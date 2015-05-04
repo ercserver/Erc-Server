@@ -629,15 +629,15 @@ public class DbComm_V1 implements IDbComm_model {
 
 
     public int addNewCommunityMember(HashMap<String,String> details) {
-        /* - I'm assuming the fields 'doctor_id' (from p_doctors) will
-             be in the form 'TABLENAME.doctor_id' to prevent ambiguity.
-             e.g. p_supervision.doctor_id
+        /* - I'm assuming the fields 'doc_licence_num' (from p_doctors) will
+             be in the form 'TABLENAME.doc_licence_num' to prevent ambiguity.
+             e.g. p_supervision.doc_licence_num
 
            - Because of the multiple occurrences of the field 'date_to' and
              mainly because the lack of actual meaning of it, regarding the registration
              process, a simple 'date_to' is expected
 
-           - output: the createn cmid
+           - output: the created cmid
          */
         int cmid = -1;
         try {
@@ -745,9 +745,10 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt.close();
 
                     // Supervision
+
                     stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id, date_to) " +
                             "VALUES (?,?,?)");
-                    stmt.setInt(1, Integer.parseInt(details.get("p_supervision.doctor_id")));
+                    stmt.setInt(1, getDoctorIdByLicence(details.get("p_supervision.doc_licence_number")));
                     stmt.setInt(2, patientID);
                     stmt.setString(3, details.get("date_to"));
                     stmt.executeUpdate();
@@ -758,7 +759,7 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt.setInt(1, Integer.parseInt(details.get("medication_num")));
                     stmt.setFloat(2, Float.parseFloat(details.get("dosage")));
                     stmt.setInt(3, Integer.parseInt(details.get("medical_condition_id")));
-                    stmt.setInt(4, Integer.parseInt(details.get("p_prescriptions.doctor_id")));
+                    stmt.setInt(4, getDoctorIdByLicence(details.get("p_prescriptions.doc_licence_num")));
                     stmt.setString(5, details.get("date_to"));
                     stmt.setInt(6, patientID);
                     stmt.executeUpdate();
@@ -768,7 +769,7 @@ public class DbComm_V1 implements IDbComm_model {
                             "doctor_id, date_to) VALUES (?,?,?,?)");
                     stmt.setInt(1, patientID);
                     stmt.setInt(2, Integer.parseInt(details.get("medical_condition_id")));
-                    stmt.setInt(3, Integer.parseInt(details.get("p_diagnosis.doctor_id")));
+                    stmt.setInt(3, getDoctorIdByLicence(details.get("p_diagnosis.doc_licence_num")));
                     stmt.setString(4, details.get("date_to"));
                     stmt.executeUpdate();
                     stmt.close();
@@ -822,6 +823,14 @@ public class DbComm_V1 implements IDbComm_model {
         }
         return cmid;
 
+    }
+
+    private int getDoctorIdByLicence(String licence) {
+        HashMap whereClause = new HashMap();
+        whereClause.put("doc_license_num", licence);
+        List select = Arrays.asList("doctor_id");
+        String docID = selectFromTable("p_doctors", select, whereClause).get(0).get("doctor_id");
+        return Integer.parseInt(docID);
     }
 
     // expected format of the state:'state-name'
