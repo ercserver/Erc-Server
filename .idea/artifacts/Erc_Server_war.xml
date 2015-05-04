@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="Erc-Server:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="Erc-Server.war">
+      <element id="artifact" artifact-name="Erc-Server:war exploded" />
+    </root>
+  </artifact>
+</component>
