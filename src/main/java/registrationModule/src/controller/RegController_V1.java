@@ -209,8 +209,7 @@ public class RegController_V1 implements IRegController {
 
     //need to do
     public Object responeByDoctor(HashMap<String, String> data) {
-        HashMap<Integer,HashMap<String,String>> response =
-                new HashMap<Integer,HashMap<String,String>>();//TODO - SHMULIK THIS VARIABLE IS NEVER USED
+        HashMap<Integer,HashMap<String,String>> response;
 
         int cmid = Integer.parseInt(data.get("community_member_id"));
         String reason = data.get("reason");
@@ -332,11 +331,7 @@ public class RegController_V1 implements IRegController {
 
             requestID = "waitResend";
             message = "Resend successful!";
-        }/*//TODO - WHY IS THIS IF NEEDED?? The lack of documentation makes it really hard to understand =\
-        else if(ifTypeISPatientOrGuardian(regid)) {
-            commController.setCommToUsers(buildResponeWithOnlyRequestID(data, "rejectResend"),target,false);
-            commController.sendResponse();
-        }*/
+        }
         //failed to verify credentials - communicate that failure
         else {
             //TODO - Do we have a request code for invalid credentials?? If not - we need one!!
@@ -369,7 +364,7 @@ public class RegController_V1 implements IRegController {
         int index = 1;
         for(String currCmid : listOfPatients){
             HashMap<String,String> whereConditions = new HashMap<String, String>();
-            whereConditions.put("community_member_id", "'" + currCmid + "'");
+            whereConditions.put("community_member_id", currCmid);
             response.put(index,registrator.filterFieldsForDoctorAuth(dbController.getUserByParameter(whereConditions)));
             //TODO -Shmulit we receive an integer here!
             index++;
