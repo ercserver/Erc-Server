@@ -75,7 +75,6 @@ public class RequestsHandler {
             IRegController rc = new RegController_V1();
             reqId = requestJson.getString(REQ_ID);
 
-
             switch (reqId) {
                 case SIGNIN:
                     rc.signIn(requestMap);

@@ -18,7 +18,7 @@ public class ModelsFactory {
         private final int commControllerVersion = 1;
         private final int dbControllerVersion = 1;
         private final int regRequestVersion = 1;
-        private final int regVerifyVersion = 1;
+        private final int regVerifyVersion = 2;
 
 
         public ICommController determineCommControllerVersion(){
@@ -45,7 +45,7 @@ public class ModelsFactory {
             }
         }
         public IRegRequest_model determineRegRequestVersion(){
-            switch (dbControllerVersion) {
+            switch (regRequestVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
                     return new RegRequest_V1();
@@ -56,9 +56,13 @@ public class ModelsFactory {
             }
         }
         public IRegVerify_model determineRegVerifyVersion(){
-            switch (dbControllerVersion) {
+            switch (regVerifyVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
+                   // return new RegVerify_V1();
+                    return null;
+                }
+                case 2: {
                     return new RegVerify_V2();
                 }
                 default: {
