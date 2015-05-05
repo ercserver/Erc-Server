@@ -7,7 +7,7 @@ import Utilities.ModelsFactory;
 import java.util.HashMap;
 
 /**
- * Created by מאור on 02/05/2015.
+ * Created by Maor on 02/05/2015.
  */
 public class Updates_V1 implements IUpdates_model {
     private IDbController dbController = null;

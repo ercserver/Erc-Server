@@ -2,7 +2,6 @@ package RequestsModule;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,8 +9,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import registrationModule.src.api.IRegController;
 import registrationModule.src.controller.RegController_V1;
 
+import java.util.HashMap;
+
 @Controller
-@RequestMapping("/requests")
+@RequestMapping("/server/requests")
 public class RequestsHandler {
     private final String REQ_ID = "RequestID"; // This is the requests identifier's field name
 
@@ -19,7 +20,7 @@ public class RequestsHandler {
     private final String REGISTRATION = "registration";
     private final String SIGNUP = "signUp";
     private final String SIGNIN = "signIn";
-    private final String RESENDEMAIL = "resendEmail";
+    private final String RESEND_EMAIL = "resendEmail";
 
     /*** Routine Requests Codes ***/
     private final String VERIFYDOCTOR = "verifyDoctor";
@@ -33,24 +34,52 @@ public class RequestsHandler {
         return "Welcome to the erc-server";
 	}
 
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/patients_reg")
-    public @ResponseBody String handleRequest(@RequestParam JSONObject requestJson){
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/registration")
+    public @ResponseBody String handleRegistrationRequests(@RequestParam JSONObject requestJson){
+        HashMapCreator hmc = new HashMapCreator();
+        HashMap<String, String> requestMap = hmc.jsonToMap(requestJson);
         String reqId = "";
+
         try {
             IRegController rc = new RegController_V1();
             reqId = requestJson.getString(REQ_ID);
 
-            // TODO - add the correct functions of IRegController
             switch (reqId) {
                 case REGISTRATION:
-
+                    rc.getRegDetails(requestMap);
                     break;
                 case SIGNUP:
+                    rc.handleReg(requestMap);
                     break;
+                case RESEND_EMAIL:
+                    rc.resendAuth(requestMap);
+                    break;
+                default:
+                    // Do nothing...
+                    break;
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return (new JSONObject().put("RequestAccepted", reqId).toString());
+    }
+
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")
+    public @ResponseBody String handleRoutineRequests(@RequestParam JSONObject requestJson){
+        HashMapCreator hmc = new HashMapCreator();
+        HashMap<String, String> requestMap = hmc.jsonToMap(requestJson);
+        String reqId = "";
+
+        try {
+            IRegController rc = new RegController_V1();
+            reqId = requestJson.getString(REQ_ID);
+
+
+            switch (reqId) {
                 case SIGNIN:
+                    rc.signIn(requestMap);
                     break;
-                case RESENDEMAIL:
-                    break;
+
                 default:
                     // Do nothing...
                     break;

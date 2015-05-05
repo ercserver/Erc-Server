@@ -12,7 +12,7 @@ import registrationModule.src.model.RegRequest_V1;
 import registrationModule.src.model.RegVerify_V2;
 
 /**
- * Created by מאור on 30/04/2015.
+ * Created by Maor on 30/04/2015.
  */
 public class ModelsFactory {
         private final int commControllerVersion = 1;
