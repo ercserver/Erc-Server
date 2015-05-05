@@ -1,4 +1,4 @@
-package RequestsModule;
+package RequestsModule.utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
