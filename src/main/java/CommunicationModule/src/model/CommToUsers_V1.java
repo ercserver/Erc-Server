@@ -16,10 +16,9 @@ public class CommToUsers_V1 implements ICommToUsers_model {
     JSONArray objToSend = null;
     ArrayList<String> targets = null;
 
-    //C'tor - building up the JSON response to be sent when instantiated
-    public CommToUsers_V1(HashMap<Integer, HashMap<String, String>> data, ArrayList<String> target){
-        objToSend = new JSONResponseCreator().establishResponse(data);
+    public CommToUsers_V1(HashMap<Integer, HashMap<String, String>> data) {
     }
+
     public JSONArray sendResponse () {
         return objToSend;
     }

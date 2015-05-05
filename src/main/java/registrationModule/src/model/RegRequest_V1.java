@@ -40,7 +40,9 @@ public class RegRequest_V1 implements IRegRequest_model {
         //One-by-one - retrieve the fields into the response
         for(String field : listOfFieldsToFilter){
             filteredResponse.put(field,fieldsToFilter.get(field));
+
         }
+        filteredResponse.put("RequestID", "waitingPatients");
         return filteredResponse;
     }
 

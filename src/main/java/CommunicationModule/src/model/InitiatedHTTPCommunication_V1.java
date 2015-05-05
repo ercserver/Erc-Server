@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by NAOR on 05/04/2015.
+ * Created by NAOR on 05/04/2015..
  */
 public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
 
-    private String communicateToURL = "mba4.ad.biu.ac.il:443/Routine/routineprocess";//"www.Gis.com";
-    private String username = "";//"ImSoCool";
-    private String password = "";//"MyPWisCoolAlso";
+    private String communicateToURL = "www.Gis.com";
+    private String username = "ImSoCool";
+    private String password = "MyPWisCoolAlso";
 
     public InitiatedHTTPCommunication_V1(HashMap<Integer,HashMap<String,String>> data, ArrayList<String> target) {
-        super(data, target);
+        super(data);
         targets = target;
         /*TODO - Is this needed? Or do we assume we don't need to send the details here. If we do - perhaps HashMap rather than ArrayList?
         communicateToURL = target.get(0);

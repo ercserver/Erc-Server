@@ -31,6 +31,7 @@ public class RegController_V1 implements IRegController {
         //generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(request.get("userType")));
+        dataToSend.get(1).put("RequestID", "registration");
         ArrayList<String> sendTo = sendTo(request);
         //determine how to send the data
         commController.setCommToUsers(dataToSend, sendTo, false);
@@ -45,7 +46,8 @@ public class RegController_V1 implements IRegController {
         String responseCode = null;
         if(null != message){
             //set the message and code
-            responseCode = "emailAlreadyExists";
+            responseCode = setResponseCodeForRejection(filledForm.get("user_type"));
+
             message = "A user with such email already exists! Please try again.";
         }
         //User does not exist
@@ -56,7 +58,7 @@ public class RegController_V1 implements IRegController {
             if(!messages.isEmpty()){
                 //TODO - We need to have such code....
                 //set the message and code
-                responseCode = "doctorDoesntExist";
+                responseCode = setResponseCodeForRejection(filledForm.get("user_type"));
                 message = appendAllMessages(messages);
             }
             //Legit form
@@ -70,7 +72,7 @@ public class RegController_V1 implements IRegController {
                 //Add the new community member (a new CmID is generated)
                 int newCmid = dbController.addNewCommunityMember(filledForm);
                 //Update status to "Verifying Email"
-                dbController.updateStatus(newCmid,null,"'verifying_email'");
+                dbController.updateStatus(newCmid,null,"'verifying email'");
                 //insert the newly created cmid to the form for mail purposes
                 filledForm.put("community_member_id", Integer.toString(newCmid));
                 //Generate data for the authorization message
@@ -91,6 +93,28 @@ public class RegController_V1 implements IRegController {
         return commController.sendResponse();
     }
 
+    private String setResponseCodeForRejection(String user_type) {
+        //set response code according to user type
+        switch(Integer.parseInt(user_type)){
+            case 0:{
+                return "rejectPatient";
+            }
+            case 1:{
+                return "rejectDoctor";
+            }
+            case 2:{
+                return "rejectGuardian";
+            }
+            case 3:{
+                return "rejectEms";
+            }
+            default:{
+                //throw some nasty error
+                return null;
+            }
+        }
+    }
+
     private String appendAllMessages(ArrayList<String> messages) {
         //Title for the main message
         String message = "An error has occurred!\n";
@@ -100,7 +124,7 @@ public class RegController_V1 implements IRegController {
             message += Integer.toString(index) + ". " + msg + "\n";
         }
         //close the main message and return it
-        message += "Please correct the above fields and re-submit the registrations form.";
+        message += "Please correct the above fields and re-submit the registrations form.\n";
         return message;
     }
     //TODO - Sendto always returns one string (or null)...An ArrayList here is probably a bad implementation =\
@@ -117,7 +141,7 @@ public class RegController_V1 implements IRegController {
 
 
 
-
+    //TODO - This function should not receive a HashMap as it is initiated by the mail. It only get Cmid (String type)
     public Object verifyDetail(HashMap<String, String> data) {
         int cmid = Integer.parseInt(data.get("community_member_id"));
         String password = data.get("password");
@@ -171,12 +195,12 @@ public class RegController_V1 implements IRegController {
 
 
     private HashMap<Integer,HashMap<String,String>> buildResponeWithOnlyRequestID(String message,
-                                                                                 String code)
+                                                                                  String code)
     {
         HashMap<Integer,HashMap<String,String>> res = new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> dataToSend = new HashMap<String, String>();
         dataToSend.put("RequestID", code);
-        dataToSend.put("Message", message);
+        dataToSend.put("message", message);
         res.put(1, dataToSend);
         return res;
     }
@@ -187,6 +211,7 @@ public class RegController_V1 implements IRegController {
     public Object responeByDoctor(HashMap<String, String> data) {
         HashMap<Integer,HashMap<String,String>> response =
                 new HashMap<Integer,HashMap<String,String>>();//TODO - SHMULIK THIS VARIABLE IS NEVER USED
+
         int cmid = Integer.parseInt(data.get("community_member_id"));
         String reason = data.get("reason");
         String password = data.get("password");
@@ -195,7 +220,7 @@ public class RegController_V1 implements IRegController {
         target.add(regid);
         if (checkCmidAndPassword(password, cmid)) {
             if (reason == null) {
-                dbController.updateStatus(cmid, "'verifying_details'", "'Active'");
+                dbController.updateStatus(cmid, "'verifying details'", "'Active'");
                 if (verification.ifTypeISPatientOrGuardian(regid)) {
                     response =  verification.proccesOfOkMember(cmid);
                     commController.setCommToUsers(response, target, false);
@@ -222,7 +247,7 @@ public class RegController_V1 implements IRegController {
 
     private boolean checkCmidAndPassword(String password, int cmid) {
         HashMap<String,String> data = verification.getUserByCmid(cmid);
-         String email = data.get("email_address");
+        String email = data.get("email_address");
         data = dbController.getLoginDetails("'" +email + "'");
         String pas = data.get("password");
         return pas.equals(password);
@@ -236,33 +261,29 @@ public class RegController_V1 implements IRegController {
         String email = details.get("email_address");
         //reject
         int type = verification.checkIfDoctorIsaccept(email);
-        if (type == 0) {
+        if (0 == type) {
             int cmid = Integer.parseInt(details.get("community_member_id"));
             dbController.deleteUser(cmid);
             response = buildRejectMessage(cmid, "reject_by_authentication");
             commController.setCommToUsers(response, null, false);
         }
         //accept
-        //TODO - SHMULIK WE ALSO SEND A MESSAGE ALONG WITH THE RESPONSE CODE
-        if (type == 1)
+        if (1 == type)
         {
-            response = buildResponeWithOnlyRequestID("SOME_REASON", "Active");
+            response.get(1).put("RequestID", "Active");
             commController.setCommToUsers(response, null, false);
-
         }
-        //TODO - SHMULIK WE ALSO SEND A MESSAGE ALONG WITH THE RESPONSE CODE
         //in other status
         else
         {
             // is equal to 2
-            response = buildResponeWithOnlyRequestID("SOME_REASON", "wait");
+            response.get(1).put("RequestID", "wait");
             commController.setCommToUsers(response, null, false);
         }
         return commController.sendResponse();
     }
 
 
-    //TODO - Shmulik: need to implement resending of email or SMS
     public Object resendAuth(HashMap<String, String> data) {
         //verify cmid and password
         int cmid = Integer.parseInt(data.get("community_member_id"));
@@ -350,6 +371,7 @@ public class RegController_V1 implements IRegController {
             HashMap<String,String> whereConditions = new HashMap<String, String>();
             whereConditions.put("community_member_id", "'" + currCmid + "'");
             response.put(index,registrator.filterFieldsForDoctorAuth(dbController.getUserByParameter(whereConditions)));
+            //TODO -Shmulit we receive an integer here!
             index++;
         }
         //determine how to send the data - initiated communication so use "false"
