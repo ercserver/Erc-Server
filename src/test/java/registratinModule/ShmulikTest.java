@@ -1,3 +1,5 @@
+package registratinModule;
+
 import registrationModule.src.model.RegVerify_V2;
 
 import java.util.HashMap;
