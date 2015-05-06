@@ -7,9 +7,9 @@ import java.util.HashMap;
  */
 public interface IRegVerify {
 
-    //boolean verifyEmailWithCmid(String mail,int cmid);
-    Object verifyDetail(HashMap<String, String> data);
-    //boolean verifyDetailsDueToType(int userType);
+    //after member accept his mail we apply this function
+    Object verifyDetail(String communityMemberId);
+
 
     Object resendAuth(HashMap<String, String> data);
 

@@ -140,14 +140,9 @@ public class RegController_V1 implements IRegController {
     }
 
 
-
-    //Naor - why cmid and dont mail.
-    //how from link we will get cmid of member ????
-    //TODO - This function should not receive a HashMap as it is initiated by the mail.
-
-    public Object verifyDetail(HashMap<String, String> data) {
+    public Object verifyDetail(String communityMemberId) {
         //data contain onlt cmid as string
-        int cmid = Integer.parseInt(data.get("community_member_id"));
+        int cmid = Integer.parseInt(communityMemberId);
 
 
         HashMap<String, String> details =  verification.getUserByCmid(cmid);
