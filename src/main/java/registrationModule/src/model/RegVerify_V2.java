@@ -203,6 +203,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         return responseToPatient;
     }
 
+
     public int checkIfDoctorIsaccept(String email)
     {
         HashMap<String, String> member = new HashMap<String, String>();
