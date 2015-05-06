@@ -4,7 +4,6 @@ import DatabaseModule.src.api.IDbController;
 import registrationModule.src.api.IRegVerify_model;
 import Utilities.ModelsFactory;
 
-import javax.jws.HandlerChain;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,7 @@ import java.util.Map;
  * Created by User on 29/04/2015.
  */
 public class RegVerify_V2 implements IRegVerify_model {
-    private static final String mailLinkFormat = "erc-server-url/server/requests/verify_email?key=";
+
     IDbController dbController = null;
 
     public RegVerify_V2() {
@@ -56,7 +55,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         }
         return null;
     }
-    //TODO - Link for this one also
+
     private ArrayList<String> generateMailForVerificationDoctor(HashMap<String, String> memberDetails,
                                                                 HashMap<String, String> doctorsAuthorizer){
         String firstName = memberDetails.get("first_name");
@@ -127,10 +126,11 @@ public class RegVerify_V2 implements IRegVerify_model {
         }
         return filter;
     }
-
+    /*
     public boolean statusIsEqualTo(String s,HashMap <String,String> details) {
+
         return details.get("status_num").equals(s);
-    }
+    }*/
 
     /***********for func resendMail*********************/
     public HashMap<String, String> getUserByCmid(int cmid) {
@@ -174,7 +174,8 @@ public class RegVerify_V2 implements IRegVerify_model {
 
 
     public boolean checkCondForResendMail(HashMap<String, String> details, String email, int cmid) {
-        if (details.get("status_num").equals("verifying email"))
+        String status = getStatus(details);
+        if (status.equals("verifying email"))
             return false;
         if (getUserByMail(email) == null)
             return false;
@@ -197,14 +198,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         responseToPatient.put(2,getFrequency("'location_frequency'"));
         responseToPatient.put(3,getFrequency("'connect_server_frequency'"));
         responseToPatient.put(4,getFrequency("'times_to_conect_to_serve'"));
-
         responseToPatient.put(5, getDefaultInEmergency(getState(cmid)));
-
-        System.out.println(responseToPatient.get(1));
-        System.out.println(responseToPatient.get(2));
-        System.out.println(responseToPatient.get(3));
-        System.out.println(responseToPatient.get(4));
-        System.out.println(responseToPatient.get(5));
 
         return responseToPatient;
     }
@@ -214,9 +208,10 @@ public class RegVerify_V2 implements IRegVerify_model {
         HashMap<String, String> member = new HashMap<String, String>();
         member.put("P_CommunityMembers.email_address", email);
         HashMap<String, String> details = dbController.getUserByParameter(member);
-        if (details.get("status_num").equals("reject by authentication"))//TODO -Shmulit we receive an integer here!
+        String status = getStatus(details);
+        if (status.equals("reject by authentication"))
             return 0;
-        if (details.get("status_num").equals("Active"))//TODO -Shmulit we receive an integer here!
+        if (status.equals("Active"))
             return 1;
         else
             // his status equal to verify email or details
@@ -245,30 +240,32 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     public ArrayList<String> verifyFilledForm(HashMap<String, String> filledForm) {
         ArrayList<String> errorMessages = new ArrayList<String>();
-        int userType = Integer.parseInt(filledForm.get("userType"));
-        //fields to examine only for patient and guardian
-        if(0 == userType || 2 == userType) {
-            if (!doesDoctorExist(filledForm)) {
+        String userType = filledForm.get("userType");
+        if (userType.equals("Patient")) {
+            if(!doesDoctorExist(filledForm.get("DoctorID"))){
                 errorMessages.add("Doctor does not exist!");
             }
+            //if{....}
             //more things to verify....
+            //
+
+        }/*
+        else if(userType.equals("Doctor")){
+          ........
+            ........need to verify something in this stage?
+              ........
         }
-        //fields to examine only for guardian
-        if(2 == userType){
-            //////TODO
+        else if(userType.equals("EMS")){
+          ........
+            ........need to verify something in this stage?
+              ........
         }
-        //fields to examine - are there any?
-        if(1 == userType){
-//            ........
-//            ........need to verify something in this stage?
-//            ........
+        else if(userType.equals("Apotropus")){
+          ........
+            ........need to verify something in this stage?
+              ........
         }
-        //fields to examine for ems - are there any?
-        if(3 == userType){
-//            ........
-//            ........need to verify something in this stage?
-//            ........
-        }
+        */
         return errorMessages;
     }
 
@@ -369,24 +366,10 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
-    private boolean doesDoctorExist(HashMap<String,String> filledForm) {
-        //add doctors fields to be examined against the database
-        ArrayList<String> fieldsToCheck = new ArrayList<String>();
-        fieldsToCheck.add("p_supervision.doc_license_number");
-        fieldsToCheck.add("p_prescriptions.doc_license_number");
-        fieldsToCheck.add("p_diagnosis.doc_license_number");
-        //check each field separately
-        for(String field : fieldsToCheck){
-            HashMap<String,String> whereConditions = new HashMap<String, String>();
-            String doctorID = filledForm.get(field);
-            whereConditions.put(field, doctorID);
-            //if one of the specified doctors does not exist - return false
-            if((null == dbController.getRowsFromTable(whereConditions, "P_Doctors"))){
-                return false;
-            }
-        }
-        //all doctors exist - return true
-        return true;
+    private boolean doesDoctorExist(String doctorID) {
+        HashMap<String,String> whereConditions = new HashMap<String, String>();
+        whereConditions.put("doctor_id", doctorID);
+        return (null != dbController.getRowsFromTable(whereConditions, "'Doctors'"));
     }
 
     //TODO- Not for prototype for future releases
@@ -413,7 +396,7 @@ public class RegVerify_V2 implements IRegVerify_model {
                 "CMID: " + data.get("community_member_id\n") +
                 "Password: " + data.get("Password\n") +
                 "Please click the following link to complete your registration:\n" +
-                generateMailLinkForVerifications(data.get("community_member_id"));
+                generateMailLinkForVerifications(data);
 
 
         String emailSubject = "Confirm your email for Socmed App";
@@ -425,9 +408,9 @@ public class RegVerify_V2 implements IRegVerify_model {
 
         return generatedAuthMail;
     }
-    //TODO - make key more safe
-    private String generateMailLinkForVerifications(String cmid) {
-        return mailLinkFormat + cmid;
+    //TODO -
+    private String generateMailLinkForVerifications(HashMap<String, String> data) {
+        return null;
     }
 
     //TODO - Not for prototype for future releases only
