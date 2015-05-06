@@ -94,38 +94,66 @@ public class RegVerify_V2 implements IRegVerify_model {
             return true;
     }
 
-    private HashMap<String,String> filterDataForVerification(HashMap<String, String> data)
+    // need to be pravite
+    public HashMap<String,String> filterDataForVerification(HashMap<String, String> data)
     {
-        HashMap<String, String> filter = new  HashMap<String, String>();
-        HashMap<String,String> whereConditions =  new HashMap<String, String>();
-        whereConditions.put("medical_condition_id", data.get("medical_condition_id"));
 
+        HashMap<String, String> fillter = new  HashMap<String, String>();
+
+        //add medical condition description
         String medicalConditionDescription =
-                dbController.getRowsFromTable(whereConditions,"medical_conditions").get(1)
-                        .get("medical_condition_description");
+                getMedicalConditionDescription(data.get("medical_condition_id"));
+        fillter.put("medical_condition_description", medicalConditionDescription);
 
-        filter.put("medical_condition_description", medicalConditionDescription);
 
-        HashMap<String,String> whereConditions2 =  new HashMap<String, String>();
-        whereConditions.put("medication_num", data.get("medication_num"));
 
-        String medicationName =
-                dbController.getRowsFromTable(whereConditions2,"medications").get(1)
-                        .get("medication_name");
 
-        filter.put("medication_name", medicationName);
+        //add medication name
+        String medicationName = getMedicationName( data.get("medication_num"));
+
+        fillter.put("medication_name", medicationName);
 
         for (String key : data.keySet()) {
-            if (key == "first_name" || key == "last_name" || key == "street" ||
-                    key ==  "home_phone_number" || key == "email_address"
-                    || key == "house_number" || key == "contact_phone" ||
-                    key == "zip_code" || key == "birth_date" || key == "city" ||
-                    key == "mobile_phone_number" || key == "state"
-                    || key == "gender"  || key == "dosage")
-                filter.put(key,data.get(key));
+            if (key.equals("first_name") || key.equals("last_name") || key.equals("street") ||
+                    key.equals("home_phone_number") || key.equals("email_address")
+                    || key.equals("house_number") || key.equals("contact_phone") ||
+                    key.equals("zip_code") || key.equals("birth_date") || key.equals("city") ||
+                    key.equals("mobile_phone_number") || key.equals("state")
+                    || key == "dosage")
+                fillter.put(key,data.get(key));
+
+            if (key.equals("gender"))
+                fillter.put(key,convertCodeToGender(data.get(key)));
         }
-        return filter;
+        return fillter;
     }
+
+    private String getMedicationName(String medicationNum) {
+        HashMap<String,String> whereConditions =  new HashMap<String, String>();
+        whereConditions.put("medication_num", medicationNum);
+        HashMap<Integer, HashMap<String, String>> data =
+                dbController.getRowsFromTable(whereConditions, "medications");
+
+        for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
+            HashMap<String,String> obj = objs.getValue();
+            return obj.get("medication_name");
+        }
+        return null;
+    }
+
+    private String getMedicalConditionDescription(String medicalConditionId) {
+        HashMap<String,String> whereConditions =  new HashMap<String, String>();
+        whereConditions.put("medical_condition_id", medicalConditionId);
+
+        HashMap<Integer, HashMap<String, String>> data =
+                dbController.getRowsFromTable(whereConditions, "medical_conditions");
+        for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
+            HashMap<String,String> obj = objs.getValue();
+            return obj.get("medical_condition_description");
+        }
+        return null;
+    }
+
     /*
     public boolean statusIsEqualTo(String s,HashMap <String,String> details) {
 
@@ -327,6 +355,27 @@ public class RegVerify_V2 implements IRegVerify_model {
         }
         return null;
     }
+
+
+    public String convertCodeToGender(String code) {
+        HashMap<String,String> defalut = new HashMap<String,String>();
+        defalut.put("column_name","'gender'");
+        defalut.put("enum_code", "'" + code + "'");
+        defalut.put("table_name","'P_CommunityMembers'");
+        HashMap<Integer, HashMap<String, String>> data =
+                dbController.getFromEnum(defalut);
+
+        //System.out.println(response);
+        for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
+           HashMap<String,String> obj = objs.getValue();
+           return obj.get("enum_value");
+        }
+
+        return null;
+    }
+
+
+
 
     public HashMap<String, String> convertCodeToDefaultCallerSettings(String code) {
         HashMap<String,String> defalut = new HashMap<String,String>();

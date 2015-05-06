@@ -127,6 +127,7 @@ public class RegController_V1 implements IRegController {
         message += "Please correct the above fields and re-submit the registrations form.\n";
         return message;
     }
+
     //TODO - Sendto always returns one string (or null)...An ArrayList here is probably a bad implementation =\
     private ArrayList<String> sendTo(HashMap<String,String> data){
         String regID = data.get("reg_id");
@@ -140,27 +141,30 @@ public class RegController_V1 implements IRegController {
 
 
 
+    //Naor - why cmid and dont mail.
+    //how from link we will get cmid of member ????
+    //TODO - This function should not receive a HashMap as it is initiated by the mail.
 
-    //TODO - This function should not receive a HashMap as it is initiated by the mail. It only get Cmid (String type)
     public Object verifyDetail(HashMap<String, String> data) {
+        //data contain onlt cmid as string
         int cmid = Integer.parseInt(data.get("community_member_id"));
-        String password = data.get("password");
-        String regid = data.get("reg_id");
-        //String code = data.get("RequestID");
+
+
+        HashMap<String, String> details =  verification.getUserByCmid(cmid);
+        String regid = details.get("reg_id");
+
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
-        if (checkCmidAndPassword(password, cmid)) {
-            changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,data);
-            HashMap<String,String> dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid);
-            ArrayList<String> mail = verification.iFIsADoctorBuildMail(cmid, regid, dataFilter);
-            if (null != mail )
-            {
-                String emailAddress = mail.get(0);
-                String emailMessage = mail.get(1);
-                String subject =   mail.get(2);
-                sendMailD(emailAddress, emailMessage,
-                        subject);
-            }
+
+        changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
+        HashMap<String,String> dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid);
+        ArrayList<String> mail = verification.iFIsADoctorBuildMail(cmid, regid, dataFilter);
+        if (null != mail )
+        {
+            String emailAddress = mail.get(0);
+            String emailMessage = mail.get(1);
+            String subject =   mail.get(2);
+            sendMailD(emailAddress, emailMessage,subject);
         }
         return null;
     }
