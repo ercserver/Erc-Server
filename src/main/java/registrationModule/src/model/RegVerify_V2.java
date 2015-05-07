@@ -21,7 +21,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     /***********for func verifyDetail*********************/
-
+    // ToDo:never use cmid...
     public HashMap<Integer, HashMap<String, String>> changeStatusToVerifyDetailAndSendToApp(int cmid,
                                                                                             HashMap<String, String> data) {
 
@@ -42,12 +42,13 @@ public class RegVerify_V2 implements IRegVerify_model {
         HashMap<String, String> member = new HashMap<String, String>();
         member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
         HashMap<String, String> responseToDoctor = dbController.getUserByParameter(member);
+        //ToDo:why do we need that?
         responseToDoctor.put("RequestID", "verifyPatient");
         return filterDataForVerification(responseToDoctor);
     }
 
     public ArrayList<String> iFIsADoctorBuildMail(int cmid, String code,HashMap<String,String> data) {
-
+        // We could just use the method of patient type and check with 'no'
         if (ifTypeISDoctor(code)) {
             HashMap<String, String> doctorsAuthorizer =
                     dbController.getEmailOfDoctorsAuthorizer(data.get("state"));
@@ -62,7 +63,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         String lastName = memberDetails.get("last_name");
         String licenseNumber = memberDetails.get("license_number");
 
-        String emailAddress = doctorsAuthorizer.get("Email");
+        String emailAddress = doctorsAuthorizer.get("email_address");
         String emailMessage  = "Dear authorizer,\n" +
                 "Please confirm/reject the following doctor be a valid doctor:\n" +
                 "First Name: " + firstName + ".\n" +
@@ -106,8 +107,6 @@ public class RegVerify_V2 implements IRegVerify_model {
         fillter.put("medical_condition_description", medicalConditionDescription);
 
 
-
-
         //add medication name
         String medicationName = getMedicationName( data.get("medication_num"));
 
@@ -123,6 +122,7 @@ public class RegVerify_V2 implements IRegVerify_model {
                 fillter.put(key,data.get(key));
 
             if (key.equals("gender"))
+                //ToDo:why do we need the enum code of gender?!
                 fillter.put(key,convertCodeToGender(data.get(key)));
         }
         return fillter;
@@ -132,7 +132,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         HashMap<String,String> whereConditions =  new HashMap<String, String>();
         whereConditions.put("medication_num", medicationNum);
         HashMap<Integer, HashMap<String, String>> data =
-                dbController.getRowsFromTable(whereConditions, "medications");
+                dbController.getRowsFromTable(whereConditions, "P_Medications");
 
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();
@@ -146,7 +146,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         whereConditions.put("medical_condition_id", medicalConditionId);
 
         HashMap<Integer, HashMap<String, String>> data =
-                dbController.getRowsFromTable(whereConditions, "medical_conditions");
+                dbController.getRowsFromTable(whereConditions, "M_MedicalConditions");
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             return obj.get("medical_condition_description");
@@ -188,7 +188,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     {
         String status_num = details.get("status_num");
         HashMap<String,String> whereConditions = new HashMap<String, String>();
-        whereConditions.put("status_num", "'" + status_num + "'");
+        whereConditions.put("status_num", status_num);
         HashMap<Integer, HashMap<String, String>> data
                 = dbController.getRowsFromTable(whereConditions, "P_Statuses");
 
@@ -200,11 +200,13 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     }
 
-
+    //ToDo:we need to check if this mail exist in another user....
     public boolean checkCondForResendMail(HashMap<String, String> details, String email, int cmid) {
         String status = getStatus(details);
+        //ToDo:not a good condition
         if (status.equals("verifying email"))
             return false;
+        //ToDo:not a good condition
         if (getUserByMail(email) == null)
             return false;
         else
@@ -260,7 +262,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         // wrong details(probably password)-rejects sign-in
         if (user == null)
             res.put("RequestID", "reject");
-            // correct log-in details-accept sign-in
+        // correct log-in details-accept sign-in
         else
             res.put("RequestID", "accept");
         response.put(1, res);
@@ -269,8 +271,10 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     public ArrayList<String> verifyFilledForm(HashMap<String, String> filledForm) {
         ArrayList<String> errorMessages = new ArrayList<String>();
-        String userType = filledForm.get("userType");
+        //ToDo:the user type should be enum....
+        String userType = filledForm.get("user_type");
         if (userType.equals("Patient")) {
+            //ToDo:The app doesn't give us doctor ID....
             if(!doesDoctorExist(filledForm.get("DoctorID"))){
                 errorMessages.add("Doctor does not exist!");
             }
@@ -419,7 +423,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     private boolean doesDoctorExist(String doctorID) {
         HashMap<String,String> whereConditions = new HashMap<String, String>();
         whereConditions.put("doctor_id", doctorID);
-        return (null != dbController.getRowsFromTable(whereConditions, "'Doctors'"));
+        return (null != dbController.getRowsFromTable(whereConditions, "P_Doctors"));
     }
 
     //TODO- Not for prototype for future releases
