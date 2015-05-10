@@ -63,7 +63,21 @@ public class RegVerify_V2 implements IRegVerify_model {
                                                                 HashMap<String, String> doctorsAuthorizer){
         String firstName = memberDetails.get("first_name");
         String lastName = memberDetails.get("last_name");
-        String licenseNumber = memberDetails.get("license_number");
+        String licenseNumber = memberDetails.get("doc_license_number");
+
+
+        /*if (key.equals("specialization_description") || key.equals("org_house")
+                || key.equals("organization_description") || key.equals("doc_license_number")
+                || key.equals("web_site") || key.equals("org_city") ||
+                key.equals("org_street") ||  key.equals("org_state") ||
+                key.equals("remarks") || key.equals("organization_type_description") ||
+                key.equals("position_description") || key.equals("org_phone_number") ||
+                key.equals("org_city") || key.equals("email_address_of_organization")
+                || key.equals("fax_number")
+                )*/
+
+
+
 
         String emailAddress = doctorsAuthorizer.get("email_address");
         String emailMessage  = "Dear authorizer,\n" +
@@ -71,6 +85,14 @@ public class RegVerify_V2 implements IRegVerify_model {
                 "First Name: " + firstName + ".\n" +
                 "Last Name: " + lastName + ".\n" +
                 "Licence Number: " + licenseNumber + ".\n\n" +
+                "Workplace details: " + "\n" +
+                "organization description: " +
+                    memberDetails.equals("organization_description") + ".\n" +
+                "organization type description" +
+                    memberDetails.equals("organization_type_description") + ".\n" +
+                "position_description: " + memberDetails.equals("position_description") + "\n" +
+                "email address of organization: "  +
+                    memberDetails.equals("email_address_of_organization") +  ".\n" +
                 "Thank you,\n" +
                 "Socmed administration team.";
         String subject = "Doctor Authorization for Socmed App";
