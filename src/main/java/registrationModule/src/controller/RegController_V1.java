@@ -66,13 +66,14 @@ public class RegController_V1 implements IRegController {
                 //set the message and code
                 responseCode = "wait";
                 //Get authorization method from db
+                //ToDo:we should take the state from filledForm
                 int authMethod = dbController.getAuthenticationMethod("'israel'");
                 String method = (0 == authMethod) ? "mail" : "sms";
                 message = "Form filled successfully. A verification " + method + " was sent to you. Please verify your registration.";
                 //Add the new community member (a new CmID is generated)
                 int newCmid = dbController.addNewCommunityMember(filledForm);
                 //Update status to "Verifying Email"
-                dbController.updateStatus(newCmid,null,"'verifying email'");
+                dbController.updateStatus(newCmid, null,"'verifying email'");
                 //insert the newly created cmid to the form for mail purposes
                 filledForm.put("community_member_id", Integer.toString(newCmid));
                 //Generate data for the authorization message
@@ -152,7 +153,10 @@ public class RegController_V1 implements IRegController {
         target.add(regid);
 
         changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
+        //ToDo:I think we need to check first that the user type is 0.....
         HashMap<String,String> dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid);
+        // ToDo:we can't use filtered data of patient on doctor. I think we need inside to filter according to...
+        //ToDo:we need to send mail to specific doctor in case of patient
         ArrayList<String> mail = verification.iFIsADoctorBuildMail(cmid, regid, dataFilter);
         if (null != mail )
         {
@@ -165,14 +169,13 @@ public class RegController_V1 implements IRegController {
     }
 
     private void sendMailD(String emailAddress, String emailMessage, String subject) {
+        //ToDo:need to get in generic way the state
         int authMethod = dbController.getAuthenticationMethod("'israel'");
         HashMap<String, String> mail =  verification.generateDataForAuthD(emailAddress, emailMessage, subject, authMethod);
         ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
         commAuthMethod.setCommOfficial(mail,authMethod);
         //Communicate authorization (email/sms/...)
         commAuthMethod.sendMessage();
-        //commController.setCommToMail(emailAddress, emailMessage, subject);
-        //commController.sendEmail();
     }
 
     private void changeStatusToVerifyDetailAndSendToApp(int cmid, String code,
@@ -182,6 +185,7 @@ public class RegController_V1 implements IRegController {
         if (status.equals("verifying email"))
         {
             dbController.updateStatus(cmid, "'verifying email'", "'verifying details'");
+            // ToDo:why do we need again to send 'wait' message?
             if (verification.ifTypeISPatientOrGuardian(code)) {
                 HashMap<Integer, HashMap<String, String>> send =
                         verification.changeStatusToVerifyDetailAndSendToApp(cmid, data);
@@ -192,7 +196,7 @@ public class RegController_V1 implements IRegController {
         }
     }
 
-
+//-----------------------------------------------------------------------
     private HashMap<Integer,HashMap<String,String>> buildResponeWithOnlyRequestID(String message,
                                                                                   String code)
     {
@@ -242,7 +246,7 @@ public class RegController_V1 implements IRegController {
         }   //verification.responeDoctor(cmid, reason,regid);
         return null;
     }
-
+//--------------------------------------------------------------
     private boolean checkCmidAndPassword(String password, int cmid) {
         HashMap<String,String> data = verification.getUserByCmid(cmid);
         String email = data.get("email_address");
@@ -250,7 +254,7 @@ public class RegController_V1 implements IRegController {
         String pas = data.get("password");
         return pas.equals(password);
     }
-
+//-----------------------------------------------------------------------------
     public Object responeToDoctorIfHeAccept(HashMap<String,String> details)
     {
         HashMap<Integer,HashMap<String,String>> response = new
@@ -281,7 +285,7 @@ public class RegController_V1 implements IRegController {
         return commController.sendResponse();
     }
 
-
+//-------------------------------------------
     public Object resendAuth(HashMap<String, String> data) {
         //verify cmid and password
         int cmid = Integer.parseInt(data.get("community_member_id"));
@@ -291,6 +295,7 @@ public class RegController_V1 implements IRegController {
         String message = null;
         if(checkCmidAndPassword(password, cmid)){
             //get auth method
+            //ToDo:need to get in generic way the state
             int authMethod = dbController.getAuthenticationMethod("'israel'");
             //get all useer details
             HashMap<String,String> details = verification.getUserByCmid(cmid);
@@ -323,6 +328,7 @@ public class RegController_V1 implements IRegController {
                 }
             }
             //get and send the auth mail/sms/...
+            //ToDo:we need to check if we need to resend....
             HashMap<String, String> dataForAuth = verification.generateDataForAuth(details, authMethod);
             ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
             commAuthMethod.setCommOfficial(dataForAuth, authMethod);
@@ -344,16 +350,18 @@ public class RegController_V1 implements IRegController {
         commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), target, false);
         return commController.sendResponse();
     }
-
+//------------------------------------------------------
 
     private boolean ifTypeISPatientOrGuardian(String regid) {
         return !regid.equals("0");
     }
+    //------------------------------------------------------------------
     //TODO- Not for prototype for future releases
     private Object resendSMS(HashMap<String, String> data) {
         return null;
     }
 
+    //ToDo:don't we need to check if this cmid is of a doctor?
     public Object getWaitingForDoctor(int doctorCmid) {
         //Pull from the db the list of patient that are pending the doctor's confirmation
         ArrayList<String> listOfPatients = dbController.getWaitingPatientsCMID(doctorCmid);
@@ -363,11 +371,12 @@ public class RegController_V1 implements IRegController {
         int index = 1;
         for(String currCmid : listOfPatients){
             HashMap<String,String> whereConditions = new HashMap<String, String>();
-            whereConditions.put("community_member_id", currCmid);
+            whereConditions.put("P_CommunityMembers.community_member_id", currCmid);
             response.put(index,registrator.filterFieldsForDoctorAuth(dbController.getUserByParameter(whereConditions)));
             //TODO -Shmulit we receive an integer here!
             index++;
         }
+        //ToDo:we need to add reject codes for doctors....
         //determine how to send the data - initiated communication so use "false"
         commController.setCommToUsers(response,null,false);
         //send the data
@@ -379,7 +388,6 @@ public class RegController_V1 implements IRegController {
         // verify log-in details
         HashMap<Integer,HashMap<String,String>> response = verification.verifySignIn(details);
 
-        ArrayList<String> target = new ArrayList<String>();
         // Sign in of doctor/ems
         if(details.get("reg_id") == "0")
         {
@@ -388,12 +396,14 @@ public class RegController_V1 implements IRegController {
         // Sign-in of patient
         else
         {
+            ArrayList<String> target = new ArrayList<String>();
             target.add(details.get("reg_id"));
             commController.setCommToUsers(response, target, false);
         }
         // Sends response to the proper user
         return commController.sendResponse();
     }
+    //------------------------------------
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason) {
         dbController.updateStatus(cmid, "'verifying details'", "'active'");
@@ -405,7 +415,7 @@ public class RegController_V1 implements IRegController {
         responseToPatient.put(1, response);
         return responseToPatient;
     }
-
+//-----------------------------------------------------
     private void updateUserMail(String mail, int cmid) {
 
         HashMap<String, String> member = new HashMap<String, String>();

@@ -27,6 +27,7 @@ public class RegRequest_V1 implements IRegRequest_model {
         whereConditions.put("P_CommunityMember.email_address", filledForm.get("email_address"));
         HashMap<String,String> result = dbController.getUserByParameter(whereConditions);
         String message = null;
+        //ToDo:first, the name of the field is not just status i think. second, if the status is active it is mean that the user is exist!
         if((null == result) || (result.get("status").equals("active"))){
             return null;
         }
