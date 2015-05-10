@@ -151,26 +151,34 @@ public class RegController_V1 implements IRegController {
 
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
-
+        HashMap<String,String> dataFilter = null;
         changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
-        //ToDo:I think we need to check first that the user type is 0.....
-        HashMap<String,String> dataFilter =
-                verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
-        // ToDo:we can't use filtered data of patient on doctor. I think we need inside to filter according to...
-        //ToDo:we need to send mail to specific doctor in case of patient
-        ArrayList<String> mail = verification.iFIsADoctorBuildMail(cmid, regid, dataFilter);
-        if (null != mail )
-        {
-            String emailAddress = mail.get(0);
-            String emailMessage = mail.get(1);
-            String subject =   mail.get(2);
-            sendMailD(emailAddress, emailMessage,subject);
+        if (verification.ifTypeISPatientOrGuardian(regid)) {
+            dataFilter =
+                    verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
+
+            //need to send this data
+            //commController.setCommToUsers(dataFilter,sendTo,false);
+            //send the data
+            return commController.sendResponse();
+        }
+        else {
+            dataFilter = verification.fillterDoctorData(details);
+            ArrayList<String> mail = verification.iFIsADoctorBuildMail(cmid, regid, dataFilter);
+            if (null != mail) {
+                String emailAddress = mail.get(0);
+                String emailMessage = mail.get(1);
+                String subject = mail.get(2);
+                sendMailD(emailAddress, emailMessage, subject);
+            }
+
         }
         return null;
     }
 
     private void sendMailD(String emailAddress, String emailMessage, String subject) {
         //ToDo:need to get in generic way the state
+        //we  dont need state
         int authMethod = dbController.getAuthenticationMethod("'israel'");
         HashMap<String, String> mail =  verification.generateDataForAuthD(emailAddress, emailMessage, subject, authMethod);
         ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
@@ -297,7 +305,8 @@ public class RegController_V1 implements IRegController {
         if(checkCmidAndPassword(password, cmid)){
             //get auth method
             //ToDo:need to get in generic way the state
-            int authMethod = dbController.getAuthenticationMethod("'israel'");
+            String state = data.get("state");
+            int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
             //get all useer details
             HashMap<String,String> details = verification.getUserByCmid(cmid);
             switch(authMethod){

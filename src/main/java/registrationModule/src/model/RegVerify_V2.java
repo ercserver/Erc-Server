@@ -130,6 +130,9 @@ public class RegVerify_V2 implements IRegVerify_model {
         return fillter;
     }
 
+
+
+
     private String getMedicationName(String medicationNum) {
         HashMap<String,String> whereConditions =  new HashMap<String, String>();
         whereConditions.put("medication_num", medicationNum);
@@ -200,6 +203,11 @@ public class RegVerify_V2 implements IRegVerify_model {
         }
         return null;
 
+    }
+
+    //TODO
+    public HashMap<String, String> fillterDoctorData(HashMap<String, String> details) {
+        return null;
     }
 
     //ToDo:we need to check if this mail exist in another user....
