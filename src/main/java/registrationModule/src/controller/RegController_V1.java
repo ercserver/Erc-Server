@@ -178,7 +178,7 @@ public class RegController_V1 implements IRegController {
 
     private void sendMailD(String emailAddress, String emailMessage, String subject) {
         //ToDo:need to get in generic way the state
-        //we  dont need state
+        //we  dont need state here
         int authMethod = dbController.getAuthenticationMethod("'israel'");
         HashMap<String, String> mail =  verification.generateDataForAuthD(emailAddress, emailMessage, subject, authMethod);
         ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
