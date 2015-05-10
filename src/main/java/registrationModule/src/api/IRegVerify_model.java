@@ -10,9 +10,9 @@ public interface IRegVerify_model {
 
     /***********for func verifyDetail*********************/
 
-    HashMap<Integer,HashMap<String,String>> changeStatusToVerifyDetailAndSendToApp(int cmid,
-                                                                                   HashMap<String, String> data);
-    HashMap<String,String> getPatientAndFillterDataToSendDoctor(int cmid);
+    HashMap<Integer,HashMap<String,String>> changeStatusToVerifyDetailAndSendToApp(
+            HashMap<String, String> data);
+    HashMap<String,String> getPatientAndFillterDataToSendDoctor(int cmid,String code);
 
     ArrayList<String> iFIsADoctorBuildMail(int cmid, String code,HashMap<String,String> data);
     boolean ifTypeISPatientOrGuardian(String code);

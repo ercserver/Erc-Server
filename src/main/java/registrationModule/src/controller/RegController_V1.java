@@ -154,7 +154,8 @@ public class RegController_V1 implements IRegController {
 
         changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
         //ToDo:I think we need to check first that the user type is 0.....
-        HashMap<String,String> dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid);
+        HashMap<String,String> dataFilter =
+                verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
         // ToDo:we can't use filtered data of patient on doctor. I think we need inside to filter according to...
         //ToDo:we need to send mail to specific doctor in case of patient
         ArrayList<String> mail = verification.iFIsADoctorBuildMail(cmid, regid, dataFilter);
@@ -188,7 +189,7 @@ public class RegController_V1 implements IRegController {
             // ToDo:why do we need again to send 'wait' message?
             if (verification.ifTypeISPatientOrGuardian(code)) {
                 HashMap<Integer, HashMap<String, String>> send =
-                        verification.changeStatusToVerifyDetailAndSendToApp(cmid, data);
+                        verification.changeStatusToVerifyDetailAndSendToApp(data);
                 commController.setCommToUsers(send,
                         target, false);
                 commController.sendResponse();
@@ -258,7 +259,7 @@ public class RegController_V1 implements IRegController {
     public Object responeToDoctorIfHeAccept(HashMap<String,String> details)
     {
         HashMap<Integer,HashMap<String,String>> response = new
-                HashMap<Integer,HashMap<String,String>>(); //TODO - Shmulik - this variable is never used
+                HashMap<Integer,HashMap<String,String>>();
 
         String email = details.get("email_address");
         //reject
@@ -373,7 +374,8 @@ public class RegController_V1 implements IRegController {
             HashMap<String,String> whereConditions = new HashMap<String, String>();
             whereConditions.put("P_CommunityMembers.community_member_id", currCmid);
             response.put(index,registrator.filterFieldsForDoctorAuth(dbController.getUserByParameter(whereConditions)));
-            //TODO -Shmulit we receive an integer here!
+            //TODO -Shmulik we receive an integer here!
+            //shmulik- this is not my function
             index++;
         }
         //ToDo:we need to add reject codes for doctors....

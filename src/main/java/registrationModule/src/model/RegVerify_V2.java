@@ -21,9 +21,8 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     /***********for func verifyDetail*********************/
-    // ToDo:never use cmid...
-    public HashMap<Integer, HashMap<String, String>> changeStatusToVerifyDetailAndSendToApp(int cmid,
-                                                                                            HashMap<String, String> data) {
+    public HashMap<Integer, HashMap<String, String>> changeStatusToVerifyDetailAndSendToApp(
+            HashMap<String, String> data) {
 
         HashMap<Integer, HashMap<String, String>> responseToPatient =
                 new HashMap<Integer, HashMap<String, String>>();
@@ -38,13 +37,16 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
-    public HashMap<String,String> getPatientAndFillterDataToSendDoctor(int cmid) {
-        HashMap<String, String> member = new HashMap<String, String>();
-        member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
-        HashMap<String, String> responseToDoctor = dbController.getUserByParameter(member);
-        //ToDo:why do we need that?
-        responseToDoctor.put("RequestID", "verifyPatient");
-        return filterDataForVerification(responseToDoctor);
+    public HashMap<String,String> getPatientAndFillterDataToSendDoctor(int cmid,String code) {
+        if(ifTypeISDoctor(code)) {
+            HashMap<String, String> member = new HashMap<String, String>();
+            member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
+            HashMap<String, String> responseToDoctor = dbController.getUserByParameter(member);
+            //ToDo:why do we need that?
+            responseToDoctor.put("RequestID", "verifyPatient");
+            return filterDataForVerification(responseToDoctor);
+        }
+        return null;
     }
 
     public ArrayList<String> iFIsADoctorBuildMail(int cmid, String code,HashMap<String,String> data) {
