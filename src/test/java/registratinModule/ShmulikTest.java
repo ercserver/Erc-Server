@@ -21,7 +21,7 @@ public class ShmulikTest {
         //v2.convertCodeToDefaultCallerSettings("0");
         //v2.checkCondForResendMail(details,, cmid)
         v2.filterDataForVerification(h);
-
+///
 //        test3();
 
     }
