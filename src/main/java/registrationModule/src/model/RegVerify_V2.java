@@ -207,6 +207,24 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     //TODO
     public HashMap<String, String> fillterDoctorData(HashMap<String, String> details) {
+
+        HashMap<String,String> fillter = new HashMap<String,String>();
+        for (String key : details.keySet()) {
+
+            if (key.equals("first_name") || key.equals("last_name") || key.equals("street") ||
+                    key.equals("home_phone_number") || key.equals("email_address")
+                    || key.equals("house_number") || key.equals("contact_phone") ||
+                    key.equals("zip_code") || key.equals("birth_date") || key.equals("city") ||
+                    key.equals("mobile_phone_number") || key.equals("state")
+                    )
+                fillter.put(key, details.get(key));
+
+            if (key.equals("gender"))
+                //ToDo:why do we need the enum code of gender?!
+                fillter.put(key,convertCodeToGender(details.get(key)));
+        }
+        //need to add this
+        // //mybey  depend on doctor_id
         return null;
     }
 

@@ -154,16 +154,18 @@ public class RegController_V1 implements IRegController {
         HashMap<String,String> dataFilter = null;
         changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
         if (verification.ifTypeISPatientOrGuardian(regid)) {
-            dataFilter =
-                    verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
+            dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
 
-            //need to send this data
+
+            //need to send dataFilter here
+
             //commController.setCommToUsers(dataFilter,sendTo,false);
-            //send the data
+
             return commController.sendResponse();
         }
+        //if is a doctor
         else {
-            dataFilter = verification.fillterDoctorData(details);
+            dataFilter = verification.fillterDoctorData(details); //need to implement
             ArrayList<String> mail = verification.iFIsADoctorBuildMail(cmid, regid, dataFilter);
             if (null != mail) {
                 String emailAddress = mail.get(0);
@@ -304,7 +306,6 @@ public class RegController_V1 implements IRegController {
         String message = null;
         if(checkCmidAndPassword(password, cmid)){
             //get auth method
-            //ToDo:need to get in generic way the state
             String state = data.get("state");
             int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
             //get all useer details

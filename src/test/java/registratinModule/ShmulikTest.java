@@ -13,7 +13,9 @@ public class ShmulikTest {
 
         RegVerify_V2 v2 = new RegVerify_V2();
         HashMap<String,String> h = new HashMap<String,String>();
+        HashMap<String,String> h2 = new HashMap<String,String>();
         h = v2.getUserByCmid(1002);
+        h2 = v2.getUserByCmid(1003);
         /*
         RegController_V1 v = new RegController_V1();
         v2.changeStatusToVerifyDetailAndSendToApp(1002,h);*/
