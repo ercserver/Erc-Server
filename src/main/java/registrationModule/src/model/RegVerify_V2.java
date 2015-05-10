@@ -218,10 +218,23 @@ public class RegVerify_V2 implements IRegVerify_model {
                     key.equals("mobile_phone_number") || key.equals("state")
                     )
                 fillter.put(key, details.get(key));
-
+            //data that relevant only to doctor
+            if (key.equals("specialization_description") || key.equals("org_house")
+                    || key.equals("organization_description") || key.equals("doc_license_number")
+                    || key.equals("web_site") || key.equals("org_city") ||
+                    key.equals("org_street") ||  key.equals("org_state") ||
+                    key.equals("remarks") || key.equals("organization_type_description") ||
+                    key.equals("position_description") || key.equals("org_phone_number") ||
+                    key.equals("org_city") || key.equals("email_address_of_organization")
+                    || key.equals("fax_number")
+                    )
+            {
+                fillter.put(key, details.get(key));
+            }
             if (key.equals("gender"))
                 //ToDo:why do we need the enum code of gender?!
                 fillter.put(key,convertCodeToGender(details.get(key)));
+
         }
         //need to add this
         // //mybey  depend on doctor_id
