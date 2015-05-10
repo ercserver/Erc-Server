@@ -93,6 +93,7 @@ public class RegVerify_V2 implements IRegVerify_model {
                 "position_description: " + memberDetails.equals("position_description") + "\n" +
                 "email address of organization: "  +
                     memberDetails.equals("email_address_of_organization") +  ".\n" +
+                "org phone number: " + memberDetails.equals("org_phone_number") +  ".\n" +
                 "Thank you,\n" +
                 "Socmed administration team.";
         String subject = "Doctor Authorization for Socmed App";
