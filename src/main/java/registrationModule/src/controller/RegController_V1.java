@@ -479,6 +479,7 @@ public class RegController_V1 implements IRegController {
         return commController.sendResponse();
     }
 
+    //ToDo:need to add explnation...
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason) {
         dbController.updateStatus(cmid, "'verifying details'", "'active'");
         HashMap<Integer,HashMap<String,String>> responseToPatient =
