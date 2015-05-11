@@ -194,8 +194,7 @@ public class RegController_V1 implements IRegController {
         return null;
     }
 
-    private void sendMailD(String emailAddress, String emailMessage, String subject) {
-        //ToDo:need to get in generic way the state
+   /* private void sendMailD(String emailAddress, String emailMessage, String subject) {
         //we  dont need state here
         int authMethod = dbController.getAuthenticationMethod("'israel'");
         HashMap<String, String> mail =  verification.generateDataForAuthD(emailAddress, emailMessage, subject, authMethod);
@@ -203,7 +202,7 @@ public class RegController_V1 implements IRegController {
         commAuthMethod.setCommOfficial(mail,authMethod);
         //Communicate authorization (email/sms/...)
         commAuthMethod.sendMessage();
-    }
+    }*/
 
     private void changeStatusToVerifyDetailAndSendToApp(int cmid, String code,
                                                         ArrayList<String> target,
