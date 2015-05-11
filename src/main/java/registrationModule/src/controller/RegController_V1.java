@@ -257,9 +257,12 @@ public class RegController_V1 implements IRegController {
         }
         String password = data.get("password");
         String patientId = data.get("patient_id");
-        HashMap<String,String> patientDet = dbController
-        //TODO in need to get regid
-        String communityMemberId = patientDet.get("community_member_id");
+        //HashMap<String,String> patientDet
+        String communityMemberId        = dbController.getCmidByPatientID(patientId);
+        HashMap<String,String> patientDet =
+                verification.getUserByCmid(new Integer(communityMemberId ));
+
+        //String communityMemberId = patientDet.get("community_member_id");
         String regid = patientDet.get("reg_id");
 
         ArrayList<String> target = new ArrayList<String>();
@@ -269,14 +272,14 @@ public class RegController_V1 implements IRegController {
             if (reason == null) {
                 dbController.updateStatus(new Integer(communityMemberId), "'verifying details'", "'Active'");
                 //if (verification.ifTypeISPatientOrGuardian(regid)) {
-                    response =  verification.proccesOfOkMember(cmid);
+                    response =  verification.proccesOfOkMember(new Integer(communityMemberId));
                     commController.setCommToUsers(response, target, false);
 
                 //}
             }
             else
             {
-                 response = buildRejectMessage(cmid, reason);
+                 response = buildRejectMessage(new Integer(communityMemberId), reason);
                  commController.setCommToUsers(response, target, false);
 
 
@@ -305,12 +308,12 @@ public class RegController_V1 implements IRegController {
             dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
             //if (verification.ifTypeISPatientOrGuardian(regid)) {
             //response =  verification.proccesOfOkMember(cmid);
-            commController.setCommToUsers(response, target, false);
+            //commController.setCommToUsers(response, target, false);
         }
         else
         {
-            response = buildRejectMessage(cmid, reason);
-            commController.setCommToUsers(response, target, false);
+            //response = buildRejectMessage(cmid, reason);
+            //commController.setCommToUsers(response, target, false);
         }
         return commController.sendResponse();
     }
