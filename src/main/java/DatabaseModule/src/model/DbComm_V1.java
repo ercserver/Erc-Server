@@ -1030,6 +1030,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     }
 
+    // Checks if doctor is exist by his license number
     public boolean doesDoctorExists(String docLicense)
     {
         HashMap<String,String> whereConditions = new HashMap<String, String>();
