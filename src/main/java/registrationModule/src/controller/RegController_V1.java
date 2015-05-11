@@ -392,7 +392,6 @@ public class RegController_V1 implements IRegController {
         return commController.sendResponse();
     }
 
-    //------------------------------------------------------------------
     //TODO- Not for prototype for future releases
     private Object resendSMS(HashMap<String, String> data) {
         return null;
@@ -452,7 +451,6 @@ public class RegController_V1 implements IRegController {
         // Sends response to the proper user
         return commController.sendResponse();
     }
-
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason) {
         dbController.updateStatus(cmid, "'verifying details'", "'active'");
