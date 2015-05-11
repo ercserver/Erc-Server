@@ -361,13 +361,14 @@ public class RegController_V1 implements IRegController {
             }
             //get and send the auth mail/sms/...
             //ToDo:we need to check if we need to resend....
-            HashMap<String, String> dataForAuth = verification.generateDataForAuth(details, authMethod);
-            ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
-            commAuthMethod.setCommOfficial(dataForAuth, authMethod);
-            commAuthMethod.sendMessage();
-
-            requestID = "waitResend";
-            message = "Resend successful!";
+            if  (null == requestID) {
+                HashMap<String, String> dataForAuth = verification.generateDataForAuth(details, authMethod);
+                ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
+                commAuthMethod.setCommOfficial(dataForAuth, authMethod);
+                commAuthMethod.sendMessage();
+                requestID = "waitResend";
+                message = "Resend successful!";
+            }
         }
         //failed to verify credentials - communicate that failure
         else {
