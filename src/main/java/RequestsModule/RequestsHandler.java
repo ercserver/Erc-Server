@@ -89,7 +89,7 @@ public class RequestsHandler {
                     rc.signIn(requestMap);
                     break;
                 case ASKWAITINGPATIENTS:
-                    JSONArray respone  = (JSONArray) rc.getWaitingForDoctor(Integer.parseInt(requestMap.get("cmid")));
+                    JSONArray respone  = (JSONArray) rc.getWaitingForDoctor(requestMap);
                     if (respone != null){
                         //ToDo:do we really need to return something from here?
                         return respone.toString();
