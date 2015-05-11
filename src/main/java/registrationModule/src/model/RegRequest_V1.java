@@ -28,7 +28,7 @@ public class RegRequest_V1 implements IRegRequest_model {
         HashMap<String,String> result = dbController.getUserByParameter(whereConditions);
         String message = null;
         //ToDo:first, the name of the field is not just status i think. second, if the status is active it is mean that the user is exist!
-        if((null == result) || (result.get("status").equals("active"))){
+        if((null == result) || (result.get("status_name").equals("deleteAccount"))){
             return null;
         }
         return userExistsMessage;
@@ -41,7 +41,6 @@ public class RegRequest_V1 implements IRegRequest_model {
         //One-by-one - retrieve the fields into the response
         for(String field : listOfFieldsToFilter){
             filteredResponse.put(field,fieldsToFilter.get(field));
-
         }
         filteredResponse.put("RequestID", "waitingPatients");
         return filteredResponse;
@@ -51,7 +50,7 @@ public class RegRequest_V1 implements IRegRequest_model {
         ArrayList<String> decision = new ArrayList<String>();
         decision.add("first_name");
         decision.add("last_name");
-        decision.add("community_member_id");
+        decision.add("patient_id");
         decision.add("external_id");
         //TODO - More fields?
         //decision.add("medical_condition");

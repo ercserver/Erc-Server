@@ -558,16 +558,9 @@ public class RegVerify_V2 implements IRegVerify_model {
         String lastName = data.get("last_name");
         String emailAddress = data.get("email_address");
         String emailMessage = "Dear " + firstName + "  " + lastName + ",\n\n" +
-                data.get("message");
-                /*
-                "Thank you for registering to SocMed.\n" +
-                "CMID: " + data.get("community_member_id\n") +
-                "Password: " + data.get("Password\n") +
-                "Please click the following link to complete your registration:\n" +
-                generateMailLinkForVerifications(data);
-                */
+                data.get("Message") + generateMailLinkForVerifications(data);
 
-        String emailSubject =  data.get("email_subject");//"Confirm your email for Socmed App";
+        String emailSubject =  data.get("Subject");
 
         HashMap<String,String> generatedAuthMail = new HashMap<String, String>();
         generatedAuthMail.put("Subject", emailSubject);

@@ -1,5 +1,6 @@
 package registratinModule;
 
+import registrationModule.src.controller.RegController_V1;
 import registrationModule.src.model.RegVerify_V2;
 
 import java.util.HashMap;
@@ -44,6 +45,12 @@ public class ShmulikTest {
         System.out.println(s);
 
     }
+    public static void testNaor1() {
+        RegController_V1 rc = new RegController_V1();
+    }
+
+
+
 
 
 }

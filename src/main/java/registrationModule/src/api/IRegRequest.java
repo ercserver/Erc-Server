@@ -9,5 +9,5 @@ import java.util.HashMap;
 public interface IRegRequest {
     Object handleReg(HashMap<String, String> filledForm);
     Object getRegDetails(HashMap<String,String> request);
-    Object getWaitingForDoctor (int doctorCmid);
+    Object getWaitingForDoctor (HashMap<String,String> request);
 }

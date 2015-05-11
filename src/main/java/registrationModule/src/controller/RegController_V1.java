@@ -47,7 +47,6 @@ public class RegController_V1 implements IRegController {
         if(null != message){
             //set the message and code
             responseCode = setResponseCodeForRejection(filledForm.get("user_type"));
-
             message = "A user with such email already exists! Please try again.";
         }
         //User does not exist
@@ -56,7 +55,6 @@ public class RegController_V1 implements IRegController {
             ArrayList<String> messages = verification.verifyFilledForm(filledForm);
 
             if(!messages.isEmpty()){
-                //TODO - We need to have such code....
                 //set the message and code
                 responseCode = setResponseCodeForRejection(filledForm.get("user_type"));
                 message = appendAllMessages(messages);
@@ -66,17 +64,16 @@ public class RegController_V1 implements IRegController {
                 //set the message and code
                 responseCode = "wait";
                 //Get authorization method from db
-                //ToDo:we should take the state from filledForm
-                int authMethod = dbController.getAuthenticationMethod("'israel'");
+                int authMethod = dbController.getAuthenticationMethod("'" + filledForm.get("state") + "'");
                 String method = (0 == authMethod) ? "mail" : "sms";
                 message = "Form filled successfully. A verification " + method + " was sent to you. Please verify your registration.";
                 //Add the new community member (a new CmID is generated)
                 int newCmid = dbController.addNewCommunityMember(filledForm);
                 //Update status to "Verifying Email"
-                dbController.updateStatus(newCmid, null,"'verifying email'");
-                //insert the newly created cmid to the form for mail purposes
-                filledForm.put("community_member_id", Integer.toString(newCmid));
+                dbController.updateStatus(newCmid, null, "'verifying email'");
                 //Generate data for the authorization message
+                filledForm.put("Message", generateMessageForAuth(newCmid,filledForm.get("Password")));
+                filledForm.put("Subject","Confirm your email for Socmed App");
                 HashMap<String, String> data = verification.generateDataForAuth(filledForm,authMethod);
                 //Create authorization comm
                 ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
@@ -85,13 +82,19 @@ public class RegController_V1 implements IRegController {
                 commAuthMethod.sendMessage();
             }
         }
-        //
-        HashMap<Integer,HashMap<String,String>> dataToSend = buildResponeWithOnlyRequestID(message,responseCode);
+        HashMap<Integer,HashMap<String,String>> dataToSend = buildResponeWithOnlyRequestID(message, responseCode);
         ArrayList<String> sendTo = sendTo(filledForm);
         //determine how to send the data. Initiated communication - so use "false"
         commController.setCommToUsers(dataToSend,sendTo,false);
         //send the data
         return commController.sendResponse();
+    }
+
+    private String generateMessageForAuth(int cmid, String password) {
+        return "Thank you for registering to SocMed.\n" +
+                "CMID: " + Integer.toString(cmid) + "\n" +
+                "Password: " + password + "\n" +
+                "Please click the following link to complete your registration:\n";
     }
 
     private String setResponseCodeForRejection(String user_type) {
@@ -115,6 +118,8 @@ public class RegController_V1 implements IRegController {
             }
         }
     }
+
+
 
     private String appendAllMessages(ArrayList<String> messages) {
         //Title for the main message
@@ -159,8 +164,8 @@ public class RegController_V1 implements IRegController {
 
             //dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
             HashMap<String,String> doctorData = verification.getSupervision(details.get("P_supervision.doc_license_number"));
-            doctorData.put("email_subject", "Confirm wating patient");
-            doctorData.put("message", "you have new wating patient for your verification" + ".\n"
+            doctorData.put("Subject", "Confirm wating patient");
+            doctorData.put("Message", "you have new wating patient for your verification" + ".\n"
                     + " please enter to your website! ");
 
             data =
@@ -173,10 +178,10 @@ public class RegController_V1 implements IRegController {
             //data = Authorizer;
             HashMap<String,String> dataAuthorizer = null;
             dataAuthorizer = verification.getdoctorsAuthorizer(regid,dataFilter);
-            dataAuthorizer.put("email_subject","Doctor Authorization for Socmed App");
+            dataAuthorizer.put("Subject","Doctor Authorization for Socmed App");
             dataAuthorizer.put("first name", "doctors");
             dataAuthorizer.put("last_name", "authorizer");
-            dataAuthorizer.put("message",verification.generateMessgeForVerfictionDoctor(data) );
+            dataAuthorizer.put("Message",verification.generateMessgeForVerfictionDoctor(data) );
 
             data =
                     verification.generateDataForAuth(dataAuthorizer, authMethod);
@@ -332,58 +337,56 @@ public class RegController_V1 implements IRegController {
         String regid = data.get("reg_id");
         String requestID = null;
         String message = null;
-        //verify cmid and password
-        if(checkCmidAndPassword(password, cmid)){
-            //get auth method
-            String state = data.get("state");
-            int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
-            //get all useer details
-            HashMap<String,String> details = verification.getUserByCmid(cmid);
-            switch(authMethod){
-                case 0:{
-                    String email = data.get("email_address");
-                    //verify mail doesn't already exist in the system
-                    if (!verification.checkCondForResendMail(details, email, cmid)){
-                        requestID = "rejectResend";
-                        message = "Invalid email! Please try again...";
-                        break;
-                    }
-                    //if the user's email in the db isn't the same as specified in the request
-                    if (!details.get("email_address").equals(email)) {
-                        //change in the db
-                        updateUserMail(email, cmid);
-                        //change in the curr func
-                        details.put("email_address",email);
-                    }
+        //if cannot verify cmid and password - return null
+        if(checkCmidAndPassword(password, cmid)) {
+            return null;
+        }
+        //get auth method
+        String state = data.get("state");
+        int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
+        //get all useer details
+        HashMap<String,String> details = verification.getUserByCmid(cmid);
+        switch(authMethod) {
+            case 0: {
+                String email = data.get("email_address");
+                //verify mail doesn't already exist in the system
+                if (!verification.checkCondForResendMail(details, email, cmid)) {
+                    requestID = "rejectResend";
+                    message = "Invalid email! Please try again...";
                     break;
                 }
-                case 1:{
-                    //TODO - To be implemented in later versions
-                    //String phone = data.get("phone_number");
-                    break;
+                //if the user's email in the db isn't the same as specified in the request
+                if (!details.get("email_address").equals(email)) {
+                    //change in the db
+                    updateUserMail(email, cmid);
+                    //change in the curr func
+                    details.put("email_address", email);
                 }
-                default:{
-                    //throw some nasty error?
-                    return null;
-                }
+                break;
             }
-            //get and send the auth mail/sms/...
+            case 1: {
+                //TODO - To be implemented in later versions
+                //String phone = data.get("phone_number");
+                break;
+            }
+            default: {
+                //throw some nasty error?
+                return null;
+            }
+        }
 
-            if  (null == requestID) {
-                HashMap<String, String> dataForAuth = verification.generateDataForAuth(details, authMethod);
-                ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
-                commAuthMethod.setCommOfficial(dataForAuth, authMethod);
-                commAuthMethod.sendMessage();
-                requestID = "waitResend";
-                message = "Resend successful!";
-            }
+        //get and send the auth mail/sms/...
+        if  (null == requestID) {
+            details.put("Message", generateMessageForAuth(Integer.parseInt(data.get("community_member_id")),data.get("Password")));
+            details.put("Subject","Resend email:\n\nConfirm your email for Socmed App");
+            HashMap<String, String> dataForAuth = verification.generateDataForAuth(details, authMethod);
+            ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
+            commAuthMethod.setCommOfficial(dataForAuth, authMethod);
+            commAuthMethod.sendMessage();
+            requestID = "waitResend";
+            message = "Resend successful!";
         }
-        //failed to verify credentials - communicate that failure
-        else {
-            //TODO - Do we have a request code for invalid credentials?? If not - we need one!!
-            requestID = "invalidCredentials";
-            message = "Invalid credentials! Please try again...";
-        }
+
         //determine who to send to
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
@@ -398,24 +401,35 @@ public class RegController_V1 implements IRegController {
         return null;
     }
 
-    //ToDo:don't we need to check if this cmid is of a doctor?
-    public Object getWaitingForDoctor(int doctorCmid) {
-        //Pull from the db the list of patient that are pending the doctor's confirmation
-        ArrayList<String> listOfPatients = dbController.getWaitingPatientsCMID(doctorCmid);
+    public Object getWaitingForDoctor(HashMap<String,String> request) {
+        String password = request.get("password");
+        int cmid = Integer.parseInt(request.get("community_member_id"));
+        if(checkCmidAndPassword(password,cmid)){
+
+        }
 
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
+        //Pull from the db the list of patient that are pending the doctor's confirmation
+        ArrayList<String> listOfPatients = dbController.getWaitingPatientsCMID(cmid);
+        //user isn't a doctor - we don't serve this request. Return null
+        if(null == listOfPatients){
+            return null;
+        }
         //for each cmid in the list received - filter fields and add to the response
         int index = 1;
         for(String currCmid : listOfPatients){
             HashMap<String,String> whereConditions = new HashMap<String, String>();
             whereConditions.put("P_CommunityMembers.community_member_id", currCmid);
             response.put(index,registrator.filterFieldsForDoctorAuth(dbController.getUserByParameter(whereConditions)));
-            //TODO -Shmulik we receive an integer here!
-            //shmulik- this is not my function
             index++;
         }
-        //ToDo:we need to add reject codes for doctors....
+        //adding reject reasons object (with "subRequest" to make it identifiable)
+        HashMap<String,String> rejectCodes = dbController.getRejectCodes();
+        rejectCodes.put("RequestID","waitingPatients");
+        rejectCodes.put("subRequest","rejectReasons");
+        response.put(0,rejectCodes);
         //determine how to send the data - initiated communication so use "false"
+        ArrayList<String> sendTo = sendTo(request);
         commController.setCommToUsers(response,null,false);
         //send the data
         return commController.sendResponse();
