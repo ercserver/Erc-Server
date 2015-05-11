@@ -7,6 +7,7 @@ import registrationModule.src.api.IRegRequest_model;
 import registrationModule.src.api.IRegVerify_model;
 import registrationModule.src.utilities.ModelsFactory;
 
+import javax.ws.rs.HEAD;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -255,6 +256,15 @@ public class RegController_V1 implements IRegController {
             explantion = data.get("explantion");
         }
         String password = data.get("password");
+
+        String patientId = data.get("patient_id");
+        //HashMap<String,String> patientDet
+        String communityMemberId        = dbController.getCmidByPatientID(patientId);
+        HashMap<String,String> patientDet =
+                verification.getUserByCmid(new Integer(communityMemberId ));
+
+        //String communityMemberId = patientDet.get("community_member_id");
+        String regid = patientDet.get("reg_id");
         String painterId = data.get("patient_id");
         //TODO in need to get regid
         //String regid = data.get("reg_id");
@@ -266,14 +276,14 @@ public class RegController_V1 implements IRegController {
             if (reason == null) {
                 dbController.updateStatus(cm/*cmid*/, "'verifying details'", "'active'");
                 //if (verification.ifTypeISPatientOrGuardian(regid)) {
-                    response =  verification.proccesOfOkMember(cmid);
+                    response =  verification.proccesOfOkMember(new Integer(communityMemberId));
                     commController.setCommToUsers(response, target, false);
                     commController.sendResponse();
                 //}
             }
             else
             {
-                 response = buildRejectMessage(cmid, reason);
+                 response = buildRejectMessage(new Integer(communityMemberId), reason);
                  commController.setCommToUsers(response, target, false);
                  commController.sendResponse();
 
@@ -292,8 +302,25 @@ public class RegController_V1 implements IRegController {
 //-----------------------------------------------------------------------------
 
 
+
+    public Object responeToDoctorAturization(String cmid,boolean isAccept) {
+        HashMap<Integer, HashMap<String, String>> data =
+                dbController.getRegIDsOfUser(new Integer(cmid));
+
+        if (isAccept) {
+            dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
+            //if (verification.ifTypeISPatientOrGuardian(regid)) {
+            //response =  verification.proccesOfOkMember(cmid);
+            //commController.setCommToUsers(response, target, false);
+        } else {
+            //response = buildRejectMessage(cmid, reason);
+            //commController.setCommToUsers(response, target, false);
+        }
+        return commController.sendResponse();
+    }
     public Object responeToDoctorAturization(HashMap<String,String> details) {
         return null;
+
     }
 
     public Object responeToDoctorIfHeAccept(HashMap<String,String> details)
