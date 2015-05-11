@@ -135,4 +135,24 @@ public class DbController_V1 implements IDbController {
     {
         DB_communicator.updateTable(tableName, whereConds, columnToUpdate, newValue);
     }
+
+    public boolean doesDoctorExists(String docID){
+        return DB_communicator.doesDoctorExists(docID);
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getMedicationByNum(String medNum){
+        return DB_communicator.getMedicationByNum(medNum);
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getMedicalConditionByNum(String medConNum){
+        return DB_communicator.getMedicalConditionByNum(medConNum);
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getStatusByNum(String statusNum){
+        return DB_communicator.getStatusByNum(statusNum);
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions){
+        return DB_communicator.getDoctor(whereConditions);
+    }
 }

@@ -180,11 +180,7 @@ public class RegVerify_V2 implements IRegVerify_model {
 
 
     private String getMedicationName(String medicationNum) {
-        HashMap<String,String> whereConditions =  new HashMap<String, String>();
-        whereConditions.put("medication_num", medicationNum);
-        HashMap<Integer, HashMap<String, String>> data =
-                dbController.getRowsFromTable(whereConditions, "P_Medications");
-
+        HashMap<Integer, HashMap<String, String>> data = dbController.getMedicationByNum(medicationNum);
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             return obj.get("medication_name");
@@ -193,11 +189,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     private String getMedicalConditionDescription(String medicalConditionId) {
-        HashMap<String,String> whereConditions =  new HashMap<String, String>();
-        whereConditions.put("medical_condition_id", medicalConditionId);
-
-        HashMap<Integer, HashMap<String, String>> data =
-                dbController.getRowsFromTable(whereConditions, "M_MedicalConditions");
+        HashMap<Integer, HashMap<String, String>> data = dbController.getMedicalConditionByNum(medicalConditionId);
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             return obj.get("medical_condition_description");
@@ -238,10 +230,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     public String getStatus(HashMap<String, String> details)
     {
         String status_num = details.get("status_num");
-        HashMap<String,String> whereConditions = new HashMap<String, String>();
-        whereConditions.put("status_num", status_num);
-        HashMap<Integer, HashMap<String, String>> data
-                = dbController.getRowsFromTable(whereConditions, "P_Statuses");
+        HashMap<Integer, HashMap<String, String>> data = dbController.getStatusByNum(status_num);
 
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();
@@ -290,7 +279,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     public HashMap<String, String> getSupervision(String docLicence) {
         HashMap<String,String> whereConditions = new HashMap<String, String>();
         whereConditions.put("doc_license_number", docLicence);
-        HashMap<Integer, HashMap<String, String>> data = dbController.getRowsFromTable(whereConditions, "P_Doctors");
+        HashMap<Integer, HashMap<String, String>> data = dbController.getDoctor(whereConditions);
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             int cmid =  new Integer(obj.get("community_member_id"));
@@ -544,9 +533,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     private boolean doesDoctorExist(String doctorID) {
-        HashMap<String,String> whereConditions = new HashMap<String, String>();
-        whereConditions.put("doctor_id", doctorID);
-        return (null != dbController.getRowsFromTable(whereConditions, "P_Doctors"));
+        return(dbController.doesDoctorExists(doctorID));
     }
 
     //TODO- Not for prototype for future releases

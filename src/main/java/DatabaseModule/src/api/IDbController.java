@@ -32,4 +32,9 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<Integer,HashMap<String,String>> getRegIDsOfUser(int cmid);
     void updateTable(String tableName, HashMap<String,String> whereConds,
                             String columnToUpdate, Object newValue);
+    boolean doesDoctorExists(String docID);
+    HashMap<Integer, HashMap<String, String>> getMedicationByNum(String medNum);
+    HashMap<Integer, HashMap<String, String>> getMedicalConditionByNum(String medConNum);
+    HashMap<Integer, HashMap<String, String>> getStatusByNum(String statusNum);
+    HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
 }

@@ -1029,4 +1029,38 @@ public class DbComm_V1 implements IDbComm_model {
         }
 
     }
+
+    public boolean doesDoctorExists(String docID)
+    {
+        HashMap<String,String> whereConditions = new HashMap<String, String>();
+        whereConditions.put("doctor_id", docID);
+        return (null != getRowsFromTable(whereConditions, "P_Doctors"));
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getMedicationByNum(String medNum)
+    {
+        HashMap<String,String> whereConditions =  new HashMap<String, String>();
+        whereConditions.put("medication_num", medNum);
+        return getRowsFromTable(whereConditions, "P_Medications");
+
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getMedicalConditionByNum(String medConNum)
+    {
+        HashMap<String,String> whereConditions =  new HashMap<String, String>();
+        whereConditions.put("medical_condition_id", medConNum);
+        return getRowsFromTable(whereConditions, "M_MedicalConditions");
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getStatusByNum(String statusNum)
+    {
+        HashMap<String,String> whereConditions = new HashMap<String, String>();
+        whereConditions.put("status_num", statusNum);
+        return getRowsFromTable(whereConditions, "P_Statuses");
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions)
+    {
+        return getRowsFromTable(whereConditions, "P_Doctors");
+    }
 }

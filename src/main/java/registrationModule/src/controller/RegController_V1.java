@@ -129,7 +129,6 @@ public class RegController_V1 implements IRegController {
         return message;
     }
 
-    //TODO - Sendto always returns one string (or null)...An ArrayList here is probably a bad implementation =\
     private ArrayList<String> sendTo(HashMap<String,String> data){
         String regID = data.get("reg_id");
         ArrayList<String> sendTo = null;

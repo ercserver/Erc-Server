@@ -22,7 +22,7 @@ public class RequestsHandler {
     private final String REGISTRATION = "registration";
     private final String SIGNUP = "signUp";
     private final String SIGNIN = "signIn";
-    private final String RESEND_EMAIL = "resendEmail";
+    private final String RESEND_EMAIL = "resendAuth";
 
     /*** Routine Requests Codes ***/
     private final String ASKWAITINGPATIENTS = "askWaitingPatients";
@@ -62,6 +62,7 @@ public class RequestsHandler {
         }catch (Exception ex){
             ex.printStackTrace();
         }
+        //ToDo:do we really need to return something from here?
         return (new JSONObject().put("RequestAccepted", reqId).toString());
     }
 
@@ -82,6 +83,7 @@ public class RequestsHandler {
                 case ASKWAITINGPATIENTS:
                     JSONArray respone  = (JSONArray) rc.getWaitingForDoctor(Integer.parseInt(requestMap.get("cmid")));
                     if (respone != null){
+                        //ToDo:do we really need to return something from here?
                         return respone.toString();
                     }
                 default:
@@ -91,6 +93,7 @@ public class RequestsHandler {
         }catch (Exception ex){
             ex.printStackTrace();
         }
+        //ToDo:do we really need to return something from here?
         return (new JSONObject().put("RequestAccepted", reqId).toString());
     }
 
@@ -106,6 +109,7 @@ public class RequestsHandler {
         }catch (Exception ex){
             ex.printStackTrace();
         }
+        //ToDo:do we really need to return something from here?
         return "Email Verified";
     }
 }
