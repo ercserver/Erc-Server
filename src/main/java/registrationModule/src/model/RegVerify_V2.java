@@ -4,6 +4,8 @@ import DatabaseModule.src.api.IDbController;
 import registrationModule.src.api.IRegVerify_model;
 import Utilities.ModelsFactory;
 
+import javax.lang.model.type.ArrayType;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -175,9 +177,6 @@ public class RegVerify_V2 implements IRegVerify_model {
         }
         return fillter;
     }
-
-
-
 
     private String getMedicationName(String medicationNum) {
         HashMap<Integer, HashMap<String, String>> data = dbController.getMedicationByNum(medicationNum);
@@ -383,34 +382,39 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     public ArrayList<String> verifyFilledForm(HashMap<String, String> filledForm) {
         ArrayList<String> errorMessages = new ArrayList<String>();
-        //ToDo:the user type should be enum....
-        String userType = filledForm.get("user_type");
-        if (userType.equals("Patient")) {
-            //ToDo:The app doesn't give us doctor ID....
-            if(!doesDoctorExist(filledForm.get("DoctorID"))){
-                errorMessages.add("Doctor does not exist!");
-            }
-            //if{....}
-            //more things to verify....
-            //
 
-        }/*
-        else if(userType.equals("Doctor")){
-          ........
-            ........need to verify something in this stage?
-              ........
+        int userType = Integer.parseInt(filledForm.get("user_type"));
+        switch(userType){
+            //patient
+            case 0:{
+                //ToDo:The app doesn't give us doctor ID....
+                if(!doesDoctorExist(filledForm)){
+                    errorMessages.add("One of the specified doctors does not exist in the system!");
+                    //if{....}
+                    //more things to verify....
+                    //
+                }
+                break;
+            }
+            //doctor
+            case 1:{
+                //need to verify something in this stage?
+                break;
+            }
+            //guardian
+            case 2:{
+                //need to verify something in this stage?
+                break;
+            }
+            //EMS
+            case 3:{
+                //need to verify something in this stage?
+                break;
+            }
+            default:{
+                return null;
+            }
         }
-        else if(userType.equals("EMS")){
-          ........
-            ........need to verify something in this stage?
-              ........
-        }
-        else if(userType.equals("Apotropus")){
-          ........
-            ........need to verify something in this stage?
-              ........
-        }
-        */
         return errorMessages;
     }
 
@@ -472,7 +476,6 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
-
     public String convertCodeToGender(String code) {
         HashMap<String,String> defalut = new HashMap<String,String>();
         defalut.put("column_name","'gender'");
@@ -490,9 +493,6 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
-
-
-
     public HashMap<String, String> convertCodeToDefaultCallerSettings(String code) {
         HashMap<String,String> defalut = new HashMap<String,String>();
         defalut.put("column_name","'default_caller'");
@@ -509,7 +509,6 @@ public class RegVerify_V2 implements IRegVerify_model {
             response.put("frequency",obj.get("enum_value")); // ???
             return response;
         }
-
         return null;
     }
 
@@ -532,8 +531,27 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
-    private boolean doesDoctorExist(String doctorID) {
-        return(dbController.doesDoctorExists(doctorID));
+    private boolean doesDoctorExist(HashMap<String,String> data) {
+        //generate list of doctors licence fields to be checked against the database
+        ArrayList<String> doctorsFields = new ArrayList<String>();
+        //check each field against the database
+        for (String field : doctorsFields){
+            //if one of the doctors does not exists in the database - return false
+            //TODO - For prototype we assume only one country exists - for later versions probably a country will also have to integrated ito this method
+            if(!dbController.doesDoctorExists(data.get(field))){
+                return false;
+            }
+        }
+        //all doctors exist - return true
+        return true;
+    }
+    private ArrayList<String> doctorFields(){
+        ArrayList<String> fields = new ArrayList<String>();
+        fields.add("P_supervision.doc_licence_number");
+        fields.add("P_prescriptions.doc_licence_num");
+        fields.add("P_diagnosis.doc_licence_num");
+
+        return fields;
     }
 
     //TODO- Not for prototype for future releases
@@ -550,8 +568,6 @@ public class RegVerify_V2 implements IRegVerify_model {
 
         return generatedAuthMail;
     }
-
-
 
     private HashMap<String,String> generateVerificationForMail(HashMap<String, String> data){
         String firstName = data.get("first_name");
