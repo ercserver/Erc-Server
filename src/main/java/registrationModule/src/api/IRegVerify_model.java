@@ -47,4 +47,5 @@ public interface IRegVerify_model {
     HashMap<String, String> getSupervision(String s);
 
     String generateMessgeForVerfictionDoctor(HashMap<String, String> memberDetails);
+    String getRegId(int cmid);
 }

@@ -203,6 +203,16 @@ public class RegVerify_V2 implements IRegVerify_model {
     }*/
 
     /***********for func resendMail*********************/
+    public String getRegId(int cmid)
+    {
+        HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
+        String reg = "";
+        for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
+            HashMap<String,String> obj = objs.getValue();
+            reg = obj.get("reg_id");
+        }
+        return reg;
+    }
     public HashMap<String, String> getUserByCmid(int cmid) {
 
         HashMap<String, String> member = new HashMap<String, String>();

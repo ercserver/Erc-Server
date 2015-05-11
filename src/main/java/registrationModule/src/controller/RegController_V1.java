@@ -256,29 +256,32 @@ public class RegController_V1 implements IRegController {
             explantion = data.get("explantion");
         }
         String password = data.get("password");
-        String painterId = data.get("patient_id");
+        String patientId = data.get("patient_id");
+        HashMap<String,String> patientDet = dbController
         //TODO in need to get regid
-        //String regid = data.get("reg_id");
+        String communityMemberId = patientDet.get("community_member_id");
+        String regid = patientDet.get("reg_id");
 
         ArrayList<String> target = new ArrayList<String>();
-        //target.add(regid);
+        target.add(regid);
         int cm = 0; //change
         if (checkCmidAndPassword(password, cmid)) {
             if (reason == null) {
-                dbController.updateStatus(cm/*cmid*/, "'verifying details'", "'Active'");
+                dbController.updateStatus(new Integer(communityMemberId), "'verifying details'", "'Active'");
                 //if (verification.ifTypeISPatientOrGuardian(regid)) {
                     response =  verification.proccesOfOkMember(cmid);
                     commController.setCommToUsers(response, target, false);
-                    commController.sendResponse();
+
                 //}
             }
             else
             {
                  response = buildRejectMessage(cmid, reason);
                  commController.setCommToUsers(response, target, false);
-                 commController.sendResponse();
+
 
             }
+            commController.sendResponse();
         }   //verification.responeDoctor(cmid, reason,regid);
         return null;
     }
@@ -293,8 +296,23 @@ public class RegController_V1 implements IRegController {
 //-----------------------------------------------------------------------------
 
 
-    public Object responeToDoctorAturization(HashMap<String,String> details) {
-        return null;
+    public Object responeToDoctorAturization(String cmid,boolean isAccept) {
+        HashMap<Integer, HashMap<String, String>> data =
+                dbController.getRegIDsOfUser(new Integer(cmid));
+
+        if(isAccept)
+        {
+            dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
+            //if (verification.ifTypeISPatientOrGuardian(regid)) {
+            //response =  verification.proccesOfOkMember(cmid);
+            commController.setCommToUsers(response, target, false);
+        }
+        else
+        {
+            response = buildRejectMessage(cmid, reason);
+            commController.setCommToUsers(response, target, false);
+        }
+        return commController.sendResponse();
     }
 //----------------------------------------------------------------------------
     public Object responeToDoctorIfHeAccept(HashMap<String,String> details)
