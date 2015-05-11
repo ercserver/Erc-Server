@@ -93,10 +93,6 @@ public class DbController_V1 implements IDbController {
         DB_communicator.updateStatus(cmid,oldStatus,newStatus);
     }
 
-    public HashMap<Integer, HashMap<String, String>> getRowsFromTable(HashMap<String, String> whereConditions, String tableName) {
-        return DB_communicator.getRowsFromTable(whereConditions, tableName);
-    }
-
     public HashMap<Integer,HashMap<String,String>> getRegIDsOfUser(int cmid)
     {
         return DB_communicator.getRegIDsOfUser(cmid);
@@ -154,5 +150,9 @@ public class DbController_V1 implements IDbController {
 
     public HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions){
         return DB_communicator.getDoctor(whereConditions);
+    }
+
+    public String getCmidByPatientID(String pID){
+        return DB_communicator.getCmidByPatientID(pID);
     }
 }

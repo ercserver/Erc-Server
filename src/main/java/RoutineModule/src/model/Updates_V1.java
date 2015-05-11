@@ -19,7 +19,7 @@ public class Updates_V1 implements IUpdates_model {
 
     public HashMap<Integer,HashMap<String,String>> getFieldsForUpdate(HashMap<String, String> data)
     {
-        HashMap<Integer,HashMap<String,String>> fields = dbController.getRegistrationFields(
+       /* HashMap<Integer,HashMap<String,String>> fields = dbController.getRegistrationFields(
                 dbController.getUserType(data.get("community_member_id")));
         HashMap<String,String> cond = new HashMap<String,String>();
         cond.put("P_CommunityMembers.community_member_id", data.get("community_member_id"));
@@ -32,6 +32,7 @@ public class Updates_V1 implements IUpdates_model {
             else
                 fields.get(i).put("user_value", "null");
         }
-        return fields;
+        return fields;*/
+        return null;
     }
 }

@@ -35,4 +35,5 @@ public interface IDbComm {
     HashMap<Integer, HashMap<String, String>> getMedicalConditionByNum(String medConNum);
     HashMap<Integer, HashMap<String, String>> getStatusByNum(String statusNum);
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
+    String getCmidByPatientID(String pID);
 }
