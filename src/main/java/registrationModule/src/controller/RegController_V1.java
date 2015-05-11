@@ -241,7 +241,8 @@ public class RegController_V1 implements IRegController {
 
 
 
-    //need to do
+
+    //confirmtion or rejection doctor
     public Object responeByDoctor(HashMap<String, String> data) {
         HashMap<Integer,HashMap<String,String>> response;
         String reason = null;
@@ -291,6 +292,12 @@ public class RegController_V1 implements IRegController {
         return pas.equals(password);
     }
 //-----------------------------------------------------------------------------
+
+
+    public Object responeToDoctorAturization(HashMap<String,String> details) {
+        return null;
+    }
+//----------------------------------------------------------------------------
     public Object responeToDoctorIfHeAccept(HashMap<String,String> details)
     {
         HashMap<Integer,HashMap<String,String>> response = new
@@ -388,11 +395,7 @@ public class RegController_V1 implements IRegController {
         commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), target, false);
         return commController.sendResponse();
     }
-//------------------------------------------------------
 
-    private boolean ifTypeISPatientOrGuardian(String regid) {
-        return !regid.equals("0");
-    }
     //------------------------------------------------------------------
     //TODO- Not for prototype for future releases
     private Object resendSMS(HashMap<String, String> data) {
