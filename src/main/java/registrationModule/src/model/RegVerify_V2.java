@@ -239,7 +239,6 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     }
 
-    //TODO
     public HashMap<String, String> fillterDoctorData(HashMap<String, String> details) {
 
         HashMap<String,String> fillter = new HashMap<String,String>();

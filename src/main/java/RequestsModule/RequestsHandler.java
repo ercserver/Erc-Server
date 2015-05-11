@@ -23,6 +23,8 @@ public class RequestsHandler {
     private final String SIGNUP = "signUp";
     private final String SIGNIN = "signIn";
     private final String RESEND_EMAIL = "resendAuth";
+    private final String CONFIRM_PATIENT = "confirmPatient";
+    private final String REJECT_PATIENT = "rejectPatient";
 
     /*** Routine Requests Codes ***/
     private final String ASKWAITINGPATIENTS = "askWaitingPatients";
@@ -54,6 +56,12 @@ public class RequestsHandler {
                     break;
                 case RESEND_EMAIL:
                     rc.resendAuth(requestMap);
+                    break;
+                case CONFIRM_PATIENT:
+                    rc.responeByDoctor(requestMap);
+                    break;
+                case REJECT_PATIENT:
+                    rc.responeByDoctor(requestMap);
                     break;
                 default:
                     // Do nothing...
@@ -93,7 +101,6 @@ public class RequestsHandler {
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        //ToDo:do we really need to return something from here?
         return (new JSONObject().put("RequestAccepted", reqId).toString());
     }
 
@@ -109,7 +116,8 @@ public class RequestsHandler {
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        //ToDo:do we really need to return something from here?
         return "Email Verified";
     }
+
+    //ToDo:need links for confirmation and rejection of doctor
 }

@@ -748,7 +748,7 @@ public class DbComm_V1 implements IDbComm_model {
 
                     stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id, date_to) " +
                             "VALUES (?,?,?)");
-                    stmt.setInt(1, getDoctorIdByLicence(details.get("p_supervision.doc_licence_number")));
+                    stmt.setInt(1, getDoctorIdByLicence(details.get("P_supervision.doc_licence_number")));
                     stmt.setInt(2, patientID);
                     stmt.setString(3, details.get("date_to"));
                     stmt.executeUpdate();
@@ -759,7 +759,7 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt.setInt(1, Integer.parseInt(details.get("medication_num")));
                     stmt.setFloat(2, Float.parseFloat(details.get("dosage")));
                     stmt.setInt(3, Integer.parseInt(details.get("medical_condition_id")));
-                    stmt.setInt(4, getDoctorIdByLicence(details.get("p_prescriptions.doc_licence_num")));
+                    stmt.setInt(4, getDoctorIdByLicence(details.get("P_prescriptions.doc_licence_num")));
                     stmt.setString(5, details.get("date_to"));
                     stmt.setInt(6, patientID);
                     stmt.executeUpdate();
@@ -769,7 +769,7 @@ public class DbComm_V1 implements IDbComm_model {
                             "doctor_id, date_to) VALUES (?,?,?,?)");
                     stmt.setInt(1, patientID);
                     stmt.setInt(2, Integer.parseInt(details.get("medical_condition_id")));
-                    stmt.setInt(3, getDoctorIdByLicence(details.get("p_diagnosis.doc_licence_num")));
+                    stmt.setInt(3, getDoctorIdByLicence(details.get("P_diagnosis.doc_licence_num")));
                     stmt.setString(4, details.get("date_to"));
                     stmt.executeUpdate();
                     stmt.close();
@@ -1030,11 +1030,11 @@ public class DbComm_V1 implements IDbComm_model {
 
     }
 
-    public boolean doesDoctorExists(String docID)
+    public boolean doesDoctorExists(String docLicense)
     {
         HashMap<String,String> whereConditions = new HashMap<String, String>();
-        whereConditions.put("doctor_id", docID);
-        return (null != getRowsFromTable(whereConditions, "P_Doctors"));
+        whereConditions.put("doc_license_number", docLicense);
+        return (null != getDoctor(whereConditions));
     }
 
     public HashMap<Integer, HashMap<String, String>> getMedicationByNum(String medNum)
