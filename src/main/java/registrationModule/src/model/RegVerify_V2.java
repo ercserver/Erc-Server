@@ -330,6 +330,7 @@ public class RegVerify_V2 implements IRegVerify_model {
             if (getUserByMail(email) == null)
                 return false;
         }
+        //////
 
             return true;
     }
