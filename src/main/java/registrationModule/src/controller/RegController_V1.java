@@ -211,7 +211,6 @@ public class RegController_V1 implements IRegController {
         if (status.equals("verifying email"))
         {
             dbController.updateStatus(cmid, "'verifying email'", "'verifying details'");
-            // ToDo:why do we need again to send 'wait' message?
             //if (verification.ifTypeISPatientOrGuardian(code)) {
                 HashMap<Integer, HashMap<String, String>> send =
                         verification.changeStatusToVerifyDetailAndSendToApp(data);
