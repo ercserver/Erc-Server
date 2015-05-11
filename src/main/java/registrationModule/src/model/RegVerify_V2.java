@@ -386,7 +386,6 @@ public class RegVerify_V2 implements IRegVerify_model {
         switch(userType){
             //patient
             case 0:{
-                //ToDo:The app doesn't give us doctor ID....
                 if(!doesDoctorExist(filledForm)){
                     errorMessages.add("One of the specified doctors does not exist in the system!");
                     //if{....}
@@ -532,7 +531,7 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     private boolean doesDoctorExist(HashMap<String,String> data) {
         //generate list of doctors licence fields to be checked against the database
-        ArrayList<String> doctorsFields = new ArrayList<String>();
+        ArrayList<String> doctorsFields = doctorFields();
         //check each field against the database
         for (String field : doctorsFields){
             //if one of the doctors does not exists in the database - return false
