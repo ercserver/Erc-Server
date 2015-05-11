@@ -110,7 +110,7 @@ public class RequestsHandler {
 
         try {
             IRegController rc = new RegController_V1();
-            rc.verifyDetail(null); // TODO - insert the key
+            rc.verifyDetail(key);
 
 
         }catch (Exception ex){
