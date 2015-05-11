@@ -342,7 +342,7 @@ public class RegVerify_V2 implements IRegVerify_model {
                 new HashMap<Integer,HashMap<String,String>>();
 
         HashMap<String,String> response = new HashMap<String, String>();
-        response.put("RequestID", "Active");
+        response.put("RequestID", "active");
 
         responseToPatient.put(1, response);
         responseToPatient.put(2,getFrequency("'location_frequency'"));
