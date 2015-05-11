@@ -246,39 +246,36 @@ public class RegController_V1 implements IRegController {
     public Object responeByDoctor(HashMap<String, String> data) {
         HashMap<Integer,HashMap<String,String>> response;
         String reason = null;
+        String explantion = null;
         int cmid = Integer.parseInt(data.get("community_member_id"));
 
-        if (data.keySet().contains("reason"))
+        if (data.keySet().contains("reason") && data.keySet().contains("explantion")) {
             reason = data.get("reason");
-
+            explantion = data.get("explantion");
+        }
         String password = data.get("password");
-        String regid = data.get("reg_id");
+        String painterId = data.get("patient_id");
+        //TODO in need to get regid
+        //String regid = data.get("reg_id");
 
         ArrayList<String> target = new ArrayList<String>();
-        target.add(regid);
-
+        //target.add(regid);
+        int cm = 0; //change
         if (checkCmidAndPassword(password, cmid)) {
             if (reason == null) {
-                dbController.updateStatus(cmid, "'verifying details'", "'Active'");
-                if (verification.ifTypeISPatientOrGuardian(regid)) {
+                dbController.updateStatus(cm/*cmid*/, "'verifying details'", "'Active'");
+                //if (verification.ifTypeISPatientOrGuardian(regid)) {
                     response =  verification.proccesOfOkMember(cmid);
                     commController.setCommToUsers(response, target, false);
                     commController.sendResponse();
-                }
+                //}
             }
             else
             {
-                //if is a doctor
-                if (!verification.ifTypeISPatientOrGuardian(regid))
-                {
-                    dbController.updateStatus(cmid, "'verifying details'", "'reject by authentication'");
-                    return null;
-                }
-                else {
-                    response = buildRejectMessage(cmid, reason);
-                    commController.setCommToUsers(response, target, false);
-                    commController.sendResponse();
-                }
+                 response = buildRejectMessage(cmid, reason);
+                 commController.setCommToUsers(response, target, false);
+                 commController.sendResponse();
+
             }
         }   //verification.responeDoctor(cmid, reason,regid);
         return null;

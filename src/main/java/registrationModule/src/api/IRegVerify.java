@@ -20,6 +20,7 @@ public interface IRegVerify {
     Object signIn(HashMap<String,String> details);
 
     //Object responeToDoctorIfHeAccept (HashMap<String,String> details);
+
     //TODO
     Object responeToDoctorAturization(HashMap<String,String> details);
 }
