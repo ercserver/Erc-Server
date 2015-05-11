@@ -12,9 +12,9 @@ public interface IRegVerify_model {
 
     HashMap<Integer,HashMap<String,String>> changeStatusToVerifyDetailAndSendToApp(
             HashMap<String, String> data);
-    HashMap<String,String> getPatientAndFillterDataToSendDoctor(int cmid,String code);
+   // HashMap<String,String> getPatientAndFillterDataToSendDoctor(int cmid,String code);
 
-    ArrayList<String> iFIsADoctorBuildMail(int cmid, String code,HashMap<String,String> data);
+    HashMap<String,String> getdoctorsAuthorizer(String code,HashMap<String,String> data);
     boolean ifTypeISPatientOrGuardian(String code);
 
     /***********for func resendMail********************/
@@ -43,4 +43,8 @@ public interface IRegVerify_model {
     String getStatus(HashMap<String, String> details);
 
     HashMap<String,String> fillterDoctorData(HashMap<String, String> details);
+
+    HashMap<String, String> getSupervision(String s);
+
+    String generateMessgeForVerfictionDoctor(HashMap<String, String> memberDetails);
 }

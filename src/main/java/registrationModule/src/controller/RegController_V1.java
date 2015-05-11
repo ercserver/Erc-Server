@@ -144,37 +144,49 @@ public class RegController_V1 implements IRegController {
     public Object verifyDetail(String communityMemberId) {
         //data contain onlt cmid as string
         int cmid = Integer.parseInt(communityMemberId);
-
-
+        //ArrayList<String> mail = null;
+        HashMap<String,String> data = null;
         HashMap<String, String> details =  verification.getUserByCmid(cmid);
         String regid = details.get("reg_id");
-
+        //method how to send data mail/sms
+        int authMethod= authMethod =
+                dbController.getAuthenticationMethod("'" + details.get("state")+ "'");;
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
         HashMap<String,String> dataFilter = null;
         changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
+
         if (verification.ifTypeISPatientOrGuardian(regid)) {
-            dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
 
+            //dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
+            HashMap<String,String> doctorData = verification.getSupervision(details.get("P_supervision.doc_license_number"));
+            doctorData.put("email_subject", "Confirm wating patient");
+            doctorData.put("message", "you have new wating patient for your verification" + ".\n"
+                    + " please enter to your website! ");
 
-            //need to send dataFilter here
+            data =
+                    verification.generateDataForAuth(doctorData, authMethod);
 
-            //commController.setCommToUsers(dataFilter,sendTo,false);
-
-            return commController.sendResponse();
         }
         //if is a doctor
         else {
             dataFilter = verification.fillterDoctorData(details); //need to implement
-            ArrayList<String> mail = verification.iFIsADoctorBuildMail(cmid, regid, dataFilter);
-            if (null != mail) {
-                String emailAddress = mail.get(0);
-                String emailMessage = mail.get(1);
-                String subject = mail.get(2);
-                sendMailD(emailAddress, emailMessage, subject);
-            }
+            //data = Authorizer;
+            HashMap<String,String> dataAuthorizer = null;
+            dataAuthorizer = verification.getdoctorsAuthorizer(regid,dataFilter);
+            dataAuthorizer.put("email_subject","Doctor Authorization for Socmed App");
+            dataAuthorizer.put("first name", "doctors");
+            dataAuthorizer.put("last_name", "authorizer");
+            dataAuthorizer.put("message",verification.generateMessgeForVerfictionDoctor(data) );
+
+            data =
+                    verification.generateDataForAuth(dataAuthorizer, authMethod);
 
         }
+        ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
+        commAuthMethod.setCommOfficial(data,authMethod);
+        //Communicate authorization (email/sms/...)
+        commAuthMethod.sendMessage();
         return null;
     }
 
@@ -197,13 +209,21 @@ public class RegController_V1 implements IRegController {
         {
             dbController.updateStatus(cmid, "'verifying email'", "'verifying details'");
             // ToDo:why do we need again to send 'wait' message?
-            if (verification.ifTypeISPatientOrGuardian(code)) {
+            //if (verification.ifTypeISPatientOrGuardian(code)) {
                 HashMap<Integer, HashMap<String, String>> send =
                         verification.changeStatusToVerifyDetailAndSendToApp(data);
+            if (verification.ifTypeISPatientOrGuardian(code)) {
                 commController.setCommToUsers(send,
                         target, false);
-                commController.sendResponse();
             }
+            else
+            {
+                //send to doctor
+                commController.setCommToUsers(send,
+                        null, false);
+            }
+            commController.sendResponse();
+            //}
         }
     }
 
@@ -298,12 +318,13 @@ public class RegController_V1 implements IRegController {
 
 //-------------------------------------------
     public Object resendAuth(HashMap<String, String> data) {
-        //verify cmid and password
+
         int cmid = Integer.parseInt(data.get("community_member_id"));
         String password = data.get("password");
         String regid = data.get("reg_id");
         String requestID = null;
         String message = null;
+        //verify cmid and password
         if(checkCmidAndPassword(password, cmid)){
             //get auth method
             String state = data.get("state");

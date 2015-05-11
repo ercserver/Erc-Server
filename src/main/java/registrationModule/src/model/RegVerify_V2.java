@@ -31,6 +31,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         {
             HashMap<String, String> dataToPatient = new HashMap<String, String>();
             dataToPatient.put("RequestID", "wait");
+            dataToPatient.put("message", "mail confirm wait for verify your medical details");
             responseToPatient.put(1, dataToPatient);
             return responseToPatient;
         }
@@ -49,22 +50,45 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
-    public ArrayList<String> iFIsADoctorBuildMail(int cmid, String code,HashMap<String,String> data) {
+    public HashMap<String,String> getdoctorsAuthorizer(String code,HashMap<String,String> data) {
         // We could just use the method of patient type and check with 'no'
         if (ifTypeISDoctor(code)) {
-            HashMap<String, String> doctorsAuthorizer =
-                    dbController.getEmailOfDoctorsAuthorizer(data.get("state"));
-            return generateMailForVerificationDoctor(data, doctorsAuthorizer);
+            //return doctorsAuthorizer details
+            return dbController.getEmailOfDoctorsAuthorizer(data.get("state"));
+            //return generateMailForVerificationDoctor(data, doctorsAuthorizer);
         }
         return null;
     }
 
-    private ArrayList<String> generateMailForVerificationDoctor(HashMap<String, String> memberDetails,
-                                                                HashMap<String, String> doctorsAuthorizer){
+
+    public String generateMessgeForVerfictionDoctor(HashMap<String, String> memberDetails)
+    {
         String firstName = memberDetails.get("first_name");
         String lastName = memberDetails.get("last_name");
         String licenseNumber = memberDetails.get("doc_license_number");
 
+        return "Please confirm/reject the following doctor be a valid doctor:\n" +
+                "First Name: " + firstName + ".\n" +
+                "Last Name: " + lastName + ".\n" +
+                "Licence Number: " + licenseNumber + ".\n\n" +
+                "Workplace details: " + "\n" +
+                "   organization description: " +
+                memberDetails.equals("organization_description") + ".\n" +
+                "   organization type description" +
+                memberDetails.equals("organization_type_description") + ".\n" +
+                "   position_description: " + memberDetails.equals("position_description") + "\n" +
+                "   email address of organization: "  +
+                memberDetails.equals("email_address_of_organization") +  ".\n" +
+                "   org phone number: " + memberDetails.equals("org_phone_number") +  ".\n" +
+                "Thank you,\n" +
+                "Socmed administration team.";
+    }
+
+/*
+    private ArrayList<String> generateMailForVerificationDoctor(HashMap<String, String> memberDetails,
+                                                                HashMap<String, String> doctorsAuthorizer){
+
+*/
 
         /*if (key.equals("specialization_description") || key.equals("org_house")
                 || key.equals("organization_description") || key.equals("doc_license_number")
@@ -78,7 +102,7 @@ public class RegVerify_V2 implements IRegVerify_model {
 
 
 
-
+/*
         String emailAddress = doctorsAuthorizer.get("email_address");
         String emailMessage  = "Dear authorizer,\n" +
                 "Please confirm/reject the following doctor be a valid doctor:\n" +
@@ -86,14 +110,14 @@ public class RegVerify_V2 implements IRegVerify_model {
                 "Last Name: " + lastName + ".\n" +
                 "Licence Number: " + licenseNumber + ".\n\n" +
                 "Workplace details: " + "\n" +
-                "organization description: " +
+                "   organization description: " +
                     memberDetails.equals("organization_description") + ".\n" +
-                "organization type description" +
+                "   organization type description" +
                     memberDetails.equals("organization_type_description") + ".\n" +
-                "position_description: " + memberDetails.equals("position_description") + "\n" +
-                "email address of organization: "  +
+                "   position_description: " + memberDetails.equals("position_description") + "\n" +
+                "   email address of organization: "  +
                     memberDetails.equals("email_address_of_organization") +  ".\n" +
-                "org phone number: " + memberDetails.equals("org_phone_number") +  ".\n" +
+                "   org phone number: " + memberDetails.equals("org_phone_number") +  ".\n" +
                 "Thank you,\n" +
                 "Socmed administration team.";
         String subject = "Doctor Authorization for Socmed App";
@@ -105,7 +129,7 @@ public class RegVerify_V2 implements IRegVerify_model {
 
         return emailDetails;
     }
-
+*/
     private boolean ifTypeISDoctor(String regid) {
         if (regid.equals("0"))
             return true;
@@ -264,16 +288,49 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
+    @Override
+    public HashMap<String, String> getSupervision(String docLicence) {
+        HashMap<String,String> whereConditions = new HashMap<String, String>();
+        whereConditions.put("doc_license_number", docLicence);
+        HashMap<Integer, HashMap<String, String>> data = dbController.getRowsFromTable(whereConditions, "P_Doctors");
+        for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
+            HashMap<String,String> obj = objs.getValue();
+            int cmid =  new Integer(obj.get("community_member_id"));
+            HashMap<String,String> doctor = getUserByCmid(cmid);
+            return doctor;
+        }
+        return null;
+    }
+
+
+
+
+
+
     //ToDo:we need to check if this mail exist in another user....
+    //not for prototype
+    private HashMap<String,String> generateVerificationOfPatientForSMS(HashMap<String, String> doctorData) {
+        return null;
+    }
+
+
     public boolean checkCondForResendMail(HashMap<String, String> details, String email, int cmid) {
         String status = getStatus(details);
-        //ToDo:not a good condition
-        if (status.equals("verifying email"))
-            return false;
-        //ToDo:not a good condition
-        if (getUserByMail(email) == null)
-            return false;
-        else
+        String currentEmail = details.get("email_address");
+
+        //if we  resend mail to hos current mail
+        //we need to check that this mail dont approval
+        if (currentEmail.equals(email)) {
+            if (status.equals("verifying email"))
+                return false;
+        }
+        //if member change his mail we need to check that
+        //is mail not exist in another user
+        else {
+            if (getUserByMail(email) == null)
+                return false;
+        }
+
             return true;
     }
 
@@ -505,19 +562,23 @@ public class RegVerify_V2 implements IRegVerify_model {
         return generatedAuthMail;
     }
 
+
+
     private HashMap<String,String> generateVerificationForMail(HashMap<String, String> data){
         String firstName = data.get("first_name");
         String lastName = data.get("last_name");
         String emailAddress = data.get("email_address");
         String emailMessage = "Dear " + firstName + "  " + lastName + ",\n\n" +
+                data.get("message");
+                /*
                 "Thank you for registering to SocMed.\n" +
                 "CMID: " + data.get("community_member_id\n") +
                 "Password: " + data.get("Password\n") +
                 "Please click the following link to complete your registration:\n" +
                 generateMailLinkForVerifications(data);
+                */
 
-
-        String emailSubject = "Confirm your email for Socmed App";
+        String emailSubject =  data.get("email_subject");//"Confirm your email for Socmed App";
 
         HashMap<String,String> generatedAuthMail = new HashMap<String, String>();
         generatedAuthMail.put("Subject", emailSubject);
