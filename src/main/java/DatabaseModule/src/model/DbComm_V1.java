@@ -67,7 +67,7 @@ public class DbComm_V1 implements IDbComm_model {
     /*For all of the methods:in each HashMap if the value represent value of column with type varchar,
       the value need to be in this format: 'value' */
 
-    public HashMap<Integer,HashMap<String,String>>
+    private HashMap<Integer,HashMap<String,String>>
     getRowsFromTable(HashMap<String,String> whereConditions, String tableName)
     {
         String conditions = "";
@@ -1063,5 +1063,12 @@ public class DbComm_V1 implements IDbComm_model {
     public HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions)
     {
         return getRowsFromTable(whereConditions, "P_Doctors");
+    }
+
+    public String getCmidByPatientID(String pID)
+    {
+        HashMap<String,String> cond = new HashMap<String,String>();
+        cond.put("patient_id", pID);
+        return getRowsFromTable(cond, "P_Patients").get(1).get("community_member_id");
     }
 }

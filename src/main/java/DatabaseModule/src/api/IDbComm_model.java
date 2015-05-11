@@ -24,8 +24,6 @@ public interface IDbComm_model {
     void updateLastRefreshTime(HashMap<String,String> params);
     HashMap<Integer,HashMap<String,String>> getAllRefreshTimes();
     void updateStatus(int cmid, String oldStatus, String newStatus);
-    HashMap<Integer,HashMap<String,String>>
-    getRowsFromTable(HashMap<String,String> whereConditions, String tableName);
     void deleteUser(int cmid);
     int getUserType(String cmid);
     HashMap<Integer,HashMap<String,String>> getRegIDsOfUser(int cmid);
@@ -36,4 +34,5 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> getMedicalConditionByNum(String medConNum);
     HashMap<Integer, HashMap<String, String>> getStatusByNum(String statusNum);
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
+    String getCmidByPatientID(String pID);
 }
