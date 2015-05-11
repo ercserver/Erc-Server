@@ -171,7 +171,6 @@ public class RegVerify_V2 implements IRegVerify_model {
                 fillter.put(key,data.get(key));
 
             if (key.equals("gender"))
-                //ToDo:why do we need the enum code of gender?!
                 fillter.put(key,convertCodeToGender(data.get(key)));
         }
         return fillter;
@@ -279,8 +278,7 @@ public class RegVerify_V2 implements IRegVerify_model {
                 fillter.put(key, details.get(key));
             }
             if (key.equals("gender"))
-                //ToDo:why do we need the enum code of gender?!
-                fillter.put(key,convertCodeToGender(details.get(key)));
+                 fillter.put(key,convertCodeToGender(details.get(key)));
 
         }
         //need to add this
@@ -307,7 +305,6 @@ public class RegVerify_V2 implements IRegVerify_model {
 
 
 
-    //ToDo:we need to check if this mail exist in another user....
     //not for prototype
     private HashMap<String,String> generateVerificationOfPatientForSMS(HashMap<String, String> doctorData) {
         return null;

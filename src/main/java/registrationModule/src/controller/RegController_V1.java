@@ -244,13 +244,18 @@ public class RegController_V1 implements IRegController {
     //need to do
     public Object responeByDoctor(HashMap<String, String> data) {
         HashMap<Integer,HashMap<String,String>> response;
-
+        String reason = null;
         int cmid = Integer.parseInt(data.get("community_member_id"));
-        String reason = data.get("reason");
+
+        if (data.keySet().contains("reason"))
+            reason = data.get("reason");
+
         String password = data.get("password");
         String regid = data.get("reg_id");
+
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
+
         if (checkCmidAndPassword(password, cmid)) {
             if (reason == null) {
                 dbController.updateStatus(cmid, "'verifying details'", "'Active'");
@@ -360,7 +365,7 @@ public class RegController_V1 implements IRegController {
                 }
             }
             //get and send the auth mail/sms/...
-            //ToDo:we need to check if we need to resend....
+
             if  (null == requestID) {
                 HashMap<String, String> dataForAuth = verification.generateDataForAuth(details, authMethod);
                 ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
