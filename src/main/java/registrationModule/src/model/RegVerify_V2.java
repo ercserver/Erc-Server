@@ -322,17 +322,21 @@ public class RegVerify_V2 implements IRegVerify_model {
         //we need to check that this mail dont approval
         if (currentEmail.equals(email)) {
             if (status.equals("verifying email"))
+                return true;
+            else
                 return false;
         }
         //if member change his mail we need to check that
         //is mail not exist in another user
         else {
             if (getUserByMail(email) == null)
+                return true;
+            else
                 return false;
         }
-        //////
 
-            return true;
+
+
     }
 
     /***********for func responeDoctor********************/
