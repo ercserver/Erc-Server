@@ -252,6 +252,7 @@ public class DbInit_V1 implements IDbInit_model {
                     +"get_possible_values_from VARCHAR(50),"
                     +"serial_num INT NOT NUll," //begin with 1
                     +"insert_data_to VARCHAR(200),"
+                    +"gui_description VARCHAR(200),"//how to present the field name in app/website
                     +"refresh_time INT)");
             //connection.commit();
 
