@@ -116,7 +116,7 @@ public class DbInit_V1 implements IDbInit_model {
                     +"active_component_id INT NOT NULL FOREIGN KEY REFERENCES M_ActiveComponents (active_component_id),"
                     +"brand_name_id INT NOT NULL FOREIGN KEY REFERENCES M_BrandNames(brand_name_id),"
                     +"quantity INT NOT NULL ,"
-                    +"unit_of_measure INT NOT NULL)");
+                    +"unit_of_measure INT NOT NULL)"); //enum:0=ml, 1=gr
 //            connection.commit();
 
             statement.addBatch("CREATE TABLE M_Substitutives ("
