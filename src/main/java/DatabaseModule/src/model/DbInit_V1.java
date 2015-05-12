@@ -618,7 +618,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " state  VARCHAR(50) not NULL, " +
                         " patient_age VARCHAR(50) not NULL, " +
                         " ems_eta VARCHAR(50) not NULL, " +
-                        " use_erc BIT not NULL)");
+                        " use_erc BIT not NULL)");// enum:0 for yes, 1 for no
             }
         }
         // There was a fault with the connection to the server or with SQL
