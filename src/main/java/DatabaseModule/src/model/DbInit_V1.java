@@ -124,7 +124,7 @@ public class DbInit_V1 implements IDbInit_model {
                     +"brand_name_id1 INT NOT NULL FOREIGN KEY REFERENCES M_BrandNames(brand_name_id),"
                     +"brand_name_id2 INT NOT NULL FOREIGN KEY REFERENCES M_BrandNames(brand_name_id),"
                     +"conversion_ratio FLOAT NOT NULL,"
-                    +"compliance VARCHAR(10) NOT NULL)"); // --Enum(full, partial))
+                    +"compliance INT NOT NULL)"); // --Enum(full, partial))
 //            connection.commit();
 
             statement.addBatch("CREATE TABLE P_Devices ("
