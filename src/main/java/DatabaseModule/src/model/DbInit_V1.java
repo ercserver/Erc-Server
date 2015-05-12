@@ -687,9 +687,9 @@ public class DbInit_V1 implements IDbInit_model {
                         " community_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " event_id INTEGER not NULL FOREIGN KEY REFERENCES O_EmergencyEvents(event_id), " +
                         " emergency_event_num INTEGER not NULL, " +
-                        " action_type_num INTEGER not NULL, " +
+                        " action_type_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionTypes(action_type_num), " +
                         " eta_by_foot INTEGER not NULL, " +
-                        " action_status_num INTEGER not NULL, " +
+                        " action_status_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionStatus(action_status_num), " +
                         " eta_by_car INTEGER not NULL, " +
                         " created_date TIMESTAMP not NULL, " +
                         " x REAL not NULL, " +
