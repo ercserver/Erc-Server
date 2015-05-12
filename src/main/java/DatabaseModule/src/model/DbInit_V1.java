@@ -244,7 +244,7 @@ public class DbInit_V1 implements IDbInit_model {
             statement.addBatch("CREATE TABLE RegistrationFields ("
                     +"field_name VARCHAR(30) NOT NULL,"
                     +"type INT NOT NULL," // --Enum = {string, int, float}
-                    +"user_type INT NOT NULL," // --Enum = {patient, doctor, guardian}
+                    +"user_type INT NOT NULL," // --Enum = {patient, doctor, guardian,ems}
                     +"fields_group INT NOT NULL," // --Enum = {personal, medical, professional, preferences}
                     +"needs_verification BIT NOT NUll DEFAULT 0," // 0-no, 1-yes
                     +"is_required BIT NOT NUll DEFAULT 0,"//0-yes, 1-no
