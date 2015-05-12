@@ -309,7 +309,7 @@ public class DbInit_V1 implements IDbInit_model {
             createMedicalPersonnelDBOrganizationTypes();
             createMedicalPersonnelDBSpecifalization();
             createMedicalPesonnelDBOrganizations();
-            //createMedicalPesonnelDBMedicalPersonnel();
+            createMedicalPesonnelDBMedicalPersonnel();
             createMedicalPersonnelDBCertification();
             createMedicalPesonnelDBPositions();
             createMedicalPesonnelDBAffiliation();
