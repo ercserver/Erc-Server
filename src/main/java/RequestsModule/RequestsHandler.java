@@ -30,7 +30,7 @@ public class RequestsHandler {
 
     /*** Routine Requests Codes ***/
     private final String ASKWAITINGPATIENTS = "askWaitingPatients";
-    private final String CURRENTLOCATION = "currentLocation";
+    private final String CURRENTLOCATION = "routineLocation";
 
 
 
