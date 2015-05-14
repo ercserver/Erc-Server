@@ -1,6 +1,8 @@
 package RequestsModule;
 
 import RequestsModule.utils.HashMapCreator;
+import RoutineModule.src.api.IRoutineController;
+import RoutineModule.src.controller.RoutineController_V1;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -82,6 +84,7 @@ public class RequestsHandler {
 
         try {
             IRegController rc = new RegController_V1();
+            IRoutineController ruc = new RoutineController_V1();
             reqId = requestJson.getString(REQ_ID);
 
             switch (reqId) {
@@ -91,9 +94,10 @@ public class RequestsHandler {
                 case ASKWAITINGPATIENTS:
                     JSONArray respone  = (JSONArray) rc.getWaitingForDoctor(requestMap);
                     if (respone != null){
-                        //ToDo:do we really need to return something from here?
                         return respone.toString();
                     }
+                case CURRENTLOCATION:
+                    ruc.transferLocation(requestMap);
                 default:
                     // Do nothing...
                     break;
