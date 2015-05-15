@@ -362,7 +362,7 @@ public class RegController_V1 implements IRegController {
         String requestID = null;
         String message = null;
         //if cannot verify cmid and password - return null
-        if(checkCmidAndPassword(password, cmid)) {
+        if(!checkCmidAndPassword(password, cmid)) {
             return null;
         }
         //get auth method
@@ -427,8 +427,8 @@ public class RegController_V1 implements IRegController {
     public Object getWaitingForDoctor(HashMap<String,String> request) {
         String password = request.get("password");
         int cmid = Integer.parseInt(request.get("community_member_id"));
-        if(checkCmidAndPassword(password,cmid)){
-
+        if(!checkCmidAndPassword(password,cmid)){
+            return null;
         }
 
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();

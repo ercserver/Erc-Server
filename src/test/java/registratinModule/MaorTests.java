@@ -15,4 +15,14 @@ public class MaorTests {
         HashMap<String,String> h1 = d.getUserByParameter(h);
         System.out.println(h1);
     }
+
+   /* public Object updatedFromPatient(HashMap<String, String> filledForm)
+    {
+        if checkCmidAndPassword(filledForm.get("password"), Integer.parseInt(filledForm.get("community_member_id"))
+        {
+
+        }
+        else
+
+    }*/
 }
