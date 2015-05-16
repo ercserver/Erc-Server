@@ -690,7 +690,7 @@ public class DbComm_V1 implements IDbComm_model {
             // Insert contact info
             stmt = connection.prepareStatement("INSERT INTO P_EmergencyContact (community_member_id, contact_phone) VALUES (?,?)");
             stmt.setInt(1, cmid);
-            stmt.setString(2, details.get("contact_phone"));
+                stmt.setString(2, details.get("contact_phone"));
             stmt.executeQuery();
             stmt.close();
 

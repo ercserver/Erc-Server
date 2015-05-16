@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class JSONResponseCreator implements IResponseCreator {
     public JSONArray establishResponse(HashMap<Integer,HashMap<String,String>> data) {
-        //TODO
         JSONArray objsToSend = new JSONArray();
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();

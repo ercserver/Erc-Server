@@ -4,8 +4,6 @@ import DatabaseModule.src.api.IDbController;
 import registrationModule.src.api.IRegVerify_model;
 import Utilities.ModelsFactory;
 
-import javax.lang.model.type.ArrayType;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -555,9 +553,9 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
     private ArrayList<String> doctorFields(){
         ArrayList<String> fields = new ArrayList<String>();
-        fields.add("P_supervision.doc_licence_number");
+        fields.add("P_supervision.doc_licence_num");
         fields.add("P_prescriptions.doc_licence_num");
-        fields.add("P_diagnosis.doc_licence_num");
+            fields.add("P_diagnosis.doc_licence_num");
 
         return fields;
     }

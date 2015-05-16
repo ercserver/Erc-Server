@@ -13,10 +13,12 @@ import java.util.HashMap;
  */
 public class CommToUsers_V1 implements ICommToUsers_model {
     //members
-    JSONArray objToSend = null;
-    ArrayList<String> targets = null;
+    protected JSONArray objToSend = null;
+    protected ArrayList<String> targets = null;
 
     public CommToUsers_V1(HashMap<Integer, HashMap<String, String>> data) {
+        JSONResponseCreator responseCreator = new JSONResponseCreator();
+        objToSend = responseCreator.establishResponse(data);
     }
 
     public JSONArray sendResponse () {
