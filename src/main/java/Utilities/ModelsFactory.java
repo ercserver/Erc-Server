@@ -4,6 +4,8 @@ import CommunicationModule.src.api.ICommController;
 import CommunicationModule.src.controller.CommController_V1;
 import DatabaseModule.src.api.IDbController;
 import DatabaseModule.src.controller.DbController_V1;
+import EmergencyModule.src.api.IEmer_model;
+import EmergencyModule.src.model.Emer_V1;
 import RoutineModule.src.api.IUpdates_model;
 import RoutineModule.src.model.Updates_V1;
 import registrationModule.src.api.IRegRequest_model;
@@ -19,6 +21,7 @@ public class ModelsFactory {
         private final int dbControllerVersion = 1;
         private final int regRequestVersion = 1;
         private final int regVerifyVersion = 2;
+        private final int emerVersion = 1;
 
 
         public ICommController determineCommControllerVersion(){
@@ -83,4 +86,15 @@ public class ModelsFactory {
         }
     }
 
+    public IEmer_model determineEmerVersion() {
+        switch (emerVersion) {
+            //Communicate the DB to retrieve the data
+            case 1: {
+                return new Emer_V1();
+            }
+            default: {
+                return null;
+            }
+        }
+    }
 }

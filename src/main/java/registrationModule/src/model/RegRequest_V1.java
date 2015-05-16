@@ -1,8 +1,9 @@
 package registrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
+import Utilities.ModelsFactory;
 import registrationModule.src.api.IRegRequest_model;
-import registrationModule.src.utilities.ModelsFactory;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
