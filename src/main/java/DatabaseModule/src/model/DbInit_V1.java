@@ -116,7 +116,7 @@ public class DbInit_V1 implements IDbInit_model {
                     +"active_component_id INT NOT NULL FOREIGN KEY REFERENCES M_ActiveComponents (active_component_id),"
                     +"brand_name_id INT NOT NULL FOREIGN KEY REFERENCES M_BrandNames(brand_name_id),"
                     +"quantity INT NOT NULL ,"
-                    +"unit_of_measure INT NOT NULL)");
+                    +"unit_of_measure INT NOT NULL)"); //enum:0=ml, 1=gr
 //            connection.commit();
 
             statement.addBatch("CREATE TABLE M_Substitutives ("
@@ -124,7 +124,7 @@ public class DbInit_V1 implements IDbInit_model {
                     +"brand_name_id1 INT NOT NULL FOREIGN KEY REFERENCES M_BrandNames(brand_name_id),"
                     +"brand_name_id2 INT NOT NULL FOREIGN KEY REFERENCES M_BrandNames(brand_name_id),"
                     +"conversion_ratio FLOAT NOT NULL,"
-                    +"compliance VARCHAR(10) NOT NULL)"); // --Enum(full, partial))
+                    +"compliance INT NOT NULL)"); // --Enum(full, partial))
 //            connection.commit();
 
             statement.addBatch("CREATE TABLE P_Devices ("
@@ -244,7 +244,7 @@ public class DbInit_V1 implements IDbInit_model {
             statement.addBatch("CREATE TABLE RegistrationFields ("
                     +"field_name VARCHAR(30) NOT NULL,"
                     +"type INT NOT NULL," // --Enum = {string, int, float}
-                    +"user_type INT NOT NULL," // --Enum = {patient, doctor, guardian}
+                    +"user_type INT NOT NULL," // --Enum = {patient, doctor, guardian,ems}
                     +"fields_group INT NOT NULL," // --Enum = {personal, medical, professional, preferences}
                     +"needs_verification BIT NOT NUll DEFAULT 0," // 0-no, 1-yes
                     +"is_required BIT NOT NUll DEFAULT 0,"//0-yes, 1-no
@@ -309,7 +309,7 @@ public class DbInit_V1 implements IDbInit_model {
             createMedicalPersonnelDBOrganizationTypes();
             createMedicalPersonnelDBSpecifalization();
             createMedicalPesonnelDBOrganizations();
-            //createMedicalPesonnelDBMedicalPersonnel();
+            createMedicalPesonnelDBMedicalPersonnel();
             createMedicalPersonnelDBCertification();
             createMedicalPesonnelDBPositions();
             createMedicalPesonnelDBAffiliation();
@@ -618,7 +618,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " state  VARCHAR(50) not NULL, " +
                         " patient_age VARCHAR(50) not NULL, " +
                         " ems_eta VARCHAR(50) not NULL, " +
-                        " use_erc BIT not NULL)");
+                        " use_erc BIT not NULL)");// enum:0 for yes, 1 for no
             }
         }
         // There was a fault with the connection to the server or with SQL
@@ -687,9 +687,9 @@ public class DbInit_V1 implements IDbInit_model {
                         " community_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " event_id INTEGER not NULL FOREIGN KEY REFERENCES O_EmergencyEvents(event_id), " +
                         " emergency_event_num INTEGER not NULL, " +
-                        " action_type_num INTEGER not NULL, " +
+                        " action_type_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionTypes(action_type_num), " +
                         " eta_by_foot INTEGER not NULL, " +
-                        " action_status_num INTEGER not NULL, " +
+                        " action_status_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionStatus(action_status_num), " +
                         " eta_by_car INTEGER not NULL, " +
                         " created_date TIMESTAMP not NULL, " +
                         " x REAL not NULL, " +
