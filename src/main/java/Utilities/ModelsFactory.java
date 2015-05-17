@@ -8,10 +8,10 @@ import EmergencyModule.src.api.IEmer_model;
 import EmergencyModule.src.model.EmerFilter_V1;
 import RoutineModule.src.api.IUpdates_model;
 import RoutineModule.src.model.Updates_V1;
-import RegistrationModule.src.api.IRegRequest_model;
-import RegistrationModule.src.api.IRegVerify_model;
-import RegistrationModule.src.model.RegRequest_V1;
-import RegistrationModule.src.model.RegVerify_V2;
+import registrationModule.src.api.IRegRequest_model;
+import registrationModule.src.api.IRegVerify_model;
+import registrationModule.src.model.RegRequest_V1;
+import registrationModule.src.model.RegVerify_V2;
 
 /**
  * Created by Maor on 30/04/2015.

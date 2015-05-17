@@ -1,7 +1,7 @@
 package RequestsModule;
 
-import RegistrationModule.src.api.*;
-import RegistrationModule.src.controller.RegController_V1;
+import registrationModule.src.api.*;
+import registrationModule.src.controller.RegController_V1;
 import RequestsModule.utils.HashMapCreator;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
