@@ -1,5 +1,7 @@
 package RequestsModule;
 
+import RegistrationModule.src.api.*;
+import RegistrationModule.src.controller.RegController_V1;
 import RequestsModule.utils.HashMapCreator;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
@@ -10,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import registrationModule.src.api.IRegController;
-import registrationModule.src.controller.RegController_V1;
 
 import java.util.HashMap;
 
