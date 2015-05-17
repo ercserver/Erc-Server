@@ -305,7 +305,7 @@ public class RegController_V1 implements IRegController {
                 dbController.getRegIDsOfUser(new Integer(cmid));
 
         if (isAccept) {
-            dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
+            dbController.updateStatus(new Integer(cmid), "'verifying details'", "'active'");
             //0 say that type is doctor
             response =  verification.proccesOfOkMember(new Integer(cmid),"0");
             commController.setCommToUsers(response, null, false);
