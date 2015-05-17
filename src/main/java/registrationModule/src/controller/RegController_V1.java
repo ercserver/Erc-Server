@@ -244,7 +244,7 @@ public class RegController_V1 implements IRegController {
 
 
     //-----------------------------------------------------------------------
-    //confirmtion or rejection by doctor
+    //confirmtion or rejection patient by doctor
     public Object responeByDoctor(HashMap<String, String> data) {
         HashMap<Integer,HashMap<String,String>> response;
         String reason = null;
@@ -270,23 +270,20 @@ public class RegController_V1 implements IRegController {
 
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
-        //int cm = 0; //change
+
         if (checkCmidAndPassword(password, cmidDoctor)) {
             if (reason == null) {
                 dbController.updateStatus(cmidPatient, "'verifying details'", "'active'");
                 //we send regid != 0 to say that type is patient
                 response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid);
                 commController.setCommToUsers(response, target, false);
-                commController.sendResponse();
-
             }
             else
             {
                  response = buildRejectMessage(new Integer(communityMemberId), reason, explantion);
                  commController.setCommToUsers(response, target, false);
-                 commController.sendResponse();
-
             }
+            commController.sendResponse();
         }   //verification.responeDoctor(cmid, reason,regid);
         return null;
     }
