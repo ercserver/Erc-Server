@@ -334,20 +334,22 @@ public class RegVerify_V2 implements IRegVerify_model {
     /***********for func responeDoctor********************/
 
 
-    public HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid)
+    public HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid,String type)
     {
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
 
         HashMap<String,String> response = new HashMap<String, String>();
         response.put("RequestID", "active");
+        responseToPatient.put(3,getFrequency("'connect_server_frequency'"));
+        responseToPatient.put(4,getFrequency("'times_to_connect_to_server'"));
 
         responseToPatient.put(1, response);
-        responseToPatient.put(2,getFrequency("'location_frequency'"));
-        responseToPatient.put(3,getFrequency("'connect_server_frequency'"));
-        responseToPatient.put(4,getFrequency("'times_to_conect_to_serve'"));
-        responseToPatient.put(5, getDefaultInEmergency(getState(cmid)));
-
+        //if is a patient
+        if (!type.equals("0")) {
+            responseToPatient.put(2, getFrequency("'location_frequency'"));
+            responseToPatient.put(5, getDefaultInEmergency(getState(cmid)));
+        }
         return responseToPatient;
     }
 

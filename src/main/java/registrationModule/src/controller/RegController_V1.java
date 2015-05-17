@@ -274,11 +274,11 @@ public class RegController_V1 implements IRegController {
         if (checkCmidAndPassword(password, cmidDoctor)) {
             if (reason == null) {
                 dbController.updateStatus(cmidPatient, "'verifying details'", "'active'");
-                //if (verification.ifTypeISPatientOrGuardian(regid)) {
-                    response =  verification.proccesOfOkMember(new Integer(communityMemberId));
-                    commController.setCommToUsers(response, target, false);
-                    commController.sendResponse();
-                //}
+                //we send regid != 0 to say that type is patient
+                response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid);
+                commController.setCommToUsers(response, target, false);
+                commController.sendResponse();
+
             }
             else
             {
@@ -308,14 +308,13 @@ public class RegController_V1 implements IRegController {
 
         if (isAccept) {
             dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
-            //response =  verification.proccesOfOkMember(cmid);
+            //0 say that type is doctor
+            response =  verification.proccesOfOkMember(new Integer(cmid),"0");
             commController.setCommToUsers(response, null, false);
         } else {
             response = buildRejectMessage(new Integer(cmid),"doctor Aturization reject you",
                     "ask Aturization");
             commController.setCommToUsers(response, null, false);
-             //response = buildRejectMessage(cmid, reason);
-            //commController.setCommToUsers(response, target, false);
         }
         return commController.sendResponse();
     }
