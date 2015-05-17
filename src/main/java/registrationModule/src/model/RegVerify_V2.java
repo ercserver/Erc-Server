@@ -333,7 +333,7 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     /***********for func responeDoctor********************/
 
-
+    //ToDo need also to send cmid, password, and location frequency in emergency
     public HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid,String type)
     {
         HashMap<Integer,HashMap<String,String>> responseToPatient =
