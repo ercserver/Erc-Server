@@ -59,15 +59,15 @@ public class ShmulikTest {
     public static void testNaor2() {
         RegController_V1 rc = new RegController_V1();
         HashMap<String, String> fakeDetails = new HashMap<String, String>();
-        fakeDetails.put("email_address", "NaorSibony1111@gmail.com");
+        fakeDetails.put("email_address", "bla@gmail.com");
         fakeDetails.put("user_type", "0");
         fakeDetails.put("P_supervision.doc_licence_num", "10054");
         fakeDetails.put("P_prescriptions.doc_licence_num", "10054");
         fakeDetails.put("P_diagnosis.doc_licence_num", "10054");
         fakeDetails.put("external_id", "111111111");
         fakeDetails.put("external_id_type", "0");
-        fakeDetails.put("first_name", "Naor");
-        fakeDetails.put("last_name", "Sibony");
+        fakeDetails.put("first_name", "Ohad");
+        fakeDetails.put("last_name", "Gur");
         fakeDetails.put("birth_date", "1993-10-27");
         fakeDetails.put("gender", "0");
         fakeDetails.put("state", "israel");
@@ -77,7 +77,7 @@ public class ShmulikTest {
         fakeDetails.put("zip_code", "00000");
         fakeDetails.put("mobile_phone_number", "052222222222");
         fakeDetails.put("contact_phone", "0521123456");
-        fakeDetails.put("reg_id", "222222");
+        fakeDetails.put("reg_id", "123678");
         fakeDetails.put("hour_from", "12");
         fakeDetails.put("minutes_from", "56");
         fakeDetails.put("hour_to", "16");

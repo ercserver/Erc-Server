@@ -690,15 +690,15 @@ public class DbComm_V1 implements IDbComm_model {
             // Insert contact info
             stmt = connection.prepareStatement("INSERT INTO P_EmergencyContact (community_member_id, contact_phone) VALUES (?,?)");
             stmt.setInt(1, cmid);
-                stmt.setString(2, details.get("contact_phone"));
-            stmt.executeQuery();
+            stmt.setString(2, details.get("contact_phone"));
+            stmt.executeUpdate();
             stmt.close();
 
             // Insert reg_id
             stmt = connection.prepareStatement("INSERT INTO RegIDs (reg_id, community_member_id) VALUES (?,?)");
             stmt.setString(1, details.get("reg_id"));
             stmt.setInt(2, cmid);
-            stmt.executeQuery();
+            stmt.executeUpdate();
             stmt.close();
 
             // Insert availability hours
@@ -708,7 +708,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.setInt(2, Integer.parseInt(details.get("minutes_from")));
             stmt.setInt(3, Integer.parseInt(details.get("hour_to")));
             stmt.setInt(4, Integer.parseInt(details.get("minutes_to")));
-            stmt.executeQuery();
+            stmt.executeUpdate();
             stmt.close();
 
 
