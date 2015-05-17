@@ -7,7 +7,6 @@ import registrationModule.src.api.IRegRequest_model;
 import registrationModule.src.api.IRegVerify_model;
 import registrationModule.src.utilities.ModelsFactory;
 
-import javax.ws.rs.HEAD;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,6 +18,7 @@ public class RegController_V1 implements IRegController {
     private IRegVerify_model verification = null;
     private IDbController dbController = null;
     private ICommController commController = null;
+    private HashMap<Integer, HashMap<String, String>> response = null;
 
     public RegController_V1(){
         ModelsFactory models = new ModelsFactory();
@@ -244,37 +244,36 @@ public class RegController_V1 implements IRegController {
 
 
     //-----------------------------------------------------------------------
-    //confirmtion or rejection doctor
+    //confirmtion or rejection by doctor
     public Object responeByDoctor(HashMap<String, String> data) {
         HashMap<Integer,HashMap<String,String>> response;
         String reason = null;
         String explantion = null;
-        int cmid = Integer.parseInt(data.get("community_member_id"));
-
+        int cmidDoctor = Integer.parseInt(data.get("community_member_id"));
+        String password = data.get("password");
         if (data.keySet().contains("reason") && data.keySet().contains("explantion")) {
             reason = data.get("reason");
             explantion = data.get("explantion");
         }
-        String password = data.get("password");
+
 
         String patientId = data.get("patient_id");
-        //HashMap<String,String> patientDet
-        String communityMemberId        = dbController.getCmidByPatientID(patientId);
+
+        String communityMemberId = dbController.getCmidByPatientID(patientId);
         HashMap<String,String> patientDet =
                 verification.getUserByCmid(new Integer(communityMemberId ));
 
-        //String communityMemberId = patientDet.get("community_member_id");
+
         String regid = patientDet.get("reg_id");
-        String painterId = data.get("patient_id");
-        //TODO in need to get regid
-        //String regid = data.get("reg_id");
+        int cmidPatient = Integer.parseInt(patientDet.get("community_member_id"));
+
 
         ArrayList<String> target = new ArrayList<String>();
-        //target.add(regid);
-        int cm = 0; //change
-        if (checkCmidAndPassword(password, cmid)) {
+        target.add(regid);
+        //int cm = 0; //change
+        if (checkCmidAndPassword(password, cmidDoctor)) {
             if (reason == null) {
-                dbController.updateStatus(cm/*cmid*/, "'verifying details'", "'active'");
+                dbController.updateStatus(cmidPatient, "'verifying details'", "'active'");
                 //if (verification.ifTypeISPatientOrGuardian(regid)) {
                     response =  verification.proccesOfOkMember(new Integer(communityMemberId));
                     commController.setCommToUsers(response, target, false);
@@ -283,7 +282,7 @@ public class RegController_V1 implements IRegController {
             }
             else
             {
-                 response = buildRejectMessage(new Integer(communityMemberId), reason);
+                 response = buildRejectMessage(new Integer(communityMemberId), reason, explantion);
                  commController.setCommToUsers(response, target, false);
                  commController.sendResponse();
 
@@ -309,20 +308,19 @@ public class RegController_V1 implements IRegController {
 
         if (isAccept) {
             dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
-            //if (verification.ifTypeISPatientOrGuardian(regid)) {
             //response =  verification.proccesOfOkMember(cmid);
-            //commController.setCommToUsers(response, target, false);
+            commController.setCommToUsers(response, null, false);
         } else {
-            //response = buildRejectMessage(cmid, reason);
+            response = buildRejectMessage(new Integer(cmid),"doctor Aturization reject you",
+                    "ask Aturization");
+            commController.setCommToUsers(response, null, false);
+             //response = buildRejectMessage(cmid, reason);
             //commController.setCommToUsers(response, target, false);
         }
         return commController.sendResponse();
     }
-    public Object responeToDoctorAturization(HashMap<String,String> details) {
-        return null;
 
-    }
-
+/*
     public Object responeToDoctorIfHeAccept(HashMap<String,String> details)
     {
         HashMap<Integer,HashMap<String,String>> response = new
@@ -334,7 +332,7 @@ public class RegController_V1 implements IRegController {
         if (0 == type) {
             int cmid = Integer.parseInt(details.get("community_member_id"));
             dbController.deleteUser(cmid);
-            response = buildRejectMessage(cmid, "reject_by_authentication");
+            response = buildRejectMessage(cmid, "reject_by_authentication", explantion);
             commController.setCommToUsers(response, null, false);
         }
         //accept
@@ -352,6 +350,7 @@ public class RegController_V1 implements IRegController {
         }
         return commController.sendResponse();
     }
+*/
 
 //-------------------------------------------
     public Object resendAuth(HashMap<String, String> data) {
@@ -479,13 +478,15 @@ public class RegController_V1 implements IRegController {
         return commController.sendResponse();
     }
 
-    private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason) {
+    private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason,
+                                                                       String explantion) {
         dbController.updateStatus(cmid, "'verifying details'", "'active'");
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
         response.put("RequestID", "reject");
         response.put("reason", Reason);
+        response.put("explantion", explantion);
         responseToPatient.put(1, response);
         return responseToPatient;
     }

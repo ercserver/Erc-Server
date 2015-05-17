@@ -17,10 +17,12 @@ public interface IRegVerify {
     //else we send null
     Object responeByDoctor(HashMap<String, String> data);
 
-    Object signIn(HashMap<String,String> details);
-
-    //Object responeToDoctorIfHeAccept (HashMap<String,String> details);
 
     //TODO
     Object responeToDoctorAturization(String cmid,boolean isAccept);
+
+    Object signIn(HashMap<String,String> details);
+
+
+
 }
