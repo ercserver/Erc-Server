@@ -57,7 +57,7 @@ public class EmerController_V1 implements IEmerController {
     @Override
     public Object assistantRespondsToApproach(HashMap<String, String> response) {
         //TODO - Maor // we use "addOrRemoveAssistant" here
-        //1. If approves - we need to send him the map or something(?)
+        //1. If approves - we need to send him the map or something(??)
         //2. If not - it just exits "event mode" in the app
         //TODO - Maor
         return null;
