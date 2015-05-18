@@ -4,6 +4,7 @@ import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.api.IEmerFilter_model;
+import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
@@ -20,12 +21,14 @@ public class EmerController_V1 implements IEmerController {
     private IEmerFilter_model emergencyFilter = null;
     private IDbController dbController = null;
     private ICommController commController = null;
+    private AssistantFunctions assistentFuncs = null;
 
     EmerController_V1(){
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
         dbController = models.determineDbControllerVersion();
         emergencyFilter = models.determineEmerVersion();
+        assistentFuncs = new AssistantFunctions();
     }
 
     //this methos will be called from the emergency event initiation
@@ -77,16 +80,37 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void arrivalToDestination(HashMap<String, String> data) {
-        //TODO - Maor
-        // I think we don't need to return anything here because the app will
-        // always return "Wait", as we concluded together
-        //TODO - Maor
+        //TODO - will need to do here things with logs
+        if (!assistentFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+        {
+            return;
+        }
+        HashMap<String,String> h = new HashMap<String,String>();
+        h.put("event_id", data.get("event_id"));
+        HashMap<String,String> cond = new HashMap<String,String>();
+        cond.put("P_CommunityMembers.community_member_id", data.get("community_member_id"));
+        h.put("patient_id", dbController.getUserByParameter(cond).get("patient_id"));
+        h.put("RequestID", "needConfirmMedicationGivving");
+        HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
+        response.put(1, h);
+        commController.setCommToUsers(response, null, false);
+        commController.sendResponse();
     }
 
     @Override
     public void approveOrRejectMed(HashMap<String, String> data) {
-        //TODO - Maor // we use "approveOrRejectHelper" here
-
+        //TODO - will need to do here things with logs
+        HashMap<String,String> h = new HashMap<String, String>();
+        h.put("event_id", data.get("event_id"));
+        h.put("RequestID", data.get("RequestID"));
+        String cmid = dbController.getCmidByPatientID(data.get("patient_id"));
+        String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
+        ArrayList<String> target = new ArrayList<String>();
+        target.add(regid);
+        HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
+        response.put(1, h);
+        commController.setCommToUsers(response, target, false);
+        commController.sendResponse();
     }
 
     @Override
@@ -112,7 +136,22 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void updatePatientStatus(HashMap<String, String> data) {
-        //TODO - Maor
+        //TODO - will need to do here things with logs
+        if (!assistentFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+        {
+            return;
+        }
+        //ToDo:need from DB
+       // String eventId = dbController.getEventByCmid(data.get("community_member_id"));
+        HashMap<String, String> response = new HashMap<String, String>();
+        //response.put("event_id", eventId);
+        response.put("message", data.get("message"));
+        response.put("RequestID", "newInfo");
+        //ToDo:need from DB
+        //ArrayList<String> regIds = dbController.getHelpersRegIds(eventId);
+        HashMap<Integer,HashMap<String,String>> h = new HashMap<Integer,HashMap<String,String>>();
+        h.put(1, response);
+        //popUpMessage(h, regIds, true);
     }
 
     @Override
@@ -140,8 +179,25 @@ public class EmerController_V1 implements IEmerController {
         //TODO - Naor // this PRIVATE function is called from "rejectAssistantsByEMS"
     }
 
-    private void popUpMessage(HashMap<String,String> data){
-        //TODO - Maor // we call this from "updatePatientStatus"
+    private void popUpMessage(HashMap<Integer,HashMap<String,String>> response, ArrayList<String> regIds, boolean sendToEms){
+        // we call this from "updatePatientStatus"
+        if(sendToEms)
+        {
+            if(null != regIds)
+            {
+                commController.setCommToUsers(response, null, false);
+                commController.sendResponse();
+                commController.setCommToUsers(response, regIds, false);
+                commController.sendResponse();
+            }
+            commController.setCommToUsers(response, null, false);
+            commController.sendResponse();
+        }
+        if(null != regIds)
+        {
+            commController.setCommToUsers(response, regIds, false);
+            commController.sendResponse();
+        }
         //TODO - Perhaps we do that from another module? maybe the comm?
     }
 
@@ -149,6 +205,7 @@ public class EmerController_V1 implements IEmerController {
         HashMap<Integer,HashMap<String,String>> dataToSend = new HashMap<Integer,HashMap<String,String>>();
         dataToSend.put(1, request);
         //initiated comm - true
+        //ToDo:Naor pay your atension that by this you can only comunicate with EMS of GIS
         commController.setCommToUsers(dataToSend, URLs,true);
         //send request
         commController.sendResponse();
@@ -166,14 +223,10 @@ public class EmerController_V1 implements IEmerController {
     }
 
     //we call this function from "approveOrRejectMed"
-    private void approveOrRejectHelper(int patientID, int eventID) {
-        //TODO - Maor
+    /*private void approveOrRejectHelper(int patientID, int eventID) {
         // in case of reject, do we need to tell the helper not to give the medicine
         //Perhaps we just keep him waiting?? no need to really cancel...?
-        //TODO
-
-
-    }
+    }*/
 
     /*
     @Override
