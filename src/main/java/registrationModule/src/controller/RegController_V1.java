@@ -2,11 +2,10 @@ package registrationModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
-import Utilities.ModelsFactory;
 import registrationModule.src.api.IRegController;
 import registrationModule.src.api.IRegRequest_model;
 import registrationModule.src.api.IRegVerify_model;
-
+import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -245,7 +244,7 @@ public class RegController_V1 implements IRegController {
 
 
     //-----------------------------------------------------------------------
-    //confirmtion or rejection patient by doctor
+    //confirmtion or rejection by doctor
     public Object responeByDoctor(HashMap<String, String> data) {
         HashMap<Integer,HashMap<String,String>> response;
         String reason = null;
@@ -271,20 +270,23 @@ public class RegController_V1 implements IRegController {
 
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
-
+        //int cm = 0; //change
         if (checkCmidAndPassword(password, cmidDoctor)) {
             if (reason == null) {
                 dbController.updateStatus(cmidPatient, "'verifying details'", "'active'");
                 //we send regid != 0 to say that type is patient
                 response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid);
                 commController.setCommToUsers(response, target, false);
+                commController.sendResponse();
+
             }
             else
             {
                  response = buildRejectMessage(new Integer(communityMemberId), reason, explantion);
                  commController.setCommToUsers(response, target, false);
+                 commController.sendResponse();
+
             }
-            commController.sendResponse();
         }   //verification.responeDoctor(cmid, reason,regid);
         return null;
     }
@@ -305,7 +307,7 @@ public class RegController_V1 implements IRegController {
                 dbController.getRegIDsOfUser(new Integer(cmid));
 
         if (isAccept) {
-            dbController.updateStatus(new Integer(cmid), "'verifying details'", "'active'");
+            dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
             //0 say that type is doctor
             response =  verification.proccesOfOkMember(new Integer(cmid),"0");
             commController.setCommToUsers(response, null, false);

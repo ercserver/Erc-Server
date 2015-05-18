@@ -1,10 +1,9 @@
 package EmergencyModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
-import CommunicationModule.src.model.InitiatedHTTPCommunication_V1;
 import DatabaseModule.src.api.IDbController;
 import EmergencyModule.src.api.IEmerController;
-import EmergencyModule.src.api.IEmer_model;
+import EmergencyModule.src.api.IEmerFilter_model;
 import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
@@ -16,7 +15,9 @@ import java.util.HashMap;
 public class EmerController_V1 implements IEmerController {
 
     private static final String GIS_URL = null;
-    private IEmer_model emergency = null;
+    private static final String EMS_URL = null;
+
+    private IEmerFilter_model emergencyFilter = null;
     private IDbController dbController = null;
     private ICommController commController = null;
 
@@ -24,15 +25,22 @@ public class EmerController_V1 implements IEmerController {
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
         dbController = models.determineDbControllerVersion();
-        emergency = models.determineEmerVersion();
+        emergencyFilter = models.determineEmerVersion();
     }
 
     //this methos will be called from the emergency event initiation
     @Override
     public void receiveUsersAroundLocation(HashMap<String, String> data) {
-
-        //TODO - Naor //we use "filterUsersByMatch" and "requestUserArrivalTimes" here
-
+        data.remove("RequestID");
+        //filter
+        HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data);
+        //prepare and send "Times" request to the GIS
+        data.put("RequestID", "Times");
+        //add the GIS URL to the receivers
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo.add(GIS_URL);
+        //initiate request
+        initiatedOneObjectRequest(data,sendTo);
     }
 
     //This function is called from "receiveUsersAroundLocation"
@@ -44,7 +52,6 @@ public class EmerController_V1 implements IEmerController {
     @Override
     public Object assistantRespondsToApproach(HashMap<String, String> response) {
         //TODO - Maor // we use "addOrRemoveAssistant" here
-        // I believe we do not need to return anything here:
         //1. If approves - we need to send him the map or something(?)
         //2. If not - it just exits "event mode" in the app
         //TODO - Maor
@@ -53,7 +60,14 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void rejectAssistantsByEMS(HashMap<String, String> toReject) {
-        //TODO - Naor // we use "addOrRemoveAssistant" here
+        toReject.remove("RequestID");
+        String eventID = toReject.get("EventID");
+        toReject.remove("EventID");
+        //run over the list and remove every assistant ("false" indicates removal)
+        for(String patientID : toReject.values()){
+            addOrRemoveAssistant(patientID,eventID,false);
+        }
+        //TODO - Naor
     }
 
     @Override
@@ -66,17 +80,29 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void approveOrRejectMed(HashMap<String, String> data) {
-        //TODO - Maor
+        //TODO - Maor // we use "approveOrRejectHelper" here
+
     }
 
     @Override
     public void assistantGaveMed(HashMap<String, String> data) {
-        //TODO - Naor
+        String eventID = data.get("eventID");
+        String cmid = data.get("community_member_id");
+        //dbController.updateMedicideGiven(cmid,eventID); //TODO - Ohad
+        data.put("RequestID", "AssistantGaveMed");
+        //add the EMS URL to the receivers
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo.add(EMS_URL);
+        //initiate request
+        initiatedOneObjectRequest(data,sendTo);
     }
 
     @Override
     public void assistantCancelsArrival(HashMap<String, String> data) {
-        //TODO - Naor
+        String patientID = data.get("PatientID");
+        String eventID = data.get("EventID");
+        //"false" for removal
+        addOrRemoveAssistant(patientID,eventID,false);
     }
 
     @Override
@@ -86,6 +112,22 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void emsTakeover(HashMap<String, String> data) {
+
+        if(null != data.get("Status")){
+            cancelEvent(data.get("EventID"));
+            return;
+        }
+        //if()
+        //TODO - Naor
+    }
+
+    //called from EMSTakeover
+    private void cancelEvent(String eventID) {
+    /*
+        HashMap<String,String> eventHelpers = dbController.getAllEventHelpers(eventID);//TODO-Ohad
+        rejectAssistantsByEMS(eventHelpers);
+        dbController.closeEvent(eventID); //TODO - Ohad
+    */
         //TODO - Naor
     }
 
@@ -98,35 +140,33 @@ public class EmerController_V1 implements IEmerController {
         //TODO - Perhaps we do that from another module? maybe the comm?
     }
 
-    private void requestFromGIS(HashMap<Integer,HashMap<String, String>> request){
-        //determine where and how to send the request
-        ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo.add(GIS_URL);
+    private void initiatedOneObjectRequest(HashMap<String, String> request,ArrayList<String> URLs){
+        HashMap<Integer,HashMap<String,String>> dataToSend = new HashMap<Integer,HashMap<String,String>>();
+        dataToSend.put(1, request);
         //initiated comm - true
-        commController.setCommToUsers(request,sendTo,true);
+        commController.setCommToUsers(dataToSend, URLs,true);
         //send request
         commController.sendResponse();
     }
 
-    @Override
-    public void approachAssistants(ArrayList<String> assistantsList) {
+    private void approachAssistants(ArrayList<String> assistantsList) {
         //TODO - Maor
         //we approach from within "receiveUsersArrivalTimesAndApproach"
     }
 
 
-    @Override
-    public void addOrRemoveAssistant(HashMap<String, String> data) {
+    private void addOrRemoveAssistant(String patientID,String eventID,boolean action) {
         //TODO - Naor
         //we call this function from "assistantRespondsToApproach" and from "rejectAssistantsByEMS"
     }
 
-    @Override
-    public void approveOrRejectHelper(int patientID, int eventID) {
-        //TODO - Maor //we need to tell the helper not to give the medicine
-        //TODO - Perhaps we just keep him waiting?? no need to really cancel...?
+    //we call this function from "approveOrRejectMed"
+    private void approveOrRejectHelper(int patientID, int eventID) {
+        //TODO - Maor
+        // in case of reject, do we need to tell the helper not to give the medicine
+        //Perhaps we just keep him waiting?? no need to really cancel...?
+        //TODO
 
-        //we call this function from "approveOrRejectMed"
 
     }
 

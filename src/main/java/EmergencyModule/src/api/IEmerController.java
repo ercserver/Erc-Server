@@ -10,7 +10,4 @@ public interface IEmerController extends IEmer {
 
     //void requestUsersAroundLocation(HashMap<Integer,HashMap<String, String>> request);
     //void requestUsersArrivalTimes(HashMap<Integer,HashMap<String, String>> request);
-    void approachAssistants(ArrayList<String> assistantsList);
-    void addOrRemoveAssistant(HashMap<String,String> data);
-    void approveOrRejectHelper(int patientID,int eventID);
 }
