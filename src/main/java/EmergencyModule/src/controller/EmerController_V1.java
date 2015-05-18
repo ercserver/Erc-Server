@@ -46,7 +46,12 @@ public class EmerController_V1 implements IEmerController {
     //This function is called from "receiveUsersAroundLocation"
     @Override
     public void receiveUsersArrivalTimesAndApproach(HashMap<Integer, HashMap<String, String>> data) {
+        //filter
+        HashMap<String,String> filteredData = emergencyFilter.filterUsersByArrivalTime(data);
         //TODO - Maor // we use "filterUsersByArrivalTime" and "approachAssistants" here
+        approachAssistants(filteredData);
+        //...
+        //...
     }
 
     @Override
@@ -149,7 +154,7 @@ public class EmerController_V1 implements IEmerController {
         commController.sendResponse();
     }
 
-    private void approachAssistants(ArrayList<String> assistantsList) {
+    private void approachAssistants(HashMap<String, String> assistantsList) {
         //TODO - Maor
         //we approach from within "receiveUsersArrivalTimesAndApproach"
     }
