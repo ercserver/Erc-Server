@@ -1,7 +1,7 @@
 package RequestsModule;
 
-import registrationModule.src.api.*;
-import registrationModule.src.controller.RegController_V1;
+import RegistrationModule.src.api.*;
+import RegistrationModule.src.controller.RegController_V1;
 import RequestsModule.utils.HashMapCreator;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 
 @Controller
-@RequestMapping("/server/requests")
+@RequestMapping("/requests")
 public class RequestsHandler {
     private final String REQ_ID = "RequestID"; // This is the requests identifier's field name
 
@@ -33,6 +33,10 @@ public class RequestsHandler {
     private final String CURRENTLOCATION = "routineLocation";
 
 
+    // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
+    public RequestsHandler(){
+        System.out.println("constructor");
+    }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/welcome")
 	public @ResponseBody String printWelcome() {

@@ -250,12 +250,13 @@ public class DbComm_V1 implements IDbComm_model {
             // gets all column names from the executed query
             for (int i = 1; i <= columnCount; i++ )
                 columnNames.add(rsmd.getColumnName(i));
-            // no user for the givven conditions is exists
+
+            // no user for the given conditions  exists
             if (!rs.next())
                 return null;
             else
             {
-                HashMap<String,String> user = new HashMap<String,String>();;
+                HashMap<String,String> user = new HashMap<String,String>();
                 // gets the data about the user:key=column-name, value=column-value-needs the most updated data
                 do
                 {
@@ -1071,4 +1072,11 @@ public class DbComm_V1 implements IDbComm_model {
         cond.put("patient_id", pID);
         return getRowsFromTable(cond, "P_Patients").get(1).get("community_member_id");
     }
+
+    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
+        // TODO: Ohad
+        return null;
+    }
+
+    // TODO: get fields with values (intersection of registration fields and community_member)
 }

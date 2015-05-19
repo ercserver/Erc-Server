@@ -36,4 +36,8 @@ public interface IDbComm {
     HashMap<Integer, HashMap<String, String>> getStatusByNum(String statusNum);
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
     String getCmidByPatientID(String pID);
+    // TODO: Ohad
+    HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
+    HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
+
 }
