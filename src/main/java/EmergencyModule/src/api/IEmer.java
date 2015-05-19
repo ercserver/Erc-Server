@@ -27,4 +27,6 @@ public interface IEmer {
     void updatePatientStatus(HashMap<String,String> data);
     //From EMS
     void emsTakeover(HashMap<String,String> data);
+    //From GIS
+    void receiveArrivalTime(HashMap<String,String> data);
 }

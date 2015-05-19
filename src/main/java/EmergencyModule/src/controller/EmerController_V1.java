@@ -83,6 +83,13 @@ public class EmerController_V1 implements IEmerController {
         initiatedOneObjectRequest(request, sendTo);
     }
 
+    public void receiveArrivalTime(HashMap<String,String> data)
+    {
+        //ToDo:probably need to add arival times and maby x and y
+        addOrRemoveAssistant(dbController.getPatientIDByCmid(data.get("community_member_id")),
+                data.get("event_id"), true);
+    }
+
     @Override
     public void rejectAssistantsByEMS(HashMap<String, String> toReject) {
         toReject.remove("RequestID");
@@ -265,6 +272,27 @@ public class EmerController_V1 implements IEmerController {
                 return user.get("event_id");
         }
         return null;
+    }
+
+    private void stopFollow(String eventId, ArrayList<String> cmids)
+    {
+        HashMap<String, String> req = new HashMap<String, String>();
+        req.put("RequestID", "stopFollow");
+        req.put("event_id", eventId);
+        HashMap<Integer, HashMap<String, String>> response = new  HashMap<Integer, HashMap<String, String>>();
+        for(int i = 0; i < cmids.size(); i++)
+        {
+            HashMap<String, String> user = new HashMap<String, String>();
+            user.put("community_member_id", cmids.get(i));
+            user.put("subRequest", "cmid");
+            response.put(i + 1, user);
+        }
+        response.put(cmids.size() + 1, req);
+        ArrayList<String> target = new ArrayList<String>();
+        target.add(GIS_URL);
+        commController.setCommToUsers(response, target, true);
+        //send request
+        commController.sendResponse();
     }
 
     //ToDo:Naor, i think you need also to get ArrivalTimes
