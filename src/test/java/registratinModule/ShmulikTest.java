@@ -56,6 +56,7 @@ public class ShmulikTest {
         JSONArray objToSend = (JSONArray) rc.getRegDetails(fakeDetails);
         System.out.println(objToSend.toString());
     }
+
     public static void testNaor2() {
         RegController_V1 rc = new RegController_V1();
         HashMap<String, String> fakeDetails = new HashMap<String, String>();
@@ -69,6 +70,7 @@ public class ShmulikTest {
         fakeDetails.put("first_name", "Ohad");
         fakeDetails.put("last_name", "Gur");
         fakeDetails.put("birth_date", "1993-10-27");
+        
         fakeDetails.put("gender", "0");
         fakeDetails.put("state", "israel");
         fakeDetails.put("city", "Nahariyya");
