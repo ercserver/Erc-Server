@@ -9,6 +9,7 @@ import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by NAOR on 16/05/2015.
@@ -47,14 +48,12 @@ public class EmerController_V1 implements IEmerController {
     }
 
     //This function is called from "receiveUsersAroundLocation"
+    // we use "filterUsersByArrivalTime" and "approachAssistants" here
     @Override
     public void receiveUsersArrivalTimesAndApproach(HashMap<Integer, HashMap<String, String>> data) {
         //filter
-        HashMap<String,String> filteredData = emergencyFilter.filterUsersByArrivalTime(data);
-        //TODO - Maor // we use "filterUsersByArrivalTime" and "approachAssistants" here
+        HashMap<Integer, HashMap<String, String>> filteredData = emergencyFilter.filterUsersByArrivalTime(data);
         approachAssistants(filteredData);
-        //...
-        //...
     }
 
     @Override
@@ -211,9 +210,43 @@ public class EmerController_V1 implements IEmerController {
         commController.sendResponse();
     }
 
-    private void approachAssistants(HashMap<String, String> assistantsList) {
-        //TODO - Maor
-        //we approach from within "receiveUsersArrivalTimesAndApproach"
+    //we approach from within "receiveUsersArrivalTimesAndApproach"
+    private void approachAssistants(HashMap<Integer, HashMap<String, String>> assistantsList)
+    {
+        String eventId = getEventId(assistantsList);
+        //ToDo:need form db
+        //HashMap<String, String> eventDetails = dbController.getEventDetails(eventId);
+        Iterator<HashMap<String, String>> iter = assistantsList.values().iterator();
+        while(iter.hasNext())
+        {
+            HashMap<String, String> user = iter.next();
+            if(!user.keySet().contains("subRequest"))
+                continue;
+            //user.put("x", eventDetails.get("x"));
+            //user.put("y", eventDetails.get("y"));
+            //ToDo:need to put patient's address and get in some way proper medication that the cmid has
+            user.put("RequestID", "helpAssist");
+            user.put("event_id", eventId);
+            HashMap<Integer, HashMap<String, String>> response = new HashMap<Integer, HashMap<String, String>>();
+            response.put(1, user);
+            HashMap<Integer,HashMap<String,String>> regId = dbController.getRegIDsOfUser(Integer.parseInt(user.get("community_member_id")));
+            ArrayList<String> target = new ArrayList<String>();
+            target.add(regId.get(1).get("reg_id"));
+            commController.setCommToUsers(response, target, false);
+            commController.sendResponse();
+        }
+    }
+
+    private String getEventId(HashMap<Integer, HashMap<String, String>> assistantsList)
+    {
+        Iterator<HashMap<String, String>> iter = assistantsList.values().iterator();
+        while(iter.hasNext())
+        {
+            HashMap<String, String> user = iter.next();
+            if(!user.keySet().contains("subRequest"))
+                return user.get("event_id");
+        }
+        return null;
     }
 
 

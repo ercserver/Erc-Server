@@ -32,7 +32,7 @@ public class EmerFilter_V1 implements IEmerFilter_model {
 
     //filter list received from "receiveUsersArrivalTimesAndApproach"
     @Override
-    public HashMap<String,String> filterUsersByArrivalTime(HashMap<Integer,HashMap<String, String>> listToFilter) {
+    public HashMap<Integer, HashMap<String, String>> filterUsersByArrivalTime(HashMap<Integer,HashMap<String, String>> listToFilter) {
         //TODO - Maor
         return null;
     }
