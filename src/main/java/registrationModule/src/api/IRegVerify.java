@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Created by NAOR on 06/04/2015.
  */
 public interface IRegVerify {
-
+//bla
     //after member accept his mail we apply this function
     Object verifyDetail(String communityMemberId);
 
