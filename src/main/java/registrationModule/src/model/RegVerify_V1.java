@@ -1,4 +1,4 @@
-package RegistrationModule.src.model;
+package registrationModule.src.model;
 
 import CommunicationModule.src.api.ICommController;
 

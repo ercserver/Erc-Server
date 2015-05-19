@@ -1,11 +1,11 @@
-package RegistrationModule.src.controller;
+package registrationModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
 
-import RegistrationModule.src.api.IRegController;
-import RegistrationModule.src.api.IRegRequest_model;
-import RegistrationModule.src.api.IRegVerify_model;
+import registrationModule.src.api.IRegController;
+import registrationModule.src.api.IRegRequest_model;
+import registrationModule.src.api.IRegVerify_model;
 
 
 
