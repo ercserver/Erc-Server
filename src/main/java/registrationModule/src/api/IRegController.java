@@ -1,4 +1,4 @@
-package registrationModule.src.api;
+package RegistrationModule.src.api;
 
 /**
  * Created by NAOR on 06/04/2015.

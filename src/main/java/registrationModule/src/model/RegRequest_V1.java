@@ -1,8 +1,8 @@
-package registrationModule.src.model;
+package RegistrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
 import Utilities.ModelsFactory;
-import registrationModule.src.api.IRegRequest_model;
+import RegistrationModule.src.api.IRegRequest_model;
 
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class RegRequest_V1 implements IRegRequest_model {
     public String doesUserExist(HashMap<String, String> filledForm) {
         //search for an active user with that email - if not found return null, else return "userExistsMessage".
         HashMap<String,String> whereConditions = new HashMap<String, String>();
-        whereConditions.put("P_CommunityMember.email_address", filledForm.get("email_address"));
+        whereConditions.put("P_CommunityMembers.email_address", filledForm.get("email_address"));
         HashMap<String,String> result = dbController.getUserByParameter(whereConditions);
         String message = null;
         if((null == result) || (result.get("status_name").equals("deleteAccount"))){

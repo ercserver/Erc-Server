@@ -1,4 +1,4 @@
-package registrationModule.src.api;
+package RegistrationModule.src.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;

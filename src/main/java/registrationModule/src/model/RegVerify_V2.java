@@ -1,7 +1,7 @@
-package registrationModule.src.model;
+package RegistrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
-import registrationModule.src.api.IRegVerify_model;
+import RegistrationModule.src.api.IRegVerify_model;
 import Utilities.ModelsFactory;
 
 import java.util.ArrayList;

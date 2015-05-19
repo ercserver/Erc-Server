@@ -1,10 +1,14 @@
-package registrationModule.src.controller;
+package RegistrationModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
-import registrationModule.src.api.IRegController;
-import registrationModule.src.api.IRegRequest_model;
-import registrationModule.src.api.IRegVerify_model;
+
+import RegistrationModule.src.api.IRegController;
+import RegistrationModule.src.api.IRegRequest_model;
+import RegistrationModule.src.api.IRegVerify_model;
+
+
+
 import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
@@ -475,6 +479,11 @@ public class RegController_V1 implements IRegController {
         }
         // Sends response to the proper user
         return commController.sendResponse();
+    }
+
+    @Override
+    public Object handleForgotPassword(HashMap<String, String> data) {
+        return null;
     }
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason,
