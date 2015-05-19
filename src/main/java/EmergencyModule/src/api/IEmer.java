@@ -12,7 +12,7 @@ public interface IEmer {
     //From GIS
     void receiveUsersArrivalTimesAndApproach(HashMap<Integer,HashMap<String,String>> data);
     //From app
-    Object assistantRespondsToApproach (HashMap<String,String> response);
+    void assistantRespondsToApproach(HashMap<String, String> response);
     //From EMS
     void rejectAssistantsByEMS (HashMap<String,String> toReject);
     //From app

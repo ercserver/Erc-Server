@@ -56,13 +56,31 @@ public class EmerController_V1 implements IEmerController {
         approachAssistants(filteredData);
     }
 
+    // we use "addOrRemoveAssistant" here
     @Override
-    public Object assistantRespondsToApproach(HashMap<String, String> response) {
-        //TODO - Maor // we use "addOrRemoveAssistant" here
+    public void assistantRespondsToApproach(HashMap<String, String> response) {
         //1. If approves - we need to send him the map or something(??)
         //2. If not - it just exits "event mode" in the app
-        //TODO - Maor
-        return null;
+        //TODO - will need to do here things with logs
+        if (!assistentFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
+            return;
+        if(!response.get("RequestID").equals("arivalRejection")) {
+            //ToDo:probably need to add arival times and maby the arival method
+            addOrRemoveAssistant(dbController.getPatientIDByCmid(response.get("community_member_id")),
+                    response.get("event_id"), true);
+            askGisToFollow(response.get("event_id"), response.get("community_member_id"));
+        }
+    }
+
+    private void askGisToFollow(String eventId, String cmid)
+    {
+        HashMap<String, String> request = new HashMap<String, String>();
+        request.put("community_member_id", cmid);
+        request.put("event_id", eventId);
+        request.put("RequestID", "followUser");
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo.add(GIS_URL);
+        initiatedOneObjectRequest(request, sendTo);
     }
 
     @Override
@@ -204,7 +222,7 @@ public class EmerController_V1 implements IEmerController {
         HashMap<Integer,HashMap<String,String>> dataToSend = new HashMap<Integer,HashMap<String,String>>();
         dataToSend.put(1, request);
         //initiated comm - true
-        //ToDo:Naor pay your atension that by this you can only comunicate with EMS of GIS
+        //ToDo:Naor pay your atension that by this you can only comunicate with EMS or GIS
         commController.setCommToUsers(dataToSend, URLs,true);
         //send request
         commController.sendResponse();
@@ -249,9 +267,9 @@ public class EmerController_V1 implements IEmerController {
         return null;
     }
 
-
+    //ToDo:Naor, i think you need also to get ArrivalTimes
     private void addOrRemoveAssistant(String patientID,String eventID,boolean action) {
-        //TODO - Naor
+        //TODO - Naor-if action is true that's mean that we add the assistent?
         //we call this function from "assistantRespondsToApproach" and from "rejectAssistantsByEMS"
     }
 

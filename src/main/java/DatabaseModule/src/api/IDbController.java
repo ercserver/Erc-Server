@@ -36,4 +36,5 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<Integer, HashMap<String, String>> getStatusByNum(String statusNum);
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
     String getCmidByPatientID(String pID);
+    String getPatientIDByCmid(String cmid);
 }

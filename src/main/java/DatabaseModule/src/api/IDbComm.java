@@ -40,4 +40,6 @@ public interface IDbComm {
     HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
 
+    String getPatientIDByCmid(String cmid);
+
 }

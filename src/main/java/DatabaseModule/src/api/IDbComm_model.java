@@ -36,4 +36,5 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
     String getCmidByPatientID(String pID);
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
+    String getPatientIDByCmid(String cmid);
 }

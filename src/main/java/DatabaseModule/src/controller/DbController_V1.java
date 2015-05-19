@@ -155,4 +155,18 @@ public class DbController_V1 implements IDbController {
     public String getCmidByPatientID(String pID){
         return DB_communicator.getCmidByPatientID(pID);
     }
+
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime() {
+        return null;
+    }
+
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getUnfinishedEvents() {
+        return null;
+    }
+
+    public String getPatientIDByCmid(String cmid){
+        return DB_communicator.getPatientIDByCmid(cmid);
+    }
 }

@@ -1073,6 +1073,13 @@ public class DbComm_V1 implements IDbComm_model {
         return getRowsFromTable(cond, "P_Patients").get(1).get("community_member_id");
     }
 
+    public String getPatientIDByCmid(String cmid)
+    {
+        HashMap<String,String> cond = new HashMap<String,String>();
+        cond.put("community_member_id", cmid);
+        return getRowsFromTable(cond, "P_Patients").get(1).get("patient_id");
+    }
+
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
         // TODO: Ohad
         return null;
