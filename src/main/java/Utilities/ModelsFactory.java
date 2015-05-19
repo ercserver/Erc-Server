@@ -4,7 +4,7 @@ import CommunicationModule.src.api.ICommController;
 import CommunicationModule.src.controller.CommController_V1;
 import DatabaseModule.src.api.IDbController;
 import DatabaseModule.src.controller.DbController_V1;
-import EmergencyModule.src.api.IEmer_model;
+import EmergencyModule.src.api.IEmerFilter_model;
 import EmergencyModule.src.model.EmerFilter_V1;
 import RoutineModule.src.api.IUpdates_model;
 import RoutineModule.src.model.Updates_V1;
@@ -86,7 +86,7 @@ public class ModelsFactory {
         }
     }
 
-    public IEmer_model determineEmerVersion() {
+    public IEmerFilter_model determineEmerVersion() {
         switch (emerFilterVersion) {
             //Communicate the DB to retrieve the data
             case 1: {

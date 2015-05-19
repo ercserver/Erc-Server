@@ -12,7 +12,6 @@ import java.util.HashMap;
  */
 public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
 
-    private String communicateToURL = "www.Gis.com";
     private String username = "ImSoCool";
     private String password = "MyPWisCoolAlso";
 
@@ -26,14 +25,17 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
         */
     }
     public JSONArray sendResponse () {
-        try {
-            Jsoup.connect(communicateToURL)
-                    .data("username", username)
-                    .data("password", password)
-                    .data("JSONFile", objToSend.toString())
-                    .method(Connection.Method.POST).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
+        //communicate the JSON file to each target URL provided
+        for(String targetURL : targets) {
+            try {
+                Jsoup.connect(targetURL)
+                        .data("username", username)
+                        .data("password", password)
+                        .data("JSONFile", objToSend.toString())
+                        .method(Connection.Method.POST).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
