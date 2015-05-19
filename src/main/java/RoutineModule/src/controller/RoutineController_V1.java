@@ -1,6 +1,7 @@
 package RoutineModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
+import RoutineModule.src.api.IEmsRoutine_model;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.api.IUpdates_model;
 import Utilities.ModelsFactory;
@@ -14,12 +15,14 @@ import java.util.HashMap;
 public class RoutineController_V1 implements IRoutineController {
     private ICommController commController = null;
     private IUpdates_model updates = null;
+    private IEmsRoutine_model ems = null;
 
     public RoutineController_V1()
     {
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
         updates = models.determineIUpdatesVersion();
+        ems = models.determineIEmsRoutineVersion();
     }
 
     public Object transferLocation(HashMap<String, String> data)
@@ -53,5 +56,19 @@ public class RoutineController_V1 implements IRoutineController {
         }
         // Sends response to the proper user
         return commController.sendResponse();
-    }//
+    }
+
+
+    // TODO: Shumulik
+    @Override
+    public Object updateCommunicationParameters() {
+        return null;
+    }
+
+    // TODO: Shmulik
+    @Override
+    public Object getEmsEventsByDispatcherCmid(int cmid) {
+
+        return null;
+    }
 }
