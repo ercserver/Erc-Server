@@ -1,7 +1,7 @@
 package RequestsModule;
 
-import RegistrationModule.src.api.*;
-import RegistrationModule.src.controller.RegController_V1;
+import registrationModule.src.api.*;
+import registrationModule.src.controller.RegController_V1;
 import RequestsModule.utils.HashMapCreator;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
@@ -43,15 +43,24 @@ public class RequestsHandler {
         return "Welcome to the erc-server";
 	}
 
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test")
+    public @ResponseBody String returnJson(@RequestParam JSONObject request) {
+        return request.toString();
+    }
+
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/registration")
-    public @ResponseBody String handleRegistrationRequests(@RequestParam JSONObject requestJson){
+    public @ResponseBody String handleRegistrationRequests(@RequestParam JSONObject request){
         HashMapCreator hmc = new HashMapCreator();
-        HashMap<String, String> requestMap = hmc.jsonToMap(requestJson);
+        HashMap<String, String> requestMap = hmc.jsonToMap(request);
         String reqId = "";
+        System.out.println("in registration");
+        System.out.println("request:");
+        System.out.println(request);
+
 
         try {
             IRegController rc = new RegController_V1();
-            reqId = requestJson.getString(REQ_ID);
+            reqId = request.getString(REQ_ID);
 
             switch (reqId) {
                 case REGISTRATION:
@@ -81,15 +90,15 @@ public class RequestsHandler {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")
-    public @ResponseBody String handleRoutineRequests(@RequestParam JSONObject requestJson){
+    public @ResponseBody String handleRoutineRequests(@RequestParam JSONObject request){
         HashMapCreator hmc = new HashMapCreator();
-        HashMap<String, String> requestMap = hmc.jsonToMap(requestJson);
+        HashMap<String, String> requestMap = hmc.jsonToMap(request);
         String reqId = "";
 
         try {
             IRegController rc = new RegController_V1();
             IRoutineController ruc = new RoutineController_V1();
-            reqId = requestJson.getString(REQ_ID);
+            reqId = request.getString(REQ_ID);
 
             switch (reqId) {
                 case SIGNIN:

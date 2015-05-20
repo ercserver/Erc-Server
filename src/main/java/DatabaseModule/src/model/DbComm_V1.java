@@ -679,6 +679,7 @@ public class DbComm_V1 implements IDbComm_model {
             }
             stmt.close();
 
+            insertRegID(details.get("reg_id"), cmid);
             // Insert login details
             stmt = connection.prepareStatement("INSERT INTO MembersLoginDetails (community_member_id, password, email_address)" +
                     " VALUES (?,?,?)");

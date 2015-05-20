@@ -12,6 +12,7 @@ import java.util.HashMap;
  */
 public class ShmulikTest {
     public static void main(String[] args) {
+
         DbComm_V1 d = new DbComm_V1();
         testNaor2();
 /*

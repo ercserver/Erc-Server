@@ -65,6 +65,36 @@ public class RoutineController_V1 implements IRoutineController {
         return null;
     }
 
+    @Override
+    public Object updateMemberDetails(HashMap<String, String> data) {
+        return null;
+    }
+
+    @Override
+    public Object handleRefreshDetails() {
+        return null;
+    }
+
+    @Override
+    public Object handleRefreshResponse(HashMap<Integer, HashMap<String, String>> data) {
+        return null;
+    }
+
+    @Override
+    public Object updateStatus(HashMap<String, String> data) {
+        return null;
+    }
+
+    @Override
+    public Object logoff(HashMap<String, String> data) {
+        return null;
+    }
+
+    @Override
+    public Object deleteMember(HashMap<String, String> data) {
+        return null;
+    }
+
     // TODO: Shmulik
     @Override
     public Object getEmsEventsByDispatcherCmid(int cmid) {
