@@ -1087,4 +1087,32 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     // TODO: get fields with values (intersection of registration fields and community_member)
+
+    public HashMap<String, String> getEventDetails(String eventId)
+    {
+        HashMap<String, String> cond = new HashMap<String, String>();
+        cond.put("event_id", eventId);
+        return getRowsFromTable(cond, "O_EmergencyEvents").get(1);
+    }
+
+    public void insertAssistent(HashMap<String, String> insert)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // inserts the regid to the regIDs table
+            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,eta_by_foot,eta_by_car,created_date,x,y) VALUES (" +
+                    insert.get("community_member_id") + "," + insert.get("event_id") + "," +
+                    insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
+                    ",'" + insert.get("created_date") + "'," + insert.get("x") +
+                    "," + insert.get("y") + ")");
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
 }

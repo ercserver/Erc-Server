@@ -37,4 +37,6 @@ public interface IDbComm_model {
     String getCmidByPatientID(String pID);
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
     String getPatientIDByCmid(String cmid);
+    HashMap<String, String> getEventDetails(String eventId);
+    void insertAssistent(HashMap<String, String> insert);
 }

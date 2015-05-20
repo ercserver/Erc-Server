@@ -694,10 +694,10 @@ public class DbInit_V1 implements IDbInit_model {
                         " created_date TIMESTAMP not NULL, " +
                         " x REAL not NULL, " +
                         " y REAL not NULL, " +
-                        " request_sent_date DATETIME, " +
+                        " request_sent_date DATETIME not NULL DEFAULT current_timestamp, " +
                         " response_date DATETIME, " +
-                        " response_type VARCHAR(50) not NULL, " +
-                        " transformation_mean INTEGER not NULL, " +  //enum: 0 for foot, 1 for car
+                        " response_type VARCHAR(50), " +
+                        " transformation_mean INTEGER, " +  //enum: 0 for foot, 1 for car
                         " activation_date DATETIME, " +
                         " arrival_date DATETIME, " +
                         " result VARCHAR(100))");

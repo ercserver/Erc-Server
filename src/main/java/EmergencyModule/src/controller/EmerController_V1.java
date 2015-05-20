@@ -239,17 +239,22 @@ public class EmerController_V1 implements IEmerController {
     private void approachAssistants(HashMap<Integer, HashMap<String, String>> assistantsList)
     {
         String eventId = getEventId(assistantsList);
-        //ToDo:need form db
-        //HashMap<String, String> eventDetails = dbController.getEventDetails(eventId);
+        HashMap<String, String> eventDetails = dbController.getEventDetails(eventId);
         Iterator<HashMap<String, String>> iter = assistantsList.values().iterator();
         while(iter.hasNext())
         {
             HashMap<String, String> user = iter.next();
             if(!user.keySet().contains("subRequest"))
                 continue;
-            //user.put("x", eventDetails.get("x"));
-            //user.put("y", eventDetails.get("y"));
-            //ToDo:need to put patient's address and get in some way proper medication that the cmid has
+            String x = user.get("x");
+            String y = user.get("y");
+            user.remove("x");
+            user.remove("y");
+            insertAssistent(user, x, y, eventId, eventDetails.get("created_date"));
+            user.put("x", eventDetails.get("x"));
+            user.put("y", eventDetails.get("y"));
+            user.put("location_remark", eventDetails.get("location_remark"));
+            //ToDo:need to get in some way proper medication that the cmid has
             user.put("RequestID", "helpAssist");
             user.put("event_id", eventId);
             HashMap<Integer, HashMap<String, String>> response = new HashMap<Integer, HashMap<String, String>>();
@@ -260,6 +265,19 @@ public class EmerController_V1 implements IEmerController {
             commController.setCommToUsers(response, target, false);
             commController.sendResponse();
         }
+    }
+
+    private void insertAssistent(HashMap<String, String> user, String x, String y, String eventId, String date)
+    {
+        HashMap<String, String> insert = new HashMap<String, String>();
+        insert.put("x", x);
+        insert.put("y", y);
+        insert.put("event_id", eventId);
+        insert.put("community_member_id", user.get("community_member_id"));
+        insert.put("eta_by_foot", user.get("eta_by_foot"));
+        insert.put("eta_by_car", user.get("eta_by_car"));
+        insert.put("created_date", date);
+        dbController.insertAssistent(insert);
     }
 
     private String getEventId(HashMap<Integer, HashMap<String, String>> assistantsList)

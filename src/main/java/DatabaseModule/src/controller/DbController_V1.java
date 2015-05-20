@@ -169,4 +169,8 @@ public class DbController_V1 implements IDbController {
     public String getPatientIDByCmid(String cmid){
         return DB_communicator.getPatientIDByCmid(cmid);
     }
+
+    public HashMap<String, String> getEventDetails(String eventId){return DB_communicator.getEventDetails(eventId);}
+
+    public void insertAssistent(HashMap<String, String> insert){DB_communicator.insertAssistent(insert);}
 }
