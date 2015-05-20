@@ -317,7 +317,7 @@ public class DbInit_V1 implements IDbInit_model {
             createOperationalDBActionTypes();
             createPatientsDBRelationTypes();
             createEventStatuses();
-            createInvolvedCommunityMembers();
+            //createInvolvedCommunityMembers();
             createEmergencyEvents();
             connection.commit();
             createActionStatuses();
@@ -686,7 +686,7 @@ public class DbInit_V1 implements IDbInit_model {
                         "(response_num INTEGER not NULL IDENTITY(1000,1) PRIMARY KEY, " +
                         " community_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " event_id INTEGER not NULL FOREIGN KEY REFERENCES O_EmergencyEvents(event_id), " +
-                        " emergency_event_num INTEGER not NULL, " +
+                        " emergency_event_num INTEGER, " +
                         " action_type_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionTypes(action_type_num), " +
                         " eta_by_foot INTEGER not NULL, " +
                         " action_status_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionStatus(action_status_num), " +
@@ -832,11 +832,11 @@ public class DbInit_V1 implements IDbInit_model {
             {
                 statement.executeUpdate("CREATE TABLE O_EmergencyEvents " +
                         "(event_id INTEGER not NULL IDENTITY(1000,1) PRIMARY KEY, " +
-                        " create_by_member_id INTEGER not NULL FOREIGN KEY REFERENCES O_InvolvedCommunityMembers(internal_id), " +
+                        " create_by_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " patient_id INTEGER not NULL, " +
                         " created_date TIMESTAMP not NULL, " +
                         " finished_date DATETIME, " +
-                        " ems_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
+                        " ems_member_id INTEGER FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " status_num INTEGER not NULL FOREIGN KEY REFERENCES O_EventStatuses(status_num), " +
                         " x REAL not NULL, " +
                         " y REAL not NULL, " +
@@ -915,9 +915,9 @@ public class DbInit_V1 implements IDbInit_model {
                 statement.executeUpdate("CREATE TABLE O_EmergencyMedicationUse " +
                         "(emergency_medication_use_num INTEGER not NULL IDENTITY(1000,1) PRIMARY KEY, " +
                         " event_id INTEGER not NULL FOREIGN KEY REFERENCES O_EmergencyEvents(event_id), " +
-                        " providing_member_id INTEGER not NULL FOREIGN KEY REFERENCES O_InvolvedCommunityMembers(internal_id), " +
-                        " providing_dispenser_num INTEGER not NULL FOREIGN KEY REFERENCES O_AutomaticDispensers(dispensers_num), " +
-                        " approved_by_id INTEGER not NULL, " +
+                        " providing_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
+                        " providing_dispenser_num INTEGER FOREIGN KEY REFERENCES O_AutomaticDispensers(dispensers_num), " +
+                        " approved_by_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " medication_num INTEGER not NULL FOREIGN KEY REFERENCES P_Medications(medication_num), " +
                         " approval_date DATETIME, " +
                         " medication_provision_date DATETIME, " +
@@ -1007,7 +1007,7 @@ public class DbInit_V1 implements IDbInit_model {
         }
     }
 
-    private  void createInvolvedCommunityMembers()
+    /*private  void createInvolvedCommunityMembers()
     {
         ResultSet rs = null;
         try
@@ -1051,7 +1051,7 @@ public class DbInit_V1 implements IDbInit_model {
                 catch (Exception e) {e.printStackTrace();}
             }
         }
-    }
+    }*/
 
     private  void createUpdatesDB()
     {
