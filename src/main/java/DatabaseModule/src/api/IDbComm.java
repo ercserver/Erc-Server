@@ -44,5 +44,10 @@ public interface IDbComm {
     HashMap<String, String> getEventDetails(String eventId);
     void insertAssistent(HashMap<String, String> insert);
     void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds);
+    void updateArrivalDate(HashMap<String, String> data);
+    void updateActivationDate(String cmid, String eventId);
+    void updateResult(String cmid, String eventId, String result);
+    String getEventByCmid(String cmid);
+    void updatePatientRemarks(String cmid, String eventID, String remark);
 
 }

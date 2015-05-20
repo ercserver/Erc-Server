@@ -126,6 +126,7 @@ public class EmerController_V1 implements IEmerController {
         {
             return;
         }
+        dbController.updateArrivalDate(data);
         HashMap<String,String> h = new HashMap<String,String>();
         h.put("event_id", data.get("event_id"));
         HashMap<String,String> cond = new HashMap<String,String>();
@@ -145,6 +146,10 @@ public class EmerController_V1 implements IEmerController {
         h.put("event_id", data.get("event_id"));
         h.put("RequestID", data.get("RequestID"));
         String cmid = dbController.getCmidByPatientID(data.get("patient_id"));
+        if(data.get("RequestID").equals("confirmMedication"))
+            dbController.updateActivationDate(cmid, data.get("event_id"));
+        else
+            dbController.updateResult(cmid, data.get("event_id"), "'EMS rejected medication givving'");
         String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
@@ -182,10 +187,10 @@ public class EmerController_V1 implements IEmerController {
         {
             return;
         }
-        //ToDo:need from DB
-       // String eventId = dbController.getEventByCmid(data.get("community_member_id"));
+        String eventId = dbController.getEventByCmid(data.get("community_member_id"));
+        dbController.updatePatientRemarks(data.get("community_member_id"), eventId, data.get("message"));
         HashMap<String, String> response = new HashMap<String, String>();
-        //response.put("event_id", eventId);
+        response.put("event_id", eventId);
         response.put("message", data.get("message"));
         response.put("RequestID", "newInfo");
         //ToDo:need from DB

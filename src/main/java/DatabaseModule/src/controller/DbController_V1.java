@@ -175,4 +175,14 @@ public class DbController_V1 implements IDbController {
     public void insertAssistent(HashMap<String, String> insert){DB_communicator.insertAssistent(insert);}
 
     public void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds){DB_communicator.updateEmerFirstResponse(updates, conds);}
+
+    public void updateArrivalDate(HashMap<String, String> data){DB_communicator.updateArrivalDate(data);}
+
+    public void updateActivationDate(String cmid, String eventId){DB_communicator.updateActivationDate(cmid, eventId);}
+
+    public void updateResult(String cmid, String eventId, String result){DB_communicator.updateResult(cmid, eventId, result);}
+
+    public String getEventByCmid(String cmid){return DB_communicator.getEventByCmid(cmid);}
+
+    public void updatePatientRemarks(String cmid, String eventID, String remark){DB_communicator.updatePatientRemarks(cmid, eventID, remark);}
 }

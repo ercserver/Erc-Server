@@ -1143,4 +1143,122 @@ public class DbComm_V1 implements IDbComm_model {
             releaseResources(statement, connection);
         }
     }
+
+    public void updateArrivalDate(HashMap<String, String> data)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEventResponse SET arrival_date=current_timestamp WHERE community_member_id="
+                    + data.get("community_member_id") + " AND event_id=" + data.get("event_id"));
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public void updateActivationDate(String cmid, String eventId)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEventResponse SET activation_date=current_timestamp WHERE community_member_id="
+                    + cmid + " AND event_id=" + eventId);
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public void updateResult(String cmid, String eventId, String result)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEventResponse SET result=" + result + " WHERE community_member_id="
+                    + cmid + " AND event_id=" + eventId);
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public String getEventByCmid(String cmid)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM O_EmergencyEvents " +
+                    "WHERE community_member_id=" + cmid + " AND finished_date IS NULL order by created_date");
+            String eventId = null;
+            while(rs.next())
+                eventId = (String)rs.getObject("event_id");
+            return eventId;
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return null;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
+
+    public void updatePatientRemarks(String cmid, String eventID, String remark)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM O_EmergencyEvents " +
+                    "WHERE community_member_id=" + cmid + " AND event_id=" + eventID);
+            rs.next();
+            String re = (String)rs.getObject("patient_condition_remarks");
+            if(re == null)
+                re = "";
+            re = "'" + re + "," + remark + "'";
+            statement.execute("UPDATE O_EmergencyEvents SET patient_condition_remarks=" + re + " WHERE community_member_id="
+                    + cmid + " AND event_id=" + eventID);
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace();}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
 }
