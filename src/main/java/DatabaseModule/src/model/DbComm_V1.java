@@ -1102,12 +1102,40 @@ public class DbComm_V1 implements IDbComm_model {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();
             statement = connection.createStatement();
-            // inserts the regid to the regIDs table
             statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,eta_by_foot,eta_by_car,created_date,x,y) VALUES (" +
                     insert.get("community_member_id") + "," + insert.get("event_id") + "," +
                     insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
                     ",'" + insert.get("created_date") + "'," + insert.get("x") +
                     "," + insert.get("y") + ")");
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds)
+    {
+        updateTable("O_EmergencyEventResponse", conds, "response_type", updates.get("response_type"));
+        if(updates.keySet().contains("transformation_mean"))
+            updateTable("O_EmergencyEventResponse", conds, "transformation_mean", updates.get("transformation_mean"));
+        // Create the where clause
+        String whereString = "";
+        Iterator<String> iter = conds.keySet().iterator();
+        while (iter.hasNext()){
+            String key = iter.next();
+            String val = conds.get(key);
+            whereString += String.format("%s=%s AND ", key, val);
+        }
+        // Remove the last "AND"
+        whereString = whereString.substring(0, whereString.length() - 4);
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEventResponse SET response_date=current_timestamp WHERE " + whereString);
         }
         catch (SQLException e) {e.printStackTrace();}
         finally

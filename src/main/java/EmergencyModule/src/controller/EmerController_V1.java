@@ -64,6 +64,23 @@ public class EmerController_V1 implements IEmerController {
         //TODO - will need to do here things with logs
         if (!assistentFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
+        HashMap<String, String> updates = new HashMap<String, String>();
+        if(response.get("RequestID").equals("arivalRejection"))
+            updates.put("response_type", "'reject'");
+        else if(response.get("requestID").equals("arivalAcceptionOnFoot"))
+        {
+            updates.put("response_type", "'accept'");
+            updates.put("transformation_mean", "0");
+        }
+        else
+        {
+            updates.put("response_type", "'accept'");
+            updates.put("transformation_mean", "1");
+        }
+        HashMap<String, String> conds = new HashMap<String, String>();
+        conds.put("event_id", response.get("event_id"));
+        conds.put("community_member_id", response.get("community_member_id"));
+        dbController.updateEmerFirstResponse(updates, conds);
         if(!response.get("RequestID").equals("arivalRejection")) {
             //ToDo:probably need to add arival times and maby the arival method
             addOrRemoveAssistant(dbController.getPatientIDByCmid(response.get("community_member_id")),

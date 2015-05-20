@@ -39,4 +39,5 @@ public interface IDbController  extends IDbInit, IDbComm {
     String getPatientIDByCmid(String cmid);
     HashMap<String, String> getEventDetails(String eventId);
     void insertAssistent(HashMap<String, String> insert);
+    void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds);
 }
