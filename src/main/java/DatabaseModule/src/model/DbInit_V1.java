@@ -919,7 +919,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " providing_dispenser_num INTEGER FOREIGN KEY REFERENCES O_AutomaticDispensers(dispensers_num), " +
                         " approved_by_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " medication_num INTEGER not NULL FOREIGN KEY REFERENCES P_Medications(medication_num), " +
-                        " approval_date DATETIME, " +
+                        " approval_date DATETIME DEFAULT current_timestamp, " +
                         " medication_provision_date DATETIME, " +
                         " digital_signature_file VARCHAR(100))");
             }

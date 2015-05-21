@@ -185,4 +185,6 @@ public class DbController_V1 implements IDbController {
     public String getEventByCmid(String cmid){return DB_communicator.getEventByCmid(cmid);}
 
     public void updatePatientRemarks(String cmid, String eventID, String remark){DB_communicator.updatePatientRemarks(cmid, eventID, remark);}
+
+    public void insertMedicationUse(String proCmid, String eventId, String aproId){DB_communicator.insertMedicationUse(proCmid, eventId, aproId);}
 }

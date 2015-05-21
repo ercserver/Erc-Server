@@ -1261,4 +1261,21 @@ public class DbComm_V1 implements IDbComm_model {
             }
         }
     }
+
+    public void insertMedicationUse(String proCmid, String eventId, String aproId)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("INSERT INTO O_EmergencyMedicationUse (event_id,providing_member_id,approved_by_id) VALUES (" +
+                    eventId + "," + proCmid + "," + aproId + ")");
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
 }

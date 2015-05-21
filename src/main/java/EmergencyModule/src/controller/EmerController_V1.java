@@ -142,12 +142,15 @@ public class EmerController_V1 implements IEmerController {
     @Override
     public void approveOrRejectMed(HashMap<String, String> data) {
         //TODO - will need to do here things with logs
-        HashMap<String,String> h = new HashMap<String, String>();
+        HashMap<String, String> h = new HashMap<String, String>();
         h.put("event_id", data.get("event_id"));
         h.put("RequestID", data.get("RequestID"));
         String cmid = dbController.getCmidByPatientID(data.get("patient_id"));
-        if(data.get("RequestID").equals("confirmMedication"))
+        //ToDO:I think we will need to get also medication num in that case
+        if (data.get("RequestID").equals("confirmMedication")) {
             dbController.updateActivationDate(cmid, data.get("event_id"));
+            dbController.insertMedicationUse(cmid, data.get("event_id"), data.get("community_member_id"));
+        }
         else
             dbController.updateResult(cmid, data.get("event_id"), "'EMS rejected medication givving'");
         String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
