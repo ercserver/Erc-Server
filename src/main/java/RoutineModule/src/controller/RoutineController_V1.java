@@ -93,9 +93,9 @@ public class RoutineController_V1 implements IRoutineController {
         //ret.put(basic);
         for (Map.Entry<Integer,HashMap<String,String>> objs : allCmid.entrySet()){
             HashMap<String,String> obj = objs.getValue();
-            String c = obj.get("community_member_id");
+            int c = new Integer(obj.get("community_member_id"));
             HashMap<String, String> comParameter = updates.getCommunicationParameters(
-                    new Integer(c),code);
+                    c,code);
 
             if (comParameter == null) {
                 // this mean that is paramter of Patient and this is a doctor
