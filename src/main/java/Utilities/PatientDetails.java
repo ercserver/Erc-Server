@@ -18,6 +18,19 @@ public class PatientDetails {
         dbController = models.determineDbControllerVersion();
     }
 
+    public String getStatus(HashMap<String, String> details)
+    {
+        String status_num = details.get("status_num");
+        HashMap<Integer, HashMap<String, String>> data = dbController.getStatusByNum(status_num);
+
+        for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
+            HashMap<String,String> obj = objs.getValue();
+            return obj.get("status_name");
+        }
+        return null;
+    }
+
+
     public String getRegId(int cmid)
     {
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);

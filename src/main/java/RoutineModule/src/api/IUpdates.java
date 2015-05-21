@@ -6,11 +6,12 @@ import java.util.HashMap;
  * Created by Maor on 02/05/2015.
  */
 public interface IUpdates {
+
     public Object getUpdatesFields(HashMap<String, String> data);
 
     public Object updateCommunicationParameters(String code); // Send to all users the most recent comm. params.
 
-    public Object updateMemberDetails(HashMap<String, String> data); // Update the details in the db
+    public Object updateMemberDetails(HashMap<Integer,HashMap<String, String>> data); // Update the details in the db
 
     public Object handleRefreshDetails(); /* Get all the fields of all the users
                                     and check if they need a refresh. If so, send those useres a message */

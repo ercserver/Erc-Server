@@ -8,11 +8,9 @@ import RoutineModule.src.api.IUpdates_model;
 import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
 import Utilities.PatientDetails;
+import Utilities.VerifyDetail;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by NAOR on 28/04/2015.
@@ -25,6 +23,9 @@ public class RoutineController_V1 implements IRoutineController {
     private AssistantFunctions assistent = null;
     private IDbController dbController = null;
     private PatientDetails memberDetail = null;
+    private VerifyDetail verify = null;
+
+
 
     public RoutineController_V1()
     {
@@ -35,6 +36,7 @@ public class RoutineController_V1 implements IRoutineController {
         ems = models.determineIEmsRoutineVersion();
         assistent = new AssistantFunctions();
         memberDetail = new PatientDetails();
+        verify = new VerifyDetail();
     }
 
     public Object transferLocation(HashMap<String, String> data)
@@ -116,7 +118,30 @@ public class RoutineController_V1 implements IRoutineController {
     }
 
     @Override
-    public Object updateMemberDetails(HashMap<String, String> data) {
+    public Object updateMemberDetails(HashMap<Integer,HashMap<String, String>> data) {
+        boolean needVerify = false;
+        int cmid =  0;//Integer.parseInt(data.get("community_member_id"));
+        String password = "";// data.get("password");
+        data.remove("password");
+        data.remove("community_member_id"); 
+        if(assistent.checkCmidAndPassword(password,cmid)) {
+            for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
+                HashMap<String,String> obj = objs.getValue();
+                String col = obj.get("name");
+                if (obj.get("needs_verification").equals("1"))
+                    needVerify = true;
+                else
+                {
+                            //update in table
+                    //updates.updateUserDetails(cmid,col);
+                }
+
+
+            }
+            if (needVerify)
+                verify.verifyDetail(new Integer(cmid).toString());
+        }
+
         return null;
     }
 

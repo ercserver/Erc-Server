@@ -67,4 +67,13 @@ public class Updates_V1 implements IUpdates_model {
     }
 
 
+    public void updateUserDetails(int cmid,String col,String value) {
+            HashMap<String, String> member = new HashMap<String, String>();
+            member.put(col, "'" + value + "'");
+            member.put("community_member_id", Integer.toString(cmid));
+            dbController.updateUserDetails(member);
+
+    }
+
+
 }

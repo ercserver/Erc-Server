@@ -10,4 +10,5 @@ public interface IUpdates_model {
     HashMap<String, String>  getCommunicationParameters(int cmid);
 
     HashMap<String,String> buildBasicResponse(String message,String code);
+    void updateUserDetails(int cmid,String col,String value);
 }
