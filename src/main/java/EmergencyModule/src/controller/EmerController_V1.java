@@ -141,6 +141,8 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void approveOrRejectMed(HashMap<String, String> data) {
+        if (!assistentFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+            return;
         //TODO - will need to do here things with logs
         HashMap<String, String> h = new HashMap<String, String>();
         h.put("event_id", data.get("event_id"));
