@@ -687,6 +687,8 @@ public class DbInit_V1 implements IDbInit_model {
                         " community_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " event_id INTEGER not NULL FOREIGN KEY REFERENCES O_EmergencyEvents(event_id), " +
                         " emergency_event_num INTEGER, " +
+                        " brand_name_id INTEGER not null foreign key references M_BrandNames(brand_name_id), " +
+                        " dosage FLOAT not null, " +
                         " action_type_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionTypes(action_type_num), " +
                         " eta_by_foot INTEGER not NULL, " +
                         " action_status_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionStatus(action_status_num), " +
@@ -834,6 +836,7 @@ public class DbInit_V1 implements IDbInit_model {
                         "(event_id INTEGER not NULL IDENTITY(1000,1) PRIMARY KEY, " +
                         " create_by_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " patient_id INTEGER not NULL, " +
+                        " medical_condition_id INTEGER not null FOREIGN KEY REFERENCES M_MedicalConditions(medical_condition_id)," +
                         " created_date TIMESTAMP not NULL, " +
                         " finished_date DATETIME, " +
                         " ems_member_id INTEGER FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +

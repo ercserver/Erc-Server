@@ -54,6 +54,27 @@ public class EmerController_V1 implements IEmerController {
         //filter
         HashMap<Integer, HashMap<String, String>> filteredData = emergencyFilter.filterUsersByArrivalTime(data);
         approachAssistants(filteredData);
+        // Sends to EMS the radius with that the GIS searches for assistants
+        String radius = getRadius(data);
+        HashMap<String, String> response = new HashMap<String, String>();
+        response.put("RequestID", "getRadius");
+        response.put("radius", radius);
+        response.put("event_id", getEventId(data));
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo.add(EMS_URL);
+        initiatedOneObjectRequest(response, sendTo);
+    }
+
+    // Searches for the map with the arguments that are not a possible assistant and returns the radius
+    private String getRadius(HashMap<Integer, HashMap<String, String>> data) {
+        Iterator<HashMap<String, String>> iter = data.values().iterator();
+        while(iter.hasNext())
+        {
+            HashMap<String, String> user = iter.next();
+            if(!user.keySet().contains("subRequest"))
+                return user.get("radius");
+        }
+        return null;
     }
 
     // we use "addOrRemoveAssistant" here
@@ -148,7 +169,6 @@ public class EmerController_V1 implements IEmerController {
         h.put("event_id", data.get("event_id"));
         h.put("RequestID", data.get("RequestID"));
         String cmid = dbController.getCmidByPatientID(data.get("patient_id"));
-        //ToDO:I think we will need to get also medication num in that case
         if (data.get("RequestID").equals("confirmMedication")) {
             dbController.updateActivationDate(cmid, data.get("event_id"));
             dbController.insertMedicationUse(cmid, data.get("event_id"), data.get("community_member_id"));
@@ -256,7 +276,6 @@ public class EmerController_V1 implements IEmerController {
         HashMap<Integer,HashMap<String,String>> dataToSend = new HashMap<Integer,HashMap<String,String>>();
         dataToSend.put(1, request);
         //initiated comm - true
-        //ToDo:Naor pay your atension that by this you can only comunicate with EMS or GIS
         commController.setCommToUsers(dataToSend, URLs,true);
         //send request
         commController.sendResponse();
@@ -270,20 +289,25 @@ public class EmerController_V1 implements IEmerController {
         Iterator<HashMap<String, String>> iter = assistantsList.values().iterator();
         while(iter.hasNext())
         {
+            //possible assistant
             HashMap<String, String> user = iter.next();
+            //This is the map of the other arguments from GIS
             if(!user.keySet().contains("subRequest"))
                 continue;
+            //Assistant location
             String x = user.get("x");
             String y = user.get("y");
             user.remove("x");
             user.remove("y");
+            // Inserts the assistant to the data base
             insertAssistent(user, x, y, eventId, eventDetails.get("created_date"));
             user.put("x", eventDetails.get("x"));
             user.put("y", eventDetails.get("y"));
             user.put("location_remark", eventDetails.get("location_remark"));
-            //ToDo:need to get in some way proper medication that the cmid has
+            //ToDo:need to get in some way proper medication that the cmid has and dosage
             user.put("RequestID", "helpAssist");
             user.put("event_id", eventId);
+            // Sends the approach to the assistant
             HashMap<Integer, HashMap<String, String>> response = new HashMap<Integer, HashMap<String, String>>();
             response.put(1, user);
             HashMap<Integer,HashMap<String,String>> regId = dbController.getRegIDsOfUser(Integer.parseInt(user.get("community_member_id")));
@@ -294,8 +318,10 @@ public class EmerController_V1 implements IEmerController {
         }
     }
 
+    //Inserts assistent to the data base
     private void insertAssistent(HashMap<String, String> user, String x, String y, String eventId, String date)
     {
+        //ToDo:need to insert also brand name and dosage or description num
         HashMap<String, String> insert = new HashMap<String, String>();
         insert.put("x", x);
         insert.put("y", y);
@@ -307,6 +333,7 @@ public class EmerController_V1 implements IEmerController {
         dbController.insertAssistent(insert);
     }
 
+    // Searches for the map with the arguments that are not a possible assistant and returns the eventID
     private String getEventId(HashMap<Integer, HashMap<String, String>> assistantsList)
     {
         Iterator<HashMap<String, String>> iter = assistantsList.values().iterator();
@@ -340,7 +367,6 @@ public class EmerController_V1 implements IEmerController {
         commController.sendResponse();
     }
 
-    //ToDo:Naor, i think you need also to get ArrivalTimes
     private void addOrRemoveAssistant(String patientID,String eventID,boolean action) {
         //TODO - Naor-if action is true that's mean that we add the assistent?
         //we call this function from "assistantRespondsToApproach" and from "rejectAssistantsByEMS"
