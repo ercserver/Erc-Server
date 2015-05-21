@@ -1087,4 +1087,195 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     // TODO: get fields with values (intersection of registration fields and community_member)
+
+    public HashMap<String, String> getEventDetails(String eventId)
+    {
+        HashMap<String, String> cond = new HashMap<String, String>();
+        cond.put("event_id", eventId);
+        return getRowsFromTable(cond, "O_EmergencyEvents").get(1);
+    }
+
+    public void insertAssistent(HashMap<String, String> insert)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,eta_by_foot,eta_by_car,created_date,x,y) VALUES (" +
+                    insert.get("community_member_id") + "," + insert.get("event_id") + "," +
+                    insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
+                    ",'" + insert.get("created_date") + "'," + insert.get("x") +
+                    "," + insert.get("y") + ")");
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds)
+    {
+        updateTable("O_EmergencyEventResponse", conds, "response_type", updates.get("response_type"));
+        if(updates.keySet().contains("transformation_mean"))
+            updateTable("O_EmergencyEventResponse", conds, "transformation_mean", updates.get("transformation_mean"));
+        // Create the where clause
+        String whereString = "";
+        Iterator<String> iter = conds.keySet().iterator();
+        while (iter.hasNext()){
+            String key = iter.next();
+            String val = conds.get(key);
+            whereString += String.format("%s=%s AND ", key, val);
+        }
+        // Remove the last "AND"
+        whereString = whereString.substring(0, whereString.length() - 4);
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEventResponse SET response_date=current_timestamp WHERE " + whereString);
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public void updateArrivalDate(HashMap<String, String> data)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEventResponse SET arrival_date=current_timestamp WHERE community_member_id="
+                    + data.get("community_member_id") + " AND event_id=" + data.get("event_id"));
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public void updateActivationDate(String cmid, String eventId)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEventResponse SET activation_date=current_timestamp WHERE community_member_id="
+                    + cmid + " AND event_id=" + eventId);
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public void updateResult(String cmid, String eventId, String result)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEventResponse SET result=" + result + " WHERE community_member_id="
+                    + cmid + " AND event_id=" + eventId);
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public String getEventByCmid(String cmid)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM O_EmergencyEvents " +
+                    "WHERE community_member_id=" + cmid + " AND finished_date IS NULL order by created_date");
+            String eventId = null;
+            while(rs.next())
+                eventId = (String)rs.getObject("event_id");
+            return eventId;
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return null;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
+
+    public void updatePatientRemarks(String cmid, String eventID, String remark)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM O_EmergencyEvents " +
+                    "WHERE community_member_id=" + cmid + " AND event_id=" + eventID);
+            rs.next();
+            String re = (String)rs.getObject("patient_condition_remarks");
+            if(re == null)
+                re = "";
+            re = "'" + re + "," + remark + "'";
+            statement.execute("UPDATE O_EmergencyEvents SET patient_condition_remarks=" + re + " WHERE community_member_id="
+                    + cmid + " AND event_id=" + eventID);
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace();}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
+
+    public void insertMedicationUse(String proCmid, String eventId, String aproId)
+    {
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("INSERT INTO O_EmergencyMedicationUse (event_id,providing_member_id,approved_by_id) VALUES (" +
+                    eventId + "," + proCmid + "," + aproId + ")");
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
 }

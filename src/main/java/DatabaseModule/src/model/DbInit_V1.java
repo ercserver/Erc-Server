@@ -694,10 +694,10 @@ public class DbInit_V1 implements IDbInit_model {
                         " created_date TIMESTAMP not NULL, " +
                         " x REAL not NULL, " +
                         " y REAL not NULL, " +
-                        " request_sent_date DATETIME, " +
+                        " request_sent_date DATETIME not NULL DEFAULT current_timestamp, " +
                         " response_date DATETIME, " +
-                        " response_type VARCHAR(50) not NULL, " +
-                        " transformation_mean INTEGER not NULL, " +  //enum: 0 for foot, 1 for car
+                        " response_type VARCHAR(50), " +
+                        " transformation_mean INTEGER, " +  //enum: 0 for foot, 1 for car
                         " activation_date DATETIME, " +
                         " arrival_date DATETIME, " +
                         " result VARCHAR(100))");
@@ -919,7 +919,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " providing_dispenser_num INTEGER FOREIGN KEY REFERENCES O_AutomaticDispensers(dispensers_num), " +
                         " approved_by_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " medication_num INTEGER not NULL FOREIGN KEY REFERENCES P_Medications(medication_num), " +
-                        " approval_date DATETIME, " +
+                        " approval_date DATETIME DEFAULT current_timestamp, " +
                         " medication_provision_date DATETIME, " +
                         " digital_signature_file VARCHAR(100))");
             }

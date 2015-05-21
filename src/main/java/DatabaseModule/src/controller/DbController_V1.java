@@ -166,7 +166,30 @@ public class DbController_V1 implements IDbController {
         return null;
     }
 
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid) {
+        return DB_communicator.getEventsByEmsCmid(cmid);
+    }
+
     public String getPatientIDByCmid(String cmid){
         return DB_communicator.getPatientIDByCmid(cmid);
     }
+
+    public HashMap<String, String> getEventDetails(String eventId){return DB_communicator.getEventDetails(eventId);}
+
+    public void insertAssistent(HashMap<String, String> insert){DB_communicator.insertAssistent(insert);}
+
+    public void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds){DB_communicator.updateEmerFirstResponse(updates, conds);}
+
+    public void updateArrivalDate(HashMap<String, String> data){DB_communicator.updateArrivalDate(data);}
+
+    public void updateActivationDate(String cmid, String eventId){DB_communicator.updateActivationDate(cmid, eventId);}
+
+    public void updateResult(String cmid, String eventId, String result){DB_communicator.updateResult(cmid, eventId, result);}
+
+    public String getEventByCmid(String cmid){return DB_communicator.getEventByCmid(cmid);}
+
+    public void updatePatientRemarks(String cmid, String eventID, String remark){DB_communicator.updatePatientRemarks(cmid, eventID, remark);}
+
+    public void insertMedicationUse(String proCmid, String eventId, String aproId){DB_communicator.insertMedicationUse(proCmid, eventId, aproId);}
 }

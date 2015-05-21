@@ -12,10 +12,9 @@ import java.util.HashMap;
  */
 public class ShmulikTest {
     public static void main(String[] args) {
+  //      DbComm_V1 d = new DbComm_V1();
+ //       testNaor2();
 
-        DbComm_V1 d = new DbComm_V1();
-        testNaor2();
-/*
         RegVerify_V2 v2 = new RegVerify_V2();
         HashMap<String,String> h = new HashMap<String,String>();
         HashMap<String,String> h2 = new HashMap<String,String>();

@@ -64,6 +64,23 @@ public class EmerController_V1 implements IEmerController {
         //TODO - will need to do here things with logs
         if (!assistentFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
+        HashMap<String, String> updates = new HashMap<String, String>();
+        if(response.get("RequestID").equals("arivalRejection"))
+            updates.put("response_type", "'reject'");
+        else if(response.get("requestID").equals("arivalAcceptionOnFoot"))
+        {
+            updates.put("response_type", "'accept'");
+            updates.put("transformation_mean", "0");
+        }
+        else
+        {
+            updates.put("response_type", "'accept'");
+            updates.put("transformation_mean", "1");
+        }
+        HashMap<String, String> conds = new HashMap<String, String>();
+        conds.put("event_id", response.get("event_id"));
+        conds.put("community_member_id", response.get("community_member_id"));
+        dbController.updateEmerFirstResponse(updates, conds);
         if(!response.get("RequestID").equals("arivalRejection")) {
             //ToDo:probably need to add arival times and maby the arival method
             addOrRemoveAssistant(dbController.getPatientIDByCmid(response.get("community_member_id")),
@@ -109,6 +126,7 @@ public class EmerController_V1 implements IEmerController {
         {
             return;
         }
+        dbController.updateArrivalDate(data);
         HashMap<String,String> h = new HashMap<String,String>();
         h.put("event_id", data.get("event_id"));
         HashMap<String,String> cond = new HashMap<String,String>();
@@ -123,11 +141,20 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void approveOrRejectMed(HashMap<String, String> data) {
+        if (!assistentFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+            return;
         //TODO - will need to do here things with logs
-        HashMap<String,String> h = new HashMap<String, String>();
+        HashMap<String, String> h = new HashMap<String, String>();
         h.put("event_id", data.get("event_id"));
         h.put("RequestID", data.get("RequestID"));
         String cmid = dbController.getCmidByPatientID(data.get("patient_id"));
+        //ToDO:I think we will need to get also medication num in that case
+        if (data.get("RequestID").equals("confirmMedication")) {
+            dbController.updateActivationDate(cmid, data.get("event_id"));
+            dbController.insertMedicationUse(cmid, data.get("event_id"), data.get("community_member_id"));
+        }
+        else
+            dbController.updateResult(cmid, data.get("event_id"), "'EMS rejected medication givving'");
         String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
@@ -165,10 +192,10 @@ public class EmerController_V1 implements IEmerController {
         {
             return;
         }
-        //ToDo:need from DB
-       // String eventId = dbController.getEventByCmid(data.get("community_member_id"));
+        String eventId = dbController.getEventByCmid(data.get("community_member_id"));
+        dbController.updatePatientRemarks(data.get("community_member_id"), eventId, data.get("message"));
         HashMap<String, String> response = new HashMap<String, String>();
-        //response.put("event_id", eventId);
+        response.put("event_id", eventId);
         response.put("message", data.get("message"));
         response.put("RequestID", "newInfo");
         //ToDo:need from DB
@@ -239,17 +266,22 @@ public class EmerController_V1 implements IEmerController {
     private void approachAssistants(HashMap<Integer, HashMap<String, String>> assistantsList)
     {
         String eventId = getEventId(assistantsList);
-        //ToDo:need form db
-        //HashMap<String, String> eventDetails = dbController.getEventDetails(eventId);
+        HashMap<String, String> eventDetails = dbController.getEventDetails(eventId);
         Iterator<HashMap<String, String>> iter = assistantsList.values().iterator();
         while(iter.hasNext())
         {
             HashMap<String, String> user = iter.next();
             if(!user.keySet().contains("subRequest"))
                 continue;
-            //user.put("x", eventDetails.get("x"));
-            //user.put("y", eventDetails.get("y"));
-            //ToDo:need to put patient's address and get in some way proper medication that the cmid has
+            String x = user.get("x");
+            String y = user.get("y");
+            user.remove("x");
+            user.remove("y");
+            insertAssistent(user, x, y, eventId, eventDetails.get("created_date"));
+            user.put("x", eventDetails.get("x"));
+            user.put("y", eventDetails.get("y"));
+            user.put("location_remark", eventDetails.get("location_remark"));
+            //ToDo:need to get in some way proper medication that the cmid has
             user.put("RequestID", "helpAssist");
             user.put("event_id", eventId);
             HashMap<Integer, HashMap<String, String>> response = new HashMap<Integer, HashMap<String, String>>();
@@ -260,6 +292,19 @@ public class EmerController_V1 implements IEmerController {
             commController.setCommToUsers(response, target, false);
             commController.sendResponse();
         }
+    }
+
+    private void insertAssistent(HashMap<String, String> user, String x, String y, String eventId, String date)
+    {
+        HashMap<String, String> insert = new HashMap<String, String>();
+        insert.put("x", x);
+        insert.put("y", y);
+        insert.put("event_id", eventId);
+        insert.put("community_member_id", user.get("community_member_id"));
+        insert.put("eta_by_foot", user.get("eta_by_foot"));
+        insert.put("eta_by_car", user.get("eta_by_car"));
+        insert.put("created_date", date);
+        dbController.insertAssistent(insert);
     }
 
     private String getEventId(HashMap<Integer, HashMap<String, String>> assistantsList)

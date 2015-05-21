@@ -42,5 +42,5 @@ public interface IDbComm {
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
 
     String getPatientIDByCmid(String cmid);
-    List<Integer> getAllCMIDsByStatus(int statusCode);
+
 }

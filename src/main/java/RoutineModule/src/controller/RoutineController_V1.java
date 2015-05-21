@@ -4,6 +4,7 @@ import CommunicationModule.src.api.ICommController;
 import RoutineModule.src.api.IEmsRoutine_model;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.api.IUpdates_model;
+import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class RoutineController_V1 implements IRoutineController {
     private ICommController commController = null;
     private IUpdates_model updates = null;
     private IEmsRoutine_model ems = null;
+    private AssistantFunctions assistent = null;
 
     public RoutineController_V1()
     {
@@ -23,6 +25,7 @@ public class RoutineController_V1 implements IRoutineController {
         commController = models.determineCommControllerVersion();
         updates = models.determineIUpdatesVersion();
         ems = models.determineIEmsRoutineVersion();
+        assistent = new AssistantFunctions();
     }
 
     public Object transferLocation(HashMap<String, String> data)
@@ -97,8 +100,13 @@ public class RoutineController_V1 implements IRoutineController {
 
     // TODO: Shmulik
     @Override
-    public Object getEmsEventsByDispatcherCmid(int cmid) {
-
+    public Object getEmsEventsByDispatcherCmid(HashMap<String, String> data) {
+        int cmid = Integer.parseInt(data.get("community_member_id"));
+        String password = data.get("password");
+        if(assistent.checkCmidAndPassword(password,cmid))
+        {
+               return ems.getEmsEventsByDispatcherCmid(cmid);
+        }
         return null;
     }
 }

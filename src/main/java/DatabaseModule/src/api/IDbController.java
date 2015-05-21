@@ -6,7 +6,11 @@ import java.util.HashMap;
 /**
  * Created by User on 20/04/2015.
  */
+
 public interface IDbController  extends IDbInit, IDbComm {
+    HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
+    HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
+    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
     HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType);
     HashMap<String,String> getUserByParameter(HashMap<String,String> whereConditions);
     void updateUserDetails(HashMap<String,String> updates);
@@ -37,4 +41,14 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
     String getCmidByPatientID(String pID);
     String getPatientIDByCmid(String cmid);
+    HashMap<String, String> getEventDetails(String eventId);
+    void insertAssistent(HashMap<String, String> insert);
+    void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds);
+    void updateArrivalDate(HashMap<String, String> data);
+    void updateActivationDate(String cmid, String eventId);
+    void updateResult(String cmid, String eventId, String result);
+    String getEventByCmid(String cmid);
+    void updatePatientRemarks(String cmid, String eventID, String remark);
+    void insertMedicationUse(String proCmid, String eventId, String aproId);
+
 }

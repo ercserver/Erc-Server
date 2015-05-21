@@ -24,9 +24,7 @@ public class ModelsFactory {
         private final int regRequestVersion = 1;
         private final int regVerifyVersion = 2;
         private final int emerFilterVersion = 1;
-        private final int emsVersion = 1;
-
-
+        private final int emsRoutineVersion = 1;
 
         public ICommController determineCommControllerVersion(){
             switch (commControllerVersion) {
@@ -89,6 +87,17 @@ public class ModelsFactory {
             }
         }
     }
+    public IEmsRoutine_model determineIEmsRoutineVersion(){
+        switch (emsRoutineVersion) {
+            //Communicate the DB to retrieve the data
+            case 1: {
+                return new EmsRoutine_V1();
+            }
+            default: {
+                return null;
+            }
+        }
+    }
 
     public IEmerFilter_model determineEmerVersion() {
         switch (emerFilterVersion) {
@@ -102,15 +111,4 @@ public class ModelsFactory {
         }
     }
 
-    public IEmsRoutine_model determineIEmsRoutineVersion() {
-        switch (emsVersion) {
-            //Communicate the DB to retrieve the data
-            case 1: {
-                return new EmsRoutine_V1();
-            }
-            default: {
-                return null;
-            }
-        }
-    }
 }
