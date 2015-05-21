@@ -1,31 +1,39 @@
 package RoutineModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
+import DatabaseModule.src.api.IDbController;
 import RoutineModule.src.api.IEmsRoutine_model;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.api.IUpdates_model;
 import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
+import Utilities.PatientDetails;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by NAOR on 28/04/2015.
  */
 public class RoutineController_V1 implements IRoutineController {
+
     private ICommController commController = null;
     private IUpdates_model updates = null;
     private IEmsRoutine_model ems = null;
     private AssistantFunctions assistent = null;
+    private IDbController dbController = null;
+    private PatientDetails memberDetail = null;
 
     public RoutineController_V1()
     {
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
+        dbController = models.determineDbControllerVersion();
         updates = models.determineIUpdatesVersion();
         ems = models.determineIEmsRoutineVersion();
         assistent = new AssistantFunctions();
+        memberDetail = new PatientDetails();
     }
 
     public Object transferLocation(HashMap<String, String> data)
@@ -64,7 +72,23 @@ public class RoutineController_V1 implements IRoutineController {
 
     // TODO: Shumulik
     @Override
-    public Object updateCommunicationParameters() {
+    public Object updateCommunicationParameters()
+    {
+        ArrayList<Integer> allCmid = null; //dbController
+        //pass all over cmid in db
+        for (Integer c : allCmid) {
+            //cannot check if already reached last item
+            String regId = memberDetail.getRegId(c);
+            if (memberDetail.ifTypeISPatientOrGuardian(regId))
+            {
+
+            }
+            // is a doctor
+            else
+            {
+
+            }
+        }
         return null;
     }
 
