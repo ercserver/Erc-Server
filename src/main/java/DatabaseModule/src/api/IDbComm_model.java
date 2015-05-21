@@ -2,6 +2,7 @@ package DatabaseModule.src.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by NAOR on 06/04/2015.
@@ -36,14 +37,11 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
     String getCmidByPatientID(String pID);
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
+
+
+    // TODO: Ohad
+    HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
+    HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
+    List<Integer> getAllCmidsByStatus(int status);
     String getPatientIDByCmid(String cmid);
-    HashMap<String, String> getEventDetails(String eventId);
-    void insertAssistent(HashMap<String, String> insert);
-    void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds);
-    void updateArrivalDate(HashMap<String, String> data);
-    void updateActivationDate(String cmid, String eventId);
-    void updateResult(String cmid, String eventId, String result);
-    String getEventByCmid(String cmid);
-    void updatePatientRemarks(String cmid, String eventID, String remark);
-    void insertMedicationUse(String proCmid, String eventId, String aproId);
 }
