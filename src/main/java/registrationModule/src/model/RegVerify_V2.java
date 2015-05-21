@@ -244,7 +244,6 @@ public class RegVerify_V2 implements IRegVerify_model {
             return obj.get("status_name");
         }
         return null;
-
     }
 
     public HashMap<String, String> fillterDoctorData(HashMap<String, String> details) {

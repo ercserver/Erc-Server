@@ -8,7 +8,7 @@ import java.util.HashMap;
 public interface IUpdates {
     public Object getUpdatesFields(HashMap<String, String> data);
 
-    public Object updateCommunicationParameters(); // Send to all users the most recent comm. params.
+    public Object updateCommunicationParameters(String code); // Send to all users the most recent comm. params.
 
     public Object updateMemberDetails(HashMap<String, String> data); // Update the details in the db
 

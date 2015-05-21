@@ -2,12 +2,14 @@ package DatabaseModule.src.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by User on 20/04/2015.
  */
 
 public interface IDbController  extends IDbInit, IDbComm {
+    List<Integer> getAllCmidsByStatus(int status);
     HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);

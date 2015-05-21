@@ -1083,7 +1083,6 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
 
-
     // TODO: get fields with values (intersection of registration fields and community_member)
 
     public HashMap<String, String> getEventDetails(String eventId)

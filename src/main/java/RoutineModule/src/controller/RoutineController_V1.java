@@ -11,6 +11,7 @@ import Utilities.PatientDetails;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,23 +72,45 @@ public class RoutineController_V1 implements IRoutineController {
 
 
     // TODO: Shumulik
-    @Override
-    public Object updateCommunicationParameters()
+
+    public Object updateCommunicationParameters(String code)
     {
-        ArrayList<Integer> allCmid = null; //dbController
+        HashMap<Integer, HashMap<String, String>> ret =
+                new HashMap<Integer, HashMap<String, String>>();
+
+        ArrayList<String> target = new ArrayList<String>();
+
+
+        int numStatus = 0;//dbController.
+
+        List<Integer> allCmid = dbController.getAllCmidsByStatus(numStatus);
         //pass all over cmid in db
+        //String code = "setLocationFrequency";
+        String messge = "please update your communication parameters";
+        HashMap<String, String> basic = updates.buildBasicResponse(messge, code);
+        //ret.put(basic);
         for (Integer c : allCmid) {
-            //cannot check if already reached last item
+            //need to change
+            HashMap<String, String> comParameter = updates.getCommunicationParameters(c);
+            basic.putAll(comParameter);
+            ret.put(1,basic);
+
             String regId = memberDetail.getRegId(c);
+
             if (memberDetail.ifTypeISPatientOrGuardian(regId))
             {
-
+                commController.setCommToUsers(ret,
+                        target, false);
             }
             // is a doctor
             else
             {
-
+                commController.setCommToUsers(ret,
+                        null, false);
             }
+            commController.sendResponse();
+            //clean target
+            target.clear();
         }
         return null;
     }
