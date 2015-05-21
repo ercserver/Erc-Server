@@ -6,6 +6,7 @@ import DatabaseModule.src.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by NAOR on 06/04/2015.
@@ -154,6 +155,12 @@ public class DbController_V1 implements IDbController {
 
     public String getCmidByPatientID(String pID){
         return DB_communicator.getCmidByPatientID(pID);
+    }
+
+
+    @Override
+    public List<Integer> getAllCmidsByStatus(int status) {
+        return DB_communicator.getAllCmidsByStatus(status);
     }
 
     @Override

@@ -44,4 +44,22 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
     List<Integer> getAllCmidsByStatus(int status);
     String getPatientIDByCmid(String cmid);
+
+    HashMap<String,String> getEventDetails(String eventId);
+
+    void insertAssistent(HashMap<String, String> insert);
+
+    void updateArrivalDate(HashMap<String, String> data);
+
+    void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds);
+
+    void updateActivationDate(String cmid, String eventId);
+
+    void updateResult(String cmid, String eventId, String result);
+
+    String getEventByCmid(String cmid);
+
+    void updatePatientRemarks(String cmid, String eventID, String remark);
+
+    void insertMedicationUse(String proCmid, String eventId, String aproId);
 }

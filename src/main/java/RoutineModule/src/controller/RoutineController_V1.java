@@ -11,6 +11,7 @@ import Utilities.PatientDetails;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -74,7 +75,8 @@ public class RoutineController_V1 implements IRoutineController {
     @Override
     public Object updateCommunicationParameters()
     {
-        ArrayList<Integer> allCmid = null; //dbController
+        int numStatus = 0;//dbController.
+        List<Integer> allCmid = dbController.getAllCmidsByStatus(numStatus);
         //pass all over cmid in db
         for (Integer c : allCmid) {
             //cannot check if already reached last item
