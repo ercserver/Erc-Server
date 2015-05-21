@@ -85,14 +85,17 @@ public class RoutineController_V1 implements IRoutineController {
 
         int numStatus = 0;//dbController.
 
-        List<Integer> allCmid = dbController.getAllCmidsByStatus(numStatus);
+        HashMap<Integer, HashMap<String, String>> allCmid = dbController.getAllCmidsByStatus(numStatus);
         //pass all over cmid in db
         //String code = "setLocationFrequency";
         String messge = "please update your communication parameters";
         HashMap<String, String> basic = updates.buildBasicResponse(messge, code);
         //ret.put(basic);
-        for (Integer c : allCmid) {
-            HashMap<String, String> comParameter = updates.getCommunicationParameters(c,code);
+        for (Map.Entry<Integer,HashMap<String,String>> objs : allCmid.entrySet()){
+            HashMap<String,String> obj = objs.getValue();
+            String c = obj.get("community_member_id");
+            HashMap<String, String> comParameter = updates.getCommunicationParameters(
+                    new Integer(c),code);
 
             if (comParameter == null) {
                 // this mean that is paramter of Patient and this is a doctor

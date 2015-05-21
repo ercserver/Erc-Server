@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public interface IDbController  extends IDbInit, IDbComm {
-    List<Integer> getAllCmidsByStatus(int status);
+    HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status);
     HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);

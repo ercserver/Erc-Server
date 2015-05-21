@@ -40,7 +40,7 @@ public interface IDbComm {
     // TODO: Ohad
     HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
-    List<Integer> getAllCmidsByStatus(int status);
+    HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status);
     String getPatientIDByCmid(String cmid);
 
 }

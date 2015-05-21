@@ -1294,7 +1294,7 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
-    public List<Integer> getAllCmidsByStatus(int status) {
+    public HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status) {
         HashMapBuilder<String, String> cond = new HashMapBuilder<>();
         return selectFromTable("P_StatusLog",Arrays.asList("community_member_id"),
                 cond.put("date_to", "null").put("status_num", Integer.toString(status)));
