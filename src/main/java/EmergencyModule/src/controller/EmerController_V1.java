@@ -154,6 +154,7 @@ public class EmerController_V1 implements IEmerController {
         //TODO - Naor
     }
 
+    // Assistant arrival to the destination in emergency event
     @Override
     public void arrivalToDestination(HashMap<String, String> data) {
         //TODO - will need to do here things with logs
@@ -161,17 +162,16 @@ public class EmerController_V1 implements IEmerController {
         {
             return;
         }
+        // Updates the data base
         dbController.updateArrivalDate(data);
+        // Sends the news to EMS and asks for givving the medication
         HashMap<String,String> h = new HashMap<String,String>();
         h.put("event_id", data.get("event_id"));
-        HashMap<String,String> cond = new HashMap<String,String>();
-        cond.put("P_CommunityMembers.community_member_id", data.get("community_member_id"));
-        h.put("patient_id", dbController.getUserByParameter(cond).get("patient_id"));
+        h.put("patient_id", dbController.getPatientIDByCmid(data.get("community_member_id")));
         h.put("RequestID", "needConfirmMedicationGivving");
-        HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
-        response.put(1, h);
-        commController.setCommToUsers(response, null, false);
-        commController.sendResponse();
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo.add(EMS_URL);
+        initiatedOneObjectRequest(h, sendTo);
     }
 
     @Override
@@ -183,12 +183,15 @@ public class EmerController_V1 implements IEmerController {
         h.put("event_id", data.get("event_id"));
         h.put("RequestID", data.get("RequestID"));
         String cmid = dbController.getCmidByPatientID(data.get("patient_id"));
+        // Ems accept medication givving-updates the data base
         if (data.get("RequestID").equals("confirmMedication")) {
             dbController.updateActivationDate(cmid, data.get("event_id"));
             dbController.insertMedicationUse(cmid, data.get("event_id"), data.get("community_member_id"));
         }
+        // Ems reject medication givving-updates the data base
         else
             dbController.updateResult(cmid, data.get("event_id"), "'EMS rejected medication givving'");
+        // Sends EMS response to the assistant
         String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
@@ -216,7 +219,7 @@ public class EmerController_V1 implements IEmerController {
         String patientID = data.get("PatientID");
         String eventID = data.get("EventID");
         //"false" for removal
-        addOrRemoveAssistant(patientID,eventID,false, eta);
+        addOrRemoveAssistant(patientID,eventID,false, null);
     }
 
     @Override
@@ -228,6 +231,7 @@ public class EmerController_V1 implements IEmerController {
         }
         String eventId = dbController.getEventByCmid(data.get("community_member_id"));
         dbController.updatePatientRemarks(data.get("community_member_id"), eventId, data.get("message"));
+        // Sends the patient's message to EMS and the assistents
         HashMap<String, String> response = new HashMap<String, String>();
         response.put("event_id", eventId);
         response.put("message", data.get("message"));
@@ -268,22 +272,25 @@ public class EmerController_V1 implements IEmerController {
         // we call this from "updatePatientStatus"
         if(sendToEms)
         {
+            // Sends message to apps and to EMS
             if(null != regIds)
             {
                 commController.setCommToUsers(response, null, false);
                 commController.sendResponse();
                 commController.setCommToUsers(response, regIds, false);
                 commController.sendResponse();
+                return;
             }
+            // Sends message only to EMS
             commController.setCommToUsers(response, null, false);
             commController.sendResponse();
         }
+        // Sends message only to apps
         if(null != regIds)
         {
             commController.setCommToUsers(response, regIds, false);
             commController.sendResponse();
         }
-        //TODO - Perhaps we do that from another module? maybe the comm?
     }
 
     private void initiatedOneObjectRequest(HashMap<String, String> request,ArrayList<String> URLs){
@@ -360,6 +367,7 @@ public class EmerController_V1 implements IEmerController {
         return null;
     }
 
+    // Gets eventId and list of users, and tells to GIS to stop following aftr those users
     private void stopFollow(String eventId, ArrayList<String> cmids)
     {
         HashMap<String, String> req = new HashMap<String, String>();
