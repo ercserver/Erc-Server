@@ -1278,8 +1278,8 @@ public class DbComm_V1 implements IDbComm_model {
 
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
         HashMapBuilder<String, String> hma = new HashMapBuilder<>();
-        return selectFromTable("O_EmergencyEvents", null /*all*/,
-                hma.put("ems_member_id", Integer.toString(cmid)));
+        //return selectFromTable("O_EmergencyEvents", null /*all*/,
+        //        hma.put("ems_member_id", Integer.toString(cmid)));
     }
 
     @Override

@@ -92,13 +92,15 @@ public class RoutineController_V1 implements IRoutineController {
         HashMap<String, String> basic = updates.buildBasicResponse(messge, code);
         //ret.put(basic);
         for (Integer c : allCmid) {
-            //need to change
-            HashMap<String, String> comParameter = updates.getCommunicationParameters(c);
+            HashMap<String, String> comParameter = updates.getCommunicationParameters(c,code);
+
+            if (comParameter == null) {
+                // this mean that is paramter of Patient and this is a doctor
+                continue;
+            }
             basic.putAll(comParameter);
             ret.put(1,basic);
-
             String regId = memberDetail.getRegId(c);
-
             if (memberDetail.ifTypeISPatientOrGuardian(regId))
             {
                 commController.setCommToUsers(ret,

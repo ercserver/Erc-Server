@@ -45,9 +45,35 @@ public class Updates_V1 implements IUpdates_model {
     }
 
     @Override
-    public HashMap<String, String> getCommunicationParameters(int cmid) {
+    public HashMap<String, String> getCommunicationParameters(int cmid,String type) {
        // HashMap<Integer,HashMap<String, String>> ret =
        //         new HashMap<Integer,HashMap<String, String>>();
+
+        HashMap<String, String> ret = new HashMap<String, String>();
+
+
+        if (type.equals("setConnectServerFrequency"))
+        {
+            ret.putAll(comParam.getFrequency("'connect_server_frequency'"));
+        }
+
+        if (type.equals("setTimesToConnectToServer")) {
+            ret.putAll(comParam.getFrequency("'times_to_connect_to_server'"));
+        }
+
+        String reg = memberDetail.getRegId(cmid);
+        if (memberDetail.ifTypeISPatientOrGuardian(reg)) {
+            if (type.equals("setLocationFrequency")) {
+                ret.putAll(comParam.getFrequency("'location_frequency'"));
+            }
+            if (type.equals("setCallingDefault")) {
+                ret.putAll(comParam.getDefaultInEmergency(memberDetail.getState(cmid)));
+            }
+        }
+        // this mean that is paramter of Patient and this is a doctor
+        return null;
+
+        /*
         HashMap<String, String> param = new HashMap<String, String>();
         param.putAll(comParam.getFrequency("'connect_server_frequency'"));
         param.putAll(comParam.getFrequency("'times_to_connect_to_server'"));
@@ -58,6 +84,7 @@ public class Updates_V1 implements IUpdates_model {
         }
         //ret.put(1,param);
         return param;
+        */
     }
 
     @Override
