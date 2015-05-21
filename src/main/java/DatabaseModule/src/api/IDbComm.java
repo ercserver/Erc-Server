@@ -42,5 +42,6 @@ public interface IDbComm {
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
     HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status);
     String getPatientIDByCmid(String cmid);
+    void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);
 
 }
