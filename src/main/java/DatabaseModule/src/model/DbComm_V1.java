@@ -1084,22 +1084,6 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
 
-
-    @Override
-    public HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime() {
-        return null;
-    }
-
-    @Override
-    public HashMap<Integer, HashMap<String, String>> getUnfinishedEvents() {
-        return null;
-    }
-
-    @Override
-    public List<Integer> getAllCmidsByStatus(int status) {
-        return null;
-    }
-
     // TODO: get fields with values (intersection of registration fields and community_member)
 
     public HashMap<String, String> getEventDetails(String eventId)
