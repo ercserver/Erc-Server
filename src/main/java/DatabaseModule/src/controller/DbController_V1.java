@@ -159,7 +159,7 @@ public class DbController_V1 implements IDbController {
 
 
     @Override
-    public List<Integer> getAllCmidsByStatus(int status) {
+    public HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status) {
         return DB_communicator.getAllCmidsByStatus(status);
     }
 
