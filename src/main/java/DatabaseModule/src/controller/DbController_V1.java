@@ -166,6 +166,11 @@ public class DbController_V1 implements IDbController {
         return null;
     }
 
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid) {
+        return DB_communicator.getEventsByEmsCmid(cmid);
+    }
+
     public String getPatientIDByCmid(String cmid){
         return DB_communicator.getPatientIDByCmid(cmid);
     }

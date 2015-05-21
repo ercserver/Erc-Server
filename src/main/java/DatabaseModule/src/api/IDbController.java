@@ -6,7 +6,11 @@ import java.util.HashMap;
 /**
  * Created by User on 20/04/2015.
  */
+
 public interface IDbController  extends IDbInit, IDbComm {
+    HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
+    HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
+    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
     HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType);
     HashMap<String,String> getUserByParameter(HashMap<String,String> whereConditions);
     void updateUserDetails(HashMap<String,String> updates);
@@ -46,4 +50,5 @@ public interface IDbController  extends IDbInit, IDbComm {
     String getEventByCmid(String cmid);
     void updatePatientRemarks(String cmid, String eventID, String remark);
     void insertMedicationUse(String proCmid, String eventId, String aproId);
+
 }
