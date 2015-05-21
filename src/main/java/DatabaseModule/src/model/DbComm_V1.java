@@ -2,8 +2,7 @@ package DatabaseModule.src.model;
 
 
 import DatabaseModule.src.api.IDbComm_model;
-import RequestsModule.utils.HashMapCreator;
-import Utilities.HashMapAdapter;
+import Utilities.HashMapBuilder;
 import com.sun.deploy.util.StringUtils;
 import org.json.JSONObject;
 
@@ -1278,7 +1277,7 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
-        HashMapAdapter<String, String> hma = new HashMapAdapter<>();
+        HashMapBuilder<String, String> hma = new HashMapBuilder<>();
         return selectFromTable("O_EmergencyEvents", null /*all*/,
                 hma.put("ems_member_id", Integer.toString(cmid)));
     }
@@ -1296,6 +1295,8 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public List<Integer> getAllCmidsByStatus(int status) {
-        return null;
+        HashMapBuilder<String, String> cond = new HashMapBuilder<>();
+        return selectFromTable("P_StatusLog",Arrays.asList("community_member_id"),
+                cond.put("date_to", "null").put("status_num", Integer.toString(status)));
     }
 }
