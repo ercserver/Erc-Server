@@ -55,11 +55,11 @@ public class EmerController_V1 implements IEmerController {
         HashMap<Integer, HashMap<String, String>> filteredData = emergencyFilter.filterUsersByArrivalTime(data);
         approachAssistants(filteredData);
         // Sends to EMS the radius with that the GIS searches for assistants
-        String radius = getRadius(data);
+        String radius = getRadius(filteredData);
         HashMap<String, String> response = new HashMap<String, String>();
         response.put("RequestID", "getRadius");
         response.put("radius", radius);
-        response.put("event_id", getEventId(data));
+        response.put("event_id", getEventId(filteredData));
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo.add(EMS_URL);
         initiatedOneObjectRequest(response, sendTo);
@@ -80,32 +80,39 @@ public class EmerController_V1 implements IEmerController {
     // we use "addOrRemoveAssistant" here
     @Override
     public void assistantRespondsToApproach(HashMap<String, String> response) {
-        //1. If approves - we need to send him the map or something(??)
-        //2. If not - it just exits "event mode" in the app
         //TODO - will need to do here things with logs
         if (!assistentFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
         HashMap<String, String> updates = new HashMap<String, String>();
+        // This assistant rejected arrival
         if(response.get("RequestID").equals("arivalRejection"))
             updates.put("response_type", "'reject'");
+        // This assistant will arrival by foot
         else if(response.get("requestID").equals("arivalAcceptionOnFoot"))
         {
             updates.put("response_type", "'accept'");
             updates.put("transformation_mean", "0");
         }
+        // This assistant will arrival by car
         else
         {
             updates.put("response_type", "'accept'");
             updates.put("transformation_mean", "1");
         }
+        // Updates the data base about the assistant's response
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("event_id", response.get("event_id"));
         conds.put("community_member_id", response.get("community_member_id"));
         dbController.updateEmerFirstResponse(updates, conds);
+        // Adds this assistant to EMS, and to the following emergency of GIS
         if(!response.get("RequestID").equals("arivalRejection")) {
-            //ToDo:probably need to add arival times and maby the arival method
+            String eta = null;
+            if(response.get("requestID").equals("arivalAcceptionOnFoot"))
+                eta = response.get("eta_by_foot");
+            else
+                eta = response.get("eta_by_car");
             addOrRemoveAssistant(dbController.getPatientIDByCmid(response.get("community_member_id")),
-                    response.get("event_id"), true);
+                    response.get("event_id"), true, eta);
             askGisToFollow(response.get("event_id"), response.get("community_member_id"));
         }
     }
@@ -123,9 +130,16 @@ public class EmerController_V1 implements IEmerController {
 
     public void receiveArrivalTime(HashMap<String,String> data)
     {
-        //ToDo:probably need to add arival times and maby x and y
-        addOrRemoveAssistant(dbController.getPatientIDByCmid(data.get("community_member_id")),
-                data.get("event_id"), true);
+        // Updates the data base about the location and arrival times of an assistant
+        dbController.updateAssistantArrivalTimesAndLocation(data);
+        // Updates the EMS
+        updateAssistantArrivalTimes(dbController.getPatientIDByCmid(data.get("community_member_id")),
+                data.get("event_id"), data.get("eta_by_foot"), data.get("eta_by_car"), data.get("x"),
+                data.get("y"));
+    }
+
+    //ToDo:Naor
+    private void updateAssistantArrivalTimes(String patientId, String eventId, String etaFoot, String etaCar, String x, String y) {
     }
 
     @Override
@@ -135,7 +149,7 @@ public class EmerController_V1 implements IEmerController {
         toReject.remove("EventID");
         //run over the list and remove every assistant ("false" indicates removal)
         for(String patientID : toReject.values()){
-            addOrRemoveAssistant(patientID,eventID,false);
+            addOrRemoveAssistant(patientID,eventID,false, null);
         }
         //TODO - Naor
     }
@@ -202,7 +216,7 @@ public class EmerController_V1 implements IEmerController {
         String patientID = data.get("PatientID");
         String eventID = data.get("EventID");
         //"false" for removal
-        addOrRemoveAssistant(patientID,eventID,false);
+        addOrRemoveAssistant(patientID,eventID,false, eta);
     }
 
     @Override
@@ -367,8 +381,7 @@ public class EmerController_V1 implements IEmerController {
         commController.sendResponse();
     }
 
-    private void addOrRemoveAssistant(String patientID,String eventID,boolean action) {
-        //TODO - Naor-if action is true that's mean that we add the assistent?
+    private void addOrRemoveAssistant(String patientID, String eventID, boolean action, String eta) {
         //we call this function from "assistantRespondsToApproach" and from "rejectAssistantsByEMS"
     }
 
