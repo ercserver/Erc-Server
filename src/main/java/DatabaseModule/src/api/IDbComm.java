@@ -2,6 +2,7 @@ package DatabaseModule.src.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by NAOR on 06/04/2015.
@@ -41,5 +42,5 @@ public interface IDbComm {
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
 
     String getPatientIDByCmid(String cmid);
-
+    List<Integer> getAllCMIDsByStatus(int statusCode);
 }
