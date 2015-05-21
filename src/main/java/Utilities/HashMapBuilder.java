@@ -1,38 +1,36 @@
 package Utilities;
 
-import org.json.simple.JSONObject;
-
 import java.util.HashMap;
 
 /**
  * Created by ohad on 21/5/2015.
  */
 /* This is meant to be a regular hashmap with one liners methods*/
-public class HashMapAdapter<K, T> {
+public class HashMapBuilder<K, T> {
     private HashMap<K, T> map;
 
-    public HashMapAdapter() {
+    public HashMapBuilder() {
         map = new HashMap<K, T>();
     }
 
-    public HashMapAdapter(HashMap other){
+    public HashMapBuilder(HashMap other){
         map = new HashMap<>();
         map.putAll(other);
     }
 
     // One liners
-    public HashMap<K,T> put(K key, T val){
+    public HashMapBuilder<K,T> put(K key, T val){
         map.put(key, val);
-        return map;
+        return this;
     }
 
-    public HashMap<K,T> putAll(HashMap<K, T> other){
+    public HashMapBuilder<K,T> putAll(HashMap<K, T> other){
         map.putAll(other);
-        return map;
+        return this;
     }
 
-    public Object get(K key){
-        return map.get(key);
+    public HashMap<K, T> build(){
+        return map;
     }
 
 }
