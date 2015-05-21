@@ -2,6 +2,8 @@ package DatabaseModule.src.model;
 
 
 import DatabaseModule.src.api.IDbComm_model;
+import RequestsModule.utils.HashMapCreator;
+import Utilities.HashMapAdapter;
 import com.sun.deploy.util.StringUtils;
 import org.json.JSONObject;
 
@@ -1081,10 +1083,7 @@ public class DbComm_V1 implements IDbComm_model {
         return getRowsFromTable(cond, "P_Patients").get(1).get("patient_id");
     }
 
-    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
-        // TODO: Ohad
-        return null;
-    }
+
 
     @Override
     public HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime() {
@@ -1292,5 +1291,27 @@ public class DbComm_V1 implements IDbComm_model {
         {
             releaseResources(statement, connection);
         }
+    }
+
+    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
+        HashMapAdapter<String, String> hma = new HashMapAdapter<>();
+        return selectFromTable("O_EmergencyEvents", null /*all*/,
+                hma.put("ems_member_id", Integer.toString(cmid)));
+    }
+
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime() {
+        return null;
+
+    }
+
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getUnfinishedEvents() {
+        return null;
+    }
+
+    @Override
+    public List<Integer> getAllCmidsByStatus(int status) {
+        return null;
     }
 }
