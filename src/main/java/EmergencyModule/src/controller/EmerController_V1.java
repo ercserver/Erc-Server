@@ -4,6 +4,7 @@ import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.api.IEmerFilter_model;
+import EmergencyModule.src.api.IEmerLogger_model;
 import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
 
@@ -20,6 +21,7 @@ public class EmerController_V1 implements IEmerController {
     private static final String EMS_URL = null;
 
     private IEmerFilter_model emergencyFilter = null;
+    private IEmerLogger_model emergencyLogger = null;
     private IDbController dbController = null;
     private ICommController commController = null;
     private AssistantFunctions assistentFuncs = null;
@@ -28,7 +30,8 @@ public class EmerController_V1 implements IEmerController {
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
         dbController = models.determineDbControllerVersion();
-        emergencyFilter = models.determineEmerVersion();
+        emergencyFilter = models.determineEmerFilterVersion();
+        emergencyLogger = models.determineEmerLoggerVersion();
         assistentFuncs = new AssistantFunctions();
     }
 
@@ -81,6 +84,7 @@ public class EmerController_V1 implements IEmerController {
     @Override
     public void assistantRespondsToApproach(HashMap<String, String> response) {
         //TODO - will need to do here things with logs
+        emergencyLogger.handleAssistantRespondsToApproach(response);
         if (!assistentFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
         HashMap<String, String> updates = new HashMap<String, String>();
@@ -158,6 +162,7 @@ public class EmerController_V1 implements IEmerController {
     @Override
     public void arrivalToDestination(HashMap<String, String> data) {
         //TODO - will need to do here things with logs
+        emergencyLogger.handleArrivalToDest(data);
         if (!assistentFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
         {
             return;
@@ -179,6 +184,7 @@ public class EmerController_V1 implements IEmerController {
         if (!assistentFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
         //TODO - will need to do here things with logs
+        emergencyLogger.handleApproveOrRejectMed(data);
         HashMap<String, String> h = new HashMap<String, String>();
         h.put("event_id", data.get("event_id"));
         h.put("RequestID", data.get("RequestID"));
@@ -219,12 +225,13 @@ public class EmerController_V1 implements IEmerController {
         String patientID = data.get("PatientID");
         String eventID = data.get("EventID");
         //"false" for removal
-        addOrRemoveAssistant(patientID,eventID,false, null);
+        addOrRemoveAssistant(patientID, eventID, false, null);
     }
 
     @Override
     public void updatePatientStatus(HashMap<String, String> data) {
         //TODO - will need to do here things with logs
+        emergencyLogger.handleUpdatePatientStatus(data);
         if (!assistentFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
         {
             return;
