@@ -238,11 +238,10 @@ public class EmerController_V1 implements IEmerController {
         response.put("event_id", eventId);
         response.put("message", data.get("message"));
         response.put("RequestID", "newInfo");
-        //ToDo:need from DB
-        //ArrayList<String> regIds = dbController.getHelpersRegIds(eventId);
+        ArrayList<String> regIds = dbController.getHelpersRegIds(eventId);
         HashMap<Integer,HashMap<String,String>> h = new HashMap<Integer,HashMap<String,String>>();
         h.put(1, response);
-        //popUpMessage(h, regIds, true);
+        popUpMessage(h, regIds, true);
     }
 
     @Override
