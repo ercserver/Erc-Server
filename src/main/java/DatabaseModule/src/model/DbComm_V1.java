@@ -1083,6 +1083,8 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
 
+
+
     // TODO: get fields with values (intersection of registration fields and community_member)
 
     public HashMap<String, String> getEventDetails(String eventId)
@@ -1139,17 +1141,6 @@ public class DbComm_V1 implements IDbComm_model {
         {
             releaseResources(statement, connection);
         }
-    }
-
-    public void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data)
-    {
-        HashMap<String, String> conds = new HashMap<String, String>();
-        conds.put("community_member_id", data.get("community_member_id"));
-        conds.put("event_id", data.get("event_id"));
-        updateTable("O_EmergencyEventResponse", conds, "x", data.get("x"));
-        updateTable("O_EmergencyEventResponse", conds, "y", data.get("y"));
-        updateTable("O_EmergencyEventResponse", conds, "eta_by_foot", data.get("eta_by_foot"));
-        updateTable("O_EmergencyEventResponse", conds, "eta_by_car", data.get("eta_by_car"));
     }
 
     public void updateArrivalDate(HashMap<String, String> data)
@@ -1287,10 +1278,22 @@ public class DbComm_V1 implements IDbComm_model {
         }
     }
 
+    @Override
+    public void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data) {
+
+    }
+
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId) {
+        HashMapBuilder<String, String> hma = new HashMapBuilder<>();
+        return selectFromTable("O_EmergencyEventResponse", Arrays.asList("cmid"),
+                hma.put("event_id", Integer.toString(eventId)).put("response_type", "1").build());
+    }
+
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
         HashMapBuilder<String, String> hma = new HashMapBuilder<>();
-        //return selectFromTable("O_EmergencyEvents", null /*all*/,
-        //        hma.put("ems_member_id", Integer.toString(cmid)));
+        return selectFromTable("O_EmergencyEvents", null /*all*/,
+                hma.put("ems_member_id", Integer.toString(cmid)).build());
     }
 
     @Override
@@ -1305,9 +1308,9 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
-    public HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status) {
+    public HashMap<Integer, HashMap<String, String>>  getAllCmidsByStatus(int status) {
         HashMapBuilder<String, String> cond = new HashMapBuilder<>();
         return selectFromTable("P_StatusLog",Arrays.asList("community_member_id"),
-                cond.put("date_to", "null").put("status_num", Integer.toString(status)));
+                cond.put("date_to", "null").put("status_num", Integer.toString(status)).build());
     }
 }

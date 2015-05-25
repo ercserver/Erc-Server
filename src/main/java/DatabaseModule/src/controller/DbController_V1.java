@@ -182,6 +182,11 @@ public class DbController_V1 implements IDbController {
         return DB_communicator.getPatientIDByCmid(cmid);
     }
 
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId) {
+        return DB_communicator.getAllAssistantsByEventId(eventId);
+    }
+
     public HashMap<String, String> getEventDetails(String eventId){return DB_communicator.getEventDetails(eventId);}
 
     public void insertAssistent(HashMap<String, String> insert){DB_communicator.insertAssistent(insert);}

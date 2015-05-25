@@ -506,20 +506,22 @@
       <column name="action_status_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="status_name" sqlType="varchar" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PK__O_Action__FDE30FB65768D5EF" columns="action_status_num"/>
-      <exported-key name="FK__O_Emergen__Actio__5F09F7B7" table="O_EmergencyEventActions" schema="dbo" catalog="socmedserver" columns="action_status_num"/>
+      <exported-key name="FK__O_Emergen__actio__517AF26F" table="O_EmergencyEventActions" schema="dbo" catalog="socmedserver" columns="action_status_num"/>
+      <exported-key name="FK__O_Emergen__actio__591C1437" table="O_EmergencyEventResponse" schema="dbo" catalog="socmedserver" columns="action_status_num"/>
     </table>
     <table name="O_ActionTypes" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="action_type_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="action_type_name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PK__O_Action__0F2FFACA454A25B4" columns="action_type_num"/>
-      <exported-key name="FK__O_Emergen__Actio__5E15D37E" table="O_EmergencyEventActions" schema="dbo" catalog="socmedserver" columns="action_type_num"/>
+      <exported-key name="FK__O_Emergen__actio__5086CE36" table="O_EmergencyEventActions" schema="dbo" catalog="socmedserver" columns="action_type_num"/>
+      <exported-key name="FK__O_Emergen__actio__5827EFFE" table="O_EmergencyEventResponse" schema="dbo" catalog="socmedserver" columns="action_type_num"/>
     </table>
     <table name="O_AutomaticDispensers" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="dispensers_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="dispensers_name" sqlType="varchar" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <column name="dispensers_location" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PK__O_Automa__632311C4679F3DB8" columns="dispensers_num"/>
-      <exported-key name="FK__O_Emergen__Provi__6F405F80" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="providing_dispenser_num"/>
+      <exported-key name="FK__O_Emergen__provi__5FC911C6" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="providing_dispenser_num"/>
     </table>
     <table name="O_EmergencyEventActions" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="emergency_action_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -528,16 +530,16 @@
       <column name="action_status_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="created_date" sqlType="timestamp" precision="8" scale="0" nullable="false" jdbcType="-2" version="true"/>
       <column name="finished_date" sqlType="datetime" precision="23" scale="3" nullable="false" jdbcType="93"/>
-      <primary-key name="PK__O_Emerge__B183AE9B5B3966D3" columns="emergency_action_num"/>
-      <foreign-key name="FK__O_Emergen__Actio__5F09F7B7" columns="action_status_num" ref-table="O_ActionStatus" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="action_status_num" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK__O_Emergen__Actio__5E15D37E" columns="action_type_num" ref-table="O_ActionTypes" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="action_type_num" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK__O_Emergen__Event__5D21AF45" columns="event_id" ref-table="O_EmergencyEvents" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="event_id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <primary-key name="PK__O_Emerge__AC0BBFFF4DAA618B" columns="emergency_action_num"/>
+      <foreign-key name="FK__O_Emergen__actio__517AF26F" columns="action_status_num" ref-table="O_ActionStatus" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="action_status_num" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__actio__5086CE36" columns="action_type_num" ref-table="O_ActionTypes" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="action_type_num" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__event__4F92A9FD" columns="event_id" ref-table="O_EmergencyEvents" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="event_id" update-rule="1" delete-rule="1" deferrability="2"/>
     </table>
     <table name="O_EmergencyEventResponse" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="response_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="community_member_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="event_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="emergency_event_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="emergency_event_num" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="action_type_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="eta_by_foot" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="action_status_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -552,9 +554,11 @@
       <column name="activation_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <column name="arrival_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <column name="result" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="PK__O_Emerge__A8884D053019FEA4" columns="response_num"/>
-      <foreign-key name="FK__O_Emergen__Event__32F66B4F" columns="event_id" ref-table="O_EmergencyEvents" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="event_id" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK__O_Emergen__Commu__32024716" columns="community_member_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <primary-key name="PK__O_Emerge__F44D3BEE54575F1A" columns="response_num"/>
+      <foreign-key name="FK__O_Emergen__actio__591C1437" columns="action_status_num" ref-table="O_ActionStatus" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="action_status_num" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__actio__5827EFFE" columns="action_type_num" ref-table="O_ActionTypes" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="action_type_num" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__event__5733CBC5" columns="event_id" ref-table="O_EmergencyEvents" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="event_id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__commu__563FA78C" columns="community_member_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
     </table>
     <table name="O_EmergencyEvents" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="event_id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -562,7 +566,7 @@
       <column name="patient_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="created_date" sqlType="timestamp" precision="8" scale="0" nullable="false" jdbcType="-2" version="true"/>
       <column name="finished_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
-      <column name="ems_member_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ems_member_id" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="status_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="x" sqlType="real" precision="24" scale="0" nullable="false" jdbcType="7"/>
       <column name="y" sqlType="real" precision="24" scale="0" nullable="false" jdbcType="7"/>
@@ -571,35 +575,36 @@
       <column name="last_action_time" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <column name="time_to_next_reminder" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="memo" sqlType="varchar" precision="300" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="PK__O_Emerge__7944C87050BBD860" columns="event_id"/>
-      <foreign-key name="FK__O_Emergen__Statu__548C6944" columns="status_num" ref-table="O_EventStatuses" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="status_num" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK__O_Emergen__Creat__52A420D2" columns="create_by_member_id" ref-table="O_InvolvedCommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="internal_id" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK__O_Emergen__EmsMe__5398450B" columns="ems_member_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
-      <exported-key name="FK__O_Emergen__Event__5D21AF45" table="O_EmergencyEventActions" schema="dbo" catalog="socmedserver" columns="event_id"/>
-      <exported-key name="FK__O_Emergen__Event__32F66B4F" table="O_EmergencyEventResponse" schema="dbo" catalog="socmedserver" columns="event_id"/>
-      <exported-key name="FK__O_Emergen__Event__6D58170E" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="event_id"/>
+      <primary-key name="PK__O_Emerge__2370F72746FD63FC" columns="event_id"/>
+      <foreign-key name="FK__O_Emergen__statu__4ACDF4E0" columns="status_num" ref-table="O_EventStatuses" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="status_num" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__creat__48E5AC6E" columns="create_by_member_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__ems_m__49D9D0A7" columns="ems_member_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <exported-key name="FK__O_Emergen__event__4F92A9FD" table="O_EmergencyEventActions" schema="dbo" catalog="socmedserver" columns="event_id"/>
+      <exported-key name="FK__O_Emergen__event__5733CBC5" table="O_EmergencyEventResponse" schema="dbo" catalog="socmedserver" columns="event_id"/>
+      <exported-key name="FK__O_Emergen__event__5DE0C954" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="event_id"/>
     </table>
     <table name="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" type="TABLE">
-      <column name="emergenct_medication_use_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="emergency_medication_use_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="event_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="providing_member_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="providing_dispenser_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="providing_dispenser_num" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="approved_by_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="medication_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="approval_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <column name="medication_provision_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <column name="digital_signature_file" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="PK__O_Emerge__7883DFBB6B6FCE9C" columns="emergenct_medication_use_num"/>
-      <foreign-key name="FK__O_Emergen__Provi__6F405F80" columns="providing_dispenser_num" ref-table="O_AutomaticDispensers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="dispensers_num" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK__O_Emergen__Event__6D58170E" columns="event_id" ref-table="O_EmergencyEvents" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="event_id" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK__O_Emergen__Provi__6E4C3B47" columns="providing_member_id" ref-table="O_InvolvedCommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="internal_id" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK__O_Emergen__Medic__703483B9" columns="medication_num" ref-table="P_Medications" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="medication_num" update-rule="1" delete-rule="1" deferrability="2"/>
+      <primary-key name="PK__O_Emerge__F3CC7B875BF880E2" columns="emergency_medication_use_num"/>
+      <foreign-key name="FK__O_Emergen__provi__5FC911C6" columns="providing_dispenser_num" ref-table="O_AutomaticDispensers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="dispensers_num" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__event__5DE0C954" columns="event_id" ref-table="O_EmergencyEvents" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="event_id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__provi__5ED4ED8D" columns="providing_member_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__appro__60BD35FF" columns="approved_by_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK__O_Emergen__medic__61B15A38" columns="medication_num" ref-table="P_Medications" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="medication_num" update-rule="1" delete-rule="1" deferrability="2"/>
     </table>
     <table name="O_EventStatuses" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="status_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="status_name" sqlType="varchar" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PK__O_EventS__76509154491AB698" columns="status_num"/>
-      <exported-key name="FK__O_Emergen__Statu__548C6944" table="O_EmergencyEvents" schema="dbo" catalog="socmedserver" columns="status_num"/>
+      <exported-key name="FK__O_Emergen__statu__4ACDF4E0" table="O_EmergencyEvents" schema="dbo" catalog="socmedserver" columns="status_num"/>
     </table>
     <table name="O_InvolvedCommunityMembers" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="internal_id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -618,8 +623,6 @@
       <column name="mobile_phone_number" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="email_address" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PK__O_Involv__56FE95BE4CEB477C" columns="internal_id"/>
-      <exported-key name="FK__O_Emergen__Creat__52A420D2" table="O_EmergencyEvents" schema="dbo" catalog="socmedserver" columns="create_by_member_id"/>
-      <exported-key name="FK__O_Emergen__Provi__6E4C3B47" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="providing_member_id"/>
     </table>
     <table name="P_Buddies" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="relationship_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -653,8 +656,11 @@
       <exported-key name="FK__Availabil__commu__4420F751" table="Availability" schema="dbo" catalog="socmedserver" columns="community_member_id"/>
       <exported-key name="FK__MP_Medica__Commu__3607E224" table="MP_MedicalPersonnel" schema="dbo" catalog="socmedserver" columns="community_member_id"/>
       <exported-key name="FK__MembersLo__Commu__780AAFAB" table="MembersLoginDetails" schema="dbo" catalog="socmedserver" columns="community_member_id"/>
-      <exported-key name="FK__O_Emergen__Commu__32024716" table="O_EmergencyEventResponse" schema="dbo" catalog="socmedserver" columns="community_member_id"/>
-      <exported-key name="FK__O_Emergen__EmsMe__5398450B" table="O_EmergencyEvents" schema="dbo" catalog="socmedserver" columns="ems_member_id"/>
+      <exported-key name="FK__O_Emergen__commu__563FA78C" table="O_EmergencyEventResponse" schema="dbo" catalog="socmedserver" columns="community_member_id"/>
+      <exported-key name="FK__O_Emergen__creat__48E5AC6E" table="O_EmergencyEvents" schema="dbo" catalog="socmedserver" columns="create_by_member_id"/>
+      <exported-key name="FK__O_Emergen__ems_m__49D9D0A7" table="O_EmergencyEvents" schema="dbo" catalog="socmedserver" columns="ems_member_id"/>
+      <exported-key name="FK__O_Emergen__provi__5ED4ED8D" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="providing_member_id"/>
+      <exported-key name="FK__O_Emergen__appro__60BD35FF" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="approved_by_id"/>
       <exported-key name="FK__P_Buddies__Commu__5C629536" table="P_Buddies" schema="dbo" catalog="socmedserver" columns="community_member_id1"/>
       <exported-key name="FK__P_Buddies__Commu__5D56B96F" table="P_Buddies" schema="dbo" catalog="socmedserver" columns="community_member_id2"/>
       <exported-key name="FK__P_DeviceL__Commu__56A9BBE0" table="P_DeviceLog" schema="dbo" catalog="socmedserver" columns="community_member_id"/>
@@ -724,7 +730,7 @@
       <column name="medication_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="medication_name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PK__P_Medica__90DB07CF0C11A858" columns="medication_num"/>
-      <exported-key name="FK__O_Emergen__Medic__703483B9" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="medication_num"/>
+      <exported-key name="FK__O_Emergen__medic__61B15A38" table="O_EmergencyMedicationUse" schema="dbo" catalog="socmedserver" columns="medication_num"/>
       <exported-key name="FK__P_Prescri__Medic__11CA81AE" table="P_Prescriptions" schema="dbo" catalog="socmedserver" columns="medication_num"/>
     </table>
     <table name="P_Patients" schema="dbo" catalog="socmedserver" type="TABLE">
