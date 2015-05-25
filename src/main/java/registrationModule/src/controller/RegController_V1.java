@@ -36,7 +36,7 @@ public class RegController_V1 implements IRegController {
         //generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(request.get("userType")));
-        dataToSend.get(1).put("RequestID", "registration");
+        dataToSend.get(1).put("Request_ID", "registration");
         ArrayList<String> sendTo = sendTo(request);
         //determine how to send the data
         commController.setCommToUsers(dataToSend, sendTo, false);
@@ -239,7 +239,7 @@ public class RegController_V1 implements IRegController {
     {
         HashMap<Integer,HashMap<String,String>> res = new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> dataToSend = new HashMap<String, String>();
-        dataToSend.put("RequestID", code);
+        dataToSend.put("Request_ID", code);
         dataToSend.put("message", message);
         res.put(1, dataToSend);
         return res;
@@ -450,7 +450,7 @@ public class RegController_V1 implements IRegController {
         }
         //adding reject reasons object (with "subRequest" to make it identifiable)
         HashMap<String,String> rejectCodes = dbController.getRejectCodes();
-        rejectCodes.put("RequestID","waitingPatients");
+        rejectCodes.put("Request_ID","waitingPatients");
         rejectCodes.put("subRequest","rejectReasons");
         response.put(0,rejectCodes);
         //determine how to send the data - initiated communication so use "false"
@@ -492,7 +492,7 @@ public class RegController_V1 implements IRegController {
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
-        response.put("RequestID", "reject");
+        response.put("Request_ID", "reject");
         response.put("reason", Reason);
         response.put("explantion", explantion);
         responseToPatient.put(1, response);

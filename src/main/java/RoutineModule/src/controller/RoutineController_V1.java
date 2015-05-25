@@ -5,10 +5,7 @@ import DatabaseModule.src.api.IDbController;
 import RoutineModule.src.api.IEmsRoutine_model;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.api.IUpdates_model;
-import Utilities.AssistantFunctions;
-import Utilities.ModelsFactory;
-import Utilities.PatientDetails;
-import Utilities.VerifyDetail;
+import Utilities.*;
 
 import java.util.*;
 
@@ -24,7 +21,7 @@ public class RoutineController_V1 implements IRoutineController {
     private IDbController dbController = null;
     private PatientDetails memberDetail = null;
     private VerifyDetail verify = null;
-
+    private SendAssistant sendAssist = null;
 
 
     public RoutineController_V1()
@@ -37,6 +34,7 @@ public class RoutineController_V1 implements IRoutineController {
         assistent = new AssistantFunctions();
         memberDetail = new PatientDetails();
         verify = new VerifyDetail();
+        sendAssist = new SendAssistant();
     }
 
     public Object transferLocation(HashMap<String, String> data)
@@ -98,7 +96,7 @@ public class RoutineController_V1 implements IRoutineController {
                     c,code);
 
             if (comParameter == null) {
-                // this mean that is paramter of Patient and this is a doctor
+                // this mean that is parameter of Patient and this is a doctor
                 continue;
             }
             basic.putAll(comParameter);
@@ -126,37 +124,118 @@ public class RoutineController_V1 implements IRoutineController {
     public Object updateMemberDetails(HashMap<Integer,HashMap<String, String>> data) {
         boolean needVerify = false;
         int cmid =  0;//Integer.parseInt(data.get("community_member_id"));
+        int index = 0;
         String password = "";// data.get("password");
-        data.remove("password");
-        data.remove("community_member_id"); 
-        if(assistent.checkCmidAndPassword(password,cmid)) {
-            for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
+        for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
                 HashMap<String,String> obj = objs.getValue();
-                String col = obj.get("name");
+                if (index == 0)
+                {
+                    cmid = Integer.parseInt(obj.get("community_member_id"));
+                    password = obj.get("password");
+                }
+                if(!assistent.checkCmidAndPassword(password,cmid)) {
+                    return null;
+                }
+
+                String col = obj.get("field_name");
+                String val = obj.get("value"); // TODO-need to change
                 if (obj.get("needs_verification").equals("1"))
                     needVerify = true;
                 else
                 {
-                            //update in table
-                    //updates.updateUserDetails(cmid,col);
+                    //update in table
+                    updates.updateUserDetails(cmid,col,val);
                 }
 
 
             }
-            if (needVerify)
+            if (needVerify) {
                 verify.verifyDetail(new Integer(cmid).toString());
-        }
-
+            }
         return null;
     }
 
     @Override
     public Object handleRefreshDetails() {
+        HashMap<Integer, HashMap<String, String>> data =
+                dbController.getRegistrationFieldsWithRefreshTime();
+
+        for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()) {
+
+            int cmid = objs.getKey();
+
+            HashMap<String, String> obj = objs.getValue();
+            HashMap<Integer,HashMap<String,String>> ret = new
+                    HashMap<Integer,HashMap<String,String>>();
+            HashMap<String,String> buildRet = new
+                    HashMap<String,String>();
+
+            //check if we need to refresh
+            if(updates.FieldneedRefresh(objs));
+            {
+                String reg = memberDetail.getRegId(cmid);
+                ArrayList<String> target = new ArrayList<String>();
+
+
+                sendAssist.buildBasicRespone("need refresh parameter", "refresh");
+                ret.put(cmid,obj);
+
+
+                if (memberDetail.ifTypeISPatientOrGuardian(reg))
+                {
+                    target.add(reg);
+                    commController.setCommToUsers(ret, target, false);
+                }
+                // is a doctor
+                else
+                {
+                    target.add("url...");//*
+                    commController.setCommToUsers(ret,null, false);
+                }
+                commController.sendResponse();
+
+            }
+        }
         return null;
     }
 
     @Override
     public Object handleRefreshResponse(HashMap<Integer, HashMap<String, String>> data) {
+        for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()) {
+            HashMap<String, String> obj = objs.getValue();
+            int cmid = Integer.parseInt(obj.get("community_member_id"));
+            String password = obj.get("password");
+            if (assistent.checkCmidAndPassword(password,cmid))
+            {
+
+                if (obj.get("Request_ID").equals("acceptRefresh"))
+                {
+                    //set  to urget to 0
+                    dbController.updateUrgentInRefreshDetailsTime
+                            (cmid, obj.get("field_name"), 0);
+                    //TODO add and check if we need verifiction
+                    if (obj.get("needs_verification").equals("1"))
+                    {
+
+                    }
+                    else
+                    {
+                        //update in table
+                        //updates.updateUserDetails(cmid,col,val);
+                    }
+                }
+                //"Request_ID" equal to rejectRefresh
+                else
+                {
+                    //set  to urget to 1
+                    dbController.updateUrgentInRefreshDetailsTime
+                            (cmid, obj.get("field_name"), 1);
+                }
+
+            }
+            else
+                return null;
+        }
         return null;
     }
 

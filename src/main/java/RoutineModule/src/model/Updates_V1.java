@@ -7,8 +7,7 @@ import Utilities.ModelsFactory;
 import Utilities.PatientDetails;
 import Utilities.SendAssistant;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by Maor on 02/05/2015.
@@ -99,7 +98,27 @@ public class Updates_V1 implements IUpdates_model {
             member.put(col, "'" + value + "'");
             member.put("community_member_id", Integer.toString(cmid));
             dbController.updateUserDetails(member);
+    }
 
+    @Override
+    public boolean FieldneedRefresh(Map.Entry<Integer, HashMap<String, String>> objs) {
+
+        HashMap<String, String> obj = objs.getValue();
+        String lastUpdate = obj.get("last_update_time");
+        Date date = new Date(lastUpdate);
+        String timeToRefresh = obj.get("refresh_time");
+
+        Calendar timeRef = Calendar.getInstance();
+        timeRef.setTime(date);
+        timeRef.add(Calendar.MINUTE, new Integer(timeToRefresh));
+
+        Calendar currentTime = Calendar.getInstance();
+        //if last update time + refresh_time > current time
+        //then we need to refresh
+        if(currentTime.before(timeRef))
+                return true;
+        else
+            return false;
     }
 
 

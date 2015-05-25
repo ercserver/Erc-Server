@@ -1315,6 +1315,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime() {
+        //Integer need to be cmid
         return null;
 
     }

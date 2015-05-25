@@ -1,6 +1,7 @@
 package RoutineModule.src.api;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Maor on 02/05/2015.
@@ -11,4 +12,6 @@ public interface IUpdates_model {
 
     HashMap<String,String> buildBasicResponse(String message,String code);
     void updateUserDetails(int cmid,String col,String value);
+
+    boolean FieldneedRefresh(Map.Entry<Integer, HashMap<String, String>> objs);
 }
