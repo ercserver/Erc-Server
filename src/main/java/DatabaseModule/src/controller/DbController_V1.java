@@ -203,6 +203,8 @@ public class DbController_V1 implements IDbController {
 
     public void updatePatientRemarks(String cmid, String eventID, String remark){DB_communicator.updatePatientRemarks(cmid, eventID, remark);}
 
+    public ArrayList<String> getHelpersRegIds(String eventId){return DB_communicator.getHelpersRegIds(eventId);}
+
     public void insertMedicationUse(String proCmid, String eventId, String aproId){DB_communicator.insertMedicationUse(proCmid, eventId, aproId);}
 
     public void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data){DB_communicator.updateAssistantArrivalTimesAndLocation(data);}

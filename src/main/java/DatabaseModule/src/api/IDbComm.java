@@ -45,5 +45,5 @@ public interface IDbComm {
     HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType);
 
     void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);
-
+    ArrayList<String> getHelpersRegIds(String eventId);
 }

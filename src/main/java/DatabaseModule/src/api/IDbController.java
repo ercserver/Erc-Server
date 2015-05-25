@@ -53,5 +53,6 @@ public interface IDbController  extends IDbInit, IDbComm {
     void updatePatientRemarks(String cmid, String eventID, String remark);
     void insertMedicationUse(String proCmid, String eventId, String aproId);
     void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);
+    ArrayList<String> getHelpersRegIds(String eventId);
 
 }

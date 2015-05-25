@@ -64,4 +64,5 @@ public interface IDbComm_model {
 
     void insertMedicationUse(String proCmid, String eventId, String aproId);
     void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);
+    ArrayList<String> getHelpersRegIds(String eventId);
 }

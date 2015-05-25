@@ -1287,9 +1287,24 @@ public class DbComm_V1 implements IDbComm_model {
     @Override
     public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType) {
         HashMapBuilder<String, String> hma = new HashMapBuilder<>();
-        return selectFromTable("O_EmergencyEventResponse", Arrays.asList("cmid"),
+        return selectFromTable("O_EmergencyEventResponse", Arrays.asList("community_member_id"),
                 hma.put("event_id", Integer.toString(eventId)).
                         put("response_type", Integer.toString(responseType)).build());
+    }
+
+    public ArrayList<String> getHelpersRegIds(String eventId)
+    {
+        HashMap<Integer, HashMap<String, String>> assistents = getAllAssistantsByEventId(Integer.parseInt(eventId), 1);
+        Iterator<HashMap<String, String>> iter = assistents.values().iterator();
+        ArrayList<String> regs = new ArrayList<String>();
+        while(iter.hasNext())
+        {
+            HashMap<Integer, HashMap<String, String>> r = getRegIDsOfUser(Integer.parseInt(iter.next().get("community_member_id")));
+            Iterator<HashMap<String, String>> iter1 = r.values().iterator();
+            while(iter1.hasNext())
+                regs.add(iter1.next().get("reg_id"));
+        }
+        return regs;
     }
 
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
