@@ -183,8 +183,8 @@ public class DbController_V1 implements IDbController {
     }
 
     @Override
-    public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId) {
-        return DB_communicator.getAllAssistantsByEventId(eventId);
+    public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType) {
+        return DB_communicator.getAllAssistantsByEventId(eventId, responseType);
     }
 
     public HashMap<String, String> getEventDetails(String eventId){return DB_communicator.getEventDetails(eventId);}

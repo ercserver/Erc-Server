@@ -44,7 +44,7 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
     HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status);
     String getPatientIDByCmid(String cmid);
-    HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId);
+    HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType);
 
     HashMap<String,String> getEventDetails(String eventId);
 

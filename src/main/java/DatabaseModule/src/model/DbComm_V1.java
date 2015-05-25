@@ -1284,10 +1284,11 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
-    public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId) {
+    public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType) {
         HashMapBuilder<String, String> hma = new HashMapBuilder<>();
         return selectFromTable("O_EmergencyEventResponse", Arrays.asList("cmid"),
-                hma.put("event_id", Integer.toString(eventId)).put("response_type", "1").build());
+                hma.put("event_id", Integer.toString(eventId)).
+                        put("response_type", Integer.toString(responseType)).build());
     }
 
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
