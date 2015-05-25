@@ -1116,7 +1116,8 @@ public class DbComm_V1 implements IDbComm_model {
 
     public void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds)
     {
-        updateTable("O_EmergencyEventResponse", conds, "response_type", updates.get("response_type"));
+        if(updates.get("response_type").equals("1"))
+            updateTable("O_EmergencyEventResponse", conds, "response_type", updates.get("response_type"));
         if(updates.keySet().contains("transformation_mean"))
             updateTable("O_EmergencyEventResponse", conds, "transformation_mean", updates.get("transformation_mean"));
         // Create the where clause

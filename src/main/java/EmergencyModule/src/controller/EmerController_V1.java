@@ -88,20 +88,15 @@ public class EmerController_V1 implements IEmerController {
         if (!assistentFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
         HashMap<String, String> updates = new HashMap<String, String>();
-        // This assistant rejected arrival
-        if(response.get("RequestID").equals("arivalRejection"))
-            updates.put("response_type", "'reject'");
-        // This assistant will arrival by foot
-        else if(response.get("requestID").equals("arivalAcceptionOnFoot"))
-        {
-            updates.put("response_type", "'accept'");
-            updates.put("transformation_mean", "0");
-        }
-        // This assistant will arrival by car
-        else
-        {
-            updates.put("response_type", "'accept'");
-            updates.put("transformation_mean", "1");
+        // This assistant accepted arrival
+        if(!response.get("RequestID").equals("arivalRejection")) {
+            updates.put("response_type", "1");
+            // This assistant will arrival by foot
+            if (response.get("RequestID").equals("arivalAcceptionOnFoot"))
+                updates.put("transformation_mean", "0");
+            // This assistant will arrival by car
+            else
+                updates.put("transformation_mean", "1");
         }
         // Updates the data base about the assistant's response
         HashMap<String, String> conds = new HashMap<String, String>();
@@ -111,7 +106,7 @@ public class EmerController_V1 implements IEmerController {
         // Adds this assistant to EMS, and to the following emergency of GIS
         if(!response.get("RequestID").equals("arivalRejection")) {
             String eta = null;
-            if(response.get("requestID").equals("arivalAcceptionOnFoot"))
+            if(response.get("RequestID").equals("arivalAcceptionOnFoot"))
                 eta = response.get("eta_by_foot");
             else
                 eta = response.get("eta_by_car");
