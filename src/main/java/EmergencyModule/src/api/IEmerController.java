@@ -8,6 +8,4 @@ import java.util.HashMap;
  */
 public interface IEmerController extends IEmer {
 
-    //void requestUsersAroundLocation(HashMap<Integer,HashMap<String, String>> request);
-    //void requestUsersArrivalTimes(HashMap<Integer,HashMap<String, String>> request);
 }

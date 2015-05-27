@@ -11,12 +11,14 @@ import java.util.HashMap;
 
 public class CommToUsersFactory_V1 implements ICommToUsersFactory {
     public CommToUsers_V1 createComm(HashMap<Integer,HashMap<String,String>> data,ArrayList<String> target,boolean initiatedComm) {
-        //If we communicate to EMS or Doctor website
+
+        //TODO - PROBLEM! EMS OR DOCTOR? also - DO WE PASS UN/PW HERE?? LETS TALK ABOUT THIS.
+        //If we respond to a website (EMS or Doctor website)
         if (null == target || target.get(0).equals("0"))
         {
             return new CommToUsers_V1(data);
         }
-        //If we initiate comm to GIS (or other serverr)
+        //If we initiate comm to GIS or EMS (or other server)
         else if(initiatedComm) {
             return new InitiatedHTTPCommunication_V1(data,target);
         }
