@@ -46,6 +46,8 @@ public class EmerController_V1 implements IEmerController {
     // THEY SEND US - MEANING A NEW SEARCH WAS MADE ON AN ACTIVE EVENT
     //TODO
     //this methos will be called from the emergency event initiation
+
+    //TODO - We need to have a list of helpers to whom we have approached in the past (not only those who confirmed) so we can cancel the approach
     @Override
     public void receiveUsersAroundLocation(HashMap<String, String> data) {
         data.remove("RequestID");
