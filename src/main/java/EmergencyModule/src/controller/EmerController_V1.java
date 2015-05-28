@@ -40,14 +40,10 @@ public class EmerController_V1 implements IEmerController {
         emergencyLogger = models.determineEmerLoggerVersion();
         assistantFuncs = new AssistantFunctions();
     }
-    //TODO -
-    // NEED TO TELL GIS THAT IF THIS REQUEST WAS MADE FOR AN UNGOING EVENT
-    // THEY NEED TO SEND US A PARAM "ONGOING: TRUE" EVENT ALREADY EXISTS
-    // THEY SEND US - MEANING A NEW SEARCH WAS MADE ON AN ACTIVE EVENT
-    //TODO
-    //this methos will be called from the emergency event initiation
 
-    //TODO - We need to have a list of helpers to whom we have approached in the past (not only those who confirmed) so we can cancel the approach
+    //this methos will be called from the emergency event initiation
+    //-1 for all 0 Not responded 1 - approved 2 - rejected - 3 -  cancelled
+
     @Override
     public void receiveUsersAroundLocation(HashMap<String, String> data) {
         data.remove("RequestID");
@@ -60,8 +56,6 @@ public class EmerController_V1 implements IEmerController {
         if(ongoing){
             //get current event helpers
             HashMap<String,String> currentHelpers = new HashMap<String,String>(); // TODO - OHAD // = dbController.getAllEventHelpers(eventID);
-            HashMap<String,String> unRequiredHelpers = new HashMap<String,String>();
-            HashMap<String,String> helpersToApproach = new HashMap<String,String>();
             //assemble no longer required helpers
             for(Map.Entry<String, String> helper : currentHelpers.entrySet()){
                 //TODO - get key or value?
@@ -91,7 +85,6 @@ public class EmerController_V1 implements IEmerController {
                     data.remove(helper);
                 }
             }
-            //data.put("ongoing_event","true"); TODO - Do we need this for later stages or does the logic already take care of this?
         }
         //add the GIS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
@@ -189,21 +182,19 @@ public class EmerController_V1 implements IEmerController {
         initiatedOneObjectRequest(request, sendTo);
     }
 
-    //TODO - MAOR: Do need to allow a list here, I think... please explain why just
-    //arrival time of one user? We should probably be supporting "Arrival Times" rather than "Arrival Time".
-    //We also need to perform filtering here for the arrival times (Use "EmerFilter")
-    // TODO -
     public void receiveArrivalTime(HashMap<String,String> data)
     {
         // Updates the data base about the location and arrival times of an assistant
         dbController.updateAssistantArrivalTimesAndLocation(data);
         // Updates the EMS
         HashMap<String,String> toUpdate = new HashMap<String,String>();
-        //TODO - Maor - we need to handle transformation mean here also - perhaps other codes than "AccpetionOnFoot..."
-        updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(data.get("community_member_id")),
-                data.get("event_id"), data.get("eta_by_foot"), data.get("eta_by_car"), data.get("x"),
-                data.get("y"));
 
+        //TODO - MAOR CHANGE THE CONDITION PARAM IN THE TRENAR OPERATOR TO COME FROM THE TABLE IN THE DB
+        String eta = (data.get("RequestID").equals("arivalAcceptionOnFoot")) ?
+                data.get("eta_by_foot") : data.get("eta_by_car");
+
+        updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(data.get("community_member_id")),
+                data.get("event_id"), eta, data.get("x"), data.get("y"));
     }
 
     //This function will be called by "receiveArrivalTime" - for updates and by
@@ -229,7 +220,7 @@ public class EmerController_V1 implements IEmerController {
     //Inserts assistant to the data base
     private void insertAssistantToDB(HashMap<String, String> user, String x, String y, String eventId, String date)
     {
-        //ToDo:need to insert also brand name and dosage or description num
+        //ToDo:need to insert prescription num
         HashMap<String, String> insert = new HashMap<String, String>();
         insert.put("x", x);
         insert.put("y", y);
@@ -260,15 +251,15 @@ public class EmerController_V1 implements IEmerController {
 
         //Remove the assistant from the helpers list for the event in the db
         //TODO - OHAD
-        // dbController.removeAssistantFromEvent(eventId,patientId);//TODO - Ohad
+        // dbController.removeAssistantFromEvent(eventId,patientId);//
         //TODO - Logs
         //emergencyLogger.handleAssistantRemovalFromEvent(eventId,patientId)
 
         HashMap<String,String> data = new HashMap<String,String>();
         //TODO - need to verify code
-        data.put("RequestID", "cancelAssistance");
+        data.put("RequestID", "cancelAssist");
         data.put("event_id", eventId);
-        //Notify the EMS of the removsl
+        //Notify the EMS of the removal
         if(0 == inform){
             data.put("patient_id", patientId);
             ArrayList<String> sendTo = new ArrayList<String>();
@@ -285,7 +276,6 @@ public class EmerController_V1 implements IEmerController {
             ArrayList<String> sendTo = new ArrayList<String>();
             sendTo.add(regId);
             commController.setCommToUsers(request, sendTo, false);
-
         }
     }
 
@@ -343,7 +333,7 @@ public class EmerController_V1 implements IEmerController {
     public void assistantGaveMed(HashMap<String, String> data) {
         String eventID = data.get("eventID");
         String cmid = data.get("community_member_id");
-        //dbController.updateMedicideGiven(cmid,eventID); //TODO - Ohad
+        //dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
@@ -416,7 +406,7 @@ public class EmerController_V1 implements IEmerController {
     //called from EMSTakeover
     private void cancelEvent(String eventID) {
     /*
-        HashMap<String,String> eventHelpers = dbController.getAllEventHelpers(eventID);//TODO-Ohad
+        HashMap<String,String> eventHelpers = dbController.getAllEventHelpers(eventID);//
         rejectAssistantsByEMS(eventHelpers);
         dbController.closeEvent(eventID); //TODO - Ohad
     */
@@ -499,7 +489,6 @@ public class EmerController_V1 implements IEmerController {
     }
 
 
-    //TODO - Maor this funk is redundant. getting a key from a hashmap returns null if it it not contained in it... please explain
     // Searches for the map with the arguments that are not a possible assistant and returns the eventID
     private String getEventId(HashMap<Integer, HashMap<String, String>> assistantsList)
     {
@@ -535,16 +524,12 @@ public class EmerController_V1 implements IEmerController {
         commController.sendResponse();
     }
 
-    private void addFollow(String eventId, ArrayList<String> cmids) {
-        //TODO
-    }
-
-
 
     //we call this function from "approveOrRejectMed"
     /*private void approveOrRejectHelper(int patientID, int eventID) {
-        // in case of reject, do we need to tell the helper not to give the medicine
-        //Perhaps we just keep him waiting?? no need to really cancel...?
-        //TODO - TBD
+        // in case of reject, we just need to tell the helper not to give the medicine and stay put
+        //We allow the EMS to change their mind, but this logic is handled over their side using the instructions below
     }*/
+    //EMS Needs to know after first time someone said he arrived - they should allow the Mokdan
+    //to change his mind after rejecting. They should keep a boolean field in the table indicating "arrival"
 }
