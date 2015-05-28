@@ -698,7 +698,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " y REAL not NULL, " +
                         " request_sent_date DATETIME not NULL DEFAULT current_timestamp, " +
                         " response_date DATETIME, " +
-                        " response_type INTEGER not NULL DEFAULT 0, " +// enum:0 reject, 1=accept
+                        " response_type INTEGER not NULL DEFAULT 0, " +// enum:0=hasn't response yet, 1=accept, 2=reject, 3=cancell
                         " transformation_mean INTEGER, " +  //enum: 0 for foot, 1 for car
                         " activation_date DATETIME, " +
                         " arrival_date DATETIME, " +
