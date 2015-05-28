@@ -189,7 +189,7 @@ public class DbController_V1 implements IDbController {
 
     public HashMap<String, String> getEventDetails(String eventId){return DB_communicator.getEventDetails(eventId);}
 
-    public void insertAssistent(HashMap<String, String> insert){DB_communicator.insertAssistent(insert);}
+    public void insertAssistant(HashMap<String, String> insert){DB_communicator.insertAssistant(insert);}
 
     public void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds){DB_communicator.updateEmerFirstResponse(updates, conds);}
 

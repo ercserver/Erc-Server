@@ -48,7 +48,7 @@ public interface IDbComm_model {
 
     HashMap<String,String> getEventDetails(String eventId);
 
-    void insertAssistent(HashMap<String, String> insert);
+    void insertAssistant(HashMap<String, String> insert);
 
     void updateArrivalDate(HashMap<String, String> data);
 

@@ -1094,7 +1094,7 @@ public class DbComm_V1 implements IDbComm_model {
         return getRowsFromTable(cond, "O_EmergencyEvents").get(1);
     }
 
-    public void insertAssistent(HashMap<String, String> insert)
+    public void insertAssistant(HashMap<String, String> insert)
     {
         try
         {
