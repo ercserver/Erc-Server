@@ -1344,4 +1344,13 @@ public class DbComm_V1 implements IDbComm_model {
     {
         return getRegIDsOfUser(Integer.parseInt(getCmidByPatientID(patientId))).get(1).get("reg_id");
     }
+
+    public void removeAssistantFromEvent(String eventId, String patient_id)
+    {
+        String cmid = getCmidByPatientID(patient_id);
+        HashMap<String, String> conds = new HashMap<String, String>();
+        conds.put("community_member_id", cmid);
+        conds.put("event_id", eventId);
+        updateTable("O_EmergencyEventResponse", conds, "response_type", "3");
+    }
 }

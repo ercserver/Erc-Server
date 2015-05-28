@@ -247,8 +247,7 @@ public class EmerController_V1 implements IEmerController {
     private void removeAssistant(String patientId, String eventId, int inform) {
 
         //Remove the assistant from the helpers list for the event in the db
-        //TODO - OHAD
-        // dbController.removeAssistantFromEvent(eventId,patientId);//
+        dbController.removeAssistantFromEvent(eventId,patientId);//
         //TODO - Logs
         //emergencyLogger.handleAssistantRemovalFromEvent(eventId,patientId)
 

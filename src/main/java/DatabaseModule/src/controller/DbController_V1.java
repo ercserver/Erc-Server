@@ -212,4 +212,6 @@ public class DbController_V1 implements IDbController {
     public HashMap<String, String>getAssistDetails(String cmid, String eventId){return DB_communicator.getAssistDetails(cmid, eventId);}
 
     public String getRegIDOfPatient(String patientId){return DB_communicator.getRegIDOfPatient(patientId);}
+
+    public void removeAssistantFromEvent(String eventId, String patient_id){DB_communicator.removeAssistantFromEvent(eventId, patient_id);}
 }
