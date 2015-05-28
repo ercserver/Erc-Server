@@ -1116,8 +1116,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     public void updateEmerFirstResponse(HashMap<String, String> updates, HashMap<String, String> conds)
     {
-        if(updates.get("response_type").equals("1"))
-            updateTable("O_EmergencyEventResponse", conds, "response_type", updates.get("response_type"));
+        updateTable("O_EmergencyEventResponse", conds, "response_type", updates.get("response_type"));
         if(updates.keySet().contains("transformation_mean"))
             updateTable("O_EmergencyEventResponse", conds, "transformation_mean", updates.get("transformation_mean"));
         // Create the where clause
@@ -1285,6 +1284,7 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
+    //ToDo:need default value for response type -1 for taking all kind of assistants
     public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType) {
         HashMapBuilder<String, String> hma = new HashMapBuilder<>();
         return selectFromTable("O_EmergencyEventResponse", Arrays.asList("community_member_id"),
@@ -1330,5 +1330,18 @@ public class DbComm_V1 implements IDbComm_model {
         HashMapBuilder<String, String> cond = new HashMapBuilder<>();
         return selectFromTable("P_StatusLog",Arrays.asList("community_member_id"),
                 cond.put("date_to", "null").put("status_num", Integer.toString(status)).build());
+    }
+
+    public HashMap<String, String>getAssistDetails(String cmid, String eventId)
+    {
+        HashMap<String, String> conds = new HashMap<String, String>();
+        conds.put("community_member_id", cmid);
+        conds.put("event_id", eventId);
+        return getRowsFromTable(conds, "O_EmergencyEventResponse").get(1);
+    }
+
+    public String getRegIDOfPatient(String patientId)
+    {
+        return getRegIDsOfUser(Integer.parseInt(getCmidByPatientID(patientId))).get(1).get("reg_id");
     }
 }

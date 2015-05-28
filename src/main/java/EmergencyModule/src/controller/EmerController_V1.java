@@ -164,9 +164,9 @@ public class EmerController_V1 implements IEmerController {
         if(!response.get("RequestID").equals("arivalRejection")) {
             String eta = (response.get("RequestID").equals("arivalAcceptionOnFoot")) ?
                                response.get("eta_by_foot") : response.get("eta_by_car");
-            //TODO - Maor we need to intergrate xCoord and yCoord here
+            HashMap<String, String>h = dbController.getAssistDetails(response.get("community_member_id"), response.get("event_id"));
             updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(response.get("community_member_id")),
-                    response.get("event_id"), eta);
+                    response.get("event_id"), eta, h.get("x"), h.get("y"));
             askGisToFollow(response.get("event_id"), response.get("community_member_id"));
         }
     }
@@ -187,12 +187,9 @@ public class EmerController_V1 implements IEmerController {
         // Updates the data base about the location and arrival times of an assistant
         dbController.updateAssistantArrivalTimesAndLocation(data);
         // Updates the EMS
-        HashMap<String,String> toUpdate = new HashMap<String,String>();
-
-        //TODO - MAOR CHANGE THE CONDITION PARAM IN THE TRENAR OPERATOR TO COME FROM THE TABLE IN THE DB
-        String eta = (data.get("RequestID").equals("arivalAcceptionOnFoot")) ?
+        HashMap<String,String> assistDetails = dbController.getAssistDetails(data.get("community_member_id"), data.get("event_id"));
+        String eta = (assistDetails.get("transformation_mean").equals("0")) ?
                 data.get("eta_by_foot") : data.get("eta_by_car");
-
         updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(data.get("community_member_id")),
                 data.get("event_id"), eta, data.get("x"), data.get("y"));
     }
@@ -256,7 +253,6 @@ public class EmerController_V1 implements IEmerController {
         //emergencyLogger.handleAssistantRemovalFromEvent(eventId,patientId)
 
         HashMap<String,String> data = new HashMap<String,String>();
-        //TODO - need to verify code
         data.put("RequestID", "cancelAssist");
         data.put("event_id", eventId);
         //Notify the EMS of the removal
@@ -269,8 +265,7 @@ public class EmerController_V1 implements IEmerController {
         //Notify the assistant of the removal - GCM
         else{
             //get the regID of the user to be aborted
-            //TODO - WE NEED TO CHANGE getRegIDofUSER  to return just a string with a REGID
-            String regId = dbController.getRegIDsOfUser(Integer.parseInt(dbController.getCmidByPatientID(patientId))).get(1).get("reg_id");
+            String regId = dbController.getRegIDOfPatient(patientId);
             HashMap<Integer,HashMap<String,String>> request = new HashMap<Integer,HashMap<String,String>>();
             request.put(1, data);
             ArrayList<String> sendTo = new ArrayList<String>();
@@ -319,7 +314,6 @@ public class EmerController_V1 implements IEmerController {
         else
             dbController.updateResult(cmid, data.get("event_id"), "'EMS rejected medication givving'");
         // Sends EMS response to the assistant
-        //TODO - WE NEED TO CHANGE getRegIDofUSER  to return just a string with a REGID
         String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
