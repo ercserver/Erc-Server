@@ -229,4 +229,6 @@ public class DbController_V1 implements IDbController {
     public int startNewEmergencyEvent(HashMap<String, String> details) {
         return DB_communicator.startNewEmergencyEvent(details);
     }
+
+    public void updateLocationRemarkOfPatient(String eventId, String loc){DB_communicator.updateLocationRemarkOfPatient(eventId, loc);}
 }

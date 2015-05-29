@@ -1322,6 +1322,8 @@ public class DbComm_V1 implements IDbComm_model {
             re = "'" + re + "," + remark + "'";
             statement.execute("UPDATE O_EmergencyEvents SET patient_condition_remarks=" + re + " WHERE community_member_id="
                     + cmid + " AND event_id=" + eventID);
+            statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE community_member_id="
+                    + cmid + " AND event_id=" + eventID);
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {e.printStackTrace();}
@@ -1368,24 +1370,18 @@ public class DbComm_V1 implements IDbComm_model {
 
             // Prepare the statement
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO O_EmergencyEvents " +
-                    "(create_by_member_id, patient_id, medical_condition_id, created_date," +
-                    " finished_date, ems_member_id, status_num, x, y, location_remark," +
-                    " patient_condition_remark, slast_action_time, time_to_next_reminder, memo) " +
+                    "(create_by_member_id, patient_id, medical_condition_id," +
+                    " status_num, x, y," +
+                    " time_to_next_reminder) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, Integer.parseInt(details.get("create_by_member_id")));
             stmt.setInt(2, Integer.parseInt(details.get("patient_id")));
             stmt.setInt(3, Integer.parseInt(details.get("medical_condition_id")));
-            stmt.setString(4, details.get("created_date"));
-            stmt.setString(5, details.get("finished_date"));
-            stmt.setInt(6, Integer.parseInt(details.get("ems_member_id")));
-            stmt.setInt(7, Integer.parseInt(details.get("status_num")));
-            stmt.setFloat(8, Float.parseFloat(details.get("x")));
-            stmt.setFloat(9, Float.parseFloat(details.get("y")));
-            stmt.setString(10, details.get("location_remark"));
-            stmt.setString(11, details.get("patient_condition_remarks"));
-            stmt.setString(12, details.get("last_action_time"));
-            stmt.setInt(13, Integer.parseInt(details.get("time_to_next_reminder")));
-            stmt.setString(14, details.get("memo"));
+            stmt.setInt(4, Integer.parseInt(details.get("status_num")));
+            stmt.setFloat(5, Float.parseFloat(details.get("x")));
+            stmt.setFloat(6, Float.parseFloat(details.get("y")));
+            //ToDo:I think that we need to get this from something else
+            stmt.setInt(7, Integer.parseInt(details.get("time_to_next_reminder")));
 
             stmt.executeUpdate();
 
@@ -1524,5 +1520,25 @@ public class DbComm_V1 implements IDbComm_model {
         conds.put("community_member_id", cmid);
         conds.put("event_id", eventId);
         updateTable("O_EmergencyEventResponse", conds, "response_type", "3");
+    }
+
+    public void updateLocationRemarkOfPatient(String eventId, String loc)
+    {
+        HashMap<String, String> cond = new HashMap<String, String>();
+        cond.put("event_id", eventId);
+        updateTable("O_EmergencyEvents", cond, "location_remark", loc);
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE event_id=" + eventId);
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace();}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+        }
     }
 }

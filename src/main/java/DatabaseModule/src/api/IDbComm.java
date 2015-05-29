@@ -53,4 +53,5 @@ public interface IDbComm {
     HashMap<String, String>getAssistDetails(String cmid, String eventId);
     String getRegIDOfPatient(String patientId);
     void removeAssistantFromEvent(String eventId, String patient_id);
+    void updateLocationRemarkOfPatient(String eventId, String loc);
 }

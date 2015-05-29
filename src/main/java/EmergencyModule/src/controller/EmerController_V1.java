@@ -50,10 +50,12 @@ public class EmerController_V1 implements IEmerController {
 
     //this methos will be called from the emergency event initiation
     //-1 for all 0 Not responded 1 - approved 2 - rejected - 3 -  cancelled
-
+    //ToDo:Naor, I think we should get here HashMap<Integer,HashMap<String,String> because we get a list of users...
     @Override
     public void receiveUsersAroundLocation(HashMap<String, String> data) {
         data.remove("RequestID");
+        //ToDo:need to update the DB about location_remark of the patient with the following method of DB:
+        // public void updateLocationRemarkOfPatient(String eventId, String loc)
         //filter
         HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data);
         //prepare and send "Times" request to the GIS

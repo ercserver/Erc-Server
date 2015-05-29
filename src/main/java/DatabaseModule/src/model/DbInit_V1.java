@@ -837,7 +837,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " create_by_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " patient_id INTEGER not NULL, " +
                         " medical_condition_id INTEGER not null FOREIGN KEY REFERENCES M_MedicalConditions(medical_condition_id)," +
-                        " created_date TIMESTAMP not NULL, " +
+                        " created_date TIMESTAMP not NULL DEFAULT CURRENT_TIMESTAMP , " +
                         " finished_date DATETIME, " +
                         " ems_member_id INTEGER FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " status_num INTEGER not NULL FOREIGN KEY REFERENCES O_EventStatuses(status_num), " +
@@ -845,7 +845,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " y REAL not NULL, " +
                         " location_remark VARCHAR(100), " +
                         " patient_condition_remarks VARCHAR(300), " +
-                        " last_action_time DATETIME, " +
+                        " last_action_time DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                         " time_to_next_reminder INTEGER, " +
                         " memo VARCHAR(300))");
             }
