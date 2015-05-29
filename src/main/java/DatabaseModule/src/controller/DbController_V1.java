@@ -187,6 +187,11 @@ public class DbController_V1 implements IDbController {
         return DB_communicator.getAllAssistantsByEventId(eventId, responseType);
     }
 
+    @Override
+    public void closeEvent(int eventId, String newStatus) {
+        DB_communicator.closeEvent(eventId, newStatus);
+    }
+
     public HashMap<String, String> getEventDetails(String eventId){return DB_communicator.getEventDetails(eventId);}
 
     public void insertAssistant(HashMap<String, String> insert){DB_communicator.insertAssistant(insert);}

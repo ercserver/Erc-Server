@@ -38,12 +38,13 @@ public interface IDbComm {
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
     String getCmidByPatientID(String pID);
 
-    // TODO: Ohad
+
     HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
     HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status);
     String getPatientIDByCmid(String cmid);
     HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType);
+    void closeEvent(int eventId, String newStatus); // status = {CANCELED, ACTIVE, FINISHED}
 
     void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);
     ArrayList<String> getHelpersRegIds(String eventId);

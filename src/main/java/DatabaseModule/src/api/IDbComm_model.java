@@ -36,7 +36,7 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> getStatusByNum(String statusNum);
     HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions);
     String getCmidByPatientID(String pID);
-    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
+    HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
 
 
     // TODO: Ohad
@@ -59,7 +59,7 @@ public interface IDbComm_model {
     void updateResult(String cmid, String eventId, String result);
 
     String getEventByCmid(String cmid);
-
+    void closeEvent(int eventId, String newStatus); // status={CANCELED, ACTIVE, FINISHED}
     void updatePatientRemarks(String cmid, String eventID, String remark);
 
     void insertMedicationUse(String proCmid, String eventId, String aproId);

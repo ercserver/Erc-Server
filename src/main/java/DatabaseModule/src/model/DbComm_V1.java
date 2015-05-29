@@ -7,6 +7,8 @@ import com.sun.deploy.util.StringUtils;
 import org.json.JSONObject;
 
 import java.sql.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -1226,6 +1228,39 @@ public class DbComm_V1 implements IDbComm_model {
         }
     }
 
+    private String getCurrentDateTime(){
+        java.util.Date date = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:MM:ss");
+
+        return sdf.format(date);
+    }
+
+    @Override
+    public void closeEvent(int eventId, String newStatus) {
+        // status = {CANCELED, ACTIVE, FINISHED}
+
+       try {
+           HashMapBuilder<String, String> hmb = new HashMapBuilder<>();
+            // Get the status code from O_EventStatuses
+            String statusNum = selectFromTable("O_EventStatuses",
+                    Arrays.asList("status_num"),
+                    hmb.put("status_name", newStatus).build()).get(0).get("status_num");
+
+            // Update the finish date and the status
+            hmb = new HashMapBuilder<>();
+            updateTable("O_EmergencyEvents", hmb.put("event_id", Integer.toString(eventId)).build(),
+                    "finished_date", getCurrentDateTime());
+            updateTable("O_EmergencyEvents", hmb.put("event_id", Integer.toString(eventId)).build(),
+                    "status_num", statusNum);
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+
+
+    }
+
     public void updatePatientRemarks(String cmid, String eventID, String remark)
     {
         ResultSet rs = null;
@@ -1284,12 +1319,19 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
-    //ToDo:need default value for response type -1 for taking all kind of assistants
     public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType) {
         HashMapBuilder<String, String> hma = new HashMapBuilder<>();
-        return selectFromTable("O_EmergencyEventResponse", Arrays.asList("community_member_id"),
-                hma.put("event_id", Integer.toString(eventId)).
-                        put("response_type", Integer.toString(responseType)).build());
+        hma.put("event_id", Integer.toString(eventId));
+
+        // Check if response type is relevant
+        if (responseType != -1){
+            hma. put("response_type", Integer.toString(responseType));
+        }
+
+        return selectFromTable("O_EmergencyEventResponse",
+                Arrays.asList("community_member_id"),
+                hma.build());
+
     }
 
     public ArrayList<String> getHelpersRegIds(String eventId)
