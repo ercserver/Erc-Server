@@ -14,6 +14,13 @@ import java.util.*;
  */
 public class RoutineController_V1 implements IRoutineController {
 
+    private static final String GIS_URL = null;
+    private static final String GIS_UNAME = null;
+    private static final String GIS_PW = null;
+    private static final String EMS_URL = null;
+    private static final String EMS_UNAME = null;
+    private static final String EMS_PW = null;
+
     private ICommController commController = null;
     private IUpdates_model updates = null;
     private IEmsRoutine_model ems = null;
@@ -42,10 +49,24 @@ public class RoutineController_V1 implements IRoutineController {
         // just transfer the location data to the GIS
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
         response.put(1, data);
-        ArrayList<String> target = new ArrayList<String>();
-        target.add("url...");//*
-        commController.setCommToUsers(response, target, true);
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo = addReceiver("GIS", sendTo);
+        commController.setCommToUsers(response, sendTo, true);
         return commController.sendResponse();
+    }
+
+    private ArrayList<String> addReceiver(String receiver,ArrayList<String> sendTo) {
+        if(receiver.equals("EMS")){
+            sendTo.add(EMS_URL);
+            sendTo.add(EMS_UNAME);
+            sendTo.add(EMS_PW);
+        }
+        else if (receiver.equals("GIS")){
+            sendTo.add(GIS_URL);
+            sendTo.add(GIS_UNAME);
+            sendTo.add(GIS_PW);
+        }
+        return sendTo;
     }
 
     //ToDo-need for changes in the next future
