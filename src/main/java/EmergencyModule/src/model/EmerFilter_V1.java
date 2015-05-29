@@ -26,6 +26,8 @@ public class EmerFilter_V1 implements IEmerFilter_model {
     @Override
     public HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter) {
         //TODO - Naor. Need to ask Michael
+        //TODO - FILTER BY MEDICINE MATCH
+        //TODO - FILTER BY AVAILABILITY AND STATUS
         return null;
     }
 
