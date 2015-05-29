@@ -196,7 +196,7 @@ public class EmerController_V1 implements IEmerController {
         updateOrAddToEms.put("y", yCoord);
         //send
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = assistantFuncs.addReceiver("EMS",sendTo);
+        sendTo = assistantFuncs.addReceiver("EMS", sendTo);
         initiatedOneObjectRequest(updateOrAddToEms, sendTo);
     }
 
@@ -244,7 +244,7 @@ public class EmerController_V1 implements IEmerController {
         if(0 == inform){
             data.put("patient_id", patientId);
             ArrayList<String> sendTo = new ArrayList<String>();
-            sendTo = assistantFuncs.addReceiver("EMS",sendTo);
+            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
             initiatedOneObjectRequest(data, sendTo);
         }
         //Notify the assistant of the removal - GCM
@@ -276,7 +276,7 @@ public class EmerController_V1 implements IEmerController {
         h.put("patient_id", dbController.getPatientIDByCmid(data.get("community_member_id")));
         h.put("RequestID", "needConfirmMedicationGivving");
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = assistantFuncs.addReceiver("EMS",sendTo);
+        sendTo = assistantFuncs.addReceiver("EMS", sendTo);
         initiatedOneObjectRequest(h, sendTo);
     }
 
@@ -316,15 +316,14 @@ public class EmerController_V1 implements IEmerController {
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = assistantFuncs.addReceiver("EMS",sendTo);
+        sendTo = assistantFuncs.addReceiver("EMS", sendTo);
         //initiate request
         initiatedOneObjectRequest(data, sendTo);
     }
 
     @Override
     public void assistantCancelsArrival(HashMap<String, String> data) {
-        //ToDo:Are you sure that we get from assistant his patientId instead of cmid?
-        String patientID = data.get("PatientID");
+        String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
         String eventID = data.get("event_id");
         //remove the assistant from the database and inform. "0" to inform EMS here.
         removeAssistant(patientID, eventID, 0);
