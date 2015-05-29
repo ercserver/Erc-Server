@@ -88,7 +88,7 @@ public class EmerController_V1 implements IEmerController {
         }
         //add the GIS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = addReceiver("GIS", sendTo);
+        sendTo = assistantFuncs.addReceiver("GIS", sendTo);
         //initiate request
         initiatedOneObjectRequest(data,sendTo);
     }
@@ -107,22 +107,8 @@ public class EmerController_V1 implements IEmerController {
         response.put("radius", radius);
         response.put("event_id", getEventId(filteredData));
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = addReceiver("EMS", sendTo);
+        sendTo = assistantFuncs.addReceiver("EMS", sendTo);
         initiatedOneObjectRequest(response, sendTo);
-    }
-
-    private ArrayList<String> addReceiver(String receiver,ArrayList<String> sendTo) {
-        if(receiver.equals("EMS")){
-            sendTo.add(EMS_URL);
-            sendTo.add(EMS_UNAME);
-            sendTo.add(EMS_PW);
-        }
-        else if (receiver.equals("GIS")){
-            sendTo.add(GIS_URL);
-            sendTo.add(GIS_UNAME);
-            sendTo.add(GIS_PW);
-        }
-        return sendTo;
     }
 
     // Searches for the map with the arguments that are not a possible assistant and returns the radius
@@ -178,7 +164,7 @@ public class EmerController_V1 implements IEmerController {
         request.put("event_id", eventId);
         request.put("RequestID", "followUser");
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = addReceiver("GIS", sendTo);
+        sendTo = assistantFuncs.addReceiver("GIS", sendTo);
         initiatedOneObjectRequest(request, sendTo);
     }
 
@@ -210,7 +196,7 @@ public class EmerController_V1 implements IEmerController {
         updateOrAddToEms.put("y", yCoord);
         //send
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = addReceiver("EMS",sendTo);
+        sendTo = assistantFuncs.addReceiver("EMS",sendTo);
         initiatedOneObjectRequest(updateOrAddToEms, sendTo);
     }
 
@@ -258,7 +244,7 @@ public class EmerController_V1 implements IEmerController {
         if(0 == inform){
             data.put("patient_id", patientId);
             ArrayList<String> sendTo = new ArrayList<String>();
-            sendTo = addReceiver("EMS",sendTo);
+            sendTo = assistantFuncs.addReceiver("EMS",sendTo);
             initiatedOneObjectRequest(data, sendTo);
         }
         //Notify the assistant of the removal - GCM
@@ -290,7 +276,7 @@ public class EmerController_V1 implements IEmerController {
         h.put("patient_id", dbController.getPatientIDByCmid(data.get("community_member_id")));
         h.put("RequestID", "needConfirmMedicationGivving");
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = addReceiver("EMS",sendTo);
+        sendTo = assistantFuncs.addReceiver("EMS",sendTo);
         initiatedOneObjectRequest(h, sendTo);
     }
 
@@ -330,7 +316,7 @@ public class EmerController_V1 implements IEmerController {
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = addReceiver("EMS",sendTo);
+        sendTo = assistantFuncs.addReceiver("EMS",sendTo);
         //initiate request
         initiatedOneObjectRequest(data, sendTo);
     }
@@ -383,7 +369,7 @@ public class EmerController_V1 implements IEmerController {
             request.put("RequestID","Locations");
             //send request to GIS
             ArrayList<String> sendTo = new ArrayList<String>();
-            sendTo = addReceiver("GIS",sendTo);
+            sendTo = assistantFuncs.addReceiver("GIS",sendTo);
             //initiate request
             initiatedOneObjectRequest(request, sendTo);
         }
@@ -414,7 +400,7 @@ public class EmerController_V1 implements IEmerController {
         if(sendToEms)
         {
             ArrayList<String> sendTo = new ArrayList<String>();
-            sendTo = addReceiver("EMS", sendTo);
+            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
             initiatedOneObjectRequest(response.get(1), sendTo);
             // Sends message to apps and to EMS
             if(null != regIds)
@@ -510,7 +496,7 @@ public class EmerController_V1 implements IEmerController {
         }
         response.put(cmids.size() + 1, req);
         ArrayList<String> sendTo = new ArrayList<String>();
-        sendTo = addReceiver("GIS",sendTo);
+        sendTo = assistantFuncs.addReceiver("GIS",sendTo);
         commController.setCommToUsers(response, sendTo, true);
         //send request
         commController.sendResponse();

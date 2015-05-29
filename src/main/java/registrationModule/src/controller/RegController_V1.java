@@ -3,6 +3,7 @@ package registrationModule.src.controller;
 import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
 
+import Utilities.AssistantFunctions;
 import registrationModule.src.api.IRegController;
 import registrationModule.src.api.IRegRequest_model;
 import registrationModule.src.api.IRegVerify_model;
@@ -23,6 +24,7 @@ public class RegController_V1 implements IRegController {
     private IDbController dbController = null;
     private ICommController commController = null;
     private HashMap<Integer, HashMap<String, String>> response = null;
+    private AssistantFunctions assistantFuncs = null;
 
     public RegController_V1(){
         ModelsFactory models = new ModelsFactory();
@@ -30,6 +32,7 @@ public class RegController_V1 implements IRegController {
         dbController = models.determineDbControllerVersion();
         registrator = models.determineRegRequestVersion();
         verification = models.determineRegVerifyVersion();
+        assistantFuncs = new AssistantFunctions();
     }
 
     public Object getRegDetails(HashMap<String,String> request) {
@@ -468,7 +471,9 @@ public class RegController_V1 implements IRegController {
         // Sign in of doctor/ems
         if(details.get("reg_id") == "0")
         {
-            commController.setCommToUsers(response, null, false);
+            ArrayList<String> sendTo = new ArrayList<String>();
+            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
+            commController.setCommToUsers(response, sendTo, true);
         }
         // Sign-in of patient
         else
