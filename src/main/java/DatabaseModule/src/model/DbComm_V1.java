@@ -1439,7 +1439,13 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data) {
-
+        HashMap<String, String> conds = new HashMap<String, String>();
+        conds.put("community_member_id", data.get("community_member_id"));
+        conds.put("event_id", data.get("event_id"));
+        updateTable("O_EmergencyEventResponse", conds, "x", data.get("x"));
+        updateTable("O_EmergencyEventResponse", conds, "y", data.get("y"));
+        updateTable("O_EmergencyEventResponse", conds, "eta_by_foot", data.get("eta_by_foot"));
+        updateTable("O_EmergencyEventResponse", conds, "eta_by_car", data.get("eta_by_car"));
     }
 
     @Override

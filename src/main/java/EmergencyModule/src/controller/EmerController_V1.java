@@ -41,6 +41,13 @@ public class EmerController_V1 implements IEmerController {
         assistantFuncs = new AssistantFunctions();
     }
 
+    public void emergencyCall(HashMap<String, String> data)
+    {
+        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+            return;
+
+    }
+
     //this methos will be called from the emergency event initiation
     //-1 for all 0 Not responded 1 - approved 2 - rejected - 3 -  cancelled
 

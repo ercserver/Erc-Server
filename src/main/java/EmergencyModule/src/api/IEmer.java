@@ -29,4 +29,6 @@ public interface IEmer {
     void emsTakeover(HashMap<String,String> data);
     //From GIS
     void receiveArrivalTime(HashMap<String,String> data);
+
+    void emergencyCall(HashMap<String, String> data);
 }
