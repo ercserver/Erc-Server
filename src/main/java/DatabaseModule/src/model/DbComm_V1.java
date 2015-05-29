@@ -1340,6 +1340,86 @@ public class DbComm_V1 implements IDbComm_model {
         }
     }
 
+    @Override
+    public int startNewEmergencyEvent(HashMap<String, String> details) {
+        /*
+        output : event_id
+        input:
+            create_by_member_id
+            patient_id
+            created_date
+            finished_date - optional
+            medical_condition_id
+            ems_member_id
+            status_num
+            x
+            y
+            location_remark - optional
+            patient_condition_remarks - optional
+            last_action_time - optional
+            time_to_next_reminder - optional
+            memo - optional
+        */
+        ResultSet rs = null;
+        int eventId = -1;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+
+            // Prepare the statement
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO O_EmergencyEvents " +
+                    "(create_by_member_id, patient_id, medical_condition_id, created_date," +
+                    " finished_date, ems_member_id, status_num, x, y, location_remark," +
+                    " patient_condition_remark, slast_action_time, time_to_next_reminder, memo) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, Integer.parseInt(details.get("create_by_member_id")));
+            stmt.setInt(2, Integer.parseInt(details.get("patient_id")));
+            stmt.setInt(3, Integer.parseInt(details.get("medical_condition_id")));
+            stmt.setString(4, details.get("created_date"));
+            stmt.setString(5, details.get("finished_date"));
+            stmt.setInt(6, Integer.parseInt(details.get("ems_member_id")));
+            stmt.setInt(7, Integer.parseInt(details.get("status_num")));
+            stmt.setFloat(8, Float.parseFloat(details.get("x")));
+            stmt.setFloat(9, Float.parseFloat(details.get("y")));
+            stmt.setString(10, details.get("location_remark"));
+            stmt.setString(11, details.get("patient_condition_remarks"));
+            stmt.setString(12, details.get("last_action_time"));
+            stmt.setInt(13, Integer.parseInt(details.get("time_to_next_reminder")));
+            stmt.setString(14, details.get("memo"));
+
+            stmt.executeUpdate();
+
+            // Get the new primary key
+            rs = stmt.getGeneratedKeys();
+
+
+            if (rs.next()) {
+                eventId = rs.getInt(1);
+            } else{
+                // There was a problem inserting the new event
+                return -1;
+            }
+            stmt.close();
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace();}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+            return eventId;
+        }
+
+    }
+
     public void insertMedicationUse(String proCmid, String eventId, String aproId)
     {
         try

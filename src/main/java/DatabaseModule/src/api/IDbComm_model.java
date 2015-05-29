@@ -63,6 +63,8 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList);
 
     void updatePatientRemarks(String cmid, String eventID, String remark);
+    int startNewEmergencyEvent(HashMap<String, String> details);
+
 
     void insertMedicationUse(String proCmid, String eventId, String aproId);
     void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);

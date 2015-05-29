@@ -224,4 +224,9 @@ public class DbController_V1 implements IDbController {
     public HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList) {
         return DB_communicator.filterAvailableMembers(cmidList);
     }
+
+    @Override
+    public int startNewEmergencyEvent(HashMap<String, String> details) {
+        return DB_communicator.startNewEmergencyEvent(details);
+    }
 }
