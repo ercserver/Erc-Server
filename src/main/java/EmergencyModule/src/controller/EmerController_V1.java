@@ -337,8 +337,9 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void assistantCancelsArrival(HashMap<String, String> data) {
+        //ToDo:Are you sure that we get from assistant his patientId instead of cmid?
         String patientID = data.get("PatientID");
-        String eventID = data.get("EventID");
+        String eventID = data.get("event_id");
         //remove the assistant from the database and inform. "0" to inform EMS here.
         removeAssistant(patientID, eventID, 0);
     }
@@ -412,18 +413,16 @@ public class EmerController_V1 implements IEmerController {
         // we call this from "updatePatientStatus"
         if(sendToEms)
         {
+            ArrayList<String> sendTo = new ArrayList<String>();
+            sendTo = addReceiver("EMS", sendTo);
+            initiatedOneObjectRequest(response.get(1), sendTo);
             // Sends message to apps and to EMS
             if(null != regIds)
             {
-                commController.setCommToUsers(response, null, false);
-                commController.sendResponse();
                 commController.setCommToUsers(response, regIds, false);
                 commController.sendResponse();
                 return;
             }
-            // Sends message only to EMS
-            commController.setCommToUsers(response, null, false);
-            commController.sendResponse();
         }
         // Sends message only to apps
         if(null != regIds)
@@ -510,9 +509,9 @@ public class EmerController_V1 implements IEmerController {
             response.put(i + 1, user);
         }
         response.put(cmids.size() + 1, req);
-        ArrayList<String> target = new ArrayList<String>();
-        target.add(GIS_URL);
-        commController.setCommToUsers(response, target, true);
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo = addReceiver("GIS",sendTo);
+        commController.setCommToUsers(response, sendTo, true);
         //send request
         commController.sendResponse();
     }
