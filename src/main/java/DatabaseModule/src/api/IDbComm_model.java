@@ -60,6 +60,8 @@ public interface IDbComm_model {
 
     String getEventByCmid(String cmid);
     void closeEvent(int eventId, String newStatus); // status={CANCELED, ACTIVE, FINISHED}
+    HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList);
+
     void updatePatientRemarks(String cmid, String eventID, String remark);
 
     void insertMedicationUse(String proCmid, String eventId, String aproId);

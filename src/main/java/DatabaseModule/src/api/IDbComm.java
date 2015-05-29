@@ -45,6 +45,7 @@ public interface IDbComm {
     String getPatientIDByCmid(String cmid);
     HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType);
     void closeEvent(int eventId, String newStatus); // status = {CANCELED, ACTIVE, FINISHED}
+    HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList);
 
     void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);
     ArrayList<String> getHelpersRegIds(String eventId);

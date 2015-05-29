@@ -549,7 +549,7 @@
       <column name="y" sqlType="real" precision="24" scale="0" nullable="false" jdbcType="7"/>
       <column name="request_sent_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <column name="response_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
-      <column name="response_type" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="response_type" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4" def="KCgwKSk="/>
       <column name="transformation_mean" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="activation_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <column name="arrival_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>

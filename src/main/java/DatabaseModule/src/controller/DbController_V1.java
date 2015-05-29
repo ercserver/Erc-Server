@@ -219,4 +219,9 @@ public class DbController_V1 implements IDbController {
     public String getRegIDOfPatient(String patientId){return DB_communicator.getRegIDOfPatient(patientId);}
 
     public void removeAssistantFromEvent(String eventId, String patient_id){DB_communicator.removeAssistantFromEvent(eventId, patient_id);}
+
+    @Override
+    public HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList) {
+        return DB_communicator.filterAvailableMembers(cmidList);
+    }
 }

@@ -12,7 +12,7 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<Integer, HashMap<String, String>> getAllCmidsByStatus(int status);
     HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
-    public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
+    HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
     HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType);
     HashMap<String,String> getUserByParameter(HashMap<String,String> whereConditions);
     void updateUserDetails(HashMap<String,String> updates);
@@ -57,5 +57,6 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<String, String>getAssistDetails(String cmid, String eventId);
     String getRegIDOfPatient(String patientId);
     void removeAssistantFromEvent(String eventId, String patient_id);
+    HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList);
 
 }

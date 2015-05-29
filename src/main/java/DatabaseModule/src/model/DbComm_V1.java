@@ -7,9 +7,10 @@ import com.sun.deploy.util.StringUtils;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.sql.Date;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by NAOR on 06/04/2015.
@@ -1259,6 +1260,49 @@ public class DbComm_V1 implements IDbComm_model {
 
 
 
+    }
+
+    @Override
+    public HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList) {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            String sql = "SELECT community_member_id FROM P_StatusLog JOIN" +
+                    "Availability WHERE status_name='active' and " +
+                    "community_member_id in ";
+            // Add the string "(cmid1, cmid2,...)"
+            sql += cmidList.toString().replace('[','(').replace(']', ')');
+
+            // Check availabilty by hours and minutes
+            Date currentTime = new Date();
+            sql += " AND hour_from<=? AND hour_to>? AND minutes_from<=? AND minutes_to>? ;";
+
+            // Prepare the statement
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, currentTime.getHours());
+            stmt.setInt(2, currentTime.getHours());
+            stmt.setInt(3, currentTime.getMinutes());
+            stmt.setInt(4, currentTime.getMinutes());
+
+            rs = stmt.executeQuery();
+            return resultSetToMap(rs);
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return null;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
     }
 
     public void updatePatientRemarks(String cmid, String eventID, String remark)
