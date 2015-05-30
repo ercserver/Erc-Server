@@ -341,8 +341,8 @@ public class EmerController_V1 implements IEmerController {
         // Ems accept medication givving-updates the data base
         if (data.get("RequestID").equals("confirmMedication")) {
             dbController.updateActivationDate(cmid, data.get("event_id"));
-            //ToDo:need to get medNum...
-            dbController.insertMedicationUse(cmid, data.get("event_id"), data.get("community_member_id"));
+            dbController.insertMedicationUse(cmid, data.get("event_id"), data.get("community_member_id"),
+                    dbController.getMedicationOfPatient(cmid));
         }
         // Ems reject medication givving-updates the data base
         else

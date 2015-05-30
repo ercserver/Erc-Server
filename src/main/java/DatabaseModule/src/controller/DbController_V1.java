@@ -233,4 +233,6 @@ public class DbController_V1 implements IDbController {
     public void updateLocationRemarkOfPatient(String eventId, String loc){DB_communicator.updateLocationRemarkOfPatient(eventId, loc);}
 
     public String getMedicalConditionOfPatient(String patientId){return DB_communicator.getMedicalConditionOfPatient(patientId);}
+
+    public String getMedicationOfPatient(String cmid){return DB_communicator.getMedicationOfPatient(cmid);}
 }

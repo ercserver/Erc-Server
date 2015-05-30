@@ -55,4 +55,5 @@ public interface IDbComm {
     void removeAssistantFromEvent(String eventId, String patient_id);
     void updateLocationRemarkOfPatient(String eventId, String loc);
     String getMedicalConditionOfPatient(String patientId);
+    String getMedicationOfPatient(String cmid);
 }
