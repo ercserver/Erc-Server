@@ -63,4 +63,5 @@ public interface IDbController  extends IDbInit, IDbComm {
     String getMedicalConditionOfPatient(String patientId);
     String getMedicationOfPatient(String cmid);
     void updateEMSOfEvent(String cmid, String eventId);
+    String getPrescNum(String cmid);
 }

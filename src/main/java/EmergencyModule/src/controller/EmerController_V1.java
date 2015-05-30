@@ -256,7 +256,6 @@ public class EmerController_V1 implements IEmerController {
     //Inserts assistant to the data base
     private void insertAssistantToDB(HashMap<String, String> user, String x, String y, String eventId, String date)
     {
-        //ToDo:need to insert prescription num
         HashMap<String, String> insert = new HashMap<String, String>();
         insert.put("x", x);
         insert.put("y", y);
@@ -265,6 +264,7 @@ public class EmerController_V1 implements IEmerController {
         insert.put("eta_by_foot", user.get("eta_by_foot"));
         insert.put("eta_by_car", user.get("eta_by_car"));
         insert.put("created_date", date);
+        insert.put("prescription_num", dbController.getPrescNum(user.get("community_member_id")));
         dbController.insertAssistant(insert);
     }
 

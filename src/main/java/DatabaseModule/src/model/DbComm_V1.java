@@ -1104,8 +1104,9 @@ public class DbComm_V1 implements IDbComm_model {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,eta_by_foot,eta_by_car,created_date,x,y) VALUES (" +
+            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,created_date,x,y) VALUES (" +
                     insert.get("community_member_id") + "," + insert.get("event_id") + "," +
+                    insert.get("prescription_num") + "," +
                     insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
                     ",'" + insert.get("created_date") + "'," + insert.get("x") +
                     "," + insert.get("y") + ")");
@@ -1601,6 +1602,40 @@ public class DbComm_V1 implements IDbComm_model {
         finally
         {
             releaseResources(statement, connection);
+        }
+    }
+
+    public String getPrescNum(String cmid)
+    {
+        ResultSet rs = null;
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets all related patients for this doctor
+            rs = statement.executeQuery("SELECT DISTINCT * FROM " + "P_Patients INNER JOIN "+
+                    "P_Prescriptions ON P_Patients.patient_id=P_Prescriptions.patient_id "
+                    + "WHERE P_Patients.community_member_id=" + cmid);
+            // no patient related for this doctor
+            if(!rs.next())
+                return null;
+            else
+                return rs.getObject("prescription_num").toString();
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return null;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
         }
     }
 
