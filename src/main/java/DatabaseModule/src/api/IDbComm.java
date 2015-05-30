@@ -56,4 +56,5 @@ public interface IDbComm {
     void updateLocationRemarkOfPatient(String eventId, String loc);
     String getMedicalConditionOfPatient(String patientId);
     String getMedicationOfPatient(String cmid);
+    void updateEMSOfEvent(String cmid, String eventId);
 }

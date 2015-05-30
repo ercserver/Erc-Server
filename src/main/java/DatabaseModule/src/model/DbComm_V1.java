@@ -1584,5 +1584,25 @@ public class DbComm_V1 implements IDbComm_model {
         }
     }
 
+    public void updateEMSOfEvent(String cmid, String eventId)
+    {
+        HashMap<String, String> cond = new HashMap<String, String>();
+        cond.put("event_id", eventId);
+        updateTable("O_EmergencyEvents", cond, "ems_member_id", cmid);
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE event_id=" + eventId);
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace();}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
     //ToDo:Ohad:need for a method that updates with current time the medication_provision_date
 }

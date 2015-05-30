@@ -87,6 +87,11 @@ public class EmerController_V1 implements IEmerController {
         initiatedOneObjectRequest(response, sendTo);
     }
 
+    public void getCmidOfEms(HashMap<String, String> data)
+    {
+        dbController.updateEMSOfEvent(data.get("community_member_id"), data.get("event_id"));
+    }
+
     //this methos will be called from the emergency event initiation
     //-1 for all 0 Not responded 1 - approved 2 - rejected - 3 -  cancelled
     //ToDo:Naor, I think we should get here HashMap<Integer,HashMap<String,String> because we get a list of users...
