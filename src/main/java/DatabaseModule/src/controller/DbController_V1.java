@@ -239,4 +239,6 @@ public class DbController_V1 implements IDbController {
     public void updateEMSOfEvent(String cmid, String eventId){DB_communicator.updateEMSOfEvent(cmid, eventId);}
 
     public String getPrescNum(String cmid){return DB_communicator.getPrescNum(cmid);}
+
+    public HashMap<String, String> getMedicalDetailsForPresenting(String cmid){return DB_communicator.getMedicalDetailsForPresenting(cmid);}
 }

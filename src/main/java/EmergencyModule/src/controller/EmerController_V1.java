@@ -502,10 +502,12 @@ public class EmerController_V1 implements IEmerController {
             user.remove("y");
             // Inserts the assistant to the data base
             insertAssistantToDB(user, x, y, eventId, eventDetails.get("created_date"));
+            HashMap<String, String> medicalDetForPresenting = dbController.getMedicalDetailsForPresenting(user.get("community_member_id"));
+            user.put("medication_name", medicalDetForPresenting.get("medication_name"));
+            user.put("dosage", medicalDetForPresenting.get("dosage"));
             user.put("x", eventDetails.get("x"));
             user.put("y", eventDetails.get("y"));
             user.put("location_remark", eventDetails.get("location_remark"));
-            //ToDo:need to get in some way proper medication that the cmid has and dosage
             user.put("RequestID", "helpAssist");
             user.put("event_id", eventId);
             // Sends the approach to the assistant

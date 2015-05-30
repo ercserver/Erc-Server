@@ -1639,5 +1639,45 @@ public class DbComm_V1 implements IDbComm_model {
         }
     }
 
+    public HashMap<String, String> getMedicalDetailsForPresenting(String cmid)
+    {
+        ResultSet rs = null;
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets all related patients for this doctor
+            rs = statement.executeQuery("SELECT DISTINCT * FROM " + "P_Patients INNER JOIN "+
+                    "P_Prescriptions ON P_Patients.patient_id=P_Prescriptions.patient_id " +
+                    "INNER JOIN P_Medications ON P_Medications.medication_num=P_Prescriptions.medication_num "
+                    + "WHERE P_Patients.community_member_id=" + cmid);
+            // no patient related for this doctor
+            if(!rs.next())
+                return null;
+            else
+            {
+                HashMap<String, String> res = new HashMap<String, String>();
+                res.put("medication_name", rs.getObject("medication_name").toString());
+                res.put("dosage", rs.getObject("dosage").toString());
+                return res;
+            }
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return null;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
+
     //ToDo:Ohad:need for a method that updates with current time the medication_provision_date
 }
