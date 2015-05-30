@@ -66,11 +66,12 @@ public interface IDbComm_model {
     int startNewEmergencyEvent(HashMap<String, String> details);
 
 
-    void insertMedicationUse(String proCmid, String eventId, String aproId);
+    void insertMedicationUse(String proCmid, String eventId, String aproId, String medNum);
     void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);
     ArrayList<String> getHelpersRegIds(String eventId);
     HashMap<String, String>getAssistDetails(String cmid, String eventId);
     String getRegIDOfPatient(String patientId);
     void removeAssistantFromEvent(String eventId, String patient_id);
     void updateLocationRemarkOfPatient(String eventId, String loc);
+    String getMedicalConditionOfPatient(String patientId);
 }

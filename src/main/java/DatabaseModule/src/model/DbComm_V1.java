@@ -1377,6 +1377,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.setInt(1, Integer.parseInt(details.get("create_by_member_id")));
             stmt.setInt(2, Integer.parseInt(details.get("patient_id")));
             stmt.setInt(3, Integer.parseInt(details.get("medical_condition_id")));
+            //ToDo:I think that this is something that you need to get from the statuses table because it's clear that we are oppening event
             stmt.setInt(4, Integer.parseInt(details.get("status_num")));
             stmt.setFloat(5, Float.parseFloat(details.get("x")));
             stmt.setFloat(6, Float.parseFloat(details.get("y")));
@@ -1416,15 +1417,15 @@ public class DbComm_V1 implements IDbComm_model {
 
     }
 
-    public void insertMedicationUse(String proCmid, String eventId, String aproId)
+    public void insertMedicationUse(String proCmid, String eventId, String aproId, String medNum)
     {
         try
         {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyMedicationUse (event_id,providing_member_id,approved_by_id) VALUES (" +
-                    eventId + "," + proCmid + "," + aproId + ")");
+            statement.execute("INSERT INTO O_EmergencyMedicationUse (event_id,providing_member_id,approved_by_id,medication_num) VALUES (" +
+                    eventId + "," + proCmid + "," + aproId + "," + medNum + ")");
         }
         catch (SQLException e) {e.printStackTrace();}
         finally
@@ -1541,4 +1542,13 @@ public class DbComm_V1 implements IDbComm_model {
             releaseResources(statement, connection);
         }
     }
+
+    public String getMedicalConditionOfPatient(String patientId)
+    {
+        HashMap<String, String>cond = new HashMap<String, String>();
+        cond.put("patient_id", patientId);
+        return getRowsFromTable(cond, "P_Diagnosis").get(1).get("medical_condition_id");
+    }
+
+    //ToDo:Ohad:need for a method that updates with current time the medication_provision_date
 }

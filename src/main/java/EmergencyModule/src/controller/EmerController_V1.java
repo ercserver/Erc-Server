@@ -43,9 +43,48 @@ public class EmerController_V1 implements IEmerController {
 
     public void emergencyCall(HashMap<String, String> data)
     {
+        // Checks that this is a real user
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
+        // Creates the event_id
+        HashMap<String, String> details = new HashMap<String, String>();
+        details.put("create_by_member_id", data.get("community_member_id"));
+        details.put("patient_id", dbController.getPatientIDByCmid(data.get("community_member_id")));
+        details.put("medical_condition_id", dbController.getMedicalConditionOfPatient(details.get("patient_id")));
+        details.put("x", data.get("x"));
+        details.put("y", data.get("y"));
+        int event = dbController.startNewEmergencyEvent(details);
+        // Updates the patient's app
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo.add(data.get("reg_id"));
+        HashMap<String, String> response = new HashMap<String, String>();
+        response.put("RequestID", "emergencyAccepted");
+        HashMap<Integer, HashMap<String, String>> res = new HashMap<Integer, HashMap<String, String>>();
+        res.put(1, response);
+        commController.setCommToUsers(res, sendTo, false);
+        commController.sendResponse();
+        askForClosestEMS(data);
+        askForUsersAroundLocation(data, Integer.toString(event),
+                dbController.getMedicalConditionByNum(details.get("medical_condition_id")).get(1).get("medical_condition_description"));
+    }
 
+    //ToDo:Naor. you need to get here also the age...
+    private void askForUsersAroundLocation(HashMap<String, String> data, String eventId, String medConditionMed) {
+    }
+
+    // called from emergencyCall
+    private void askForClosestEMS(HashMap<String, String> data) {
+        // Asks from GIS the closest EMS to the emergency event
+        HashMap<String, String> response = new HashMap<String, String>();
+        response.put("RequestID", "closestEMS");
+        response.put("event_id", data.get("event_id"));
+        response.put("x", data.get("x"));
+        response.put("y", data.get("y"));
+        //add the GIS URL to the receivers
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo = assistantFuncs.addReceiver("GIS", sendTo);
+        //initiate request
+        initiatedOneObjectRequest(response, sendTo);
     }
 
     //this methos will be called from the emergency event initiation
@@ -302,6 +341,7 @@ public class EmerController_V1 implements IEmerController {
         // Ems accept medication givving-updates the data base
         if (data.get("RequestID").equals("confirmMedication")) {
             dbController.updateActivationDate(cmid, data.get("event_id"));
+            //ToDo:need to get medNum...
             dbController.insertMedicationUse(cmid, data.get("event_id"), data.get("community_member_id"));
         }
         // Ems reject medication givving-updates the data base
@@ -311,7 +351,7 @@ public class EmerController_V1 implements IEmerController {
         String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
-        HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
+        HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer, HashMap<String, String>>();
         response.put(1, h);
         commController.setCommToUsers(response, target, false);
         commController.sendResponse();

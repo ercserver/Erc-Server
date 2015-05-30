@@ -210,7 +210,7 @@ public class DbController_V1 implements IDbController {
 
     public ArrayList<String> getHelpersRegIds(String eventId){return DB_communicator.getHelpersRegIds(eventId);}
 
-    public void insertMedicationUse(String proCmid, String eventId, String aproId){DB_communicator.insertMedicationUse(proCmid, eventId, aproId);}
+    public void insertMedicationUse(String proCmid, String eventId, String aproId, String medNum){DB_communicator.insertMedicationUse(proCmid, eventId, aproId, medNum);}
 
     public void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data){DB_communicator.updateAssistantArrivalTimesAndLocation(data);}
 
@@ -231,4 +231,6 @@ public class DbController_V1 implements IDbController {
     }
 
     public void updateLocationRemarkOfPatient(String eventId, String loc){DB_communicator.updateLocationRemarkOfPatient(eventId, loc);}
+
+    public String getMedicalConditionOfPatient(String patientId){return DB_communicator.getMedicalConditionOfPatient(patientId);}
 }

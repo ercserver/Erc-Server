@@ -51,7 +51,7 @@ public interface IDbController  extends IDbInit, IDbComm {
     void updateResult(String cmid, String eventId, String result);
     String getEventByCmid(String cmid);
     void updatePatientRemarks(String cmid, String eventID, String remark);
-    void insertMedicationUse(String proCmid, String eventId, String aproId);
+    void insertMedicationUse(String proCmid, String eventId, String aproId, String medNum);
     void updateAssistantArrivalTimesAndLocation(HashMap<String, String> data);
     ArrayList<String> getHelpersRegIds(String eventId);
     HashMap<String, String>getAssistDetails(String cmid, String eventId);
@@ -60,5 +60,6 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList);
     int startNewEmergencyEvent(HashMap<String, String> details);
     void updateLocationRemarkOfPatient(String eventId, String loc);
+    String getMedicalConditionOfPatient(String patientId);
 
 }
