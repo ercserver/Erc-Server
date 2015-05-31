@@ -66,7 +66,8 @@ public class EmerController_V1 implements IEmerController {
     }
 
     //ToDo:Naor. you need to get here also the age...
-    private void askForUsersAroundLocation(HashMap<String, String> data) {
+    private void askForUsersAroundLocation(HashMap<String, String> data)
+    {
         String age = turnBirthDateIntoAge(dbController.getBirthDate(data.get("create_by_member_id")));
         data.put("age",age);
         //add the GIS URL to the receivers
