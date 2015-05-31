@@ -19,12 +19,7 @@ import java.util.Map;
  */
 public class EmerController_V1 implements IEmerController {
 
-    private static final String GIS_URL = null;
-    private static final String GIS_UNAME = null;
-    private static final String GIS_PW = null;
-    private static final String EMS_URL = null;
-    private static final String EMS_UNAME = null;
-    private static final String EMS_PW = null;
+
 
     private IEmerFilter_model emergencyFilter = null;
     private IEmerLogger_model emergencyLogger = null;
@@ -54,7 +49,7 @@ public class EmerController_V1 implements IEmerController {
         details.put("x", data.get("x"));
         details.put("y", data.get("y"));
         int event = dbController.startNewEmergencyEvent(details);
-        // Updates the patient's app
+        //Updates the patient's app
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo.add(data.get("reg_id"));
         HashMap<String, String> response = new HashMap<String, String>();
@@ -69,7 +64,15 @@ public class EmerController_V1 implements IEmerController {
     }
 
     //ToDo:Naor. you need to get here also the age...
-    private void askForUsersAroundLocation(HashMap<String, String> data, String eventId, String medConditionMed) {
+    private void askForUsersAroundLocation(HashMap<String, String> data) {
+        //TODO - Ohad - get only the user's age
+        String age = turnBirthDateIntoAge(dbController.getBirthDate(data.get("create_by_member_id")));
+        data.put("age",age);
+        //add the GIS URL to the receivers
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo = assistantFuncs.addReceiver("GIS", sendTo);
+        //initiate request
+        initiatedOneObjectRequest(data, sendTo);
     }
 
     // called from emergencyCall
@@ -101,13 +104,19 @@ public class EmerController_V1 implements IEmerController {
         data.remove("RequestID");
         //ToDo:need to update the DB about location_remark of the patient with the following method of DB:
         // public void updateLocationRemarkOfPatient(String eventId, String loc)
-        //TODO - Naor:you didn't understand me. This is the location remark of the patient of the emergency event' and not of the assistants
 
-
-
-        //pop the event id
+        //pop the event data
+        String state = data.get("state");
+        String location_remark = data.get("location_remark");
+        String region_type = data.get("region_type");
+        String radius = data.get("radius");
         String eventID = data.get("event_id");
         data.remove("event_id");
+        data.remove("state");
+        data.remove("region_type");
+        data.remove("radius");
+        //TODO Ohad/Maor
+        dbController.updateEvent(eventID,state,region_type,radius,location_remark);
         //filter
         HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data);
         //prepare to send a "Times" request to the GIS
@@ -275,15 +284,14 @@ public class EmerController_V1 implements IEmerController {
     //Division to different cases logic is done on the EMS side:
     // If they don't have that patient in
     //that event - it's an addition. If they do - it's an update.
-    private void updateOrAddAssistantToEMS(String patientId, String eventId, String eta, String xCoord, String yCoord) {
+    private void updateOrAddAssistantToEMS(String patientId, String eventId, String eta, String locationRemark) {
         //generate
         HashMap<String,String> updateOrAddToEms = new HashMap<String,String>();
         updateOrAddToEms.put("RequestID", "updateOrAddAssistant");
         updateOrAddToEms.put("patient_id",patientId);
         updateOrAddToEms.put("event_id",eventId);
         updateOrAddToEms.put("eta",eta);
-        updateOrAddToEms.put("x",xCoord);
-        updateOrAddToEms.put("y", yCoord);
+        updateOrAddToEms.put("location_remark",locationRemark);
         //send
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
@@ -291,11 +299,10 @@ public class EmerController_V1 implements IEmerController {
     }
 
     //Inserts assistant to the data base
-    private void insertAssistantToDB(HashMap<String, String> user, String x, String y, String eventId, String date)
+    private void insertAssistantToDB(HashMap<String, String> user, String locationRemark, String eventId, String date)
     {
         HashMap<String, String> insert = new HashMap<String, String>();
-        insert.put("x", x);
-        insert.put("y", y);
+        insert.put("location_remark",locationRemark);
         insert.put("event_id", eventId);
         insert.put("community_member_id", user.get("community_member_id"));
         insert.put("eta_by_foot", user.get("eta_by_foot"));
@@ -405,16 +412,8 @@ public class EmerController_V1 implements IEmerController {
     public void assistantGaveMed(HashMap<String, String> data) {
         String eventID = data.get("event_id");
         String cmid = data.get("community_member_id");
-        //ToDo:Naor: the assistant can't know the cmid of the approver, and also you don't really need this
-        String approverID = data.get("approver_id");
-        String medNum = null;
-        /* Why do we need "medNum" here? it can be inferred from the DB. Don't forget
-        this method is intiated by the app - we can't get the med num here...
-        We can also consider holding a table of approvals in the DB (If we don't already own such)
-         */
-        //TODO - Naor:you are using the wrong method!(maby the method's name is confusing) you just need to call to method that updates the date of giving:method that Ohad need to implement
-        dbController.insertMedicationUse(cmid, eventID, approverID, medNum);
-        //dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad
+
+        dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
