@@ -101,7 +101,7 @@ public class EmerController_V1 implements IEmerController {
         data.remove("RequestID");
         //ToDo:need to update the DB about location_remark of the patient with the following method of DB:
         // public void updateLocationRemarkOfPatient(String eventId, String loc)
-        //TODO - Maor: users are added to the DB only after being approached (after being filtered in "receiveArrivalTimes") - this DOES NOT happen in this function.. not location is neeeded by the GIS here yet.
+        //TODO - Naor:you didn't understand me. This is the location remark of the patient of the emergency event' and not of the assistants
 
 
 
@@ -114,7 +114,7 @@ public class EmerController_V1 implements IEmerController {
 
         /*get all of the users to which a request was sent for the event
         and did not reject (either approved or not yet responded)*/
-        //TODO - Ohad/Maor: Please just return a Hash of String,String. Also - please accept the event ID parameter as a string rather than as an int
+        //TODO - Ohad: Please just return a Hash of String,String. Also - please accept the event ID parameter as a string rather than as an int
         HashMap<String,String> allHelpersRequested = dbController.getAllAssistantsByEventId(eventID, -1);
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
         notNeededHelpers.putAll(allHelpersRequested);
@@ -159,7 +159,7 @@ public class EmerController_V1 implements IEmerController {
         for(String helper : notNeededHelpers.keySet()){
             cmidsToStopFollow.add(helper);
         }
-        //TODO - Maor - handle empty list possibility
+        //TODO - Naor - did you mean to check empty list about the cmidsToStopFollow list?
         stopFollow(eventID, cmidsToStopFollow);
 
         //only stay in "filteredData" with the new helpers to approach
@@ -226,14 +226,17 @@ public class EmerController_V1 implements IEmerController {
             else
                 updates.put("transformation_mean", "1");
         }
+        // The assistant reject arrival
+        else
+            updates.put("response_type", "2");
+
         // Updates the data base about the assistant's response
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("event_id", response.get("event_id"));
         conds.put("community_member_id", response.get("community_member_id"));
         dbController.updateEmerFirstResponse(updates, conds);
-        // Adds this assistant to EMS, and to the following emergency of GIS
 
-        //TODO - Maor, why same "if" twice..?
+        // Adds this assistant to EMS, and to the following emergency of GIS
         if(!response.get("RequestID").equals("arivalRejection")) {
             String eta = (response.get("RequestID").equals("arivalAcceptionOnFoot")) ?
                                response.get("eta_by_foot") : response.get("eta_by_car");
@@ -242,8 +245,6 @@ public class EmerController_V1 implements IEmerController {
                     response.get("event_id"), eta, h.get("x"), h.get("y"));
             askGisToFollow(response.get("event_id"), response.get("community_member_id"));
         }
-
-        //TODO - Maor - we also need to update the DB of rejection - I can't see where do we put -2 as the new response type....
     }
 
     private void askGisToFollow(String eventId, String cmid)
@@ -402,16 +403,16 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void assistantGaveMed(HashMap<String, String> data) {
-        String eventID = data.get("eventID");
+        String eventID = data.get("event_id");
         String cmid = data.get("community_member_id");
+        //ToDo:Naor: the assistant can't know the cmid of the approver, and also you don't really need this
         String approverID = data.get("approver_id");
-        //TODO - Maor/Ohad
         String medNum = null;
         /* Why do we need "medNum" here? it can be inferred from the DB. Don't forget
         this method is intiated by the app - we can't get the med num here...
         We can also consider holding a table of approvals in the DB (If we don't already own such)
          */
-        //TODO - ^^ Maor/Ohad ^^
+        //TODO - Naor:you are using the wrong method!(maby the method's name is confusing) you just need to call to method that updates the date of giving:method that Ohad need to implement
         dbController.insertMedicationUse(cmid, eventID, approverID, medNum);
         //dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad
         data.put("RequestID", "AssistantGaveMed");
@@ -493,7 +494,7 @@ public class EmerController_V1 implements IEmerController {
         //close the event within the GIS
         cancelEventOnGIS(eventID);
         //close the event within the DB
-        //TODO - Maor/Ohad: I am not sure why we need another paramter in this function. Please explain Also, please receive the EventID param as a string.
+        //TODO - Ohad: I am not sure why we need another paramter in this function. Please explain Also, please receive the EventID param as a string.
         dbController.closeEvent(eventID);
 
         //TODO - Logs
@@ -602,6 +603,9 @@ public class EmerController_V1 implements IEmerController {
     // Gets eventId and list of users, and tells to GIS to stop following these users
     private void stopFollow(String eventId, ArrayList<String> cmids)
     {
+        // Checks that we have user that we realy need to stop following
+        if(cmids.isEmpty())
+            return;
         HashMap<String, String> req = new HashMap<String, String>();
         req.put("RequestID", "stopFollow");
         req.put("event_id", eventId);
