@@ -1502,7 +1502,7 @@ public class DbComm_V1 implements IDbComm_model {
                 cond.put("date_to", "null").put("status_num", Integer.toString(status)).build());
     }
 
-    public HashMap<String, String>getAssistDetails(String cmid, String eventId)
+    public HashMap<String, String> getAssistDetails(String cmid, String eventId)
     {
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("community_member_id", cmid);
