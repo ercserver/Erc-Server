@@ -842,6 +842,9 @@ public class DbInit_V1 implements IDbInit_model {
                         " status_num INTEGER not NULL FOREIGN KEY REFERENCES O_EventStatuses(status_num), " +
                         " x REAL not NULL, " +
                         " y REAL not NULL, " +
+                        " radius REAL " +
+                        " state VARCHAR(100)" +
+                        " region_type INTEGER" +//enum:0 for urban, 1 for rural
                         " location_remark VARCHAR(100), " +
                         " patient_condition_remarks VARCHAR(300), " +
                         " last_action_time DATETIME DEFAULT CURRENT_TIMESTAMP, " +

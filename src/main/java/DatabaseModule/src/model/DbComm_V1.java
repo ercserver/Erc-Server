@@ -1524,11 +1524,18 @@ public class DbComm_V1 implements IDbComm_model {
         updateTable("O_EmergencyEventResponse", conds, "response_type", "3");
     }
 
-    public void updateLocationRemarkOfPatient(String eventId, String loc)
+    public void updateEventDetails(String eventId, String state, String regType, String radiud, String loc)
     {
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("event_id", eventId);
-        updateTable("O_EmergencyEvents", cond, "location_remark", loc);
+        if(loc != null)
+            updateTable("O_EmergencyEvents", cond, "location_remark", loc);
+        if(state != null)
+            updateTable("O_EmergencyEvents", cond, "state", state);
+        if(radiud != null)
+            updateTable("O_EmergencyEvents", cond, "radius", radiud);
+        if(regType != null)
+            updateTable("O_EmergencyEvents", cond, "region_type", regType);
         try {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();

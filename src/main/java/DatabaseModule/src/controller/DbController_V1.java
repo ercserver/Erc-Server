@@ -230,7 +230,7 @@ public class DbController_V1 implements IDbController {
         return DB_communicator.startNewEmergencyEvent(details);
     }
 
-    public void updateLocationRemarkOfPatient(String eventId, String loc){DB_communicator.updateLocationRemarkOfPatient(eventId, loc);}
+    public void updateEventDetails(String eventId, String state, String regType, String radiud, String loc){DB_communicator.updateEventDetails(eventId, state, regType, radiud, loc);}
 
     public String getMedicalConditionOfPatient(String patientId){return DB_communicator.getMedicalConditionOfPatient(patientId);}
 

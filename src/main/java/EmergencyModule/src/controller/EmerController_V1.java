@@ -58,9 +58,11 @@ public class EmerController_V1 implements IEmerController {
         res.put(1, response);
         commController.setCommToUsers(res, sendTo, false);
         commController.sendResponse();
+        data.put("event_id", Integer.toString(event));
         askForClosestEMS(data);
-        askForUsersAroundLocation(data, Integer.toString(event),
+        data.put("medical_condition_description",
                 dbController.getMedicalConditionByNum(details.get("medical_condition_id")).get(1).get("medical_condition_description"));
+        askForUsersAroundLocation(data);
     }
 
     //ToDo:Naor. you need to get here also the age...
@@ -97,14 +99,9 @@ public class EmerController_V1 implements IEmerController {
 
     //this methos will be called from the emergency event initiation
     //-1 for all 0 Not responded 1 - approved 2 - rejected - 3 -  cancelled
-    //ToDo:Naor, I think we should get here HashMap<Integer,HashMap<String,String> because we get a list of users...
-    //TODO - Maor: we only get the plain list and one object called event_id, no real need for us to handle the complicated form... see the implementation below and respond with your opinion:
     @Override
     public void receiveUsersAroundLocation(HashMap<String,String> data) {
         data.remove("RequestID");
-        //ToDo:need to update the DB about location_remark of the patient with the following method of DB:
-        // public void updateLocationRemarkOfPatient(String eventId, String loc)
-
         //pop the event data
         String state = data.get("state");
         String location_remark = data.get("location_remark");
@@ -115,8 +112,7 @@ public class EmerController_V1 implements IEmerController {
         data.remove("state");
         data.remove("region_type");
         data.remove("radius");
-        //TODO Ohad/Maor
-        dbController.updateEvent(eventID,state,region_type,radius,location_remark);
+        dbController.updateEventDetails(eventID, state, region_type,radius,location_remark);
         //filter
         HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data);
         //prepare to send a "Times" request to the GIS
@@ -168,7 +164,6 @@ public class EmerController_V1 implements IEmerController {
         for(String helper : notNeededHelpers.keySet()){
             cmidsToStopFollow.add(helper);
         }
-        //TODO - Naor - did you mean to check empty list about the cmidsToStopFollow list?
         stopFollow(eventID, cmidsToStopFollow);
 
         //only stay in "filteredData" with the new helpers to approach

@@ -72,7 +72,7 @@ public interface IDbComm_model {
     HashMap<String, String>getAssistDetails(String cmid, String eventId);
     String getRegIDOfPatient(String patientId);
     void removeAssistantFromEvent(String eventId, String patient_id);
-    void updateLocationRemarkOfPatient(String eventId, String loc);
+    void updateEventDetails(String eventId, String state, String regType, String radiud, String loc);
     String getMedicalConditionOfPatient(String patientId);
     String getMedicationOfPatient(String cmid);
     void updateEMSOfEvent(String cmid, String eventId);
