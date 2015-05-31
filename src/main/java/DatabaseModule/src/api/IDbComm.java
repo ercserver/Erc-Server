@@ -59,4 +59,5 @@ public interface IDbComm {
     void updateEMSOfEvent(String cmid, String eventId);
     String getPrescNum(String cmid);
     HashMap<String, String> getMedicalDetailsForPresenting(String cmid);
+    String getBirthDate(String cmid);
 }

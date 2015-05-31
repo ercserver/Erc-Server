@@ -241,4 +241,6 @@ public class DbController_V1 implements IDbController {
     public String getPrescNum(String cmid){return DB_communicator.getPrescNum(cmid);}
 
     public HashMap<String, String> getMedicalDetailsForPresenting(String cmid){return DB_communicator.getMedicalDetailsForPresenting(cmid);}
+
+    public String getBirthDate(String cmid){return DB_communicator.getBirthDate(cmid);}
 }

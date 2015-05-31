@@ -693,8 +693,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " action_status_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionStatus(action_status_num), " +
                         " eta_by_car INTEGER not NULL, " +
                         " created_date TIMESTAMP not NULL, " +
-                        " x REAL not NULL, " +
-                        " y REAL not NULL, " +
+                        " location_remark VARCHAR(250) not NULL, " +
                         " request_sent_date DATETIME not NULL DEFAULT current_timestamp, " +
                         " response_date DATETIME, " +
                         " response_type INTEGER not NULL DEFAULT 0, " +// enum:0=hasn't response yet, 1=accept, 2=reject, 3=cancell

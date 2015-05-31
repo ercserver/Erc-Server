@@ -67,7 +67,6 @@ public class EmerController_V1 implements IEmerController {
 
     //ToDo:Naor. you need to get here also the age...
     private void askForUsersAroundLocation(HashMap<String, String> data) {
-        //TODO - Ohad - get only the user's age
         String age = turnBirthDateIntoAge(dbController.getBirthDate(data.get("create_by_member_id")));
         data.put("age",age);
         //add the GIS URL to the receivers
@@ -246,7 +245,7 @@ public class EmerController_V1 implements IEmerController {
                                response.get("eta_by_foot") : response.get("eta_by_car");
             HashMap<String, String>h = dbController.getAssistDetails(response.get("community_member_id"), response.get("event_id"));
             updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(response.get("community_member_id")),
-                    response.get("event_id"), eta, h.get("x"), h.get("y"));
+                    response.get("event_id"), eta, h.get("location_remark"));
             askGisToFollow(response.get("event_id"), response.get("community_member_id"));
         }
     }
@@ -271,7 +270,7 @@ public class EmerController_V1 implements IEmerController {
         String eta = (assistDetails.get("transformation_mean").equals("0")) ?
                 data.get("eta_by_foot") : data.get("eta_by_car");
         updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(data.get("community_member_id")),
-                data.get("event_id"), eta, data.get("x"), data.get("y"));
+                data.get("event_id"), eta, data.get("location_remark"));
     }
 
     //This function will be called by "receiveArrivalTime" - for updates and by
@@ -555,12 +554,10 @@ public class EmerController_V1 implements IEmerController {
             if(!user.keySet().contains("subRequest"))
                 continue;
             //Assistant location
-            String x = user.get("x");
-            String y = user.get("y");
-            user.remove("x");
-            user.remove("y");
+            String loc = user.get("location_remark");
+            user.remove("location_remark");
             // Inserts the assistant to the data base
-            insertAssistantToDB(user, x, y, eventId, eventDetails.get("created_date"));
+            insertAssistantToDB(user, loc, eventId, eventDetails.get("created_date"));
             HashMap<String, String> medicalDetForPresenting = dbController.getMedicalDetailsForPresenting(user.get("community_member_id"));
             user.put("medication_name", medicalDetForPresenting.get("medication_name"));
             user.put("dosage", medicalDetForPresenting.get("dosage"));

@@ -1104,12 +1104,12 @@ public class DbComm_V1 implements IDbComm_model {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,created_date,x,y) VALUES (" +
+            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,created_date,location_remark) VALUES (" +
                     insert.get("community_member_id") + "," + insert.get("event_id") + "," +
                     insert.get("prescription_num") + "," +
                     insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
-                    ",'" + insert.get("created_date") + "'," + insert.get("x") +
-                    "," + insert.get("y") + ")");
+                    ",'" + insert.get("created_date") + "','" + insert.get("location_remark") +
+                    "')");
         }
         catch (SQLException e) {e.printStackTrace();}
         finally
@@ -1440,8 +1440,7 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("community_member_id", data.get("community_member_id"));
         conds.put("event_id", data.get("event_id"));
-        updateTable("O_EmergencyEventResponse", conds, "x", data.get("x"));
-        updateTable("O_EmergencyEventResponse", conds, "y", data.get("y"));
+        updateTable("O_EmergencyEventResponse", conds, "location_remark", "'" + data.get("location_remark") + "'");
         updateTable("O_EmergencyEventResponse", conds, "eta_by_foot", data.get("eta_by_foot"));
         updateTable("O_EmergencyEventResponse", conds, "eta_by_car", data.get("eta_by_car"));
     }
@@ -1529,9 +1528,9 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("event_id", eventId);
         if(loc != null)
-            updateTable("O_EmergencyEvents", cond, "location_remark", loc);
+            updateTable("O_EmergencyEvents", cond, "location_remark", "'"+loc+"'");
         if(state != null)
-            updateTable("O_EmergencyEvents", cond, "state", state);
+            updateTable("O_EmergencyEvents", cond, "state", "'"+state+"'");
         if(radiud != null)
             updateTable("O_EmergencyEvents", cond, "radius", radiud);
         if(regType != null)
@@ -1684,6 +1683,13 @@ public class DbComm_V1 implements IDbComm_model {
                 catch (Exception e) {e.printStackTrace();}
             }
         }
+    }
+
+    public String getBirthDate(String cmid)
+    {
+        HashMap<String, String> cond = new HashMap<String, String>();
+        cond.put("community_member_id", cmid);
+        return getRowsFromTable(cond, "P_CommunityMembers").get(1).get("birth_date");
     }
 
     //ToDo:Ohad:need for a method that updates with current time the medication_provision_date
