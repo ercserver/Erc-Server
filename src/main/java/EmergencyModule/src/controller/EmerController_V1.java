@@ -9,10 +9,9 @@ import EmergencyModule.src.model.EmerFilter_V1;
 import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by NAOR on 16/05/2015.
@@ -77,6 +76,25 @@ public class EmerController_V1 implements IEmerController {
         initiatedOneObjectRequest(data, sendTo);
     }
 
+    private String turnBirthDateIntoAge(String stringedBirth) {
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM:ss", Locale.ENGLISH);
+        try {
+            //parse and get birth date
+            long birth = format.parse(stringedBirth).getTime();
+            //get current date
+            long now = new java.util.Date().getTime();;
+
+            //Subtract and return stringed years
+            int yearsBetween = (int)(((now-birth)/(1000*60*60*24))/365);
+            return Integer.toString(yearsBetween);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // called from emergencyCall
     private void askForClosestEMS(HashMap<String, String> data) {
         // Asks from GIS the closest EMS to the emergency event
@@ -91,7 +109,24 @@ public class EmerController_V1 implements IEmerController {
         //initiate request
         initiatedOneObjectRequest(response, sendTo);
     }
+    public void receiveClosestEmsAndApproach(HashMap<String, String> data){
+        //update the db
+        //TODO - Ohad
+        dbController.updateEMSfirstApproached(data);
+        //generate required data and approach the EMS
+        HashMap<String,String> eventDetails = dbController.getEventDetails(data.get("event_id"));
+        data.put("patient_id", eventDetails.get("event_id"));
+        data.put("location_remark",eventDetails.get("location_remark"));
+        data.put("RequestID", "start");
+        //add the EMS URL to the receivers
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo = assistantFuncs.addReceiver("EMS", sendTo);
+        //initiate request
+        initiatedOneObjectRequest(data, sendTo);
+    }
 
+
+    //TODO - Maor, what is this method for?
     public void getCmidOfEms(HashMap<String, String> data)
     {
         dbController.updateEMSOfEvent(data.get("community_member_id"), data.get("event_id"));
@@ -112,9 +147,9 @@ public class EmerController_V1 implements IEmerController {
         data.remove("state");
         data.remove("region_type");
         data.remove("radius");
-        dbController.updateEventDetails(eventID, state, region_type,radius,location_remark);
+        dbController.updateEventDetails(eventID, state, region_type, radius, location_remark);
         //filter
-        HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data);
+        HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID);
         //prepare to send a "Times" request to the GIS
 
         /*get all of the users to which a request was sent for the event

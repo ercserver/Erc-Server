@@ -24,11 +24,27 @@ public class EmerFilter_V1 implements IEmerFilter_model {
 
     //filter list receied from "receiveUsersAroundLocation"
     @Override
-    public HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter) {
-        //TODO - Naor. Need to ask Michael
-        //TODO - FILTER BY MEDICINE MATCH
-        //TODO - FILTER BY AVAILABILITY AND STATUS'
-        return null;
+    public HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter,String eventID) {
+
+        //TODO - Naor. Need to ask Michael if thats what he wants
+        for(String helper : listToFilter.keySet()){
+            //Check for status,availability and medicine match and remove mismatches
+            if((!dbController.isCmidStatusActive(helper)) ||
+               (!dbController.isCmidStatusAvailable(helper)) ||
+               (!dbController.doesMedicineMatch(helper,eventID))){
+                listToFilter.remove(helper);
+            }
+        }
+
+
+        //TODO Ohad:
+        // 1) Boolean isCmidStatusActive(cmid)
+        // 2) Boolean function called isCmidAvailable(cmid)
+        // 3) Boolean function called doesMedicineMatch(cmid,eventID)
+
+
+        return listToFilter;
+
     }
 
 
