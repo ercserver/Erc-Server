@@ -1,3 +1,4 @@
+/*
 package EmergencyModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
@@ -7,9 +8,11 @@ import Utilities.ModelsFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+*/
 /**
  * Created by NAOR on 16/05/2015.
- */
+ *//*
+
 public class EmerFilter_V1 implements IEmerFilter_model {
 
     private IDbController dbController = null;
@@ -58,3 +61,4 @@ public class EmerFilter_V1 implements IEmerFilter_model {
 
 
 }
+*/
