@@ -31,7 +31,7 @@ public interface IEmer {
     void receiveArrivalTime(HashMap<String,String> data);
     //From app
     void emergencyCall(HashMap<String, String> data);
-    //TODO From ?
+    //From EMS
     void getCmidOfEms(HashMap<String, String> data);
     //From GIS
     void receiveClosestEmsAndApproach (HashMap<String, String> data);

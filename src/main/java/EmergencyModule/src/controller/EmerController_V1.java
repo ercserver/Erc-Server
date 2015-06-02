@@ -252,24 +252,21 @@ public class EmerController_V1 implements IEmerController {
         emergencyLogger.handleAssistantRespondsToApproach(response);
         if (!assistantFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
+        // How much time will take this assistant
         String eta = null;
+        // Tells if we want to send this assistant or not
         boolean send = false;
         HashMap<String, String> updates = new HashMap<String, String>();
         // This assistant accepted arrival
         if(!response.get("RequestID").equals("arrivalRejection")) {
             eta = (response.get("RequestID").equals("arrivalAcceptionOnFoot")) ?
                     response.get("eta_by_foot") : response.get("eta_by_car");
-            //TODO
-            //1. Get all users that accepted arrival (status 1)
-            //2. for every user from phase #1:
-            //a. extract arrival time by taking the corresponding eta to the transportation mean
-            //b. sort the users by eta
-            //c. extract number of "stack users"
-            //3. if improves the stack - tell him to go and save the world
-            // - if not thank you bye
             HashMap<String,String> res = new HashMap<String, String>();
+            // The assistants that are going to the event now and their proper arrival times
             HashMap<Integer, HashMap<String, String>> relevantAssistants = dbController.getGoingAssistantsAndTimes(response.get("event_id"));
+            // Tells how much assistants we want in this state
             int howManyToSend = dbController.getHowManySendToEvent("'Israel'");
+            // We want to send this assistant-Sends proper message to app
             if(toSend(relevantAssistants, howManyToSend, eta))
             {
                 updates.put("response_type", "1");
@@ -278,6 +275,7 @@ public class EmerController_V1 implements IEmerController {
                 String message = "Thank you for yor respond! You can go to the patient at risk!"
                 res.put("message", message);
             }
+            // We don't want to send this assistant-Sends proper message to app
             else {
                 updates.put("response_type", "4");
                 res.put("RequestID", "noNeed");
@@ -291,10 +289,10 @@ public class EmerController_V1 implements IEmerController {
             target.add(response.get("reg_id"));
             commController.setCommToUsers(re, target, false);
             commController.sendResponse();
-            // This assistant will arrival by foot
+            // This assistant accepted arrival by foot
             if (response.get("RequestID").equals("arrivalAcceptionOnFoot"))
                 updates.put("transformation_mean", "0");
-            // This assistant will arrival by car
+            // This assistant accepted arrival by car
             else
                 updates.put("transformation_mean", "1");
         }
@@ -315,6 +313,21 @@ public class EmerController_V1 implements IEmerController {
                     response.get("event_id"), eta, h.get("location_remark"));
             askGisToFollow(response.get("event_id"), response.get("community_member_id"));
         }
+    }
+
+    // Tells if we want to send an assistant to emergency event by his proper arrival time
+    private boolean toSend(HashMap<Integer, HashMap<String, String>> relevantAssistants, int howManyToSend, String eta)
+    {
+        // We didn't get a full stack yet-sends the assistant
+        if(relevantAssistants.size() < howManyToSend)
+            return true;
+        double dEta = Double.parseDouble(eta);
+        // Counts how many actives assistant are better by their arrival times
+        int betterFromAssist = 0;
+        for(int i = 1; i <= relevantAssistants.size(); i++)
+            if(Double.parseDouble(relevantAssistants.get(i).get("eta")) <= dEta)
+                betterFromAssist++;
+        return betterFromAssist < howManyToSend;
     }
 
     private void askGisToFollow(String eventId, String cmid)

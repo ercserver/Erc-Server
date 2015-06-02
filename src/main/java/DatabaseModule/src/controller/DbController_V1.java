@@ -243,4 +243,8 @@ public class DbController_V1 implements IDbController {
     public HashMap<String, String> getMedicalDetailsForPresenting(String cmid){return DB_communicator.getMedicalDetailsForPresenting(cmid);}
 
     public String getBirthDate(String cmid){return DB_communicator.getBirthDate(cmid);}
+
+    public HashMap<Integer, HashMap<String, String>> getGoingAssistantsAndTimes(String eventId){return DB_communicator.getGoingAssistantsAndTimes(eventId);}
+
+    public int getHowManySendToEvent(String state){return DB_communicator.getHowManySendToEvent(state);}
 }

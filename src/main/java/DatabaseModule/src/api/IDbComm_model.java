@@ -79,4 +79,6 @@ public interface IDbComm_model {
     String getPrescNum(String cmid);
     HashMap<String, String> getMedicalDetailsForPresenting(String cmid);
     String getBirthDate(String cmid);
+    HashMap<Integer, HashMap<String, String>> getGoingAssistantsAndTimes(String eventId);
+    int getHowManySendToEvent(String state);
 }

@@ -1461,6 +1461,21 @@ public class DbComm_V1 implements IDbComm_model {
 
     }
 
+    public HashMap<Integer, HashMap<String, String>> getGoingAssistantsAndTimes(String eventId)
+    {
+        HashMap<Integer, HashMap<String, String>> assistnats = getAllAssistantsByEventId(Integer.parseInt(eventId), 1);
+        for(int i = 1; i <= assistnats.size(); i++)
+        {
+            String cmid = assistnats.get(i).get("community_member_id");
+            HashMap<String, String> det = getAssistDetails(cmid, eventId);
+            if(det.get("transformation_mean").equals("0"))
+                assistnats.get(i).put("eta", det.get("eta_by_foot"));
+            else
+                assistnats.get(i).put("eta", det.get("eta_by_car"));
+        }
+        return assistnats;
+    }
+
     public ArrayList<String> getHelpersRegIds(String eventId)
     {
         HashMap<Integer, HashMap<String, String>> assistents = getAllAssistantsByEventId(Integer.parseInt(eventId), 1);
@@ -1690,6 +1705,13 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("community_member_id", cmid);
         return getRowsFromTable(cond, "P_CommunityMembers").get(1).get("birth_date");
+    }
+
+    public int getHowManySendToEvent(String state)
+    {
+        HashMap<String, String> cond = new HashMap<String, String>();
+        cond.put("state", state);
+        return Integer.parseInt(getRowsFromTable(cond, "HowManyToSendInEmerEvent").get(1).get("how_much"));
     }
 
     //ToDo:Ohad:need for a method that updates with current time the medication_provision_date

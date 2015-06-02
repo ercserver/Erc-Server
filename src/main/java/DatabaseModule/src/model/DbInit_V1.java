@@ -303,6 +303,10 @@ public class DbInit_V1 implements IDbInit_model {
                     +"minutes_to INT NOT NULL,"
                     +"community_member_id INT NOT NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id))");
 
+            statement.addBatch("CREATE TABLE HowManyToSendInEmerEvent ("
+                    +"state VARCHAR(100) NOT NULL PRIMARY KEY,"
+                    +"how_much INT NOT NULL)");
+
             statement.executeBatch();
 
             //createPatientDBDiagnosis();
