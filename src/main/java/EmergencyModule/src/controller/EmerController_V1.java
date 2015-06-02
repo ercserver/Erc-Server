@@ -252,6 +252,8 @@ public class EmerController_V1 implements IEmerController {
         emergencyLogger.handleAssistantRespondsToApproach(response);
         if (!assistantFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
+        //Not in prototype
+        String EMSArrivalTime = null;
         // How much time will take this assistant
         String eta = null;
         // Tells if we want to send this assistant or not
@@ -261,6 +263,8 @@ public class EmerController_V1 implements IEmerController {
         if(!response.get("RequestID").equals("arrivalRejection")) {
             eta = (response.get("RequestID").equals("arrivalAcceptionOnFoot")) ?
                     response.get("eta_by_foot") : response.get("eta_by_car");
+            if(EMSArrivalTime != null)
+            {}
             HashMap<String,String> res = new HashMap<String, String>();
             // The assistants that are going to the event now and their proper arrival times
             HashMap<Integer, HashMap<String, String>> relevantAssistants = dbController.getGoingAssistantsAndTimes(response.get("event_id"));
@@ -271,7 +275,7 @@ public class EmerController_V1 implements IEmerController {
             {
                 updates.put("response_type", "1");
                 send = true;
-                res.put("RequestID", "go!");
+                res.put("RequestID", "go");
                 String message = "Thank you for yor respond! You can go to the patient at risk!"
                 res.put("message", message);
             }
