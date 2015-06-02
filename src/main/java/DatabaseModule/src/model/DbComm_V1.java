@@ -504,10 +504,8 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     private HashMap<Integer,HashMap<String,String>> resultSetToMap(ResultSet rs){
-        HashMap<Integer,HashMap<String,String>> map =
-                new HashMap<Integer,HashMap<String,String>>();
+        HashMap<Integer,HashMap<String,String>> map = new HashMap<Integer,HashMap<String,String>>();
         try {
-
             int j = 1;
             while (rs.next()) {
                 int total_rows = rs.getMetaData().getColumnCount();
@@ -517,6 +515,7 @@ public class DbComm_V1 implements IDbComm_model {
                             .toLowerCase(), rs.getObject(i + 1).toString());
                 }
                 map.put(new Integer(j), obj);
+                j++;
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -125,8 +125,6 @@ public class EmerController_V1 implements IEmerController {
         initiatedOneObjectRequest(data, sendTo);
     }
 
-
-    //TODO - Maor, what is this method for?
     public void getCmidOfEms(HashMap<String, String> data)
     {
         dbController.updateEMSOfEvent(data.get("community_member_id"), data.get("event_id"));
@@ -254,9 +252,13 @@ public class EmerController_V1 implements IEmerController {
         emergencyLogger.handleAssistantRespondsToApproach(response);
         if (!assistantFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
+        String eta = null;
+        boolean send = false;
         HashMap<String, String> updates = new HashMap<String, String>();
         // This assistant accepted arrival
         if(!response.get("RequestID").equals("arrivalRejection")) {
+            eta = (response.get("RequestID").equals("arrivalAcceptionOnFoot")) ?
+                    response.get("eta_by_foot") : response.get("eta_by_car");
             //TODO
             //1. Get all users that accepted arrival (status 1)
             //2. for every user from phase #1:
@@ -265,8 +267,30 @@ public class EmerController_V1 implements IEmerController {
             //c. extract number of "stack users"
             //3. if improves the stack - tell him to go and save the world
             // - if not thank you bye
-
-            updates.put("response_type", "1");
+            HashMap<String,String> res = new HashMap<String, String>();
+            HashMap<Integer, HashMap<String, String>> relevantAssistants = dbController.getGoingAssistantsAndTimes(response.get("event_id"));
+            int howManyToSend = dbController.getHowManySendToEvent("'Israel'");
+            if(toSend(relevantAssistants, howManyToSend, eta))
+            {
+                updates.put("response_type", "1");
+                send = true;
+                res.put("RequestID", "go!");
+                String message = "Thank you for yor respond! You can go to the patient at risk!"
+                res.put("message", message);
+            }
+            else {
+                updates.put("response_type", "4");
+                res.put("RequestID", "noNeed");
+                String message = "We have enough assistants that closer than you and confirmed their arrival.";
+                message += "\n Thank you anyway and have a good day!";
+                res.put("message", message);
+            }
+            HashMap<Integer, HashMap<String,String>> re = new HashMap<Integer,HashMap<String,String>>();
+            re.put(1, res);
+            ArrayList<String> target = new ArrayList<String>();
+            target.add(response.get("reg_id"));
+            commController.setCommToUsers(re, target, false);
+            commController.sendResponse();
             // This assistant will arrival by foot
             if (response.get("RequestID").equals("arrivalAcceptionOnFoot"))
                 updates.put("transformation_mean", "0");
@@ -285,9 +309,7 @@ public class EmerController_V1 implements IEmerController {
         dbController.updateEmerFirstResponse(updates, conds);
 
         // Adds this assistant to EMS, and to the following emergency of GIS
-        if(!response.get("RequestID").equals("arrivalRejection")) {
-            String eta = (response.get("RequestID").equals("arrivalAcceptionOnFoot")) ?
-                               response.get("eta_by_foot") : response.get("eta_by_car");
+        if(send) {
             HashMap<String, String>h = dbController.getAssistDetails(response.get("community_member_id"), response.get("event_id"));
             updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(response.get("community_member_id")),
                     response.get("event_id"), eta, h.get("location_remark"));
@@ -394,6 +416,7 @@ public class EmerController_V1 implements IEmerController {
             ArrayList<String> sendTo = new ArrayList<String>();
             sendTo.add(regId);
             commController.setCommToUsers(request, sendTo, false);
+            //ToDo:Naor, I am not sure but i think that you didn't really send the request
         }
     }
 
