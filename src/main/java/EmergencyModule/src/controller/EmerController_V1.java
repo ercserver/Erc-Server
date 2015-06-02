@@ -1,4 +1,3 @@
-/*
 package EmergencyModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
@@ -14,11 +13,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-*/
 /**
  * Created by NAOR on 16/05/2015.
- *//*
-
+ */
 public class EmerController_V1 implements IEmerController {
 
 
@@ -47,7 +44,7 @@ public class EmerController_V1 implements IEmerController {
         HashMap<String, String> details = new HashMap<String, String>();
         details.put("create_by_member_id", data.get("community_member_id"));
         details.put("patient_id", dbController.getPatientIDByCmid(data.get("community_member_id")));
-        details.put("medical_condition_id", dbController.getMedicalConditionOfPatient(details.get("patient_id")));
+        details.put("medical_condition_id", data.get("medical_condition_id"));
         details.put("x", data.get("x"));
         details.put("y", data.get("y"));
         int event = dbController.startNewEmergencyEvent(details);
@@ -155,10 +152,8 @@ public class EmerController_V1 implements IEmerController {
         HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID);
         //prepare to send a "Times" request to the GIS
 
-        */
-/*get all of the users to which a request was sent for the event
-        and did not reject (either approved or not yet responded)*//*
-
+        /*get all of the users to which a request was sent for the event
+        and did not reject (either approved or not yet responded)*/
 
         HashMap<String,String> allHelpersRequested = dbController.getAllAssistantsByEventId(eventID, -1);
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
@@ -261,10 +256,19 @@ public class EmerController_V1 implements IEmerController {
             return;
         HashMap<String, String> updates = new HashMap<String, String>();
         // This assistant accepted arrival
-        if(!response.get("RequestID").equals("arivalRejection")) {
+        if(!response.get("RequestID").equals("arrivalRejection")) {
+            //TODO
+            //1. Get all users that accepted arrival (status 1)
+            //2. for every user from phase #1:
+            //a. extract arrival time by taking the corresponding eta to the transportation mean
+            //b. sort the users by eta
+            //c. extract number of "stack users"
+            //3. if improves the stack - tell him to go and save the world
+            // - if not thank you bye
+
             updates.put("response_type", "1");
             // This assistant will arrival by foot
-            if (response.get("RequestID").equals("arivalAcceptionOnFoot"))
+            if (response.get("RequestID").equals("arrivalAcceptionOnFoot"))
                 updates.put("transformation_mean", "0");
             // This assistant will arrival by car
             else
@@ -281,8 +285,8 @@ public class EmerController_V1 implements IEmerController {
         dbController.updateEmerFirstResponse(updates, conds);
 
         // Adds this assistant to EMS, and to the following emergency of GIS
-        if(!response.get("RequestID").equals("arivalRejection")) {
-            String eta = (response.get("RequestID").equals("arivalAcceptionOnFoot")) ?
+        if(!response.get("RequestID").equals("arrivalRejection")) {
+            String eta = (response.get("RequestID").equals("arrivalAcceptionOnFoot")) ?
                                response.get("eta_by_foot") : response.get("eta_by_car");
             HashMap<String, String>h = dbController.getAssistDetails(response.get("community_member_id"), response.get("event_id"));
             updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(response.get("community_member_id")),
@@ -511,13 +515,11 @@ public class EmerController_V1 implements IEmerController {
         }
 
 
-        */
-/* TODO - Not in prototype I think
+        /* TODO - Not in prototype I think
         if(null != data.get("Dosage")) {
 
         }
-        *//*
-
+        */
     }
 
 
@@ -661,13 +663,10 @@ public class EmerController_V1 implements IEmerController {
 
 
     //we call this function from "approveOrRejectMed"
-    */
-/*private void approveOrRejectHelper(int patientID, int eventID) {
+    /*private void approveOrRejectHelper(int patientID, int eventID) {
         // in case of reject, we just need to tell the helper not to give the medicine and stay put
         //We allow the EMS to change their mind, but this logic is handled over their side using the instructions below
-    }*//*
-
+    }*/
     //EMS Needs to know after first time someone said he arrived - they should allow the Mokdan
     //to change his mind after rejecting. They should keep a boolean field in the table indicating "arrival"
 }
-*/
