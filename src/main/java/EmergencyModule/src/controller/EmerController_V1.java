@@ -687,13 +687,8 @@ public class EmerController_V1 implements IEmerController {
         req.put("event_id", eventId);
         HashMap<Integer, HashMap<String, String>> response = new  HashMap<Integer, HashMap<String, String>>();
         for(int i = 0; i < cmids.size(); i++)
-        {
-            HashMap<String, String> user = new HashMap<String, String>();
-            user.put("community_member_id", cmids.get(i));
-            user.put("subRequest", "cmid");
-            response.put(i + 1, user);
-        }
-        response.put(cmids.size() + 1, req);
+            req.put(cmids.get(i), null);
+        response.put(1, req);
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("GIS",sendTo);
         commController.setCommToUsers(response, sendTo, true);
