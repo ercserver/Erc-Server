@@ -121,5 +121,58 @@ public class Updates_V1 implements IUpdates_model {
             return false;
     }
 
+    @Override
+    public boolean checkIfWeFinishWithOnePatient(int i, int cmid, int tempCmid,Map.Entry<Integer, HashMap<String, String>> objs) {
+        if (i == 1) {
+            cmid = objs.getKey();
+            tempCmid = cmid;
+        }
+        else
+        {
+            tempCmid = objs.getKey();
+        }
+        return tempCmid == cmid;
+    }
+
+    @Override
+    public HashMap<String, String> CheckIfNeedVerifyAndUpdateOrSendToVer(int cmid,HashMap<String, String> data) {
+        boolean needVer = false;
+        Set<String> keys = data.keySet();
+        for (String fieldName : keys) {
+            //set  to urget to 0
+            dbController.updateUrgentInRefreshDetailsTime
+                    (cmid, data.get(fieldName), 0);
+            //TODO add and check if we need verifiction
+            if (data.get("needs_verification").equals("1")) {
+                needVer = true;
+            } else {
+                //update in table
+                updateUserDetails(cmid, fieldName,data.get(fieldName));
+            }
+        }
+        if (needVer)
+            return data;
+        else
+            return null;
+    }
+
+    @Override
+    public void updateUrgentInRefreshDetailsTimeToField(int cmid, HashMap<String, String> data) {
+
+        Set<String> keys = data.keySet();
+        keys.remove("community_member_id");
+        keys.remove("password");
+        for (String fieldName : keys) {
+            dbController.updateUrgentInRefreshDetailsTime
+                    (cmid, fieldName, 1);
+        }
+
+    }
+
+    @Override
+    public String getCurrentStatusOfPatient(int cmid) {
+        HashMap<String, String> data = memberDetail.getUserByCmid(cmid);
+        return memberDetail.getStatus(data);
+    }
 
 }

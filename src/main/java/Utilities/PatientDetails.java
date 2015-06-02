@@ -63,4 +63,20 @@ public class PatientDetails {
         else
             return true;
     }
+
+    public HashMap<String, String> getUserByCmid(int cmid) {
+
+        HashMap<String, String> member = new HashMap<String, String>();
+        member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
+        HashMap<String, String> details = dbController.getUserByParameter(member);
+        HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
+        String reg = "";
+        for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
+            HashMap<String,String> obj = objs.getValue();
+            reg = obj.get("reg_id");
+        }
+        details.put("reg_id",reg);
+        return details;
+    }
+
 }

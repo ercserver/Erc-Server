@@ -161,43 +161,47 @@ public class RoutineController_V1 implements IRoutineController {
     public Object handleRefreshDetails() {
         HashMap<Integer, HashMap<String, String>> data =
                 dbController.getRegistrationFieldsWithRefreshTime();
-
+        int cmid = 0;
+        int tempCmid = 0;
+        int i = 1;
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()) {
-
-            int cmid = objs.getKey();
-
             HashMap<String, String> obj = objs.getValue();
-            HashMap<Integer,HashMap<String,String>> ret = new
-                    HashMap<Integer,HashMap<String,String>>();
-            HashMap<String,String> buildRet = new
-                    HashMap<String,String>();
-
-            //check if we need to refresh
-            if(updates.FieldneedRefresh(objs));
+            HashMap<Integer, HashMap<String, String>> ret = new
+                    HashMap<Integer, HashMap<String, String>>();
+            if (updates.checkIfWeFinishWithOnePatient(i, cmid, tempCmid, objs)) {
+                HashMap<String, String> buildRet = new
+                        HashMap<String, String>();
+                //check if we need to refresh
+                if (updates.FieldneedRefresh(objs)) ;
+                {
+                    ret.put(i,obj);
+                }
+            }
+            else
             {
+                //send
+
                 String reg = memberDetail.getRegId(cmid);
                 ArrayList<String> target = new ArrayList<String>();
-
-
                 sendAssist.buildBasicRespone("need refresh parameter", "refresh");
-                ret.put(cmid,obj);
-
-
-                if (memberDetail.ifTypeISPatientOrGuardian(reg))
-                {
+                ret.put(cmid, obj);
+                if (memberDetail.ifTypeISPatientOrGuardian(reg)) {
                     target.add(reg);
                     commController.setCommToUsers(ret, target, false);
                 }
                 // is a doctor
-                else
-                {
+                else {
                     target.add("url...");//*
-                    commController.setCommToUsers(ret,null, false);
+                    commController.setCommToUsers(ret, null, false);
                 }
                 commController.sendResponse();
 
+                ret.clear();
+                i = 0;
             }
+            i++;
         }
+
         return null;
     }
 
@@ -210,28 +214,21 @@ public class RoutineController_V1 implements IRoutineController {
             if (assistent.checkCmidAndPassword(password,cmid))
             {
 
-                if (obj.get("Request_ID").equals("acceptRefresh"))
-                {
-                    //set  to urget to 0
-                    dbController.updateUrgentInRefreshDetailsTime
-                            (cmid, obj.get("field_name"), 0);
-                    //TODO add and check if we need verifiction
-                    if (obj.get("needs_verification").equals("1"))
-                    {
+               if (obj.get("Request_ID").equals("acceptRefresh"))
+               {
+                    //if we need verify details
+                   if (updates.CheckIfNeedVerifyAndUpdateOrSendToVer(cmid,obj) != null)
+                   {
 
-                    }
-                    else
-                    {
-                        //update in table
-                        //updates.updateUserDetails(cmid,col,val);
-                    }
-                }
-                //"Request_ID" equal to rejectRefresh
-                else
-                {
+                       return verify.verifyDetail(Integer.toString(cmid));
+                   }
+               }
+               //"Request_ID" equal to rejectRefresh
+               else
+               {
                     //set  to urget to 1
-                    dbController.updateUrgentInRefreshDetailsTime
-                            (cmid, obj.get("field_name"), 1);
+                   updates.updateUrgentInRefreshDetailsTimeToField(cmid,obj);
+
                 }
 
             }
@@ -243,6 +240,13 @@ public class RoutineController_V1 implements IRoutineController {
 
     @Override
     public Object updateStatus(HashMap<String, String> data) {
+        int cmid = Integer.parseInt(data.get("community_member_id"));
+        String password = data.get("password");
+        if (assistent.checkCmidAndPassword(password,cmid))
+        {
+            String oldStatus = updates.getCurrentStatusOfPatient(cmid);
+            dbController.updateStatus(cmid, "'" + oldStatus + "'", "'verifying details'");
+        }
         return null;
     }
 
@@ -253,6 +257,12 @@ public class RoutineController_V1 implements IRoutineController {
 
     @Override
     public Object deleteMember(HashMap<String, String> data) {
+        int cmid = Integer.parseInt(data.get("community_member_id"));
+        String password = data.get("password");
+        if (assistent.checkCmidAndPassword(password,cmid))
+        {
+            dbController.deleteUser(cmid);
+        }
         return null;
     }
 
