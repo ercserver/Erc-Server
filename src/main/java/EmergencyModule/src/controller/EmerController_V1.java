@@ -1,3 +1,4 @@
+/*
 package EmergencyModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
@@ -13,9 +14,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+*/
 /**
  * Created by NAOR on 16/05/2015.
- */
+ *//*
+
 public class EmerController_V1 implements IEmerController {
 
 
@@ -152,8 +155,10 @@ public class EmerController_V1 implements IEmerController {
         HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID);
         //prepare to send a "Times" request to the GIS
 
-        /*get all of the users to which a request was sent for the event
-        and did not reject (either approved or not yet responded)*/
+        */
+/*get all of the users to which a request was sent for the event
+        and did not reject (either approved or not yet responded)*//*
+
 
         HashMap<String,String> allHelpersRequested = dbController.getAllAssistantsByEventId(eventID, -1);
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
@@ -506,11 +511,13 @@ public class EmerController_V1 implements IEmerController {
         }
 
 
-        /* TODO - Not in prototype I think
+        */
+/* TODO - Not in prototype I think
         if(null != data.get("Dosage")) {
 
         }
-        */
+        *//*
+
     }
 
 
@@ -654,10 +661,13 @@ public class EmerController_V1 implements IEmerController {
 
 
     //we call this function from "approveOrRejectMed"
-    /*private void approveOrRejectHelper(int patientID, int eventID) {
+    */
+/*private void approveOrRejectHelper(int patientID, int eventID) {
         // in case of reject, we just need to tell the helper not to give the medicine and stay put
         //We allow the EMS to change their mind, but this logic is handled over their side using the instructions below
-    }*/
+    }*//*
+
     //EMS Needs to know after first time someone said he arrived - they should allow the Mokdan
     //to change his mind after rejecting. They should keep a boolean field in the table indicating "arrival"
 }
+*/

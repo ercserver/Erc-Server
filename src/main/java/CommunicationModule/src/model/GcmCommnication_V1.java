@@ -54,9 +54,9 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //TODO - FOR DEBUG PURPOSES - WE ARE SUPPOSED TO RETURN NULL!
-        return objToSend;
-        //return null;
+
+        //return objToSend; enable for debug
+        return null;
 
     }
 }
