@@ -83,7 +83,7 @@ public class EmerController_V1 implements IEmerController {
             //parse and get birth date
             long birth = format.parse(stringedBirth).getTime();
             //get current date
-            long now = new java.util.Date().getTime();;
+            long now = new java.util.Date().getTime();
 
             //Subtract and return stringed years
             int yearsBetween = (int)(((now-birth)/(1000*60*60*24))/365);
@@ -154,7 +154,7 @@ public class EmerController_V1 implements IEmerController {
 
         /*get all of the users to which a request was sent for the event
         and did not reject (either approved or not yet responded)*/
-        //TODO - Ohad: Please just return a Hash of String,String. Also - please accept the event ID parameter as a string rather than as an int
+
         HashMap<String,String> allHelpersRequested = dbController.getAllAssistantsByEventId(eventID, -1);
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
         notNeededHelpers.putAll(allHelpersRequested);
@@ -443,7 +443,7 @@ public class EmerController_V1 implements IEmerController {
         String eventID = data.get("event_id");
         String cmid = data.get("community_member_id");
 
-        dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad
+        dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad.update provision time
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
@@ -523,8 +523,8 @@ public class EmerController_V1 implements IEmerController {
         //close the event within the GIS
         cancelEventOnGIS(eventID);
         //close the event within the DB
-        //TODO - Ohad: I am not sure why we need another paramter in this function. Please explain Also, please receive the EventID param as a string.
-        dbController.closeEvent(eventID);
+        //TODO NEED TO ADD PATUENT CANCELLATION "CANCELLED"
+        dbController.closeEvent(Integer.parseInt(eventID),"FINISHED");
 
         //TODO - Logs
         //emergencyLogger.closeEventByEMS(eventID);

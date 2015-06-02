@@ -1,5 +1,8 @@
 package RequestsModule;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+import org.apache.commons.logging.Log;
+import org.springframework.web.bind.annotation.*;
 import registrationModule.src.api.*;
 import registrationModule.src.controller.RegController_V1;
 import RequestsModule.utils.HashMapCreator;
@@ -8,11 +11,10 @@ import RoutineModule.src.controller.RoutineController_V1;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 @Controller
@@ -43,32 +45,45 @@ public class RequestsHandler {
         return "Welcome to the erc-server";
 	}
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test")
-    public @ResponseBody String returnJson(@RequestParam JSONObject request) {
-        return request.toString();
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test", consumes = "application/json")
+    public @ResponseBody String returnJson(@RequestBody String request) {
+        JSONObject reqJson = new JSONObject(request);
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter("log.txt", "UTF-8");
+            writer.println("data: " + request.toString());
+
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return reqJson.toString();
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/registration")
-    public @ResponseBody String handleRegistrationRequests(@RequestParam JSONObject request){
+    public @ResponseBody String handleRegistrationRequests(@RequestBody JSONObject data){
         HashMapCreator hmc = new HashMapCreator();
-        HashMap<String, String> requestMap = hmc.jsonToMap(request);
+        HashMap<String, String> requestMap = hmc.jsonToMap(data);
         String reqId = "";
         System.out.println("in registration");
-        System.out.println("request:");
-        System.out.println(request);
+        System.out.println("data:");
+        System.out.println(data);
 
 
         try {
             IRegController rc = new RegController_V1();
-            reqId = request.getString(REQ_ID);
+            reqId = data.getString(REQ_ID);
 
             switch (reqId) {
                 case REGISTRATION:
-                    rc.getRegDetails(requestMap);
-                    break;
+                    return rc.getRegDetails(requestMap).toString();
+
                 case SIGNUP:
-                    rc.handleReg(requestMap);
-                    break;
+                    return rc.handleReg(requestMap).toString();
+
                 case RESEND_EMAIL:
                     rc.resendAuth(requestMap);
                     break;
@@ -90,15 +105,16 @@ public class RequestsHandler {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")
-    public @ResponseBody String handleRoutineRequests(@RequestParam JSONObject request){
+    public @ResponseBody String handleRoutineRequests(@RequestBody String request){
+        JSONObject data = new JSONObject(request);
         HashMapCreator hmc = new HashMapCreator();
-        HashMap<String, String> requestMap = hmc.jsonToMap(request);
+        HashMap<String, String> requestMap = hmc.jsonToMap(data);
         String reqId = "";
 
         try {
             IRegController rc = new RegController_V1();
             IRoutineController ruc = new RoutineController_V1();
-            reqId = request.getString(REQ_ID);
+            reqId = data.getString(REQ_ID);
 
             switch (reqId) {
                 case SIGNIN:
@@ -122,7 +138,7 @@ public class RequestsHandler {
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/verify_email")
-    public @ResponseBody String handleEmailVerification(@RequestParam String key /*CMID right now*/){
+    public @ResponseBody String handleEmailVerification(@RequestBody String key /*CMID right now*/){
         String reqId = "";
 
         try {

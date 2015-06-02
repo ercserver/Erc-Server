@@ -507,6 +507,7 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<Integer,HashMap<String,String>> map =
                 new HashMap<Integer,HashMap<String,String>>();
         try {
+
             int j = 1;
             while (rs.next()) {
                 int total_rows = rs.getMetaData().getColumnCount();
