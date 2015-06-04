@@ -55,8 +55,7 @@ public class EmerFilter_V1 implements IEmerFilter_model {
         //Not in prototype
         String EMSArrivalTime = null;
         if(EMSArrivalTime != null){}
-        //TODO - Maor
-        return null;
+        return listToFilter;
     }
 
 
