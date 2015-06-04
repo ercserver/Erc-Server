@@ -1740,5 +1740,33 @@ public class DbComm_V1 implements IDbComm_model {
                 "medication_provision_date", date.toString());
     }
 
+    public void updateLogs(String eventId, String actionTypeName)
+    {
+        HashMap<String, String> cond = new HashMap<String, String>();
+        cond.put("action_type_name", actionTypeName);
+        String num = getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num");
+        try
+        {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            statement.execute("INSERT INTO O_EmergencyEventActions (event_id,action_type_num) VALUES (" +
+                    eventId + "," + num + ")");
+        }
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
+    }
+
+    public HashMap<String, String> getFieldDetails(String name, String userType)
+    {
+        HashMap<String, String> conds = new HashMap<String, String>();
+        conds.put("field_name", name);
+        conds.put("user_type", userType);
+        return getRowsFromTable(conds, "RegistrationFields").get(1);
+    }
+
     //ToDo:Ohad:need for a method that updates with current time the medication_provision_date
 }

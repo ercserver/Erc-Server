@@ -71,4 +71,6 @@ public interface IDbController  extends IDbInit, IDbComm {
     int getHowManySendToEvent(String state);
     void updateMedicineGiven(int cmid, int eventID);
     void updateMedicineGiven(int cmid, int eventID, Date date);
+    void updateLogs(String eventId, String actionTypeName);
+    HashMap<String, String> getFieldDetails(String name, String userType);
 }
