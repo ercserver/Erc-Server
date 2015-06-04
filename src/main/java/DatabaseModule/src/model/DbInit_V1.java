@@ -321,10 +321,8 @@ public class DbInit_V1 implements IDbInit_model {
             createOperationalDBActionTypes();
             createPatientsDBRelationTypes();
             createEventStatuses();
-            //createInvolvedCommunityMembers();
             createEmergencyEvents();
             connection.commit();
-            createActionStatuses();
             createEmergencyEventActions();
             createOperationalDBEmergencyEventResponse();
             createAutomaticDispensers();
@@ -690,11 +688,8 @@ public class DbInit_V1 implements IDbInit_model {
                         "(response_num INTEGER not NULL IDENTITY(1000,1) PRIMARY KEY, " +
                         " community_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " event_id INTEGER not NULL FOREIGN KEY REFERENCES O_EmergencyEvents(event_id), " +
-                        " emergency_event_num INTEGER, " +
                         " prescription_num INTEGER not null foreign key references P_Prescriptions(prescription_num), " +
-                        " action_type_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionTypes(action_type_num), " +
                         " eta_by_foot INTEGER not NULL, " +
-                        " action_status_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionStatus(action_status_num), " +
                         " eta_by_car INTEGER not NULL, " +
                         " created_date TIMESTAMP not NULL, " +
                         " location_remark VARCHAR(250) not NULL, " +
@@ -887,9 +882,7 @@ public class DbInit_V1 implements IDbInit_model {
                         "(emergency_action_num INTEGER not NULL IDENTITY(1000,1) PRIMARY KEY, " +
                         " event_id INTEGER not NULL FOREIGN KEY REFERENCES O_EmergencyEvents(event_id), " +
                         " action_type_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionTypes(action_type_num), " +
-                        " action_status_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionStatus(action_status_num), " +
-                        " created_date TIMESTAMP not NULL, " +
-                        " finished_date DATETIME not NULL)");
+                        " created_date TIMESTAMP not NULL DEFAULT CURRENT_TIMESTAMP)");
             }
         }
         // There was a fault with the connection to the server or with SQL
@@ -930,39 +923,6 @@ public class DbInit_V1 implements IDbInit_model {
                         " approval_date DATETIME DEFAULT current_timestamp, " +
                         " medication_provision_date DATETIME, " +
                         " digital_signature_file VARCHAR(100))");
-            }
-        }
-        // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
-        // Releases the resources of this method
-        finally
-        {
-            if (rs != null)
-            {
-                try
-                {
-                    rs.close();
-                }
-                catch (Exception e) {e.printStackTrace();}
-            }
-        }
-    }
-
-    private  void createActionStatuses()
-    {
-        ResultSet rs = null;
-        try
-        {
-            statement = connection.createStatement();
-            DatabaseMetaData dbm = connection.getMetaData();
-            // Checks the existence of the tables of the database
-            rs = dbm.getTables(null, null, "O_ActionStatus", null);
-            // The tables are not existing now-creates those
-            if(!rs.next())
-            {
-                statement.executeUpdate("CREATE TABLE O_ActionStatus " +
-                        "(action_status_num INTEGER not NULL IDENTITY(1000,1) PRIMARY KEY, " +
-                        " status_name VARCHAR(30) not NULL)");
             }
         }
         // There was a fault with the connection to the server or with SQL
