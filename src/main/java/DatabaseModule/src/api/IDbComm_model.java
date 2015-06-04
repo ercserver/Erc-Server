@@ -81,4 +81,6 @@ public interface IDbComm_model {
     String getBirthDate(String cmid);
     HashMap<Integer, HashMap<String, String>> getGoingAssistantsAndTimes(String eventId);
     int getHowManySendToEvent(String state);
+    void updateLogs(String eventId, String actionTypeName);
+    HashMap<String, String> getFieldDetails(String name, String userType);
 }

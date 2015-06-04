@@ -247,4 +247,8 @@ public class DbController_V1 implements IDbController {
     public HashMap<Integer, HashMap<String, String>> getGoingAssistantsAndTimes(String eventId){return DB_communicator.getGoingAssistantsAndTimes(eventId);}
 
     public int getHowManySendToEvent(String state){return DB_communicator.getHowManySendToEvent(state);}
+
+    public void updateLogs(String eventId, String actionTypeName){DB_communicator.updateLogs(eventId, actionTypeName);}
+
+    public  HashMap<String, String> getFieldDetails(String name, String userType){return DB_communicator.getFieldDetails(name, userType);}
 }

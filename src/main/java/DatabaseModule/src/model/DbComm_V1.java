@@ -1734,5 +1734,13 @@ public class DbComm_V1 implements IDbComm_model {
         }
     }
 
+    public HashMap<String, String> getFieldDetails(String name, String userType)
+    {
+        HashMap<String, String> conds = new HashMap<String, String>();
+        conds.put("field_name", name);
+        conds.put("user_type", userType);
+        return getRowsFromTable(conds, "RegistrationFields").get(1);
+    }
+
     //ToDo:Ohad:need for a method that updates with current time the medication_provision_date
 }
