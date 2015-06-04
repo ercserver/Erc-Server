@@ -1264,7 +1264,8 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
-    public HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList) {
+    public List<Integer> filterAvailableMembers(List<Integer> cmidList) {
+        List<Integer> cmids = null;
         ResultSet rs = null;
         try {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
@@ -1287,7 +1288,12 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.setInt(4, currentTime.getMinutes());
 
             rs = stmt.executeQuery();
-            return resultSetToMap(rs);
+            // Extract list
+            while (rs.next()) {
+                int i = rs.getInt("community_member_id");
+                cmids.add(i);
+            }
+
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {e.printStackTrace(); return null;}
@@ -1303,7 +1309,9 @@ public class DbComm_V1 implements IDbComm_model {
                 }
                 catch (Exception e) {e.printStackTrace();}
             }
+            return cmids;
         }
+
     }
 
     public void updatePatientRemarks(String cmid, String eventID, String remark)
@@ -1712,6 +1720,24 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("state", state);
         return Integer.parseInt(getRowsFromTable(cond, "HowManyToSendInEmerEvent").get(1).get("how_much"));
+    }
+
+    @Override
+    public void updateMedicineGiven(int cmid, int eventID) {
+        HashMapBuilder<String, String> hmb = new HashMapBuilder<>();
+        updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
+                "providing_member_id", Integer.toString(cmid));
+        updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
+                "medication_provision_date", new Date());
+    }
+
+    @Override
+    public void updateMedicineGiven(int cmid, int eventID, Date date) {
+        HashMapBuilder<String, String> hmb = new HashMapBuilder<>();
+        updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
+                "providing_member_id", Integer.toString(cmid));
+        updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
+                "medication_provision_date", date.toString());
     }
 
     //ToDo:Ohad:need for a method that updates with current time the medication_provision_date

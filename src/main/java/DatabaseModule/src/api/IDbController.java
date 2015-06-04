@@ -1,6 +1,7 @@
 package DatabaseModule.src.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<String, String>getAssistDetails(String cmid, String eventId);
     String getRegIDOfPatient(String patientId);
     void removeAssistantFromEvent(String eventId, String patient_id);
-    HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList);
+    List<Integer> filterAvailableMembers(List<Integer> cmidList);
     int startNewEmergencyEvent(HashMap<String, String> details);
     void updateEventDetails(String eventId, String state, String regType, String radiud, String loc);
     String getMedicalConditionOfPatient(String patientId);
@@ -68,4 +69,6 @@ public interface IDbController  extends IDbInit, IDbComm {
     String getBirthDate(String cmid);
     HashMap<Integer, HashMap<String, String>> getGoingAssistantsAndTimes(String eventId);
     int getHowManySendToEvent(String state);
+    void updateMedicineGiven(int cmid, int eventID);
+    void updateMedicineGiven(int cmid, int eventID, Date date);
 }

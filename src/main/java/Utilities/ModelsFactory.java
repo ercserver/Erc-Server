@@ -17,9 +17,12 @@ import registrationModule.src.api.IRegVerify_model;
 import registrationModule.src.model.RegRequest_V1;
 import registrationModule.src.model.RegVerify_V2;
 
-/**
+/*
+*
  * Created by Maor on 30/04/2015.
- */
+
+*/
+
 public class ModelsFactory {
         private final int commControllerVersion = 1;
         private final int dbControllerVersion = 1;
@@ -106,7 +109,7 @@ public class ModelsFactory {
         switch (emerFilterVersion) {
             //Communicate the DB to retrieve the data
             case 1: {
-                return new EmerFilter_V1();
+               // return new EmerFilter_V1();
             }
             default: {
                 return null;

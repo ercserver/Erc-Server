@@ -48,25 +48,16 @@ public class RequestsHandler {
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test", consumes = "application/json")
     public @ResponseBody String returnJson(@RequestBody String request) {
         JSONObject reqJson = new JSONObject(request);
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter("log.txt", "UTF-8");
-            writer.println("data: " + request.toString());
 
-            writer.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
 
         return reqJson.toString();
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/registration")
-    public @ResponseBody String handleRegistrationRequests(@RequestBody JSONObject data){
+    public @ResponseBody String handleRegistrationRequests(@RequestBody String data){
         HashMapCreator hmc = new HashMapCreator();
-        HashMap<String, String> requestMap = hmc.jsonToMap(data);
+        JSONObject json = new JSONObject(data);
+        HashMap<String, String> requestMap = hmc.jsonToMap(json);
         String reqId = "";
         System.out.println("in registration");
         System.out.println("data:");
@@ -75,12 +66,25 @@ public class RequestsHandler {
 
         try {
             IRegController rc = new RegController_V1();
-            reqId = data.getString(REQ_ID);
+            reqId = requestMap.get(REQ_ID);
 
             switch (reqId) {
                 case REGISTRATION:
-                    return rc.getRegDetails(requestMap).toString();
+                    try {
+                        return rc.getRegDetails(requestMap).toString();
+                    }catch(Exception ex){
+                        PrintWriter writer = null;
+                        try {
+                            writer = new PrintWriter("log.txt", "UTF-8");
+                            ex.printStackTrace(writer);
 
+                            writer.close();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 case SIGNUP:
                     return rc.handleReg(requestMap).toString();
 
@@ -100,7 +104,7 @@ public class RequestsHandler {
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        //ToDo:do we really need to return something from here?
+
         return (new JSONObject().put("RequestAccepted", reqId).toString());
     }
 

@@ -38,7 +38,7 @@ public class RegController_V1 implements IRegController {
     public Object getRegDetails(HashMap<String,String> request) {
         //generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
-                dbController.getRegistrationFields(Integer.parseInt(request.get("userType")));
+                dbController.getRegistrationFields(Integer.parseInt(request.get("user_type")));
         dataToSend.get(1).put("Request_ID", "registration");
         ArrayList<String> sendTo = sendTo(request);
         //determine how to send the data
@@ -162,7 +162,7 @@ public class RegController_V1 implements IRegController {
         String regid = details.get("reg_id");
         //method how to send data mail/sms
         int authMethod =
-                dbController.getAuthenticationMethod("'" + details.get("state")+ "'");;
+                dbController.getAuthenticationMethod("'" + details.get("state")+ "'");
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
         HashMap<String,String> dataFilter = null;

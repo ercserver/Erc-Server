@@ -492,7 +492,7 @@ public class EmerController_V1 implements IEmerController {
         String eventID = data.get("event_id");
         String cmid = data.get("community_member_id");
 
-        dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad.update provision time
+        dbController.updateMedicineGiven(cmid,eventID);
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();

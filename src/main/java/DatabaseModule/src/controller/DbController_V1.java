@@ -4,9 +4,7 @@ package DatabaseModule.src.controller;
 import DatabaseModule.src.api.*;
 import DatabaseModule.src.model.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by NAOR on 06/04/2015.
@@ -183,8 +181,17 @@ public class DbController_V1 implements IDbController {
     }
 
     @Override
-    public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType) {
-        return DB_communicator.getAllAssistantsByEventId(eventId, responseType);
+    public List<Integer> getAllAssistantsByEventId(int eventId, int responseType) {
+        HashMap<Integer, HashMap<String,String>> rv = DB_communicator.getAllAssistantsByEventId(eventId, responseType);
+
+        // Build the list to return
+        List<Integer> list = new ArrayList<>();
+        for (Map.Entry<Integer, HashMap<String,String>> entry : rv.entrySet()){
+            for (Map.Entry<String, String> pair : entry.getValue().entrySet()){
+                list.add(Integer.parseInt(pair.getValue()));
+            }
+        }
+        return list;
     }
 
     @Override
@@ -221,7 +228,7 @@ public class DbController_V1 implements IDbController {
     public void removeAssistantFromEvent(String eventId, String patient_id){DB_communicator.removeAssistantFromEvent(eventId, patient_id);}
 
     @Override
-    public HashMap<Integer, HashMap<String, String>> filterAvailableMembers(List<Integer> cmidList) {
+    public List<Integer> filterAvailableMembers(List<Integer> cmidList) {
         return DB_communicator.filterAvailableMembers(cmidList);
     }
 
@@ -247,4 +254,14 @@ public class DbController_V1 implements IDbController {
     public HashMap<Integer, HashMap<String, String>> getGoingAssistantsAndTimes(String eventId){return DB_communicator.getGoingAssistantsAndTimes(eventId);}
 
     public int getHowManySendToEvent(String state){return DB_communicator.getHowManySendToEvent(state);}
+
+    @Override
+    public void updateMedicineGiven(int cmid, int eventID) {
+        DB_communicator.updateMedicineGiven(cmid, eventID);
+    }
+
+    @Override
+    public void updateMedicineGiven(int cmid, int eventID, Date date) {
+        DB_communicator.updateMedicineGiven(cmid, eventID, date);
+    }
 }

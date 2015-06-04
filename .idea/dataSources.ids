@@ -852,6 +852,10 @@
       <column name="community_member_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PK__UpdatesD__3214EC077310F064" columns="id"/>
     </table>
+    <table name="testDates" schema="dbo" catalog="socmedserver" type="TABLE">
+      <column name="date" sqlType="date" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="timestamp" sqlType="timestamp" precision="8" scale="0" nullable="false" jdbcType="-2" version="true"/>
+    </table>
     <table name="all_columns" schema="sys" catalog="socmedserver" type="VIEW">
       <column name="object_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="name" sqlType="sysname" precision="128" scale="0" nullable="true" jdbcType="-9"/>
