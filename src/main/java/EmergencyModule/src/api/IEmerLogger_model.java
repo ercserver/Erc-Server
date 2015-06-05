@@ -12,4 +12,12 @@ public interface IEmerLogger_model {
     void handleApproveOrRejectMed(HashMap<String, String> data);
 
     void handleUpdatePatientStatus(HashMap<String, String> data);
+
+    void handleHelpCalling(String eventId);
+
+    void handleGettingCall(String eventId);
+
+    void handleSearchingClosestEMS(String eventId);
+
+    void handleGettingCmidOfEMS(String event_id);
 }
