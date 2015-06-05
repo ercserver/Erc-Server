@@ -259,7 +259,7 @@ public class EmerController_V1 implements IEmerController {
     public void assistantRespondsToApproach(HashMap<String, String> response) {
         if (!assistantFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
-        emergencyLogger.handleAssistantRespondsToApproach(response.get("event_id"));
+        emergencyLogger.handleAssistantRespondsToApproach(response.get("event_id"), response.get("community_member_id"));
         //Not in prototype
         String EMSArrivalTime = null;
         // How much time will take this assistant
@@ -302,9 +302,9 @@ public class EmerController_V1 implements IEmerController {
             commController.setCommToUsers(re, target, false);
             commController.sendResponse();
             if(send)
-                emergencyLogger.handleSendingAssistant(response.get("event_id"));
+                emergencyLogger.handleSendingAssistant(response.get("event_id"), response.get("community_member_id"));
             else
-                emergencyLogger.handleNotSendingAssistant(response.get("event_id"));
+                emergencyLogger.handleNotSendingAssistant(response.get("event_id"), response.get("community_member_id"));
             // This assistant accepted arrival by foot
             if (response.get("RequestID").equals("arrivalAcceptionOnFoot"))
                 updates.put("transformation_mean", "0");
@@ -328,7 +328,7 @@ public class EmerController_V1 implements IEmerController {
             updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(response.get("community_member_id")),
                     response.get("event_id"), eta, h.get("location_remark"));
             askGisToFollow(response.get("event_id"), response.get("community_member_id"));
-            emergencyLogger.handleAskingGISFollowUser(response.get("event_id"));
+            emergencyLogger.handleAskingGISFollowUser(response.get("event_id"), response.get("community_member_id"));
         }
     }
 
@@ -360,7 +360,7 @@ public class EmerController_V1 implements IEmerController {
 
     public void receiveArrivalTime(HashMap<String,String> data)
     {
-        emergencyLogger.handleReceivingUserArrivalTime(data.get("event_id"));
+        emergencyLogger.handleReceivingUserArrivalTime(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base about the location and arrival times of an assistant
         dbController.updateAssistantArrivalTimesAndLocation(data);
         // Updates the EMS
@@ -454,11 +454,11 @@ public class EmerController_V1 implements IEmerController {
     // Assistant arrival to the destination in emergency event
     @Override
     public void arrivalToDestination(HashMap<String, String> data) {
-        emergencyLogger.handleArrivalToDest(data.get("event_id"));
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
         {
             return;
         }
+        emergencyLogger.handleArrivalToDest(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base
         dbController.updateArrivalDate(data);
         // Sends the news to EMS and asks for givving the medication
@@ -531,7 +531,7 @@ public class EmerController_V1 implements IEmerController {
             return;
         }
         String eventId = dbController.getEventByCmid(data.get("community_member_id"));
-        emergencyLogger.handleUpdatePatientStatus(eventId);
+        emergencyLogger.handleUpdatePatientStatus(eventId, data.get("community_member_id"));
         dbController.updatePatientRemarks(data.get("community_member_id"), eventId, data.get("message"));
         // Sends the patient's message to EMS and the assistents
         HashMap<String, String> response = new HashMap<String, String>();
