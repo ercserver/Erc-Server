@@ -114,9 +114,11 @@ public class EmerController_V1 implements IEmerController {
     public void receiveClosestEmsAndApproach(HashMap<String, String> data){
         //update the db
         //TODO - Ohad
+        //ToDo:Naor:for what we need this in DB?vI am not sure that we really need this here because we don't get here anything to the DB
         dbController.updateEMSfirstApproached(data);
         //generate required data and approach the EMS
         HashMap<String,String> eventDetails = dbController.getEventDetails(data.get("event_id"));
+        //ToDo:Naor:?!
         data.put("patient_id", eventDetails.get("event_id"));
         data.put("location_remark",eventDetails.get("location_remark"));
         data.put("RequestID", "start");
@@ -284,7 +286,7 @@ public class EmerController_V1 implements IEmerController {
                 updates.put("response_type", "1");
                 send = true;
                 res.put("RequestID", "go");
-                String message = "Thank you for yor respond! You can go to the patient at risk!"
+                String message = "Thank you for your respond! You can go to the patient at risk!";
                 res.put("message", message);
             }
             // We don't want to send this assistant-Sends proper message to app
