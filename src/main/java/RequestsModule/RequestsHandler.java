@@ -1,5 +1,6 @@
 package RequestsModule;
 
+import DatabaseModule.src.model.DbInit_V1;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import org.apache.commons.logging.Log;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,14 @@ public class RequestsHandler {
 	public @ResponseBody String printWelcome() {
         return "Welcome to the erc-server";
 	}
+
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/db")
+    public @ResponseBody String initDB()
+    {
+        DbInit_V1 db = new DbInit_V1();
+        db.initializeAndConnect();
+        return "done";
+    }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test", consumes = "application/json")
     public @ResponseBody String returnJson(@RequestBody String request) {

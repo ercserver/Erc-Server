@@ -22,7 +22,7 @@ public class DbComm_V1 implements IDbComm_model {
     final String DBName = "socmedserver";
     final private String USERNAME = "saaccount";
     final private String PASS = "saaccount";
-    private static Connection connection = null;
+    private Connection connection = null;
     private Statement statement = null;
     private String SCHEMA = "Ohad";//*
 
@@ -159,27 +159,26 @@ public class DbComm_V1 implements IDbComm_model {
         // gets registration fields according to the givven usetType
         HashMap<Integer,HashMap<String,String>> ret = getRowsFromTable(conds, "RegistrationFields");
         /* gets for each registration field the possible values from the proper table, if
-           the fiel is not "free text". we put a json object that converted to string */
-        for(int i = 1; i <= ret.size(); i++)
-        {
-            if(ret.get(i).get("get_possible_values_from") == "null")
-                continue;
-            String tableName = ret.get(i).get("get_possible_values_from");
-            JSONObject jo;
-            // field that has few possible values from Enum table
-            if(tableName.substring(0, 5) == "Enum.")
-            {
-                ArrayList<String> l = new ArrayList<String>();
-                l.add("enum_value");
-                HashMap<String, String> conds1 = new HashMap<String, String>();
-                conds1.put("table_name", "'" + tableName.split(".")[1] + "'");
-                conds1.put("column_name", "'" + tableName.split(".")[2] + "'");
-                jo = new JSONObject(selectFromTable("Enum", l, conds1));
+           the field is not "free text". we put a json object that converted to string */
+        if (ret != null) {
+            for (int i = 1; i <= ret.size(); i++) {
+                if (ret.get(i).get("get_possible_values_from") == "null")
+                    continue;
+                String tableName = ret.get(i).get("get_possible_values_from");
+                JSONObject jo;
+                // field that has few possible values from Enum table
+                if (tableName.substring(0, 5) == "Enum.") {
+                    ArrayList<String> l = new ArrayList<String>();
+                    l.add("enum_value");
+                    HashMap<String, String> conds1 = new HashMap<String, String>();
+                    conds1.put("table_name", "'" + tableName.split(".")[1] + "'");
+                    conds1.put("column_name", "'" + tableName.split(".")[2] + "'");
+                    jo = new JSONObject(selectFromTable("Enum", l, conds1));
+                } else
+                    jo = new JSONObject(getRowsFromTable(null, tableName));
+                ret.get(i).remove("get_possible_values_from");
+                ret.get(i).put("get_possible_values_from", jo.toString());
             }
-            else
-                jo = new JSONObject(getRowsFromTable(null, tableName));
-            ret.get(i).remove("get_possible_values_from");
-            ret.get(i).put("get_possible_values_from", jo.toString());
         }
         return ret;
     }

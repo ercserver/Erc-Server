@@ -284,7 +284,7 @@ public class EmerController_V1 implements IEmerController {
                 updates.put("response_type", "1");
                 send = true;
                 res.put("RequestID", "go");
-                String message = "Thank you for yor respond! You can go to the patient at risk!"
+                String message = "Thank you for yor respond! You can go to the patient at risk!";
                 res.put("message", message);
             }
             // We don't want to send this assistant-Sends proper message to app

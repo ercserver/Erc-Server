@@ -10,48 +10,52 @@ import java.sql.*;
  */
 public class DbInit_V1 implements IDbInit_model {
     static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    static final String DB_URL = "jdbc:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
-    static final String DBName = "socmedserver";
+    static final String DB_URL =/* "jdbc:sqlserver://localhost/sqlserver";*/ "jdbc:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
+    static final String DBName = /*"ercserver";*/ "socmedserver";
     static final private String USERNAME = "saaccount";
     static final private String PASS = "saaccount";
-    private static Connection connection = null;
-    private static Statement statement = null;
+    private  Connection connection = null;
+    private  Statement statement = null;
+
+    public DbInit_V1(){
+        connect();
+    }
+
 
     public  void initializeAndConnect()
     {
-        try {
-            connect();
-            createTables();
+        connect();
+        createTables();
             /**/
-            releaseResources(statement, connection);
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
+        releaseResources(statement, connection);
     }
 
 
 
-    private  void connect() throws SQLException
+    private  void connect()
     {
         try
         {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USERNAME, PASS);
-            connection.setAutoCommit(true);
-            statement = connection.createStatement();
-            //statement.addBatch("DROP DATABASE " + DBName);
-            //statement.addBatch("CREATE database " + DBName);
-            statement.addBatch("USE " + DBName);
+            if (connection == null || connection.isClosed() || !connection.isValid(1)) {
+                Class.forName(JDBC_DRIVER);
+                connection = DriverManager.getConnection(DB_URL, USERNAME, PASS);
+                connection.setAutoCommit(true);
+                statement = connection.createStatement();
+                //statement.addBatch("DROP DATABASE " + DBName);
+                //statement.addBatch("CREATE database " + DBName);
+                statement.addBatch("USE " + DBName);
 
-            connection.commit();
-            statement.executeBatch();
+                connection.commit();
+                statement.executeBatch();
 
-            DatabaseMetaData dbm = connection.getMetaData();
+                DatabaseMetaData dbm = connection.getMetaData();
+            }
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();}
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private  void releaseResources(Statement statement, Connection connection)
@@ -78,8 +82,8 @@ public class DbInit_V1 implements IDbInit_model {
     private  void createTables(){
 
         try {
-            statement.clearBatch();
-            connection.setAutoCommit(true);
+            connect();
+            statement = connection.createStatement();
 
             statement.addBatch("CREATE TABLE Enum ("
                     +"table_name VARCHAR(30) NOT NULL,"
@@ -342,11 +346,13 @@ public class DbInit_V1 implements IDbInit_model {
 
     private  void createPatientDBDiagnosis()
     {
+
         //Connection connection = null;
         //Statement statement = null;
         ResultSet rs = null;
         try
         {
+            connect();
             // Connects to the server
             //connect(connection, statement);
             // Connects to the data-base
@@ -392,6 +398,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -425,6 +432,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -462,6 +470,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -495,6 +504,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -532,6 +542,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -565,6 +576,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -608,6 +620,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -644,6 +657,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -677,6 +691,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -723,6 +738,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -756,6 +772,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -789,6 +806,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -822,6 +840,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -871,6 +890,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -906,6 +926,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -946,6 +967,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -1026,6 +1048,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -1060,6 +1083,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -1097,6 +1121,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -1130,6 +1155,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -1163,6 +1189,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database
@@ -1196,6 +1223,7 @@ public class DbInit_V1 implements IDbInit_model {
         ResultSet rs = null;
         try
         {
+            connect();
             statement = connection.createStatement();
             DatabaseMetaData dbm = connection.getMetaData();
             // Checks the existence of the tables of the database

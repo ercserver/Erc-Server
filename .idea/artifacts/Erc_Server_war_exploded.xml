@@ -33,10 +33,11 @@
           <element id="library" level="project" name="Maven: javax.ws.rs:jsr311-api:1.1.1" />
           <element id="library" level="project" name="Maven: asm:asm:3.1" />
           <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.8.2" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="C:\Users\User\IdeaProjects\Erc-Server\target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/Erc-Server/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="Erc-Server/web/Web" />
     </root>
