@@ -24,17 +24,19 @@ public class EmerFilter_V1 implements IEmerFilter_model {
 
 
     //filter list receied from "receiveUsersAroundLocation"
-    @Override
+   // @Override
     public HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter,String eventID) {
 
         //TODO - Naor. Need to ask Michael if thats what he wants
         for(String helper : listToFilter.keySet()){
             //Check for status,availability and medicine match and remove mismatches
+            /*
             if((!dbController.isCmidStatusActive(helper)) ||
                (!dbController.isCmidStatusAvailable(helper)) ||
                (!dbController.doesMedicineMatch(helper,eventID))){
                 listToFilter.remove(helper);
             }
+            */
         }
 
 
@@ -48,6 +50,11 @@ public class EmerFilter_V1 implements IEmerFilter_model {
 
     }
 
+
+    @Override
+    public HashMap<String, String> filterUsersByMatch(HashMap<String, String> listToFilter) {
+        return null;
+    }
 
     //filter list received from "receiveUsersArrivalTimesAndApproach"
     @Override

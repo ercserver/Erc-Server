@@ -137,13 +137,19 @@ public class Updates_V1 implements IUpdates_model {
     @Override
     public HashMap<String, String> CheckIfNeedVerifyAndUpdateOrSendToVer(int cmid,HashMap<String, String> data) {
         boolean needVer = false;
+        String reg = data.get("redId");
+        //TODO- how i get user type
+        String type = data.get("user_type");
+
+        data.remove("user_type");// ?????
+        data.remove("redId"); // ???
         Set<String> keys = data.keySet();
         for (String fieldName : keys) {
             //set  to urget to 0
             dbController.updateUrgentInRefreshDetailsTime
                     (cmid, data.get(fieldName), 0);
-            //TODO add and check if we need verifiction
-            if (data.get("needs_verification").equals("1")) {
+            HashMap<String, String> filedData = dbController.getFieldDetails(fieldName,type );
+            if (filedData.get("needs_verification").equals("1")) {
                 needVer = true;
             } else {
                 //update in table

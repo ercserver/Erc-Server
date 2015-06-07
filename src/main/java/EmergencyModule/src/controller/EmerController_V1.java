@@ -115,7 +115,7 @@ public class EmerController_V1 implements IEmerController {
         //update the db
         //TODO - Ohad
         //ToDo:Naor:for what we need this in DB?vI am not sure that we really need this here because we don't get here anything to the DB
-        dbController.updateEMSfirstApproached(data);
+        //dbController.updateEMSfirstApproached(data);
         //generate required data and approach the EMS
         HashMap<String,String> eventDetails = dbController.getEventDetails(data.get("event_id"));
         //ToDo:Naor:?!
@@ -141,6 +141,7 @@ public class EmerController_V1 implements IEmerController {
     //-1 for all 0 Not responded 1 - approved 2 - rejected - 3 -  cancelled
     @Override
     public void receiveUsersAroundLocation(HashMap<String,String> data) {
+
         data.remove("RequestID");
         //pop the event data
         String state = data.get("state");
@@ -154,12 +155,11 @@ public class EmerController_V1 implements IEmerController {
         data.remove("radius");
         dbController.updateEventDetails(eventID, state, region_type, radius, location_remark);
         //filter
-        HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID);
+        //HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID);
         //prepare to send a "Times" request to the GIS
 
         /*get all of the users to which a request was sent for the event
         and did not reject (either approved or not yet responded)*/
-
         HashMap<String,String> allHelpersRequested = dbController.getAllAssistantsByEventId(eventID, -1);
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
         notNeededHelpers.putAll(allHelpersRequested);
@@ -508,7 +508,7 @@ public class EmerController_V1 implements IEmerController {
         String eventID = data.get("event_id");
         String cmid = data.get("community_member_id");
 
-        dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad.update provision time
+      //  dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad.update provision time
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();

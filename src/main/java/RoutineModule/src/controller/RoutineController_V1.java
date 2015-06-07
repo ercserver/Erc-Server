@@ -213,8 +213,7 @@ public class RoutineController_V1 implements IRoutineController {
             String password = obj.get("password");
             if (assistent.checkCmidAndPassword(password,cmid))
             {
-
-               if (obj.get("Request_ID").equals("acceptRefresh"))
+                if (obj.get("Request_ID").equals("acceptRefresh"))
                {
                     //if we need verify details
                    if (updates.CheckIfNeedVerifyAndUpdateOrSendToVer(cmid,obj) != null)
@@ -252,6 +251,15 @@ public class RoutineController_V1 implements IRoutineController {
 
     @Override
     public Object logoff(HashMap<String, String> data) {
+        int cmid = Integer.parseInt(data.get("community_member_id"));
+        String password = data.get("password");
+        if (assistent.checkCmidAndPassword(password,cmid))
+        {
+            HashMap<String, String> userDetails = memberDetail.getUserByCmid(cmid);
+            String oldStatus = this.memberDetail.getStatus(userDetails);
+            dbController.updateStatus(cmid,"'" + oldStatus + "'","'onHold'");
+
+        }
         return null;
     }
 
