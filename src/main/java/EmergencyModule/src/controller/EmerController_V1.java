@@ -5,7 +5,6 @@ import DatabaseModule.src.api.IDbController;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.api.IEmerFilter_model;
 import EmergencyModule.src.api.IEmerLogger_model;
-import EmergencyModule.src.model.EmerFilter_V1;
 import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
 
@@ -115,7 +114,9 @@ public class EmerController_V1 implements IEmerController {
         //update the db
         //TODO - Ohad
         //ToDo:Naor:for what we need this in DB?vI am not sure that we really need this here because we don't get here anything to the DB
-        //dbController.updateEMSfirstApproached(data);
+        //
+        //TODO - MAOR/OHAD: we need to be able to mark in the DB whether the EMS was contacted or not... let's talk about this anyway..
+        // dbController.updateEMSfirstApproached(data);
         //generate required data and approach the EMS
         HashMap<String,String> eventDetails = dbController.getEventDetails(data.get("event_id"));
         //ToDo:Naor:?!
@@ -149,23 +150,25 @@ public class EmerController_V1 implements IEmerController {
         String region_type = data.get("region_type");
         String radius = data.get("radius");
         String eventID = data.get("event_id");
+        int eventIDInted = Integer.parseInt(eventID);
         data.remove("event_id");
         data.remove("state");
         data.remove("region_type");
         data.remove("radius");
         dbController.updateEventDetails(eventID, state, region_type, radius, location_remark);
         //filter
-        //HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID);
+        HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID);
         //prepare to send a "Times" request to the GIS
 
         /*get all of the users to which a request was sent for the event
         and did not reject (either approved or not yet responded)*/
-        HashMap<String,String> allHelpersRequested = dbController.getAllAssistantsByEventId(eventID, -1);
+        //TODO OHAD - Didn't we sat ArrayList? - right now you're returning integer,hashmap, I'm waiting for your reference to make changes
+        HashMap<String,String> allHelpersRequested = dbController.getAllAssistantsByEventId(eventIDInted, -1);
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
         notNeededHelpers.putAll(allHelpersRequested);
-        HashMap<String,String> cancelledAndRejectedAssistants = dbController.getAllAssistantsByEventId(eventID,3);
-        cancelledAndRejectedAssistants.putAll(dbController.getAllAssistantsByEventId(eventID,3));
-        HashMap<String,String> approvedArrivalAssistants = dbController.getAllAssistantsByEventId(eventID,1);
+        HashMap<String,String> cancelledAndRejectedAssistants = dbController.getAllAssistantsByEventId(eventIDInted,3);
+        cancelledAndRejectedAssistants.putAll(dbController.getAllAssistantsByEventId(eventIDInted,3));
+        HashMap<String,String> approvedArrivalAssistants = dbController.getAllAssistantsByEventId(eventIDInted,1);
         //assemble no longer required helpers
         //Remove cancelled and rejected assistants
         for(String helper : notNeededHelpers.keySet()){
@@ -173,14 +176,15 @@ public class EmerController_V1 implements IEmerController {
                 notNeededHelpers.remove(helper);
             }
         }
-        //Remove assistants out of range
+        //Isolate the list of undeeded assistants to assistants that were previously
+        //requested to help but are no longer needed
         for(String helper : notNeededHelpers.keySet()){
             //only keep helpers that are not needed
             if(filteredData.containsKey(helper)){
                 notNeededHelpers.remove(helper);
             }
         }
-        //inform the unneeded assistants of a cancellation
+        //inform these no longer needed assistants of the cancellation
         notNeededHelpers.put("event_id",eventID);
         rejectAssistants(notNeededHelpers);
         notNeededHelpers.remove("event_id");
@@ -195,7 +199,7 @@ public class EmerController_V1 implements IEmerController {
                 notNeededHelpers.remove(helper);
             }
         }
-        //remove the unneeded helpers from EMS and inform. "0" reperesents inform the EMS.
+        //remove the unneeded helpers from EMS and inform. "0" represents 'inform the EMS'.
         for(String helper : notNeededHelpers.keySet()) {
             removeAssistant(helper, eventID, 0);
         }
@@ -207,7 +211,7 @@ public class EmerController_V1 implements IEmerController {
         stopFollow(eventID, cmidsToStopFollow);
 
         //only stay in "filteredData" with the new helpers to approach
-        //TODO - Michael: Please notice that by this logic - we do not approach a cancelled/rejected helper more than once. Is the the intention?
+        //we do not approach a cancelled/rejected helper more than once. Approved by Michael
         for(String helper : filteredData.keySet()){
             if(allHelpersRequested.containsKey(helper)){
                 filteredData.remove(helper);
@@ -384,8 +388,8 @@ public class EmerController_V1 implements IEmerController {
         updateOrAddToEms.put("RequestID", "updateOrAddAssistant");
         updateOrAddToEms.put("patient_id",patientId);
         updateOrAddToEms.put("event_id",eventId);
-        updateOrAddToEms.put("eta",eta);
-        updateOrAddToEms.put("location_remark",locationRemark);
+        updateOrAddToEms.put("eta", eta);
+        updateOrAddToEms.put("location_remark", locationRemark);
         //send
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
@@ -449,7 +453,8 @@ public class EmerController_V1 implements IEmerController {
             ArrayList<String> sendTo = new ArrayList<String>();
             sendTo.add(regId);
             commController.setCommToUsers(request, sendTo, false);
-            //ToDo:Naor, I am not sure but i think that you didn't really send the request
+            //ToDo: MAOR, THANKS - FIXED
+            commController.sendResponse();
         }
     }
 
@@ -505,9 +510,10 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void assistantGaveMed(HashMap<String, String> data) {
-        String eventID = data.get("event_id");
         String cmid = data.get("community_member_id");
-
+        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(cmid)))
+            return;
+        String eventID = data.get("event_id");
       //  dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad.update provision time
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
@@ -519,6 +525,8 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void assistantCancelsArrival(HashMap<String, String> data) {
+        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+            return;
         String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
         String eventID = data.get("event_id");
         //Update the assistant's status on the DB and inform. "0" to inform EMS here.
@@ -535,7 +543,7 @@ public class EmerController_V1 implements IEmerController {
         String eventId = dbController.getEventByCmid(data.get("community_member_id"));
         emergencyLogger.handleUpdatePatientStatus(eventId, data.get("community_member_id"));
         dbController.updatePatientRemarks(data.get("community_member_id"), eventId, data.get("message"));
-        // Sends the patient's message to EMS and the assistents
+        // Sends the patient's message to EMS and the assistants
         HashMap<String, String> response = new HashMap<String, String>();
         response.put("event_id", eventId);
         response.put("message", data.get("message"));
@@ -551,7 +559,7 @@ public class EmerController_V1 implements IEmerController {
     public void emsTakeover(HashMap<String, String> data) {
 
         if(null != data.get("status")){
-            cancelEvent(data.get("event_id"));
+            cancelEvent(data.get("event_id"),"FINISHED");
             return;
         }
         //If the EMS wants to change the radius - ask for locations for GIS with the new radius
@@ -580,19 +588,23 @@ public class EmerController_V1 implements IEmerController {
 
 
     //called from EMSTakeover
-    private void cancelEvent(String eventID) {
+    private void cancelEvent(String eventID,String status) {
         //get all helpers and cancel them
-        //TODO - This error is explained before in the fucntion "receiveArrivalTimes"
-        HashMap<String,String> eventHelpers = dbController.getAllAssistantsByEventId(eventID,-1);//
+        HashMap<String,String> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),-1);//
         rejectAssistants(eventHelpers);
         //close the event within the GIS
         cancelEventOnGIS(eventID);
         //close the event within the DB
-        //TODO NEED TO ADD PATUENT CANCELLATION "CANCELLED"
-        dbController.closeEvent(Integer.parseInt(eventID),"FINISHED");
+        dbController.closeEvent(Integer.parseInt(eventID), status);
 
         //TODO - Logs
         //emergencyLogger.closeEventByEMS(eventID);
+    }
+
+    public void patientCancelledEvent(HashMap<String,String> data){
+        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+            return;
+        cancelEvent(data.get("event_ID"),"CANCELLED");
     }
 
     private void cancelEventOnGIS(String eventID) {

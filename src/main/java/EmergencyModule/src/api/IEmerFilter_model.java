@@ -8,7 +8,7 @@ import java.util.HashMap;
  */
 public interface IEmerFilter_model {
 
-    HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter);
+    HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter,String eventID);
     HashMap<Integer, HashMap<String, String>> filterUsersByArrivalTime(HashMap<Integer,HashMap<String, String>> data);
 
 }
