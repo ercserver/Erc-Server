@@ -79,27 +79,27 @@ public class RequestsHandler {
 
             switch (reqId) {
                 case REGISTRATION:
+                    String s = rc.getRegDetails(requestMap).toString();
+                    PrintWriter writer = null;
                     try {
-                        return rc.getRegDetails(requestMap).toString();
-                    }catch(Exception ex){
-                        PrintWriter writer = null;
-                        try {
-                            writer = new PrintWriter("log.txt", "UTF-8");
-                            ex.printStackTrace(writer);
+                        writer = new PrintWriter("log.txt", "UTF-8");
+                        writer.print("s");
 
-                            writer.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
+                        writer.close();
+                        return s;
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
                     }
+
+
                 case SIGNUP:
                     return rc.handleReg(requestMap).toString();
 
                 case RESEND_EMAIL:
-                    rc.resendAuth(requestMap);
-                    break;
+                    return rc.resendAuth(requestMap).toString();
+
                 case CONFIRM_PATIENT:
                     rc.responeByDoctor(requestMap);
                     break;
@@ -114,7 +114,7 @@ public class RequestsHandler {
             ex.printStackTrace();
         }
 
-        return (new JSONObject().put("RequestAccepted", reqId).toString());
+        return (new JSONObject().put("Error processing: ", reqId).toString());
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")

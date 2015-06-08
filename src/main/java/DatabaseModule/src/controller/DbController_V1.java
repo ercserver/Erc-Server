@@ -24,6 +24,7 @@ public class DbController_V1 implements IDbController {
 
 	//key = Email/InternalID vlaue = cmid do to string by class to  string/mail('') staring a  = "'aaaa'";
     public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType) {
+        System.out.println("userType");
         return DB_communicator.getRegistrationFields(userType);
     }
 

@@ -3,7 +3,8 @@ package DatabaseModule.src.model;
 
 import DatabaseModule.src.api.IDbComm_model;
 import Utilities.HashMapBuilder;
-import com.sun.deploy.util.StringUtils;
+//import com.sun.deploy.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -205,10 +206,14 @@ public class DbComm_V1 implements IDbComm_model {
                 connect();
             statement = connection.createStatement();
             // gets basic data about the user
-            rs = statement.executeQuery("SELECT DISTINCT * FROM P_CommunityMembers " +
-                            "INNER JOIN MembersLoginDetails ON P_CommunityMembers.community_member_id=MembersLoginDetails.community_member_id "
+            System.err.println("SELECT DISTINCT * FROM P_CommunMembersLoginDetails ON P_CommunityMembersityMembers " +
+                    "INNER JOIN .community_member_id=MembersLoginDetails.community_member_id "
+                    + "WHERE " + conditions);
+            rs = statement.executeQuery("SELECT DISTINCT * FROM P_CommunMembersLoginDetails ON P_CommunityMembersityMembers " +
+                            "INNER JOIN .community_member_id=MembersLoginDetails.community_member_id "
                    + "WHERE " + conditions);
-            // no user exists for the givven conditions
+
+            // no user exists for the given conditions
             if(!rs.next())
                 return null;
             String cmid = rs.getObject("community_member_id").toString();

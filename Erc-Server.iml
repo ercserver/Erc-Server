@@ -43,7 +43,7 @@
     <orderEntry type="library" exported="" scope="TEST" name="Maven: org.springframework:spring-test-mvc:1.0.0.M2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Maven: org.springframework:spring-test:3.2.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Maven: junit:junit:4.8.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="TomEE 7.0.55" level="application_server_libraries" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="TomEE 7.0.55" level="application_server_libraries" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-core:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-web:4.1.6.RELEASE" level="project" />
