@@ -35,4 +35,6 @@ public interface IEmer {
     void getCmidOfEms(HashMap<String, String> data);
     //From GIS
     void receiveClosestEmsAndApproach (HashMap<String, String> data);
+    //From app
+    void patientCancelledEvent(HashMap<String,String> data);
 }
