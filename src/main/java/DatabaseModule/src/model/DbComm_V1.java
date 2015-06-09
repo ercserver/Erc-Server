@@ -1269,7 +1269,7 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
-    public List<Integer> filterAvailableMembers(List<Integer> cmidList) {
+        public List<Integer> filterAvailableMembers(List<Integer> cmidList) {
         List<Integer> cmids = null;
         ResultSet rs = null;
         try {

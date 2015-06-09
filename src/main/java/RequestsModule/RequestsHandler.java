@@ -83,7 +83,7 @@ public class RequestsHandler {
                     PrintWriter writer = null;
                     try {
                         writer = new PrintWriter("log.txt", "UTF-8");
-                        writer.print("s");
+                        writer.print(s);
 
                         writer.close();
                         return s;
