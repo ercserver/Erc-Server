@@ -2,6 +2,7 @@ package DatabaseModule.src.model;
 
 
 import DatabaseModule.src.api.IDbComm_model;
+import Utilities.ErcLogger;
 import Utilities.HashMapBuilder;
 //import com.sun.deploy.util.StringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -648,6 +649,7 @@ public class DbComm_V1 implements IDbComm_model {
 
            - output: the created cmid
          */
+        ErcLogger.println("In addNewCommunityMember. Parameters = " + details);
         int cmid = -1;
         try {
             // Validate connection
@@ -681,13 +683,17 @@ public class DbComm_V1 implements IDbComm_model {
 
             if (rs.next()) {
                 cmid = rs.getInt(1);
+                ErcLogger.println("New Generated CMID = " + cmid);
             } else{
                 // There was a problem inserting the new member
+                ErcLogger.println("Problem getting the newly generated cmid");
                 return -1;
             }
             stmt.close();
 
+            // Insert reg_id
             insertRegID(details.get("reg_id"), cmid);
+
             // Insert login details
             stmt = connection.prepareStatement("INSERT INTO MembersLoginDetails (community_member_id, password, email_address)" +
                     " VALUES (?,?,?)");
@@ -704,20 +710,15 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
-            // Insert reg_id
-            stmt = connection.prepareStatement("INSERT INTO RegIDs (reg_id, community_member_id) VALUES (?,?)");
-            stmt.setString(1, details.get("reg_id"));
-            stmt.setInt(2, cmid);
-            stmt.executeUpdate();
-            stmt.close();
 
             // Insert availability hours
-            stmt = connection.prepareStatement(" INSERT INTO Availability (hour_from, minutes_from, hour_to, minutes_to)" +
-                    " VALUES (?,?,?,?)");
+            stmt = connection.prepareStatement(" INSERT INTO Availability (hour_from, minutes_from, hour_to, minutes_to, community_member_id)" +
+                    " VALUES (?,?,?,?,?)");
             stmt.setInt(1, Integer.parseInt(details.get("hour_from")));
             stmt.setInt(2, Integer.parseInt(details.get("minutes_from")));
             stmt.setInt(3, Integer.parseInt(details.get("hour_to")));
             stmt.setInt(4, Integer.parseInt(details.get("minutes_to")));
+            stmt.setInt(5, cmid);
             stmt.executeUpdate();
             stmt.close();
 

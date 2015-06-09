@@ -12,14 +12,15 @@ import java.util.HashMap;
  */
 public class ShmulikTest {
     public static void main(String[] args) {
-        DbComm_V1 d = new DbComm_V1();
+       /* DbComm_V1 d = new DbComm_V1();
         testNaor1();
 
         RegVerify_V2 v2 = new RegVerify_V2();
         HashMap<String,String> h = new HashMap<String,String>();
         HashMap<String,String> h2 = new HashMap<String,String>();
         h = v2.getUserByCmid(1002);
-        h2 = v2.getUserByCmid(1003);
+        h2 = v2.getUserByCmid(1003);*/
+        testNaor2();
         /*
         RegController_V1 v = new RegController_V1();
         v2.changeStatusToVerifyDetailAndSendToApp(1002,h);
@@ -60,18 +61,21 @@ public class ShmulikTest {
     public static void testNaor2() {
         RegController_V1 rc = new RegController_V1();
         HashMap<String, String> fakeDetails = new HashMap<String, String>();
-        fakeDetails.put("email_address", "bla@gmail.com");
-        fakeDetails.put("user_type", "0");
+        /*DbComm_V1 db = new DbComm_V1();
+        db.deleteUser(1030);*/
+
+        fakeDetails.put("email_address", "'arbelax@gail.com'");
+        fakeDetails.put("user_type", "1");
         fakeDetails.put("P_supervision.doc_licence_num", "10054");
         fakeDetails.put("P_prescriptions.doc_licence_num", "10054");
         fakeDetails.put("P_diagnosis.doc_licence_num", "10054");
-        fakeDetails.put("external_id", "111111111");
+        fakeDetails.put("external_id", "1234");
         fakeDetails.put("external_id_type", "0");
-        fakeDetails.put("first_name", "Ohad");
-        fakeDetails.put("last_name", "Gur");
-        fakeDetails.put("birth_date", "1993-10-27");
-        
-        fakeDetails.put("gender", "0");
+        fakeDetails.put("first_name", "Arbel");
+        fakeDetails.put("last_name", "Axelrod");
+        fakeDetails.put("birth_date", "1900-10-27");
+        fakeDetails.put("doc_license_number", "123456");
+        fakeDetails.put("gender", "1");
         fakeDetails.put("state", "israel");
         fakeDetails.put("city", "Nahariyya");
         fakeDetails.put("street", "HaZamir");
@@ -79,7 +83,7 @@ public class ShmulikTest {
         fakeDetails.put("zip_code", "00000");
         fakeDetails.put("mobile_phone_number", "052222222222");
         fakeDetails.put("contact_phone", "0521123456");
-        fakeDetails.put("reg_id", "123678");
+        fakeDetails.put("reg_id", "9999");
         fakeDetails.put("hour_from", "12");
         fakeDetails.put("minutes_from", "56");
         fakeDetails.put("hour_to", "16");
@@ -93,6 +97,7 @@ public class ShmulikTest {
 
         JSONArray objToSend = (JSONArray) rc.handleReg(fakeDetails);
         System.out.println(objToSend.toString());
+
     }
 
 

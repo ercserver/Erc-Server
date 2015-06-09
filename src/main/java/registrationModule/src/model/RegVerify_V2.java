@@ -1,6 +1,7 @@
 package registrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
+import Utilities.ErcLogger;
 import registrationModule.src.api.IRegVerify_model;
 import Utilities.ModelsFactory;
 
@@ -131,17 +132,11 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 */
     private boolean ifTypeISDoctor(String regid) {
-        if (regid.equals("0"))
-            return true;
-        else
-            return false;
+        return regid.equals("0");
     }
 
     public boolean ifTypeISPatientOrGuardian(String code) {
-        if (code.equals("0"))
-            return false;
-        else
-            return true;
+        return !code.equals("0");
     }
 
     // need to be pravite
@@ -212,10 +207,11 @@ public class RegVerify_V2 implements IRegVerify_model {
         return reg;
     }
     public HashMap<String, String> getUserByCmid(int cmid) {
-
+        ErcLogger.println("In getUserByCmid. Parameters = " + cmid);
         HashMap<String, String> member = new HashMap<String, String>();
         member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
         HashMap<String, String> details = dbController.getUserByParameter(member);
+        ErcLogger.println("details = " + details);
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
         String reg = "";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
@@ -312,18 +308,12 @@ public class RegVerify_V2 implements IRegVerify_model {
         //if we  resend mail to hos current mail
         //we need to check that this mail dont approval
         if (currentEmail.equals(email)) {
-            if (status.equals("verifying email"))
-                return true;
-            else
-                return false;
+            return status.equals("verifying email");
         }
         //if member change his mail we need to check that
         //is mail not exist in another user
         else {
-            if (getUserByMail(email) == null)
-                return true;
-            else
-                return false;
+            return getUserByMail(email) == null;
         }
 
 

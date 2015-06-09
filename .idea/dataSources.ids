@@ -823,8 +823,8 @@
       <primary-key name="PK__RegIDs__2C6821181F247CCC" columns="reg_id"/>
     </table>
     <table name="RegistrationFields" schema="dbo" catalog="socmedserver" type="TABLE">
-      <column name="field_name" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
-      <column name="type" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="field_name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="user_type" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="fields_group" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="needs_verification" sqlType="bit" precision="1" scale="0" nullable="false" jdbcType="-7" def="KCgwKSk="/>
@@ -833,8 +833,8 @@
       <column name="get_possible_values_from" sqlType="varchar" precision="50" scale="0" nullable="true" jdbcType="12"/>
       <column name="serial_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="insert_data_to" sqlType="varchar" precision="200" scale="0" nullable="true" jdbcType="12"/>
-      <column name="refresh_time" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="gui_description" sqlType="varchar" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <column name="refresh_time" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
     </table>
     <table name="RejectCodes" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
