@@ -123,6 +123,7 @@ public class EmerController_V1 implements IEmerController {
         //generate required data and approach the EMS
         HashMap<String,String> eventDetails = dbController.getEventDetails(data.get("event_id"));
         //ToDo:Naor:?!
+        //TODO: Maor let's talk about this...
         data.put("patient_id", eventDetails.get("event_id"));
         data.put("location_remark",eventDetails.get("location_remark"));
         data.put("RequestID", "start");
@@ -165,12 +166,10 @@ public class EmerController_V1 implements IEmerController {
 
         /*get all of the users to which a request was sent for the event
         and did not reject (either approved or not yet responded)*/
-        //TODO OHAD - Didn't we sat ArrayList? - right now you're returning integer,hashmap, I'm waiting for your reference to make changes
         HashMap<String,String> allHelpersRequested = turnIntListIntoHashMap(dbController.getAllAssistantsByEventId(eventIDInted, -1));
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
         notNeededHelpers.putAll(allHelpersRequested);
         HashMap<String,String> cancelledAndRejectedAssistants = turnIntListIntoHashMap(dbController.getAllAssistantsByEventId(eventIDInted, 3));
-        cancelledAndRejectedAssistants.putAllturnIntListIntoHashMap((dbController.getAllAssistantsByEventId(eventIDInted, 3)));
         HashMap<String,String> approvedArrivalAssistants = turnIntListIntoHashMap(dbController.getAllAssistantsByEventId(eventIDInted,1));
         //assemble no longer required helpers
         //Remove cancelled and rejected assistants
@@ -456,7 +455,6 @@ public class EmerController_V1 implements IEmerController {
             ArrayList<String> sendTo = new ArrayList<String>();
             sendTo.add(regId);
             commController.setCommToUsers(request, sendTo, false);
-            //ToDo: MAOR, THANKS - FIXED
             commController.sendResponse();
         }
     }
@@ -589,7 +587,7 @@ public class EmerController_V1 implements IEmerController {
         */
     }
 
-    private void turnIntListIntoHashMap(List<Integer> eventHelpers){
+    private HashMap<String,String> turnIntListIntoHashMap(List<Integer> eventHelpers){
         HashMap<String,String> toReturn = new HashMap<String,String>();
 
         for(Integer current : eventHelpers){

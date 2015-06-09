@@ -4,13 +4,12 @@ import CommunicationModule.src.api.ICommController;
 import CommunicationModule.src.controller.CommController_V1;
 import DatabaseModule.src.api.IDbController;
 import DatabaseModule.src.controller.DbController_V1;
-/*
+
 import EmergencyModule.src.api.IEmerFilter_model;
 import EmergencyModule.src.api.IEmerLogger_model;
-//import EmergencyModule.src.model.EmerFilter_V1;
 import EmergencyModule.src.model.EmerFilter_V1;
 import EmergencyModule.src.model.EmerLogger_V1;
-*/
+
 import RoutineModule.src.api.IEmsRoutine_model;
 import RoutineModule.src.api.IUpdates_model;
 import RoutineModule.src.model.EmsRoutine_V1;
@@ -105,7 +104,7 @@ public class ModelsFactory {
         }
     }
 
-   /* public IEmerFilter_model determineEmerFilterVersion() {
+   public IEmerFilter_model determineEmerFilterVersion() {
         switch (emerFilterVersion) {
             //Communicate the DB to retrieve the data
             case 1: {
@@ -127,5 +126,4 @@ public class ModelsFactory {
             }
         }
     }
-*/
 }
