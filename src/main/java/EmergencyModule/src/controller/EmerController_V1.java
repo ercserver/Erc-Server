@@ -586,12 +586,17 @@ public class EmerController_V1 implements IEmerController {
         */
     }
 
+    private void generateRejectRequest(List<Integer> eventHelpers)
 
     //called from EMSTakeover
     private void cancelEvent(String eventID,String status) {
         //get all helpers and cancel them
-        HashMap<String,String> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),-1);//
-        rejectAssistants(eventHelpers);
+
+        List<Integer> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),-1);
+
+        HashMap<String,String> rejectRequest = generateRejectRequest(eventHelpers, eventID);
+        rejectAssistants(rejectRequest);
+
         //close the event within the GIS
         cancelEventOnGIS(eventID);
         //close the event within the DB
