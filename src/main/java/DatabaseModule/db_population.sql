@@ -41,4 +41,4 @@ insert into registrationFields (field_name, type, user_type, fields_group, needs
   ('P_diagnosis.doc_licence_num', 1, 1, 1, 1, 1, 50, null, 9, null, null, 'Diagnosing doctor license number'),
   ('P_prescriptions.doc_licence_num', 1, 1, 1, 1, 1, 50, null, 10, null, null, 'Prescribing doctor licence')
 
-select * from dbo.MembersLoginDetails
+SELECT DISTINCT * from registrationfields

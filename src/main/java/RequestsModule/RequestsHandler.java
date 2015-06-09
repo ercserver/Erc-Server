@@ -123,7 +123,7 @@ public class RequestsHandler {
         HashMapCreator hmc = new HashMapCreator();
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
         String reqId = "";
-
+        String rv = "";
         try {
             IRegController rc = new RegController_V1();
             IRoutineController ruc = new RoutineController_V1();
@@ -131,15 +131,15 @@ public class RequestsHandler {
 
             switch (reqId) {
                 case SIGNIN:
-                    rc.signIn(requestMap);
-                    break;
+                    rv = rc.signIn(requestMap).toString();
+                    System.out.println("rv = " + rv);
                 case ASKWAITINGPATIENTS:
                     JSONArray respone  = (JSONArray) rc.getWaitingForDoctor(requestMap);
                     if (respone != null){
                         return respone.toString();
                     }
                 case CURRENTLOCATION:
-                    ruc.transferLocation(requestMap);
+                    rv = ruc.transferLocation(requestMap).toString();
                 default:
                     // Do nothing...
                     break;
@@ -147,7 +147,7 @@ public class RequestsHandler {
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return (new JSONObject().put("RequestAccepted", reqId).toString());
+        return rv;
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/verify_email")

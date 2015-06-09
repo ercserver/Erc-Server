@@ -206,11 +206,11 @@ public class DbComm_V1 implements IDbComm_model {
                 connect();
             statement = connection.createStatement();
             // gets basic data about the user
-            System.err.println("SELECT DISTINCT * FROM P_CommunMembersLoginDetails ON P_CommunityMembersityMembers " +
-                    "INNER JOIN .community_member_id=MembersLoginDetails.community_member_id "
+            System.err.println("SELECT DISTINCT * FROM P_CommunityMembers INNER JOIN MembersLoginDetails " +
+                    "ON P_CommunityMembers.community_member_id=MembersLoginDetails.community_member_id "
                     + "WHERE " + conditions);
-            rs = statement.executeQuery("SELECT DISTINCT * FROM P_CommunMembersLoginDetails ON P_CommunityMembersityMembers " +
-                            "INNER JOIN .community_member_id=MembersLoginDetails.community_member_id "
+            rs = statement.executeQuery("SELECT DISTINCT * FROM P_CommunityMembers INNER JOIN MembersLoginDetails " +
+                            "ON P_CommunityMembers.community_member_id=MembersLoginDetails.community_member_id "
                    + "WHERE " + conditions);
 
             // no user exists for the given conditions
@@ -726,7 +726,7 @@ public class DbComm_V1 implements IDbComm_model {
             int userType = Integer.parseInt(details.get("user_type"));
 
             // Insert to type log
-            stmt = connection.prepareStatement("INSERT INTO P_TypeLog (user_type, community_member_id, date_to) VALUES (?,?,?)");
+            stmt = connection.prepareStatement("INSERT INTO P_TypeLog (user_type, community_member_id, date_from) VALUES (?,?,?)");
 
             stmt.setInt(1, Integer.parseInt(details.get("user_type")));
             stmt.setInt(2, cmid);
