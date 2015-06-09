@@ -8,9 +8,12 @@ import EmergencyModule.src.api.IEmerLogger_model;
 import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
 
+import java.lang.Integer;
+import java.lang.String;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.HashMap;
 
 /**
  * Created by NAOR on 16/05/2015.
@@ -163,12 +166,12 @@ public class EmerController_V1 implements IEmerController {
         /*get all of the users to which a request was sent for the event
         and did not reject (either approved or not yet responded)*/
         //TODO OHAD - Didn't we sat ArrayList? - right now you're returning integer,hashmap, I'm waiting for your reference to make changes
-        HashMap<String,String> allHelpersRequested = dbController.getAllAssistantsByEventId(eventIDInted, -1);
+        HashMap<String,String> allHelpersRequested = turnIntListIntoHashMap(dbController.getAllAssistantsByEventId(eventIDInted, -1));
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
         notNeededHelpers.putAll(allHelpersRequested);
-        HashMap<String,String> cancelledAndRejectedAssistants = dbController.getAllAssistantsByEventId(eventIDInted,3);
-        cancelledAndRejectedAssistants.putAll(dbController.getAllAssistantsByEventId(eventIDInted,3));
-        HashMap<String,String> approvedArrivalAssistants = dbController.getAllAssistantsByEventId(eventIDInted,1);
+        HashMap<String,String> cancelledAndRejectedAssistants = turnIntListIntoHashMap(dbController.getAllAssistantsByEventId(eventIDInted, 3));
+        cancelledAndRejectedAssistants.putAllturnIntListIntoHashMap((dbController.getAllAssistantsByEventId(eventIDInted, 3)));
+        HashMap<String,String> approvedArrivalAssistants = turnIntListIntoHashMap(dbController.getAllAssistantsByEventId(eventIDInted,1));
         //assemble no longer required helpers
         //Remove cancelled and rejected assistants
         for(String helper : notNeededHelpers.keySet()){
@@ -586,7 +589,14 @@ public class EmerController_V1 implements IEmerController {
         */
     }
 
-    private void generateRejectRequest(List<Integer> eventHelpers)
+    private void turnIntListIntoHashMap(List<Integer> eventHelpers){
+        HashMap<String,String> toReturn = new HashMap<String,String>();
+
+        for(Integer current : eventHelpers){
+            toReturn.put(current.toString(),null);
+        }
+        return toReturn;
+    }
 
     //called from EMSTakeover
     private void cancelEvent(String eventID,String status) {
@@ -594,7 +604,8 @@ public class EmerController_V1 implements IEmerController {
 
         List<Integer> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),-1);
 
-        HashMap<String,String> rejectRequest = generateRejectRequest(eventHelpers, eventID);
+        HashMap<String,String> rejectRequest = turnIntListIntoHashMap(eventHelpers);
+        rejectRequest.put("event_id",eventID);
         rejectAssistants(rejectRequest);
 
         //close the event within the GIS
