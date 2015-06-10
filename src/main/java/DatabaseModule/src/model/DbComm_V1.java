@@ -73,7 +73,7 @@ public class DbComm_V1 implements IDbComm_model {
     /*For all of the methods:in each HashMap if the value represent value of column with type varchar,
       the value need to be in this format: 'value' */
 
-    private HashMap<Integer,HashMap<String,String>>
+    /*private HashMap<Integer,HashMap<String,String>>
     getRowsFromTable(HashMap<String,String> whereConditions, String tableName)
     {
         String conditions = "";
@@ -115,9 +115,9 @@ public class DbComm_V1 implements IDbComm_model {
             else
             {
                 int j = 1;
-                /* each simple HashMap represent a tuple from the resultSet: key=column-name, value=column-value
+                *//* each simple HashMap represent a tuple from the resultSet: key=column-name, value=column-value
                  * the complex HashMap has all of the tuples: key=serial number from the resultSet(begins with 1)
-                  * value=the tuple*/
+                  * value=the tuple*//*
                 do
                 {
                     HashMap<String,String> line = new HashMap<String,String>();
@@ -152,6 +152,62 @@ public class DbComm_V1 implements IDbComm_model {
                 catch (Exception e) {e.printStackTrace();}
             }
         }
+    }*/
+
+    private  HashMap<Integer,HashMap<String,String>>
+    getRowsFromTable(HashMap<String,String> whereConditions, String tableName)
+    {
+        String conditions = "";
+
+        if(whereConditions == null) {
+            // No conditions - get all the rows from the table
+            conditions = "1=1";
+            whereConditions = new HashMap<String, String>();
+        }
+        else
+        {
+            int numOfConditions = whereConditions.size();
+            Set<String> keys = whereConditions.keySet();
+            Iterator<String> iter = keys.iterator();
+            // creates the where condition for sql query
+            String key = iter.next();
+            conditions = key + "=?";
+            for (int i = 1; i < numOfConditions; i++)
+            {
+                key = iter.next();
+                conditions += " AND " + key + "=?";
+            }
+
+        }
+        ResultSet rs = null;
+        try
+        {
+            // Create the query
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            String query = "SELECT * FROM " + tableName + " WHERE " + conditions;
+            // Assign the values to the where clause
+            PreparedStatement stmt = connection.prepareStatement(query);
+            Set<String> keys = whereConditions.keySet();
+            int  parameterIndex = 1;
+            for (String key : keys){
+                stmt.setObject(parameterIndex, whereConditions.get(key));
+                parameterIndex++;
+            }
+
+            rs = stmt.executeQuery();
+            HashMap<Integer, HashMap<String, String>> hash = resultSetToMap(rs);
+            return hash;
+
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+
     }
 
     public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)
@@ -173,9 +229,9 @@ public class DbComm_V1 implements IDbComm_model {
                     ArrayList<String> l = new ArrayList<String>();
                     l.add("enum_value");
                     HashMap<String, String> conds1 = new HashMap<String, String>();
-
-                    conds1.put("table_name", "'" + tableName.split(".")[1] + "'");
-                    conds1.put("column_name", "'" + tableName.split(".")[2] + "'");
+                    ErcLogger.println(tableName.split("\\.")[0].toString());
+                    conds1.put("table_name", "'" + tableName.split("\\.")[1] + "'");
+                    conds1.put("column_name", "'" + tableName.split("\\.")[2] + "'");
                     jo = new JSONObject(selectFromTable("Enum", l, conds1));
                 } else
                     jo = new JSONObject(getRowsFromTable(null, tableName));
@@ -516,15 +572,20 @@ public class DbComm_V1 implements IDbComm_model {
             while (rs.next()) {
                 int total_rows = rs.getMetaData().getColumnCount();
                 HashMap<String,String> obj = new HashMap<String,String>();
-                for (int i = 0; i < total_rows; i++) {
-                    obj.put(rs.getMetaData().getColumnLabel(i + 1)
-                            .toLowerCase(), rs.getObject(i + 1).toString());
+                for (int i = 1; i <= total_rows; i++) {
+                    // Add pair (column, value) if value is not null
+                    String column = rs.getMetaData().getColumnLabel(i);
+                    Object val = rs.getObject(i);
+                    if (val != null){
+                        obj.put(column, val.toString());
+                    }
                 }
-                map.put(new Integer(j), obj);
+                map.put(j, obj);
                 j++;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            ErcLogger.println("exception in resultSetToMap");
         }
         return map;
     }
