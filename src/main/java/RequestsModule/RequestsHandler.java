@@ -1,6 +1,9 @@
 package RequestsModule;
 
+
+import DatabaseModule.src.model.DbComm_V1;
 import DatabaseModule.src.model.DbInit_V1;
+import Utilities.HashMapBuilder;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import org.apache.commons.logging.Log;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +52,10 @@ public class RequestsHandler {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/db")
     public @ResponseBody String initDB()
     {
-        DbInit_V1 db = new DbInit_V1();
-        db.initializeAndConnect();
-        return "done";
+        DbComm_V1 db = new DbComm_V1();
+        HashMapBuilder<String, String> hashMapBuilder = new HashMapBuilder<>();
+
+        return db.getUserByParameter(hashMapBuilder.put("community_member_id","1024").build()).toString();
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test", consumes = "application/json")

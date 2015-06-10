@@ -169,10 +169,11 @@ public class DbComm_V1 implements IDbComm_model {
                 String tableName = ret.get(i).get("get_possible_values_from");
                 JSONObject jo;
                 // field that has few possible values from Enum table
-                if (tableName.substring(0, 5) == "Enum.") {
+                if (tableName.substring(0, 5).equals("Enum.")) {
                     ArrayList<String> l = new ArrayList<String>();
                     l.add("enum_value");
                     HashMap<String, String> conds1 = new HashMap<String, String>();
+
                     conds1.put("table_name", "'" + tableName.split(".")[1] + "'");
                     conds1.put("column_name", "'" + tableName.split(".")[2] + "'");
                     jo = new JSONObject(selectFromTable("Enum", l, conds1));
@@ -1269,7 +1270,7 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
-        public List<Integer> filterAvailableMembers(List<Integer> cmidList) {
+    public List<Integer> filterAvailableMembers(List<Integer> cmidList) {
         List<Integer> cmids = null;
         ResultSet rs = null;
         try {
