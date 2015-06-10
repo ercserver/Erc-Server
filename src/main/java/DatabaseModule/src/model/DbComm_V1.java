@@ -220,7 +220,7 @@ public class DbComm_V1 implements IDbComm_model {
            the field is not "free text". we put a json object that converted to string */
         if (ret != null) {
             for (int i = 1; i <= ret.size(); i++) {
-                if (ret.get(i).get("get_possible_values_from") == "null")
+                if (ret.get(i).get("get_possible_values_from").equals("null"))
                     continue;
                 String tableName = ret.get(i).get("get_possible_values_from");
                 JSONObject jo;
@@ -1845,10 +1845,43 @@ public class DbComm_V1 implements IDbComm_model {
             // gets the userType by cmid
             rs = statement.executeQuery("SELECT DISTINCT * FROM P_StatusLog INNER JOIN P_Statuses " +
                     "ON P_StatusLog.status_num=P_Statuses.status_num " +
-                    "WHERE community_member_id=" + cmid + " AND date_to IS NULL");
+                    "WHERE P_StatusLog.community_member_id=" + cmid + " AND date_to IS NULL");
             if(!rs.next())
                 return false;
             return rs.getString("status_name").equals("active");
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return false;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
+
+    public boolean doesMedicineMatch(String cmid, String eventId)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM P_Patients INNER JOIN P_Prescriptions " +
+                    "ON P_Patients.patient_id=P_Prescriptions.patient_id " +
+                    "INNER JOIN M_BrandNames ON M_BrandNames.medication_num=P_Prescriptions.medication_num " +
+                    "INNER JOIN M_Indications ON M_BrandNames.brand_name_id=M_Indications.brand_name_id " +
+                    "INNER JOIN O_EmergencyEvents ON O_EmergencyEvents.medical_condition_id=M_Indications.medical_condition_id " +
+                    " WHERE P_Patients.community_member_id=" + cmid + " AND O_EmergencyEvents.event_id=" + eventId);
+            return rs.next();
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {e.printStackTrace(); return false;}
