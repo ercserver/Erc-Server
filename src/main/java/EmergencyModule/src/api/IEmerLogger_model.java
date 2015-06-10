@@ -42,4 +42,6 @@ public interface IEmerLogger_model {
     void handlePopupMessage(String eventId);
 
     void handleStopFollowingUsers(String eventId);
+
+    void handleDontHaveEMS(String event_id, String community_member_id);
 }

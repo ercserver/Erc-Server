@@ -116,4 +116,11 @@ public class EmerLogger_V1 implements IEmerLogger_model {
     public void handleStopFollowingUsers(String eventId) {
         dbController.updateLogs(eventId, "'Server told GIS to stop following part of the assistants'");
     }
+
+    @Override
+    public void handleDontHaveEMS(String event_id, String community_member_id) {
+        dbController.updateLogs(event_id, "'Server told assistant "+community_member_id+
+                " that we dont have EMS member and that he can to do what he think is right'");
+
+    }
 }

@@ -75,4 +75,5 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<String, String> getFieldDetails(String name, String userType);
     boolean isCmidStatusActive(String cmid);
     boolean doesMedicineMatch(String cmid, String eventId);
+    boolean doesEventHasEMS(String eventId);
 }

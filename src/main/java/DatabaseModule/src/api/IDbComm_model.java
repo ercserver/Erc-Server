@@ -139,4 +139,5 @@ public interface IDbComm_model {
     void updateMedicineGiven(int cmid, int eventID, Date date);
     boolean isCmidStatusActive(String cmid);
     boolean doesMedicineMatch(String cmid, String eventId);
+    boolean doesEventHasEMS(String eventId);
 }

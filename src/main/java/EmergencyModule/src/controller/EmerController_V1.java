@@ -114,17 +114,9 @@ public class EmerController_V1 implements IEmerController {
         initiatedOneObjectRequest(response, sendTo);
     }
     public void receiveClosestEmsAndApproach(HashMap<String, String> data){
-        //update the db
-        //TODO - Ohad
-        //ToDo:Naor:for what we need this in DB?vI am not sure that we really need this here because we don't get here anything to the DB
-        //
-        //TODO - MAOR/OHAD: we need to be able to mark in the DB whether the EMS was contacted or not... let's talk about this anyway..
-        // dbController.updateEMSfirstApproached(data);
         //generate required data and approach the EMS
         HashMap<String,String> eventDetails = dbController.getEventDetails(data.get("event_id"));
-        //ToDo:Naor:?!
-        //TODO: Maor let's talk about this...
-        data.put("patient_id", eventDetails.get("event_id"));
+        data.put("event_id", eventDetails.get("event_id"));
         data.put("location_remark",eventDetails.get("location_remark"));
         data.put("RequestID", "start");
         //add the EMS URL to the receivers
@@ -469,6 +461,23 @@ public class EmerController_V1 implements IEmerController {
         emergencyLogger.handleArrivalToDest(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base
         dbController.updateArrivalDate(data);
+        // This events hasn't have EMS member yet
+        if(!dbController.doesEventHasEMS(data.get("event_id")))
+        {
+            // Sends message to the assistant
+            HashMap<String, String> h = new HashMap<String, String>();
+            h.put("event_id", data.get("event_id"));
+            h.put("message", "We don't have connection with EMS now-do what you think!");
+            h.put("RequestID", "noEMS");
+            HashMap<Integer,HashMap<String,String>> request = new HashMap<Integer,HashMap<String,String>>();
+            request.put(1, h);
+            ArrayList<String> sendTo = new ArrayList<String>();
+            sendTo.add(data.get("reg_id"));
+            commController.setCommToUsers(request, sendTo, false);
+            commController.sendResponse();
+            emergencyLogger.handleDontHaveEMS(data.get("event_id"), data.get("community_member_id"));
+            return;
+        }
         // Sends the news to EMS and asks for givving the medication
         HashMap<String,String> h = new HashMap<String,String>();
         h.put("event_id", data.get("event_id"));
@@ -515,7 +524,7 @@ public class EmerController_V1 implements IEmerController {
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(cmid)))
             return;
         String eventID = data.get("event_id");
-      //  dbController.updateMedicineGiven(cmid,eventID); //TODO - Ohad.update provision time
+        dbController.updateMedicineGiven(Integer.parseInt(cmid), Integer.parseInt(eventID));
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();

@@ -1931,4 +1931,33 @@ public class DbComm_V1 implements IDbComm_model {
             }
         }
     }
+
+    public boolean doesEventHasEMS(String eventId)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM O_EmergencyEvents " +
+                    "WHERE event_id=" + eventId + " AND ems_member_id IS NULL");
+            return (!rs.next());
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return false;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
 }
