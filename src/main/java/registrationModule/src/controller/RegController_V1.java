@@ -469,7 +469,7 @@ public class RegController_V1 implements IRegController {
         HashMap<Integer,HashMap<String,String>> response = verification.verifySignIn(details);
 
         // Sign in of doctor/ems
-        if(details.get("reg_id") == "0")
+        if(details.get("reg_id").equals("0"))
         {
             ArrayList<String> sendTo = new ArrayList<String>();
             sendTo = assistantFuncs.addReceiver("EMS", sendTo);
