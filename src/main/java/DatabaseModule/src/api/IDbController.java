@@ -58,7 +58,7 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<String, String>getAssistDetails(String cmid, String eventId);
     String getRegIDOfPatient(String patientId);
     void removeAssistantFromEvent(String eventId, String patient_id);
-    List<Integer> filterAvailableMembers(List<Integer> cmidList);
+    ArrayList<Integer> filterAvailableMembers(ArrayList<Integer> cmidList, String eventId);
     int startNewEmergencyEvent(HashMap<String, String> details);
     void updateEventDetails(String eventId, String state, String regType, String radiud, String loc);
     String getMedicalConditionOfPatient(String patientId);

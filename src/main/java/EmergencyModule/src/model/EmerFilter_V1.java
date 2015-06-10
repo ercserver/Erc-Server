@@ -6,9 +6,10 @@ import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
- // Created by NAOR on 16/05/2015.
+// Created by NAOR on 16/05/2015.
 
 
 public class EmerFilter_V1 implements IEmerFilter_model {
@@ -26,20 +27,18 @@ public class EmerFilter_V1 implements IEmerFilter_model {
     //filter list receied from "receiveUsersAroundLocation"
    // @Override
     public HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter,String eventID) {
+        // Creates arrayList of possible assistants
+        ArrayList<Integer> l = new ArrayList<Integer>();
+        Iterator<String> iter = listToFilter.keySet().iterator();
+        while(iter.hasNext())
+            l.add(Integer.parseInt(iter.next()));
+        // Gets filter by the data base
+        ArrayList<Integer> filterL = dbController.filterAvailableMembers(l, eventID);
+        HashMap<String, String> filter = new HashMap<String, String>();
+        for(int i = 0; i < filterL.size(); i++)
+            filter.put(Integer.toString(filterL.get(i)), null);
 
-        //TODO - Naor. Need to ask Michael if thats what he wants
-        for(String helper : listToFilter.keySet()){
-            //Check for status,availability and medicine match and remove mismatches
-            /*
-            if((!dbController.isCmidStatusActive(helper)) ||
-               (!dbController.isCmidStatusAvailable(helper)) ||
-               (!dbController.doesMedicineMatch(helper,eventID))){
-                listToFilter.remove(helper);
-            }
-            */
-        }
-
-        return listToFilter;
+        return filter;
 
     }
 

@@ -1363,8 +1363,8 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     @Override
-    public List<Integer> filterAvailableMembers(List<Integer> cmidList) {
-        List<Integer> cmids = null;
+    public ArrayList<Integer> filterAvailableMembers(ArrayList<Integer> cmidList, String eventId) {
+        ArrayList<Integer> cmids = new ArrayList<Integer>();
         ResultSet rs = null;
         try {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
@@ -1390,7 +1390,8 @@ public class DbComm_V1 implements IDbComm_model {
             // Extract list
             while (rs.next()) {
                 int i = rs.getInt("community_member_id");
-                cmids.add(i);
+                if(doesMedicineMatch(Integer.toString(i), eventId))
+                    cmids.add(i);
             }
 
         }
@@ -1899,6 +1900,7 @@ public class DbComm_V1 implements IDbComm_model {
         }
     }
 
+    // cmid of assistant
     public boolean doesMedicineMatch(String cmid, String eventId)
     {
         ResultSet rs = null;

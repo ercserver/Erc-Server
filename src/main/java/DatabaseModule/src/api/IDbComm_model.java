@@ -94,7 +94,7 @@ public interface IDbComm_model {
 
     void closeEvent(int eventId, String newStatus); // status={CANCELED, ACTIVE, FINISHED}
 
-    List<Integer> filterAvailableMembers(List<Integer> cmidList);
+    ArrayList<Integer> filterAvailableMembers(ArrayList<Integer> cmidList, String eventId);
 
     void updatePatientRemarks(String cmid, String eventID, String remark);
 
