@@ -44,7 +44,7 @@ public class EmerFilter_V1 implements IEmerFilter_model {
         // 1) Boolean isCmidStatusActive(cmid)
         // 2) Boolean function called isCmidAvailable(cmid)
         // 3) Boolean function called doesMedicineMatch(cmid,eventID)
-
+//
 
         return listToFilter;
 

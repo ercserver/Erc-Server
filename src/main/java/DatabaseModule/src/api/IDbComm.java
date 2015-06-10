@@ -66,4 +66,5 @@ public interface IDbComm {
 
     void updateMedicineGiven(int cmid, int eventID);
     void updateMedicineGiven(int cmid, int eventID, Date date);
+    boolean isCmidStatusActive(String cmid);
 }

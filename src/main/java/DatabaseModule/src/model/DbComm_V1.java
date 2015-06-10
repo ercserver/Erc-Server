@@ -1774,5 +1774,35 @@ public class DbComm_V1 implements IDbComm_model {
         return getRowsFromTable(conds, "RegistrationFields").get(1);
     }
 
-    //ToDo:Ohad:need for a method that updates with current time the medication_provision_date
+    public boolean isCmidStatusActive(String cmid)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM P_StatusLog INNER JOIN P_Statuses " +
+                    "ON P_StatusLog.status_num=P_Statuses.status_num " +
+                    "WHERE community_member_id=" + cmid + " AND date_to IS NULL");
+            if(!rs.next())
+                return false;
+            return rs.getString("status_name").equals("active");
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return false;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
 }
