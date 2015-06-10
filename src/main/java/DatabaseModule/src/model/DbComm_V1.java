@@ -164,7 +164,7 @@ public class DbComm_V1 implements IDbComm_model {
            the field is not "free text". we put a json object that converted to string */
         if (ret != null) {
             for (int i = 1; i <= ret.size(); i++) {
-                if (ret.get(i).get("get_possible_values_from") == "null")
+                if (ret.get(i).get("get_possible_values_from").equals("null"))
                     continue;
                 String tableName = ret.get(i).get("get_possible_values_from");
                 JSONObject jo;
