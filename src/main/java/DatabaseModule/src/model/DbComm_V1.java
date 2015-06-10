@@ -251,36 +251,42 @@ public class DbComm_V1 implements IDbComm_model {
         /* creates where coditions for sql query. each key in the input here should be in this format:
            table-name.column-name */
         String key = iter.next();
-        conditions = key + "=" + whereConditions.get(key);
+        conditions = key + "=?";
         for (int i = 1; i < numOfConditions; i++)
         {
             key = iter.next();
-            conditions += " AND " + key + "=" + whereConditions.get(key);
+            conditions += " AND " + key + "=?";
         }
         ResultSet rs = null;
         try
         {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();
-            statement = connection.createStatement();
             // gets basic data about the user
             System.err.println("SELECT DISTINCT * FROM P_CommunityMembers INNER JOIN MembersLoginDetails " +
                     "ON P_CommunityMembers.community_member_id=MembersLoginDetails.community_member_id "
                     + "WHERE " + conditions);
-            rs = statement.executeQuery("SELECT DISTINCT * FROM P_CommunityMembers INNER JOIN MembersLoginDetails " +
-                            "ON P_CommunityMembers.community_member_id=MembersLoginDetails.community_member_id "
-                   + "WHERE " + conditions);
-
+            String query = "SELECT DISTINCT * FROM P_CommunityMembers INNER JOIN MembersLoginDetails " +
+                    "ON P_CommunityMembers.community_member_id=MembersLoginDetails.community_member_id "
+                    + "WHERE " + conditions;
+            // Assign the values to the where clause
+            PreparedStatement stmt = connection.prepareStatement(query);
+            Set<String> keys1 = whereConditions.keySet();
+            int  parameterIndex = 1;
+            for (String key1 : keys1){
+                stmt.setObject(parameterIndex, whereConditions.get(key1));
+                parameterIndex++;
+            }
+            rs = stmt.executeQuery();
             // no user exists for the given conditions
             if(!rs.next())
                 return null;
             String cmid = rs.getObject("community_member_id").toString();
             // gets the userType by the user's cmid
             int userType = getUserType(cmid);
-            statement = connection.createStatement();
             // gets all important data about Patient user
-            if(userType == 0)
-                rs = statement.executeQuery("SELECT DISTINCT * FROM " + "P_CommunityMembers INNER JOIN "
+            if(userType == 0) {
+                query = "SELECT DISTINCT * FROM " + "P_CommunityMembers INNER JOIN "
                         + "P_Patients ON P_CommunityMembers.community_member_id=P_Patients.community_member_id "
                         + "INNER JOIN P_EmergencyContact ON P_Patients.community_member_id=P_EmergencyContact.community_member_id "
                         + "INNER JOIN MembersLoginDetails ON P_EmergencyContact.community_member_id=MembersLoginDetails.community_member_id "
@@ -292,10 +298,19 @@ public class DbComm_V1 implements IDbComm_model {
                         + "INNER JOIN Availability ON Availability.community_member_id=P_CommunityMembers.community_member_id "
                         + "INNER JOIN P_StatusLog ON MembersLoginDetails.community_member_id=P_StatusLog.community_member_id "
                         + "INNER JOIN P_Statuses ON P_StatusLog.status_num=P_Statuses.status_num " +
-                        "WHERE " + conditions + " ORDER BY " + "P_StatusLog.date_from");
+                        "WHERE " + conditions + " ORDER BY " + "P_StatusLog.date_from";
+                stmt = connection.prepareStatement(query);
+                keys1 = whereConditions.keySet();
+                parameterIndex = 1;
+                for (String key1 : keys1){
+                    stmt.setObject(parameterIndex, whereConditions.get(key1));
+                    parameterIndex++;
+                }
+                rs = stmt.executeQuery();
+            }
             // gets all important data about Doctor or ems user
-            else
-                rs = statement.executeQuery("SELECT DISTINCT * FROM " + "P_CommunityMembers INNER JOIN "
+            else {
+                query = "SELECT DISTINCT * FROM " + "P_CommunityMembers INNER JOIN "
                         + "P_Doctors ON P_CommunityMembers.community_member_id=P_Doctors.community_member_id "
                         + "INNER JOIN P_EmergencyContact ON P_Doctors.community_member_id=P_EmergencyContact.community_member_id "
                         + "INNER JOIN MembersLoginDetails ON P_EmergencyContact.community_member_id=MembersLoginDetails.community_member_id "
@@ -309,7 +324,16 @@ public class DbComm_V1 implements IDbComm_model {
                         + "INNER JOIN MP_Organizations ON MP_Organizations.organization_id=MP_Affiliation.organization_id "
                         + "INNER JOIN MP_OrganizationTypes ON MP_Organizations.organization_type_num=MP_OrganizationTypes.organization_type_num "
                         + "INNER JOIN Availability ON Availability.community_member_id=P_CommunityMembers.community_member_id "
-                        + "WHERE " + conditions + " ORDER BY " + "P_StatusLog.date_from");
+                        + "WHERE " + conditions + " ORDER BY " + "P_StatusLog.date_from";
+                stmt = connection.prepareStatement(query);
+                keys1 = whereConditions.keySet();
+                parameterIndex = 1;
+                for (String key1 : keys1){
+                    stmt.setObject(parameterIndex, whereConditions.get(key1));
+                    parameterIndex++;
+                }
+                rs = stmt.executeQuery();
+            }
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();
             ArrayList<String> columnNames = new ArrayList<String>();
@@ -345,7 +369,7 @@ public class DbComm_V1 implements IDbComm_model {
                 // for patient user-gets his doctor's license
                 if(userType == 0)
                 {
-                    rs = statement.executeQuery("SELECT DISTINCT P_Doctors.doc_license_number as sup,doc1.doc_license_number as pre,doc2.doc_license_number as dia FROM P_CommunityMembers INNER JOIN \n" +
+                    query = "SELECT DISTINCT P_Doctors.doc_license_number as sup,doc1.doc_license_number as pre,doc2.doc_license_number as dia FROM P_CommunityMembers INNER JOIN \n" +
                             "P_Patients ON P_CommunityMembers.community_member_id=P_Patients.community_member_id \n" +
                             "INNER JOIN P_Supervision ON P_Patients.patient_id=P_Supervision.patient_id\n" +
                             "  INNER JOIN P_Prescriptions ON P_Patients.patient_id=P_Prescriptions.patient_id\n" +
@@ -354,7 +378,15 @@ public class DbComm_V1 implements IDbComm_model {
                             "  INNER JOIN P_Doctors as doc1 ON P_Prescriptions.doctor_id=doc1.doctor_id\n" +
                             "  INNER JOIN P_Doctors as doc2 ON P_Diagnosis.doctor_id=doc2.doctor_id\n" +
                             "  INNER JOIN MembersLoginDetails ON P_CommunityMembers.community_member_id=MembersLoginDetails.community_member_id \n" +
-                            "WHERE " + conditions + " and P_Supervision.date_to is null");
+                            "WHERE " + conditions + " and P_Supervision.date_to is null";
+                    stmt = connection.prepareStatement(query);
+                    keys1 = whereConditions.keySet();
+                    parameterIndex = 1;
+                    for (String key1 : keys1){
+                        stmt.setObject(parameterIndex, whereConditions.get(key1));
+                        parameterIndex++;
+                    }
+                    rs = stmt.executeQuery();
                     if(rs.next())
                     {
                         if(rs.getObject("sup") != null)
