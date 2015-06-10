@@ -99,6 +99,7 @@ public class DbInit_V1 implements IDbInit_model {
 
             statement.addBatch("CREATE TABLE M_BrandNames ("
                     +"brand_name_id INT NOT NULL IDENTITY(1000,1) PRIMARY KEY,"
+                    +"medication_num INT NOT NULL FOREIGN KEY REFERENCES P_Medications(medication_num),"
                     +"brand_name_external_id VARCHAR(30),"
                     +"brand_name_description VARCHAR(30),"
                     +"manufacturer VARCHAR(30))");

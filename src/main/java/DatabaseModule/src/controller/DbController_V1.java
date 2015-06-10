@@ -271,4 +271,6 @@ public class DbController_V1 implements IDbController {
     public  HashMap<String, String> getFieldDetails(String name, String userType){return DB_communicator.getFieldDetails(name, userType);}
 
     public boolean isCmidStatusActive(String cmid){return DB_communicator.isCmidStatusActive(cmid);}
+
+    public boolean doesMedicineMatch(String cmid, String eventId){return DB_communicator.doesMedicineMatch(cmid, eventId);}
 }
