@@ -275,4 +275,6 @@ public class DbController_V1 implements IDbController {
     public boolean doesMedicineMatch(String cmid, String eventId){return DB_communicator.doesMedicineMatch(cmid, eventId);}
 
     public boolean doesEventHasEMS(String eventId){return DB_communicator.doesEventHasEMS(eventId);}
+
+    public String getStatusByName(String statusName){return DB_communicator.getStatusByName(statusName);}
 }

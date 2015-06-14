@@ -69,4 +69,5 @@ public interface IDbComm {
     boolean isCmidStatusActive(String cmid);
     boolean doesMedicineMatch(String cmid, String eventId);
     boolean doesEventHasEMS(String eventId);
+    String getStatusByName(String statusName);
 }
