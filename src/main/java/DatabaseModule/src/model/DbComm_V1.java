@@ -1165,6 +1165,13 @@ public class DbComm_V1 implements IDbComm_model {
         return getRowsFromTable(whereConditions, "P_Statuses");
     }
 
+    public String getStatusByName(String statusName)
+    {
+        HashMap<String,String> whereConditions = new HashMap<String, String>();
+        whereConditions.put("status_name", statusName);
+        return getRowsFromTable(whereConditions, "P_Statuses").get(1).get("status_num");
+    }
+
     public HashMap<Integer, HashMap<String, String>> getDoctor(HashMap<String,String> whereConditions)
     {
         return getRowsFromTable(whereConditions, "P_Doctors");
