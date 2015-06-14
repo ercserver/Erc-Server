@@ -1,11 +1,17 @@
 package communication.ohad;
 
 import CommunicationModule.src.model.GcmCommnication_V1;
+import CommunicationModule.src.model.InitiatedHTTPCommunication_V1;
 import DatabaseModule.src.model.DbComm_V1;
 import RequestsModule.utils.HashMapCreator;
+import Utilities.HashMapBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import sun.applet.Main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,9 +22,33 @@ import java.util.List;
  */
 public class MainTest {
     public static void main(String[] args) {
-
+        MainTest mt = new MainTest();
+        mt.gisTest();
 
     }
+
+    private void gisTest(){
+        HashMap<Integer, HashMap<String, String>> data = new HashMap<>();
+        data.put(1, new HashMapBuilder<String, String>().put("hello", "world").build());
+        ArrayList<String> target = new ArrayList<>();
+       target.add("http://mba4.ad.biu.ac.il//gisWebProject/test");
+       // target.add("http://mba4.ad.biu.ac.il/Erc-Server/requests/test");
+        target.add("un");
+        target.add("pwd");
+        try {
+            Connection.Response res = Jsoup.connect(target.get(0)).
+                    data("data",new JSONObject().put("hello","world").toString())
+                    .ignoreContentType(true)
+                    .method(Connection.Method.POST)
+                    .execute();
+            System.out.println(res.body());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
     private void gcmTest(){
         DbComm_V1 db = new DbComm_V1();
         HashMap<Integer, HashMap<String, String>> data = new HashMap<>();

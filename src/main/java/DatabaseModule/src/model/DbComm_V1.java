@@ -220,12 +220,21 @@ public class DbComm_V1 implements IDbComm_model {
            the field is not "free text". we put a json object that converted to string */
         if (ret != null) {
             for (int i = 1; i <= ret.size(); i++) {
+                /* TODO: Maor - the line below causes a null exception when there
+                    is no ""get_possible_values_from" object. Just need to check for null
+                */
                 if (ret.get(i).get("get_possible_values_from").equals("null"))
                     continue;
                 String tableName = ret.get(i).get("get_possible_values_from");
                 JSONObject jo;
                 // field that has few possible values from Enum table
                 if (tableName.substring(0, 5).equals("Enum.")) {
+                    /* TODO: Maor - please remove the enum_value string so
+                    The string becomes a json
+                    example: "get_possible_values_from":{"1":"man", "2":"woman"}
+                    right now its:
+                    ,"get_possible_values_from":"{\"1\":{\"enum_value\":\"male\"},\"2\":{\"enum_value\":\"female\"}
+                     */
                     ArrayList<String> l = new ArrayList<String>();
                     l.add("enum_value");
                     HashMap<String, String> conds1 = new HashMap<String, String>();
