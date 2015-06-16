@@ -44,4 +44,10 @@ public interface IEmerLogger_model {
     void handleStopFollowingUsers(String eventId);
 
     void handleDontHaveEMS(String event_id, String community_member_id);
+
+    void updateAssistantRemovalFromEvent(String patientId, String eventId, int inform);
+
+    void terminateEvent(String event_id, String status);
+
+    void changedRadius(HashMap<String, String> request);
 }

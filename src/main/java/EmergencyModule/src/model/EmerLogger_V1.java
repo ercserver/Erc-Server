@@ -4,6 +4,8 @@ import DatabaseModule.src.api.IDbController;
 import EmergencyModule.src.api.IEmerLogger_model;
 import Utilities.ModelsFactory;
 
+import java.util.HashMap;
+
 /**
  * Created by NAOR on 23/05/2015.
  */
@@ -122,5 +124,35 @@ public class EmerLogger_V1 implements IEmerLogger_model {
         dbController.updateLogs(event_id, "'Server told assistant "+community_member_id+
                 " that we dont have EMS member and that he can to do what he think is right'");
 
+    }
+
+    @Override
+    public void updateAssistantRemovalFromEvent(String patientId, String eventId, int inform) {
+        //Document an assistant cancellation
+        if (0 == inform) {
+            dbController.updateLogs(eventId, "'Assistant " + dbController.getCmidByPatientID(patientId) +
+                    " has cancelled his offer to assist in the event.'");
+        }
+        //Document an Ems/system rejection
+        else{
+            dbController.updateLogs(eventId, "'Assistant " + dbController.getCmidByPatientID(patientId) +
+                    " was cancelled from the event due to EMS rejection/radius changes.'");
+        }
+    }
+
+    @Override
+    public void terminateEvent(String eventId, String status) {
+        if(status.equals("CANCELLED")){
+            dbController.updateLogs(eventId, "'The event was terminated by the patient - status: Cancelled.'");
+        }
+        else{
+            dbController.updateLogs(eventId, "'The event was terminated by the EMS - status: Finished.'");
+        }
+
+    }
+
+    @Override
+    public void changedRadius(HashMap<String, String> request) {
+        dbController.updateLogs(request.get("event_id"), "'Radius was changed by the EMS to " + request.get("radius") + ".'");
     }
 }

@@ -21,19 +21,16 @@ public class EmerFilter_V1 implements IEmerFilter_model {
         dbController = models.determineDbControllerVersion();
     }
 
-
-
-
-    //filter list receied from "receiveUsersAroundLocation"
+    //filter list received from "receiveUsersAroundLocation"
    // @Override
     public HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter,String eventID) {
         // Creates arrayList of possible assistants
-        ArrayList<Integer> l = new ArrayList<Integer>();
+        ArrayList<Integer> intedList = new ArrayList<Integer>();
         Iterator<String> iter = listToFilter.keySet().iterator();
         while(iter.hasNext())
-            l.add(Integer.parseInt(iter.next()));
+            intedList.add(Integer.parseInt(iter.next()));
         // Gets filter by the data base
-        ArrayList<Integer> filterL = dbController.filterAvailableMembers(l, eventID);
+        ArrayList<Integer> filterL = dbController.filterAvailableMembers(intedList, eventID);
         HashMap<String, String> filter = new HashMap<String, String>();
         for(int i = 0; i < filterL.size(); i++)
             filter.put(Integer.toString(filterL.get(i)), null);
