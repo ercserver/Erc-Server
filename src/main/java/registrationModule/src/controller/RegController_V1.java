@@ -4,6 +4,7 @@ import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
 
 import Utilities.AssistantFunctions;
+import Utilities.PatientDetails;
 import registrationModule.src.api.IRegController;
 import registrationModule.src.api.IRegRequest_model;
 import registrationModule.src.api.IRegVerify_model;
@@ -25,6 +26,7 @@ public class RegController_V1 implements IRegController {
     private ICommController commController = null;
     private HashMap<Integer, HashMap<String, String>> response = null;
     private AssistantFunctions assistantFuncs = null;
+    private PatientDetails patientD = null;
 
     public RegController_V1(){
         ModelsFactory models = new ModelsFactory();
@@ -33,6 +35,7 @@ public class RegController_V1 implements IRegController {
         registrator = models.determineRegRequestVersion();
         verification = models.determineRegVerifyVersion();
         assistantFuncs = new AssistantFunctions();
+        patientD = new PatientDetails();
     }
 
     public Object getRegDetails(HashMap<String,String> request) {
@@ -282,7 +285,7 @@ public class RegController_V1 implements IRegController {
             if (reason == null) {
                 dbController.updateStatus(cmidPatient, "'verifying details'", "'active'");
                 //we send regid != 0 to say that type is patient
-                response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid);
+                response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid,password);
                 commController.setCommToUsers(response, target, false);
                 commController.sendResponse();
 
@@ -310,13 +313,13 @@ public class RegController_V1 implements IRegController {
 
 
     public Object responeToDoctorAturization(String cmid,boolean isAccept) {
-        HashMap<Integer, HashMap<String, String>> data =
-                dbController.getRegIDsOfUser(new Integer(cmid));
+        //get user password
+        String password = verification.getUserPassword(cmid);
 
         if (isAccept) {
             dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
             //0 say that type is doctor
-            response =  verification.proccesOfOkMember(new Integer(cmid),"0");
+            response =  verification.proccesOfOkMember(new Integer(cmid),"0",password);
             commController.setCommToUsers(response, null, false);
         } else {
             response = buildRejectMessage(new Integer(cmid),"doctor Aturization reject you",

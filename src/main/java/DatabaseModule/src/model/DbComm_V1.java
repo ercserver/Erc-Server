@@ -1353,14 +1353,14 @@ public class DbComm_V1 implements IDbComm_model {
         // status = {CANCELED, ACTIVE, FINISHED}
 
        try {
-           HashMapBuilder<String, String> hmb = new HashMapBuilder<>();
+           HashMapBuilder<String, String> hmb = new HashMapBuilder<String, String>();
             // Get the status code from O_EventStatuses
             String statusNum = selectFromTable("O_EventStatuses",
                     Arrays.asList("status_num"),
                     hmb.put("status_name", newStatus).build()).get(0).get("status_num");
 
             // Update the finish date and the status
-            hmb = new HashMapBuilder<>();
+            //hmb = new HashMapBuilder<>();
             updateTable("O_EmergencyEvents", hmb.put("event_id", Integer.toString(eventId)).build(),
                     "finished_date", getCurrentDateTime());
             updateTable("O_EmergencyEvents", hmb.put("event_id", Integer.toString(eventId)).build(),
@@ -1567,7 +1567,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public HashMap<Integer, HashMap<String, String>> getAllAssistantsByEventId(int eventId, int responseType) {
-        HashMapBuilder<String, String> hma = new HashMapBuilder<>();
+        HashMapBuilder<String, String> hma = new HashMapBuilder<String, String>();
         hma.put("event_id", Integer.toString(eventId));
 
         // Check if response type is relevant
@@ -1612,7 +1612,7 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
-        HashMapBuilder<String, String> hma = new HashMapBuilder<>();
+        HashMapBuilder<String, String> hma = new HashMapBuilder<String, String>();
         return selectFromTable("O_EmergencyEvents", null /*all*/,
                 hma.put("ems_member_id", Integer.toString(cmid)).build());
     }
@@ -1631,7 +1631,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public HashMap<Integer, HashMap<String, String>>  getAllCmidsByStatus(int status) {
-        HashMapBuilder<String, String> cond = new HashMapBuilder<>();
+        HashMapBuilder<String, String> cond = new HashMapBuilder<String, String>();
         return selectFromTable("P_StatusLog",Arrays.asList("community_member_id"),
                 cond.put("date_to", "null").put("status_num", Integer.toString(status)).build());
     }
@@ -1836,7 +1836,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public void updateMedicineGiven(int cmid, int eventID) {
-        HashMapBuilder<String, String> hmb = new HashMapBuilder<>();
+        HashMapBuilder<String, String> hmb = new HashMapBuilder<String, String>();
         updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
                 "providing_member_id", Integer.toString(cmid));
         updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
@@ -1845,7 +1845,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public void updateMedicineGiven(int cmid, int eventID, Date date) {
-        HashMapBuilder<String, String> hmb = new HashMapBuilder<>();
+        HashMapBuilder<String, String> hmb = new HashMapBuilder<String, String>();
         updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
                 "providing_member_id", Integer.toString(cmid));
         updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),

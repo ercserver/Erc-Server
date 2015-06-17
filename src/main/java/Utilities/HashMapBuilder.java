@@ -13,11 +13,13 @@ public class HashMapBuilder<K, T> {
         map = new HashMap<K, T>();
     }
 
+
+    /*
     public HashMapBuilder(HashMap other){
         map = new HashMap<>();
         map.putAll(other);
     }
-
+*/
     // One liners
     public HashMapBuilder<K,T> put(K key, T val){
         map.put(key, val);

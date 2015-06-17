@@ -186,7 +186,7 @@ public class DbController_V1 implements IDbController {
         HashMap<Integer, HashMap<String,String>> rv = DB_communicator.getAllAssistantsByEventId(eventId, responseType);
 
         // Build the list to return
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
         for (Map.Entry<Integer, HashMap<String,String>> entry : rv.entrySet()){
             for (Map.Entry<String, String> pair : entry.getValue().entrySet()){
                 list.add(Integer.parseInt(pair.getValue()));

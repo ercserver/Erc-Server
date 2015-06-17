@@ -83,8 +83,8 @@ public class RoutineController_V1 implements IRoutineController {
         ArrayList<String> target = new ArrayList<String>();
 
 
-        int numStatus = 0;//dbController.
-
+        String status =  dbController.getStatusByName("active");//dbController.
+        int numStatus = Integer.parseInt(status);
         HashMap<Integer, HashMap<String, String>> allCmid = dbController.getAllCmidsByStatus(numStatus);
         //pass all over cmid in db
         //String code = "setLocationFrequency";
@@ -123,6 +123,47 @@ public class RoutineController_V1 implements IRoutineController {
     }
 
     @Override
+    public Object updateMemberDetails(HashMap<String, String> data) {
+        boolean needVerify = false;
+        //int cmid =  0;//Integer.parseInt(data.get("community_member_id"));
+        int index = 0;
+        //String password = "";// data.get("password");
+        int cmid = Integer.parseInt(data.get("community_member_id"));
+        String password = data.get("password");
+        if(!assistent.checkCmidAndPassword(password,cmid)) {
+            return null;
+        }
+
+        data.remove("password");
+        data.remove("community_member_id");
+
+        //getUserType
+        String type = String.valueOf(dbController.getUserType(String.valueOf(cmid)));
+
+
+        for (String key : data.keySet()){
+
+            String col = key;
+            String val = data.get(key);
+            //check if field need verification
+            //For this we pull out details on the spesipic field
+            HashMap<String, String> fieldDetails = dbController.getFieldDetails(key, type);
+            if (fieldDetails.get("needs_verification").equals("1"))
+                needVerify = true;
+            else
+            {
+                //update in table
+                updates.updateUserDetails(cmid,col,val);
+            }
+
+
+        }
+        if (needVerify) {
+            verify.verifyDetail(new Integer(cmid).toString());
+        }
+        return null;
+    }
+    /*
     public Object updateMemberDetails(HashMap<Integer,HashMap<String, String>> data) {
         boolean needVerify = false;
         int cmid =  0;//Integer.parseInt(data.get("community_member_id"));
@@ -130,15 +171,11 @@ public class RoutineController_V1 implements IRoutineController {
         String password = "";// data.get("password");
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
                 HashMap<String,String> obj = objs.getValue();
-                if (index == 0)
-                {
-                    cmid = Integer.parseInt(obj.get("community_member_id"));
-                    password = obj.get("password");
-                }
+                cmid = Integer.parseInt(obj.get("community_member_id"));
+                password = obj.get("password");
                 if(!assistent.checkCmidAndPassword(password,cmid)) {
                     return null;
                 }
-
                 String col = obj.get("field_name");
                 String val = obj.get("value"); // TODO-need to change
                 if (obj.get("needs_verification").equals("1"))
@@ -156,7 +193,7 @@ public class RoutineController_V1 implements IRoutineController {
             }
         return null;
     }
-
+    */
     @Override
     public Object handleRefreshDetails() {
         HashMap<Integer, HashMap<String, String>> data =

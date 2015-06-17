@@ -2,6 +2,7 @@ package registrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
 import Utilities.ErcLogger;
+import Utilities.PatientDetails;
 import registrationModule.src.api.IRegVerify_model;
 import Utilities.ModelsFactory;
 
@@ -15,10 +16,12 @@ import java.util.Map;
 public class RegVerify_V2 implements IRegVerify_model {
 
     IDbController dbController = null;
+    private PatientDetails patientD = null;
 
     public RegVerify_V2() {
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
+        patientD = new PatientDetails();
     }
 
     /***********for func verifyDetail*********************/
@@ -206,6 +209,13 @@ public class RegVerify_V2 implements IRegVerify_model {
         }
         return reg;
     }
+
+    @Override
+    public String getUserPassword(String cmid) {
+        HashMap<String, String> data = patientD.getUserByCmid(Integer.parseInt(cmid));
+        return data.get("password");
+    }
+
     public HashMap<String, String> getUserByCmid(int cmid) {
         ErcLogger.println("In getUserByCmid. Parameters = " + cmid);
         HashMap<String, String> member = new HashMap<String, String>();
@@ -323,13 +333,20 @@ public class RegVerify_V2 implements IRegVerify_model {
     /***********for func responeDoctor********************/
 
     //ToDo need also to send cmid, password, and location frequency in emergency
-    public HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid,String type)
+    public HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid,String type,String password)
     {
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
 
+
+
         HashMap<String,String> response = new HashMap<String, String>();
+        response.put("community_member_id",new Integer(cmid).toString());
+        response.put("password", password);
+
+
         response.put("RequestID", "active");
+
         responseToPatient.put(3,getFrequency("'connect_server_frequency'"));
         responseToPatient.put(4,getFrequency("'times_to_connect_to_server'"));
 
