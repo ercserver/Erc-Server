@@ -28,7 +28,7 @@ public class EmerController_V1 implements IEmerController {
     private ICommController commController = null;
     private AssistantFunctions assistantFuncs = null;
 
-    EmerController_V1(){
+    public EmerController_V1(){
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
         dbController = models.determineDbControllerVersion();
