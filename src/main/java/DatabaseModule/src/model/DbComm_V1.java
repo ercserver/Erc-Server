@@ -6,6 +6,7 @@ import Utilities.ErcLogger;
 import Utilities.HashMapBuilder;
 //import com.sun.deploy.util.StringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -220,6 +221,68 @@ public class DbComm_V1 implements IDbComm_model {
            the field is not "free text". we put a json object that converted to string */
         if (ret != null) {
             for (int i = 1; i <= ret.size(); i++) {
+                HashMap<String, String> currentField = ret.get(i);
+                if ((currentField.get("get_possible_values_from") == null) ||
+                        (currentField.get("get_possible_values_from").equals("null")))
+                    continue;
+                String tableName = currentField.get("get_possible_values_from");
+                JSONObject jo;
+                // field that has few possible values from Enum table
+                if (tableName.substring(0, 5).equals("Enum.")) {
+                    ArrayList<String> l = new ArrayList<String>();
+                    l.add("enum_value");
+                    l.add("enum_code");
+                    HashMap<String, String> conds1 = new HashMap<String, String>();
+                    ErcLogger.println(tableName.split("\\.")[0].toString());
+                    conds1.put("table_name", "'" + tableName.split("\\.")[1] + "'");
+                    conds1.put("column_name", "'" + tableName.split("\\.")[2] + "'");
+                    HashMap<Integer, HashMap<String, String>> h = selectFromTable("Enum", l, conds1);
+                    JSONArray jarray = new JSONArray();
+
+                    for(int j = 1; j <= h.size(); j++){
+                        jarray.put(new JSONObject().put("id", h.get(j).get("enum_code"))
+                                .put("value", h.get(j).get("enum_value")));
+                    }
+                    // Add the array to the field
+                    currentField.put("get_possible_values_from", jarray.toString());
+                } else { // Not an enum - Just rows from a table
+                    JSONArray jarray = new JSONArray();
+                    HashMap<Integer, HashMap<String, String>> rowsMap = getRowsFromTable(null, tableName);
+                    for (int rowNum = 1; rowNum <= rowsMap.size(); rowNum++){
+                        HashMap<String, String> row = rowsMap.get(rowNum);
+                        JSONObject json = new JSONObject();
+                        for (Map.Entry<String, String> entry : row.entrySet()){
+                            String col = entry.getKey();
+                            if (col.toLowerCase().contains("id") ||
+                                    col.toLowerCase().contains("num")){
+                                // The primary key
+                                json.put("id", entry.getValue());
+                            }
+                            else{
+                                // The value itself
+                                json.put("value", entry.getValue());
+                            }
+                        }
+                        jarray.put(json);
+                    }
+                    currentField.put("get_possible_values_from", jarray.toString());
+                }
+
+            }
+        }
+        return ret;
+    }
+
+    /*public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)
+    {
+        HashMap<String,String> conds = new HashMap<String,String>();
+        conds.put("user_type", Integer.toString(userType));
+        // gets registration fields according to the givven usetType
+        HashMap<Integer,HashMap<String,String>> ret = getRowsFromTable(conds, "RegistrationFields");
+        *//* gets for each registration field the possible values from the proper table, if
+           the field is not "free text". we put a json object that converted to string *//*
+        if (ret != null) {
+            for (int i = 1; i <= ret.size(); i++) {
                 if ((ret.get(i).get("get_possible_values_from") == null) ||
                         (ret.get(i).get("get_possible_values_from").equals("null")))
                     continue;
@@ -245,7 +308,7 @@ public class DbComm_V1 implements IDbComm_model {
             }
         }
         return ret;
-    }
+    }*/
 
     public HashMap<String,String> getUserByParameter(HashMap<String,String> whereConditions)
     {
@@ -615,6 +678,8 @@ public class DbComm_V1 implements IDbComm_model {
                     Object val = rs.getObject(i);
                     if (val != null){
                         obj.put(column, val.toString());
+                    }else{
+                        obj.put(column, "null");
                     }
                 }
                 map.put(j, obj);
