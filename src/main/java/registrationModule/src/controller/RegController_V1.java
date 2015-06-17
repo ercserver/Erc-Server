@@ -141,7 +141,7 @@ public class RegController_V1 implements IRegController {
         message += "Please correct the above fields and re-submit the registrations form.\n";
         return message;
     }
-    //TODO - REDUNDANT?
+    /*
     private ArrayList<String> sendTo(HashMap<String,String> data){
         String regID = data.get("reg_id");
         ArrayList<String> sendTo = null;
@@ -151,7 +151,7 @@ public class RegController_V1 implements IRegController {
         }
         return sendTo;
     }
-
+    */
 
     public Object verifyDetail(String communityMemberId) {
         //data contain onlt cmid as string
@@ -447,7 +447,6 @@ public class RegController_V1 implements IRegController {
         rejectCodes.put("subRequest","rejectReasons");
         response.put(0,rejectCodes);
         //determine how to send the data - initiated communication so use "false"
-        ArrayList<String> sendTo = sendTo(request);
         commController.setCommToUsers(response,null,false);
         //send the data
         return commController.sendResponse();
