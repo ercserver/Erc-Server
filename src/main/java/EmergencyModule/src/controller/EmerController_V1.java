@@ -123,8 +123,7 @@ public class EmerController_V1 implements IEmerController {
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
         //initiate request
         initiatedOneObjectRequest(data, sendTo);
-
-        //TODO - MAOR - Are we missing logs here?
+        emergencyLogger.handleReceivalOfClosestEms(eventDetails.get("event_id"));
     }
 
     public void getCmidOfEms(HashMap<String, String> data)
@@ -540,7 +539,7 @@ public class EmerController_V1 implements IEmerController {
         //initiate request
         initiatedOneObjectRequest(data, sendTo);
 
-        //TODO - Maor - did we forget logs here...?
+        emergencyLogger.handleMedicationGiving(eventID, cmid);
     }
 
     @Override

@@ -50,4 +50,8 @@ public interface IEmerLogger_model {
     void terminateEvent(String event_id, String status);
 
     void changedRadius(HashMap<String, String> request);
+
+    void handleReceivalOfClosestEms(String event_id);
+
+    void handleMedicationGiving(String eventID, String cmid);
 }

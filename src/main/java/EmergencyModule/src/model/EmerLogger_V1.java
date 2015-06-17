@@ -155,4 +155,15 @@ public class EmerLogger_V1 implements IEmerLogger_model {
     public void changedRadius(HashMap<String, String> request) {
         dbController.updateLogs(request.get("event_id"), "'Radius was changed by the EMS to " + request.get("radius") + ".'");
     }
+
+    @Override
+    public void handleReceivalOfClosestEms(String event_id) {
+        dbController.updateLogs(event_id, "'GIS sent to server the closest EMS for the event " + event_id + "'");
+    }
+
+    @Override
+    public void handleMedicationGiving(String eventID, String cmid) {
+        dbController.updateLogs(eventID, "'User " + cmid + " gave medication for the patient in the emergency event " + eventID + "'");
+
+    }
 }
