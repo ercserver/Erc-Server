@@ -43,9 +43,8 @@ public class RegController_V1 implements IRegController {
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(request.get("user_type")));
         dataToSend.get(1).put("Request_ID", "registration");
-        ArrayList<String> sendTo = sendTo(request);
         //determine how to send the data
-        commController.setCommToUsers(dataToSend, sendTo, false);
+        commController.setCommToUsers(dataToSend, null, false);
         //send the data
         return commController.sendResponse();
     }
@@ -94,9 +93,7 @@ public class RegController_V1 implements IRegController {
             }
         }
         HashMap<Integer,HashMap<String,String>> dataToSend = buildResponeWithOnlyRequestID(message, responseCode);
-        ArrayList<String> sendTo = sendTo(filledForm);
-        //determine how to send the data. Initiated communication - so use "false"
-        commController.setCommToUsers(dataToSend,sendTo,false);
+        commController.setCommToUsers(dataToSend,null,false);
         //send the data
         return commController.sendResponse();
     }
@@ -144,7 +141,7 @@ public class RegController_V1 implements IRegController {
         message += "Please correct the above fields and re-submit the registrations form.\n";
         return message;
     }
-
+    //TODO - REDUNDANT?
     private ArrayList<String> sendTo(HashMap<String,String> data){
         String regID = data.get("reg_id");
         ArrayList<String> sendTo = null;
@@ -166,14 +163,12 @@ public class RegController_V1 implements IRegController {
         //method how to send data mail/sms
         int authMethod =
                 dbController.getAuthenticationMethod("'" + details.get("state")+ "'");
-        ArrayList<String> target = new ArrayList<String>();
-        target.add(regid);
         HashMap<String,String> dataFilter = null;
-        changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
+        changeStatusToVerifyDetailAndSendToApp(cmid,regid,details);
 
         if (verification.ifTypeISPatientOrGuardian(regid)) {
 
-            //dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
+            //dataFilter = verification.getPatientAndFilterDataToSendDoctor(cmid,regid);
             HashMap<String,String> doctorData = verification.getSupervision(details.get("P_supervision.doc_license_number"));
             doctorData.put("Subject", "Confirm wating patient");
             doctorData.put("Message", "you have new wating patient for your verification" + ".\n"
@@ -216,7 +211,6 @@ public class RegController_V1 implements IRegController {
     }*/
 
     private void changeStatusToVerifyDetailAndSendToApp(int cmid, String code,
-                                                        ArrayList<String> target,
                                                         HashMap<String, String> data) {
         String status = verification.getStatus(data);
         if (status.equals("verifying email"))
@@ -226,14 +220,12 @@ public class RegController_V1 implements IRegController {
                 HashMap<Integer, HashMap<String, String>> send =
                         verification.changeStatusToVerifyDetailAndSendToApp(data);
             if (verification.ifTypeISPatientOrGuardian(code)) {
-                commController.setCommToUsers(send,
-                        target, false);
+                commController.setCommToUsers(send,null, false);
             }
             else
             {
                 //send to doctor
-                commController.setCommToUsers(send,
-                        null, false);
+                commController.setCommToUsers(send,null, false);
             }
             commController.sendResponse();
             //}
@@ -278,22 +270,20 @@ public class RegController_V1 implements IRegController {
         int cmidPatient = Integer.parseInt(patientDet.get("community_member_id"));
 
 
-        ArrayList<String> target = new ArrayList<String>();
-        target.add(regid);
         //int cm = 0; //change
         if (checkCmidAndPassword(password, cmidDoctor)) {
             if (reason == null) {
                 dbController.updateStatus(cmidPatient, "'verifying details'", "'active'");
                 //we send regid != 0 to say that type is patient
                 response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid,password);
-                commController.setCommToUsers(response, target, false);
+                commController.setCommToUsers(response, null, false);
                 commController.sendResponse();
 
             }
             else
             {
                  response = buildRejectMessage(new Integer(communityMemberId), reason, explantion);
-                 commController.setCommToUsers(response, target, false);
+                 commController.setCommToUsers(response, null, false);
                  commController.sendResponse();
 
             }
@@ -419,11 +409,8 @@ public class RegController_V1 implements IRegController {
             message = "Resend successful!";
         }
 
-        //determine who to send to
-        ArrayList<String> target = new ArrayList<String>();
-        target.add(regid);
-        //send
-        commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), target, false);
+        //determine who to send and send
+        commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), null, false);
         return commController.sendResponse();
     }
 
@@ -470,22 +457,8 @@ public class RegController_V1 implements IRegController {
     {
         // verify log-in details
         HashMap<Integer,HashMap<String,String>> response = verification.verifySignIn(details);
-
-        // Sign in of doctor/ems
-        if(details.get("reg_id").equals("0"))
-        {
-            ArrayList<String> sendTo = new ArrayList<String>();
-            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
-            commController.setCommToUsers(response, sendTo, true);
-        }
-        // Sign-in of patient
-        else
-        {
-            ArrayList<String> target = new ArrayList<String>();
-            target.add(details.get("reg_id"));
-            commController.setCommToUsers(response, target, false);
-        }
-        // Sends response to the proper user
+        //determine response and send
+        commController.setCommToUsers(response, null, false);
         return commController.sendResponse();
     }
 
