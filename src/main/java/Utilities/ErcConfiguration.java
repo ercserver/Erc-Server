@@ -5,9 +5,9 @@ package Utilities;
  */
 public class ErcConfiguration {
 
-    public final static String REQUESTS_URL_ROOT = "http://mba4.ad.biu.ac.il/requests/";
+    public final static String REQUESTS_URL_ROOT = "http://mba4.ad.biu.ac.il/Erc-Server/requests/";
 
-    public final static String VERIFY_EMAIL_URL = "http://mba4.ad.biu.ac.il/requests/verify_email";
+    public final static String VERIFY_EMAIL_URL = "http://mba4.ad.biu.ac.il/Erc-Server/requests/verify_email";
 
     public final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 

@@ -439,7 +439,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         switch(authMethod){
             case 0:{
                 return generateVerificationForMail(filledForm);
-            }
+        }
             case 1:{
                 return generateVerificationForSMS(filledForm);
             }/*
@@ -603,6 +603,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     private String generateMailLinkForVerifications(HashMap<String, String> data) {
+        ErcLogger.println("In mailVerification. parameters = " + data);
         String rv = ErcConfiguration.VERIFY_EMAIL_URL;
         String cmid = data.get("community_member_id");
         if (cmid != null){
