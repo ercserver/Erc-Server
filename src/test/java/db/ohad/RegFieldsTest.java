@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class RegFieldsTest {
     public static void main(String[] args) {
         DbComm_V1 db= new DbComm_V1();
-        db.deleteUser(1024);
+        System.out.println(db.getRegistrationFields(1));
     }
 
 

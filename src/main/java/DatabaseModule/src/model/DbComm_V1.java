@@ -253,14 +253,20 @@ public class DbComm_V1 implements IDbComm_model {
                         HashMap<String, String> row = rowsMap.get(rowNum);
                         JSONObject json = new JSONObject();
                         for (Map.Entry<String, String> entry : row.entrySet()){
+                            if (json.length() == 2){
+                                // Don't override existing values...
+                                break;
+                            }
                             String col = entry.getKey();
-                            if (col.toLowerCase().contains("id") ||
-                                    col.toLowerCase().contains("num")){
+                            if (json.isNull("id") && (col.toLowerCase().contains("id") ||
+                                    col.toLowerCase().contains("num")) &&
+                                    !col.toLowerCase().contains("phone")
+                                    && !col.toLowerCase().contains("fax")){
                                 // The primary key
                                 json.put("id", entry.getValue());
                             }
-                            else if (col.toLowerCase().contains("description") ||
-                                    col.toLowerCase().contains("name")){
+                            else if (json.isNull("value")&& (col.toLowerCase().contains("description") ||
+                                    col.toLowerCase().contains("name"))){
                                 // The value itself
                                 json.put("value", entry.getValue());
                             }
@@ -901,11 +907,10 @@ public class DbComm_V1 implements IDbComm_model {
             int userType = Integer.parseInt(details.get("user_type"));
 
             // Insert to type log
-            stmt = connection.prepareStatement("INSERT INTO P_TypeLog (user_type, community_member_id, date_from) VALUES (?,?,?)");
+            stmt = connection.prepareStatement("INSERT INTO P_TypeLog (user_type, community_member_id) VALUES (?,?)");
 
             stmt.setInt(1, Integer.parseInt(details.get("user_type")));
             stmt.setInt(2, cmid);
-            stmt.setString(3, details.get("date_to"));
 
             stmt.executeUpdate();
             stmt.close();
@@ -932,11 +937,11 @@ public class DbComm_V1 implements IDbComm_model {
 
                     // Supervision
 
-                    stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id, date_to) " +
+                    stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id, date_from) " +
                             "VALUES (?,?,?)");
                     stmt.setInt(1, getDoctorIdByLicence(details.get("P_supervision.doc_licence_number")));
                     stmt.setInt(2, patientID);
-                    stmt.setString(3, details.get("date_to"));
+                    stmt.setString(3, details.get("date_from"));
                     stmt.executeUpdate();
                     stmt.close();
 
@@ -981,20 +986,35 @@ public class DbComm_V1 implements IDbComm_model {
                     }
                     stmt.close();
 
+                    // Create medical personnel
+                    stmt = connection.prepareStatement("INSERT INTO dbo.MP_MedicalPersonnel (community_member_id)" +
+                            " VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+                    stmt.setObject(1, cmid);
+                    stmt.executeUpdate();
+                    rs = stmt.getGeneratedKeys();
+                    int mpid;
+                    if (rs.next()) {
+                        mpid = rs.getInt(1);
+                    } else{
+                        // There was a problem inserting the new member
+                        return -1;
+                    }
+                    stmt.close();
+
                     stmt = connection.prepareStatement("INSERT INTO MP_Affiliation (organization_id, medical_personnel_id," +
-                            "position_num, date_to) VALUES (?,?,?,?)");
+                            "position_num, a_date_to) VALUES (?,?,?,?)");
                     stmt.setInt(1, Integer.parseInt(details.get("organization_id")));
-                    stmt.setInt(2, doctorID);
+                    stmt.setInt(2, mpid);
                     stmt.setInt(3, Integer.parseInt(details.get("position_num")));
-                    stmt.setString(4, details.get("date_to"));
+                    stmt.setString(4, details.get("a_date_to"));
                     stmt.executeUpdate();
                     stmt.close();
 
                     stmt = connection.prepareStatement("INSERT INTO MP_Certification (certification_external_id," +
-                            "medical_personnel_id, date_to, specialization_id) VALUES (?,?,?,?)");
+                            "medical_personnel_id, c_date_to, specialization_id) VALUES (?,?,?,?)");
                     stmt.setInt(1, Integer.parseInt(details.get("certification_external_id")));
-                    stmt.setInt(2, doctorID);
-                    stmt.setString(3, details.get("date_to"));
+                    stmt.setInt(2, mpid);
+                    stmt.setString(3, details.get("c_date_to"));
                     stmt.setInt(4, Integer.parseInt(details.get("specialization_id")));
                     stmt.executeUpdate();
                     stmt.close();
@@ -1084,6 +1104,7 @@ public class DbComm_V1 implements IDbComm_model {
     // the status format should be:'status-name'
     public void updateStatus(int cmid, String oldStatus, String newStatus)
     {
+        ErcLogger.println("In Update Statusץ Parametes = " + oldStatus + ", " + newStatus);
         try
         {
             HashMap<String,String> cond = new HashMap<String,String>();
@@ -1128,6 +1149,10 @@ public class DbComm_V1 implements IDbComm_model {
     // expected regID format:'redID'
     public void insertRegID(String regId, int cmid)
     {
+        if (regId.equals("0")){
+            // No need to add reg id
+            return;
+        }
         try
         {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
