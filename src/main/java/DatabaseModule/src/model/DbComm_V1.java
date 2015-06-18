@@ -207,9 +207,6 @@ public class DbComm_V1 implements IDbComm_model {
             e.printStackTrace();
             return null;
         }
-
-
-
     }
 
     public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)
@@ -723,8 +720,7 @@ public class DbComm_V1 implements IDbComm_model {
             Iterator<String> iter = whereConds.keySet().iterator();
             while (iter.hasNext()) {
                 String key = iter.next();
-                String val = whereConds.get(key);
-                whereString += String.format("%s=%s AND ", key, val);
+                whereString += String.format("%s=? AND ", key);
             }
             // Remove the last "AND"
             whereString = whereString.substring(0, whereString.length() - 4);
@@ -738,9 +734,14 @@ public class DbComm_V1 implements IDbComm_model {
             //connect();
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();
-            statement = connection.createStatement();
-            rs = statement.executeQuery(sql);
-
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            int  parameterIndex = 1;
+            Set<String> keys = whereConds.keySet();
+            for (String key : keys){
+                stmt.setObject(parameterIndex, whereConds.get(key));
+                parameterIndex++;
+            }
+            rs = stmt.executeQuery();
             return resultSetToMap(rs);
 
         } catch (SQLException e) {
