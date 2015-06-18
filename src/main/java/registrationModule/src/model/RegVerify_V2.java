@@ -354,6 +354,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         //if is a patient
         if (!type.equals("0")) {
             responseToPatient.put(2, getFrequency("location_frequency"));
+
             responseToPatient.put(5, getDefaultInEmergency(getState(cmid)));
         }
         return responseToPatient;
