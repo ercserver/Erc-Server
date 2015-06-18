@@ -571,7 +571,7 @@ public class DbComm_V1 implements IDbComm_model {
     public HashMap<Integer,HashMap<String,String>> getDefaultInEmergency(String state)
     {
         HashMap<String,String> cond = new HashMap<String,String>();
-        cond.put("state", "'" + state + "'");
+        cond.put("state", state);
         ArrayList<String> select = new ArrayList<String>();
         select.add("default_caller");
         // gets the default caller in emergency event according to the givven state
@@ -1105,7 +1105,7 @@ public class DbComm_V1 implements IDbComm_model {
     // the status format should be:'status-name'
     public void updateStatus(int cmid, String oldStatus, String newStatus)
     {
-        ErcLogger.println("In Update Statusץ Parametes = " + oldStatus + ", " + newStatus);
+        ErcLogger.println("In Update Statusץ Parametes = " + cmid + " " + oldStatus + ", " + newStatus);
         try
         {
             HashMap<String,String> cond = new HashMap<String,String>();
@@ -1662,7 +1662,7 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("community_member_id", data.get("community_member_id"));
         conds.put("event_id", data.get("event_id"));
-        updateTable("O_EmergencyEventResponse", conds, "location_remark", "'" + data.get("location_remark") + "'");
+        updateTable("O_EmergencyEventResponse", conds, "location_remark", data.get("location_remark"));
         updateTable("O_EmergencyEventResponse", conds, "eta_by_foot", data.get("eta_by_foot"));
         updateTable("O_EmergencyEventResponse", conds, "eta_by_car", data.get("eta_by_car"));
     }
@@ -1765,9 +1765,9 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("event_id", eventId);
         if(loc != null)
-            updateTable("O_EmergencyEvents", cond, "location_remark", "'"+loc+"'");
+            updateTable("O_EmergencyEvents", cond, "location_remark", loc);
         if(state != null)
-            updateTable("O_EmergencyEvents", cond, "state", "'"+state+"'");
+            updateTable("O_EmergencyEvents", cond, "state", state);
         if(radiud != null)
             updateTable("O_EmergencyEvents", cond, "radius", radiud);
         if(regType != null)

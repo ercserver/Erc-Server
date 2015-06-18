@@ -74,13 +74,13 @@ public class RegController_V1 implements IRegController {
                 //set the message and code
                 responseCode = "wait";
                 //Get authorization method from db
-                int authMethod = dbController.getAuthenticationMethod("'" + filledForm.get("state") + "'");
+                int authMethod = dbController.getAuthenticationMethod(filledForm.get("state"));
                 String method = (0 == authMethod) ? "mail" : "sms";
                 message = "Form filled successfully. A verification " + method + " was sent to you. Please verify your registration.";
                 //Add the new community member (a new CmID is generated)
                 int newCmid = dbController.addNewCommunityMember(filledForm);
                 //Update status to "Verifying Email"
-                dbController.updateStatus(newCmid, null, "'verifying email'");
+                dbController.updateStatus(newCmid, null, "verifying email");
                 //Generate data for the authorization message
                 filledForm.put("Message", generateMessageForAuth(newCmid,filledForm.get("Password")));
                 filledForm.put("Subject","Confirm your email for Socmed App");
@@ -162,7 +162,7 @@ public class RegController_V1 implements IRegController {
         String regid = details.get("reg_id");
         //method how to send data mail/sms
         int authMethod =
-                dbController.getAuthenticationMethod("'" + details.get("state")+ "'");
+                dbController.getAuthenticationMethod(details.get("state"));
         HashMap<String,String> dataFilter = null;
         changeStatusToVerifyDetailAndSendToApp(cmid,regid,details);
 
@@ -215,7 +215,7 @@ public class RegController_V1 implements IRegController {
         String status = verification.getStatus(data);
         if (status.equals("verifying email"))
         {
-            dbController.updateStatus(cmid, "'verifying email'", "'verifying details'");
+            dbController.updateStatus(cmid, "verifying email", "verifying details");
             //if (verification.ifTypeISPatientOrGuardian(code)) {
                 HashMap<Integer, HashMap<String, String>> send =
                         verification.changeStatusToVerifyDetailAndSendToApp(data);
@@ -273,7 +273,7 @@ public class RegController_V1 implements IRegController {
         //int cm = 0; //change
         if (checkCmidAndPassword(password, cmidDoctor)) {
             if (reason == null) {
-                dbController.updateStatus(cmidPatient, "'verifying details'", "'active'");
+                dbController.updateStatus(cmidPatient, "verifying details", "active");
                 //we send regid != 0 to say that type is patient
                 response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid,password);
                 commController.setCommToUsers(response, null, false);
@@ -294,7 +294,7 @@ public class RegController_V1 implements IRegController {
     private boolean checkCmidAndPassword(String password, int cmid) {
         HashMap<String,String> data = verification.getUserByCmid(cmid);
         String email = data.get("email_address");
-        data = dbController.getLoginDetails("'" +email + "'");
+        data = dbController.getLoginDetails(email);
         String pas = data.get("password");
         return pas.equals(password);
     }
@@ -307,7 +307,7 @@ public class RegController_V1 implements IRegController {
         String password = verification.getUserPassword(cmid);
 
         if (isAccept) {
-            dbController.updateStatus(new Integer(cmid), "'verifying details'", "'Active'");
+            dbController.updateStatus(new Integer(cmid), "verifying details", "Active");
             //0 say that type is doctor
             response =  verification.proccesOfOkMember(new Integer(cmid),"0",password);
             commController.setCommToUsers(response, null, false);
@@ -365,7 +365,7 @@ public class RegController_V1 implements IRegController {
         }
         //get auth method
         String state = data.get("state");
-        int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
+        int authMethod = dbController.getAuthenticationMethod(state );
         //get all useer details
         HashMap<String,String> details = verification.getUserByCmid(cmid);
         switch(authMethod) {
@@ -468,7 +468,7 @@ public class RegController_V1 implements IRegController {
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason,
                                                                        String explantion) {
-        dbController.updateStatus(cmid, "'verifying details'", "'active'");
+        dbController.updateStatus(cmid, "verifying details", "active");
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
@@ -482,11 +482,11 @@ public class RegController_V1 implements IRegController {
     private void updateUserMail(String mail, int cmid) {
 
         HashMap<String, String> member = new HashMap<String, String>();
-        member.put("email_address", "'" + mail + "'");
+        member.put("email_address", mail);
         member.put("community_member_id", Integer.toString(cmid));
         dbController.updateUserDetails(member);
         member.remove("email_address");
-        dbController.updateTable("MembersLoginDetails", member, "email_address", "'" + mail + "'");
+        dbController.updateTable("MembersLoginDetails", member, "email_address",  mail);
 
     }
 }

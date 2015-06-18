@@ -235,7 +235,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     public HashMap<String, String> getUserByMail(String mail) {
 
         HashMap<String, String> member = new HashMap<String, String>();
-        member.put("P_CommunityMembers.email_address", "'" + mail + "'");
+        member.put("P_CommunityMembers.email_address",  mail );
         HashMap<String, String> details = dbController.getUserByParameter(member);
         return details;
     }
@@ -347,13 +347,13 @@ public class RegVerify_V2 implements IRegVerify_model {
 
         response.put("RequestID", "active");
 
-        responseToPatient.put(3,getFrequency("'connect_server_frequency'"));
-        responseToPatient.put(4,getFrequency("'times_to_connect_to_server'"));
+        responseToPatient.put(3,getFrequency("connect_server_frequency"));
+        responseToPatient.put(4,getFrequency("times_to_connect_to_server"));
 
         responseToPatient.put(1, response);
         //if is a patient
         if (!type.equals("0")) {
-            responseToPatient.put(2, getFrequency("'location_frequency'"));
+            responseToPatient.put(2, getFrequency("location_frequency"));
             responseToPatient.put(5, getDefaultInEmergency(getState(cmid)));
         }
         return responseToPatient;

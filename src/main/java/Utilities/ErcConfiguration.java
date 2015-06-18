@@ -20,4 +20,7 @@ public class ErcConfiguration {
     public final static String DB_PASS = "saaccount";
 
 
+    public static final String EMAIL_USERNAME = "ercserver@gmail.com";
+    public static final String EMAIL_PASSWORD = "serverpassword123";
+    public static final String EMAIL_HOST = "smtp.gmail.com";
 }
