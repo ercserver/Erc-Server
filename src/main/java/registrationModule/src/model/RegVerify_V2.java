@@ -1,6 +1,7 @@
 package registrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
+import Utilities.ErcConfiguration;
 import Utilities.ErcLogger;
 import Utilities.PatientDetails;
 import registrationModule.src.api.IRegVerify_model;
@@ -600,9 +601,15 @@ public class RegVerify_V2 implements IRegVerify_model {
 
         return generatedAuthMail;
     }
-    //TODO -
+
     private String generateMailLinkForVerifications(HashMap<String, String> data) {
-        return null;
+        String rv = ErcConfiguration.VERIFY_EMAIL_URL;
+        String cmid = data.get("community_member_id");
+        if (cmid != null){
+            rv  += "?key=" + cmid;
+        }
+        return rv;
+
     }
 
     //TODO - Not for prototype for future releases only
