@@ -258,7 +258,8 @@ public class DbComm_V1 implements IDbComm_model {
                                 // The primary key
                                 json.put("id", entry.getValue());
                             }
-                            else{
+                            else if (col.toLowerCase().contains("description") ||
+                                    col.toLowerCase().contains("name")){
                                 // The value itself
                                 json.put("value", entry.getValue());
                             }
@@ -342,6 +343,7 @@ public class DbComm_V1 implements IDbComm_model {
             Set<String> keys1 = whereConditions.keySet();
             int  parameterIndex = 1;
             for (String key1 : keys1){
+                ErcLogger.println("key: " + key1 + " val: " +  whereConditions.get(key1));
                 stmt.setObject(parameterIndex, whereConditions.get(key1));
                 parameterIndex++;
             }
@@ -501,8 +503,10 @@ public class DbComm_V1 implements IDbComm_model {
             // gets the userType by cmid
             rs = statement.executeQuery("SELECT DISTINCT * FROM P_TypeLog " +
                     "WHERE community_member_id=" + cmid + " AND date_to IS NULL");
-            rs.next();
-            return rs.getInt("user_type");
+            if (rs.next()) {
+                return rs.getInt("user_type");
+            }
+            return -1;
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {e.printStackTrace(); return -1;}
@@ -867,12 +871,16 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
+            ErcLogger.println("Inserted: Login Details");
+
             // Insert contact info
             stmt = connection.prepareStatement("INSERT INTO P_EmergencyContact (community_member_id, contact_phone) VALUES (?,?)");
             stmt.setInt(1, cmid);
             stmt.setString(2, details.get("contact_phone"));
             stmt.executeUpdate();
             stmt.close();
+
+            ErcLogger.println("Inserted: Emergency contact");
 
 
             // Insert availability hours
@@ -886,6 +894,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
+            ErcLogger.println("Inserted: Availabilty");
 
             /* Insert the details based on the user type */
             int userType = Integer.parseInt(details.get("user_type"));
@@ -900,6 +909,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
+            ErcLogger.println("Inserted: Type Log");
 
             switch(userType){
                 case 0:

@@ -378,9 +378,9 @@ public class RegVerify_V2 implements IRegVerify_model {
     public HashMap<Integer,HashMap<String,String>> verifySignIn(HashMap<String,String> details)
     {
         HashMap<String,String> conds = new HashMap<String,String>();
-        conds.put("P_CommunityMembers.community_member_id", details.get("community_member_id"));
-        conds.put("MembersLoginDetails.password", "'" + details.get("password") + "'");
-        conds.put("MembersLoginDetails.email_address", "'" + details.get("email_address") + "'");
+        //conds.put("P_CommunityMembers.community_member_id", details.get("community_member_id"));
+        conds.put("MembersLoginDetails.password", details.get("password") );
+        conds.put("MembersLoginDetails.email_address", details.get("email_address") );
         // gets the user according to the givven sign-in data
         HashMap<String,String> user = dbController.getUserByParameter(conds);
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
