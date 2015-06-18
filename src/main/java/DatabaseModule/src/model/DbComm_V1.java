@@ -232,8 +232,8 @@ public class DbComm_V1 implements IDbComm_model {
                     l.add("enum_code");
                     HashMap<String, String> conds1 = new HashMap<String, String>();
                     ErcLogger.println(tableName.split("\\.")[0].toString());
-                    conds1.put("table_name", "'" + tableName.split("\\.")[1] + "'");
-                    conds1.put("column_name", "'" + tableName.split("\\.")[2] + "'");
+                    conds1.put("table_name", tableName.split("\\.")[1]);
+                    conds1.put("column_name", tableName.split("\\.")[2] );
                     HashMap<Integer, HashMap<String, String>> h = selectFromTable("Enum", l, conds1);
                     JSONArray jarray = new JSONArray();
 
