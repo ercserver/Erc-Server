@@ -84,6 +84,7 @@ public class RegController_V1 implements IRegController {
                 //Generate data for the authorization message
                 filledForm.put("Message", generateMessageForAuth(newCmid,filledForm.get("password")));
                 filledForm.put("Subject","Confirm your email for Socmed App");
+                filledForm.put("community_member_id", Integer.toString(newCmid));
                 HashMap<String, String> data = verification.generateDataForAuth(filledForm,authMethod);
                 //Create authorization comm
                 ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
