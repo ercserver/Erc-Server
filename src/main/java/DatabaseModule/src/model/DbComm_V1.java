@@ -2,6 +2,7 @@ package DatabaseModule.src.model;
 
 
 import DatabaseModule.src.api.IDbComm_model;
+import Utilities.ErcConfiguration;
 import Utilities.ErcLogger;
 import Utilities.HashMapBuilder;
 //import com.sun.deploy.util.StringUtils;
@@ -20,14 +21,14 @@ import java.util.Date;
  */
 public class DbComm_V1 implements IDbComm_model {
 
-    final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    final String DB_URL = "jdbc:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
-    final String DBName = "socmedserver";
-    final private String USERNAME = "saaccount";
-    final private String PASS = "saaccount";
+    final String JDBC_DRIVER = ErcConfiguration.JDBC_DRIVER;
+    final String DB_URL = ErcConfiguration.DB_URL;
+    final String DBName = ErcConfiguration.DB_Name;
+    final private String USERNAME = ErcConfiguration.DB_USERNAME;
+    final private String PASS = ErcConfiguration.DB_PASS;
     private Connection connection = null;
     private Statement statement = null;
-    private String SCHEMA = "Ohad";//*
+
 
     private  void connect() throws SQLException
     {
