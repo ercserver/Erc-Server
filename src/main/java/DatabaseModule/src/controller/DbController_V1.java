@@ -277,4 +277,6 @@ public class DbController_V1 implements IDbController {
     public boolean doesEventHasEMS(String eventId){return DB_communicator.doesEventHasEMS(eventId);}
 
     public String getStatusByName(String statusName){return DB_communicator.getStatusByName(statusName);}
+
+    public HashMap<String, String> getMedicationNameAndDosage(String prescriptionNum){return DB_communicator.getMedicationNameAndDosage(prescriptionNum);}
 }

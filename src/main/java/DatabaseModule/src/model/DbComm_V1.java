@@ -2076,4 +2076,39 @@ public class DbComm_V1 implements IDbComm_model {
             }
         }
     }
+
+    public HashMap<String, String> getMedicationNameAndDosage(String prescriptionNum)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM P_Prescriptions INNER JOIN P_Medications " +
+                    "ON P_Prescriptions.medication_num=P_Medications.medication_num " +
+                    " WHERE P_Prescriptions.prescription_num=" + prescriptionNum);
+            if(!rs.next())
+                return null;
+            HashMap<String, String> res = new HashMap<String, String>();
+            res.put("medication_name", rs.getString("medication_name"));
+            res.put("dosage", rs.getString("dosage"));
+            return res;
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return null;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
 }
