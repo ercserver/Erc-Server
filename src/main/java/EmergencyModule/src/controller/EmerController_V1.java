@@ -132,8 +132,7 @@ public class EmerController_V1 implements IEmerController {
         data.put("home_phone_number",userDetails.get("home_phone_number"));
         data.put("mobile_phone_number",userDetails.get("mobile_phone_number"));
         //TODO - Ohad/Maor
-        HashMap<String,String> medicationDetails = dbController.getMedicationDetailsAndDosage(eventDetails.get("prescription_num"));
-        data.put("medical_condition_description",medicationDetails.get("medical_condition_description"));
+        HashMap<String,String> medicationDetails = dbController.getMedicationNameAndDosage(eventDetails.get("prescription_num"));
         data.put("medication_name",medicationDetails.get("medication_name"));
         data.put("dosage",medicationDetails.get("dosage"));
         //add the required command to the request
@@ -165,12 +164,18 @@ public class EmerController_V1 implements IEmerController {
         String region_type = data.get("region_type");
         String radius = data.get("radius");
         String eventID = data.get("event_id");
+
         int eventIDInted = Integer.parseInt(eventID);
         data.remove("event_id");
         data.remove("state");
         data.remove("region_type");
         data.remove("radius");
         dbController.updateEventDetails(eventID, state, region_type, radius, location_remark);
+        //add the radius to the EMS
+        boolean isEmsInEvent = (null != dbController.getEventDetails("ems_member_id"));
+        if (isEmsInEvent) {
+            updateRadiusToEMS(radius, eventID);
+        }
         //filter
         HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID,region_type,radius);
         /*get all of the users to which a request was sent for the event
@@ -180,7 +185,7 @@ public class EmerController_V1 implements IEmerController {
         //*Note that this necessarily suggests that the radius was changed by the EMS, but the opposite is not necessarily true
         //(Radius change does not necessarily mean that this list will be non-empty)
         if(!allHelpersRequested.isEmpty()){
-            filteredData = handleRadiusChange(allHelpersRequested,filteredData,eventID);
+            filteredData = handleRadiusChange(allHelpersRequested,filteredData,eventID,isEmsInEvent);
         }
         //Prepare the times request for the GIS with the reduced list
         filteredData.put("RequestID", "Times");
@@ -192,8 +197,7 @@ public class EmerController_V1 implements IEmerController {
         initiatedOneObjectRequest(filteredData, sendTo);
     }
 
-    private HashMap<String, String> handleRadiusChange(HashMap<String, String> allHelpersRequested, HashMap<String, String> filteredData,String eventID) {
-
+    private HashMap<String, String> handleRadiusChange(HashMap<String, String> allHelpersRequested, HashMap<String, String> filteredData,String eventID,boolean isEmsInEvent) {
         int eventIDInted = Integer.parseInt(eventID);
         HashMap<String,String> notNeededHelpers = new HashMap<String,String>();
         notNeededHelpers.putAll(allHelpersRequested);
@@ -228,9 +232,12 @@ public class EmerController_V1 implements IEmerController {
                 notNeededHelpers.remove(helper);
             }
         }
-        //remove the unneeded helpers from EMS and inform. "0" represents 'inform the EMS'.
-        for(String helper : notNeededHelpers.keySet()) {
-            removeAssistant(helper, eventID, 0,"Assistance is no longer required.");
+        //handle cases that the EMS is involved
+        if (isEmsInEvent) {
+            //remove the unneeded helpers from EMS and inform. "0" represents 'inform the EMS'.
+            for (String helper : notNeededHelpers.keySet()) {
+                removeAssistant(helper, eventID, 0, "Assistance is no longer required.");
+            }
         }
         //remove those helpers from the GIS
         ArrayList<String> cmidsToStopFollow = new ArrayList<String>();
@@ -248,6 +255,16 @@ public class EmerController_V1 implements IEmerController {
         }
 
         return filteredData;
+    }
+
+    private void updateRadiusToEMS(String radius,String eventID) {
+        HashMap<String,String> data = new HashMap<>();
+        data.put("eventID",eventID);
+        data.put("Radius",radius);
+        data.put("RequestID","SetEventSearchRadius");
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo = assistantFuncs.addReceiver("EMS", sendTo);
+        initiatedOneObjectRequest(data, sendTo);
     }
 
     //This function is called from "receiveUsersAroundLocation"
@@ -611,7 +628,7 @@ public class EmerController_V1 implements IEmerController {
         String eventID = data.get("event_id");
         //Update the assistant's status on the DB and inform. "0" to inform EMS here.
         dbController.removeAssistantFromEvent(eventID, patientID);//
-        removeAssistant(patientID, eventID, 0);
+        removeAssistant(patientID, eventID, 0,null);
     }
 
     @Override
