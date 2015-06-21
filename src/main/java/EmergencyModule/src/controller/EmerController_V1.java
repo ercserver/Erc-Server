@@ -131,7 +131,6 @@ public class EmerController_V1 implements IEmerController {
         data.put("external_id_type",userDetails.get("external_id_type"));
         data.put("home_phone_number",userDetails.get("home_phone_number"));
         data.put("mobile_phone_number",userDetails.get("mobile_phone_number"));
-        //TODO - Ohad/Maor
         HashMap<String,String> medicationDetails = dbController.getMedicationNameAndDosage(eventDetails.get("prescription_num"));
         data.put("medication_name",medicationDetails.get("medication_name"));
         data.put("dosage",medicationDetails.get("dosage"));
@@ -436,7 +435,7 @@ public class EmerController_V1 implements IEmerController {
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
         initiatedOneObjectRequest(updateOrAddToEms, sendTo);
     }
-    //TODO - Ohad - add this to the controller. the requestID is "AssistantDetails"
+
     @Override
     public void requestAssistantDetails(HashMap<String, String> data){
         //append the required data to the request
