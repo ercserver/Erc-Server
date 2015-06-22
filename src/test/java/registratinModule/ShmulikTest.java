@@ -10,10 +10,12 @@ import java.util.HashMap;
 /**
  * Created by User on 06/05/2015.
  */
+
 public class ShmulikTest {
     public static void main(String[] args) {
         RegController_V1 v = new RegController_V1();
-        v.verifyDetail("1003");
+        v.verifyDetail("1083");
+
        /* DbComm_V1 d = new DbComm_V1();
         testNaor1();
 

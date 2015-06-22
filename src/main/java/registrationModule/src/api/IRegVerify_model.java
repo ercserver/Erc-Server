@@ -50,4 +50,6 @@ public interface IRegVerify_model {
     String getRegId(int cmid);
 
     String getUserPassword(String cmid);
+
+    String initState(String state);
 }

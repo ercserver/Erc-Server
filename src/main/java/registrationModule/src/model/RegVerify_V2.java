@@ -217,6 +217,16 @@ public class RegVerify_V2 implements IRegVerify_model {
         return data.get("password");
     }
 
+    @Override
+    public String initState(String state) {
+
+        if (null == state)
+        {
+            state = "israel";
+        }
+        return state;
+    }
+
     public HashMap<String, String> getUserByCmid(int cmid) {
         ErcLogger.println("In getUserByCmid. Parameters = " + cmid);
         HashMap<String, String> member = new HashMap<String, String>();
@@ -312,6 +322,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
 
+
     public boolean checkCondForResendMail(HashMap<String, String> details, String email, int cmid) {
         String status = getStatus(details);
         String currentEmail = details.get("email_address");
@@ -331,6 +342,27 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     }
 
+
+/*
+    public boolean checkCondForResendMail(HashMap<String, String> details, String email, int cmid) {
+        String status = getStatus(details);
+        String currentEmail = details.get("email_address");
+
+        //if we  resend mail to hos current mail
+        //we need to check that this mail dont approval
+        if (currentEmail.equals(email)) {
+            return status.equals("verifying email");
+        }
+        //if member change his mail we need to check that
+        //is mail not exist in another user
+        else {
+            return getUserByMail(email) == null;
+        }
+
+
+
+    }
+*/
     /***********for func responeDoctor********************/
 
     //ToDo need also to send cmid, password, and location frequency in emergency

@@ -74,7 +74,6 @@ public class RoutineController_V1 implements IRoutineController {
 
 
     // TODO: Shumulik
-
     public Object updateCommunicationParameters(String code)
     {
 

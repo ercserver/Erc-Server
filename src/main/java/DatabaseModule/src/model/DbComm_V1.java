@@ -342,6 +342,7 @@ public class DbComm_V1 implements IDbComm_model {
             String query = "SELECT DISTINCT * FROM P_CommunityMembers INNER JOIN MembersLoginDetails " +
                     "ON P_CommunityMembers.community_member_id=MembersLoginDetails.community_member_id "
                     + "WHERE " + conditions;
+
             // Assign the values to the where clause
             PreparedStatement stmt = connection.prepareStatement(query);
             Set<String> keys1 = whereConditions.keySet();

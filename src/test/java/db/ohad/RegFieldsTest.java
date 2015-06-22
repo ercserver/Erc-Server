@@ -20,8 +20,9 @@ public class RegFieldsTest {
         RegController_V1 rc = new RegController_V1();
         DbController_V1 dbController = new DbController_V1();
         RegVerify_V2 rv = new RegVerify_V2();
-        System.out.println(dbController.getUserByParameter(new HashMapBuilder<String, String>().put("community_member_id","1083").build()
-        ));
+       // System.out.println(dbController.getUserByParameter(new HashMapBuilder<String, String>().put("community_member_id","1083").build()
+       // ));
+        System.out.println(dbController.getRegistrationFields(0));
         /*String cmid = "1081";
         HashMap<String, String> member = new HashMap<String, String>();
         member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());

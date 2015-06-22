@@ -363,6 +363,75 @@ public class RegController_V1 implements IRegController {
 */
 
 //-------------------------------------------
+
+    public Object resendAuth(HashMap<String, String> getData) {
+
+        //int cmid = Integer.parseInt(data.get("community_member_id"));
+        String password = getData.get("password");
+        String regid = getData.get("reg_id");
+        String requestID = null;
+        String message = null;
+        HashMap<String,String> details = null;
+        //init state if get null init to israel
+        String state = verification.initState(getData.get("state"));
+        //get auth method
+        int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
+
+        switch(authMethod) {
+            case 0: {
+                String email = getData.get("email_address");
+                //get all useer details
+                details = verification.getUserByMail(email);
+                //check  the user with the same email
+                if (null == details)
+                {
+                    requestID = "rejectResend";
+                    message = "Invalid email! Please try again...";
+                    break;
+                }
+                //if the user's email in the db isn't the same as specified in the request
+                /*if (!details.get("email_address").equals(email)) {
+                    //change in the db
+                    updateUserMail(email, cmid);
+                    //change in the curr func
+                    details.put("email_address", email);
+                }*/
+                break;
+            }
+            case 1: {
+                //TODO - To be implemented in later versions
+                //String phone = data.get("phone_number");
+                break;
+            }
+            default: {
+                //throw some nasty error?
+                return null;
+            }
+        }
+
+        //get and send the auth mail/sms/...
+        if  (null == requestID) {
+            getData.put("Message", generateMessageForAuth(Integer.parseInt(details.get("community_member_id")),
+                    details.get("Password")));
+            getData.put("Subject", "Resend email:\n\nConfirm your email for Socmed App");
+            HashMap<String, String> dataForAuth = verification.generateDataForAuth(getData, authMethod);
+            ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
+            commAuthMethod.setCommOfficial(dataForAuth, authMethod);
+            commAuthMethod.sendMessage();
+            requestID = "waitResend";
+            message = "Resend successful!";
+        }
+
+        //determine who to send to
+        ArrayList<String> target = new ArrayList<String>();
+        target.add(regid);
+        //send
+        commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), target, false);
+        return commController.sendResponse();
+    }
+
+
+    /*
     public Object resendAuth(HashMap<String, String> data) {
 
         int cmid = Integer.parseInt(data.get("community_member_id"));
@@ -427,7 +496,7 @@ public class RegController_V1 implements IRegController {
         commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), target, false);
         return commController.sendResponse();
     }
-
+*/
     //TODO- Not for prototype for future releases
     private Object resendSMS(HashMap<String, String> data) {
         return null;
