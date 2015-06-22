@@ -203,7 +203,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     public String getRegId(int cmid)
     {
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
-        String reg = "";
+        String reg = "0";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             reg = obj.get("reg_id");
