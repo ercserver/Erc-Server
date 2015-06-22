@@ -169,6 +169,8 @@ public class RegController_V1 implements IRegController {
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
         HashMap<String,String> dataFilter = null;
+
+        //send details to app or website that say wait, your details checking
         changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
 
         if (verification.ifTypeISPatientOrGuardian(regid)) {
@@ -192,8 +194,7 @@ public class RegController_V1 implements IRegController {
             dataAuthorizer.put("Subject","Doctor Authorization for Socmed App");
             dataAuthorizer.put("first name", "doctors");
             dataAuthorizer.put("last_name", "authorizer");
-            dataAuthorizer.put("Message",verification.generateMessgeForVerfictionDoctor(data) );
-
+            dataAuthorizer.put("Message",verification.generateMessgeForVerfictionDoctor(dataFilter/*data*/) );
             data =
                     verification.generateDataForAuth(dataAuthorizer, authMethod);
 

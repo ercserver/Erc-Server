@@ -9,7 +9,11 @@ public interface IUpdates {
 
     public Object getUpdatesFields(HashMap<String, String> data);
 
-    public Object updateCommunicationParameters(String code); // Send to all users the most recent comm. params.
+    //code meen witch parmeter to update
+    //in prototye code say send all parameter
+    // Send to all users the most recent comm. params.
+    public Object updateCommunicationParameters(String code);
+
 
     // Update the details in the db
     public Object updateMemberDetails(HashMap<String, String> data);

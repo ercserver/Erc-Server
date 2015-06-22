@@ -77,6 +77,7 @@ public class RoutineController_V1 implements IRoutineController {
 
     public Object updateCommunicationParameters(String code)
     {
+
         HashMap<Integer, HashMap<String, String>> ret =
                 new HashMap<Integer, HashMap<String, String>>();
 
@@ -88,26 +89,31 @@ public class RoutineController_V1 implements IRoutineController {
         HashMap<Integer, HashMap<String, String>> allCmid = dbController.getAllCmidsByStatus(numStatus);
         //pass all over cmid in db
         //String code = "setLocationFrequency";
+
         String messge = "please update your communication parameters";
         HashMap<String, String> basic = updates.buildBasicResponse(messge, code);
         //ret.put(basic);
         for (Map.Entry<Integer,HashMap<String,String>> objs : allCmid.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             int c = new Integer(obj.get("community_member_id"));
-            HashMap<String, String> comParameter = updates.getCommunicationParameters(
-                    c,code);
+            String type = obj.get("user_type");
+            HashMap<String, String> comParameter = updates.getCommunicationParameters(c, type);
 
-            if (comParameter == null) {
+            /*if (comParameter == null) {
                 // this mean that is parameter of Patient and this is a doctor
                 continue;
-            }
+            }*/
+
             basic.putAll(comParameter);
             ret.put(1,basic);
             String regId = memberDetail.getRegId(c);
             if (memberDetail.ifTypeISPatientOrGuardian(regId))
             {
+
+                target.add(regId);
                 commController.setCommToUsers(ret,
                         target, false);
+                target.clear();
             }
             // is a doctor
             else
@@ -117,10 +123,11 @@ public class RoutineController_V1 implements IRoutineController {
             }
             commController.sendResponse();
             //clean target
-            target.clear();
+
         }
         return null;
     }
+
 
     @Override
     public Object updateMemberDetails(HashMap<String, String> data) {
@@ -140,9 +147,7 @@ public class RoutineController_V1 implements IRoutineController {
         //getUserType
         String type = String.valueOf(dbController.getUserType(String.valueOf(cmid)));
 
-
         for (String key : data.keySet()){
-
             String col = key;
             String val = data.get(key);
             //check if field need verification
@@ -155,8 +160,6 @@ public class RoutineController_V1 implements IRoutineController {
                 //update in table
                 updates.updateUserDetails(cmid,col,val);
             }
-
-
         }
         if (needVerify) {
             verify.verifyDetail(new Integer(cmid).toString());
@@ -198,26 +201,28 @@ public class RoutineController_V1 implements IRoutineController {
     public Object handleRefreshDetails() {
         HashMap<Integer, HashMap<String, String>> data =
                 dbController.getRegistrationFieldsWithRefreshTime();
-        int cmid = 0;
+        //int cmid = 0;
         int tempCmid = 0;
         int i = 1;
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()) {
             HashMap<String, String> obj = objs.getValue();
             HashMap<Integer, HashMap<String, String>> ret = new
                     HashMap<Integer, HashMap<String, String>>();
+            int cmid = objs.getKey();
             if (updates.checkIfWeFinishWithOnePatient(i, cmid, tempCmid, objs)) {
                 HashMap<String, String> buildRet = new
                         HashMap<String, String>();
+
                 //check if we need to refresh
                 if (updates.FieldneedRefresh(objs)) ;
                 {
+                    //put all fields for send to verify
                     ret.put(i,obj);
                 }
             }
             else
             {
                 //send
-
                 String reg = memberDetail.getRegId(cmid);
                 ArrayList<String> target = new ArrayList<String>();
                 sendAssist.buildBasicRespone("need refresh parameter", "refresh");

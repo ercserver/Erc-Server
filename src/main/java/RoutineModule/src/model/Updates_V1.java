@@ -69,21 +69,7 @@ public class Updates_V1 implements IUpdates_model {
                 ret.putAll(comParam.getDefaultInEmergency(memberDetail.getState(cmid)));
             }
         }
-        // this mean that is paramter of Patient and this is a doctor
-        return null;
-
-        /*
-        HashMap<String, String> param = new HashMap<String, String>();
-        param.putAll(comParam.getFrequency("'connect_server_frequency'"));
-        param.putAll(comParam.getFrequency("'times_to_connect_to_server'"));
-        String reg = memberDetail.getRegId(cmid);
-        if (memberDetail.ifTypeISPatientOrGuardian(reg)) {
-            param.putAll(comParam.getFrequency("'location_frequency'"));
-            param.putAll(comParam.getDefaultInEmergency(memberDetail.getState(cmid)));
-        }
-        //ret.put(1,param);
-        return param;
-        */
+        return ret;
     }
 
     @Override
@@ -100,25 +86,34 @@ public class Updates_V1 implements IUpdates_model {
             dbController.updateUserDetails(member);
     }
 
+
+    private boolean compareDate(Date d1,Date d2,int refreseFreq )
+    {
+        long diff = d1.getTime() - d2.getTime();
+        int diffDays =  (int) (diff / (24* 1000 * 60 * 60));
+        return  diffDays >= refreseFreq;
+    }
+
     @Override
     public boolean FieldneedRefresh(Map.Entry<Integer, HashMap<String, String>> objs) {
-
         HashMap<String, String> obj = objs.getValue();
-        String lastUpdate = obj.get("last_update_time");
-        Date date = new Date(lastUpdate);
-        String timeToRefresh = obj.get("refresh_time");
-
         Calendar timeRef = Calendar.getInstance();
-        timeRef.setTime(date);
-        timeRef.add(Calendar.MINUTE, new Integer(timeToRefresh));
+        Date d1 = new Date(String.valueOf(timeRef.getTime()));
+        String lastUpdate = obj.get("last_update_time");
+        Date d2 = new Date(lastUpdate);
+        int timeToRefresh = Integer.parseInt(obj.get("refresh_time"));
+        return compareDate(d1,d2,timeToRefresh);
 
-        Calendar currentTime = Calendar.getInstance();
+        //timeRef.setTime(date);
+        //timeRef.add(Calendar.DAY_OF_YEAR, new Integer(timeToRefresh));
+
+        //Calendar currentTime = Calendar.getInstance();
         //if last update time + refresh_time > current time
         //then we need to refresh
-        if(currentTime.before(timeRef))
-                return true;
-        else
-            return false;
+        //if(currentTime.before(timeRef))
+        //        return true;
+        //else
+        //    return false;
     }
 
     @Override

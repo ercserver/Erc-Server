@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="SQL Server - socmedserver@socmedserver.mssql.somee.com" uuid="3f7cbb95-e5f1-4d3a-aba2-8d925c9d2371">
+  <data-source name="SQL Server - @socmedserver.mssql.somee.com" uuid="0dea1675-760e-4885-a33a-65423bed7931">
     <database-info product="Microsoft SQL Server" version="10.50.2500" jdbc-version="4.0" driver-name="Microsoft JDBC Driver 4.0 for SQL Server" driver-version="4.0.2206.100">
       <extra-name-characters>$#@</extra-name-characters>
       <identifier-quote-string>&quot;</identifier-quote-string>
@@ -387,20 +387,6 @@
     </table>
     <table name="MP_MedicalPersonnel" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="medical_personnel_id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="external_id" sqlType="varchar" precision="25" scale="0" nullable="false" jdbcType="12"/>
-      <column name="external_id_type" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="first_name" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="last_name" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="birthday_date" sqlType="date" precision="10" scale="0" nullable="false" jdbcType="91"/>
-      <column name="gender" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="state" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="city" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="street" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="house_number" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="zip_code" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="home_phone_number" sqlType="varchar" precision="50" scale="0" nullable="true" jdbcType="12"/>
-      <column name="mobile_phone_number" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="email_address" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="community_member_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PK__MP_Medic__6ED286B5341F99B2" columns="medical_personnel_id"/>
       <foreign-key name="FK__MP_Medica__Commu__3607E224" columns="community_member_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
