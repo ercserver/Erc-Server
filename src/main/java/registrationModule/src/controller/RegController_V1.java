@@ -398,7 +398,7 @@ public class RegController_V1 implements IRegController {
                 return null;
             }
         }
-
+//
         //get and send the auth mail/sms/...
         if  (null == requestID) {
             getData.put("Message", generateMessageForAuth(Integer.parseInt(details.get("community_member_id")),
