@@ -165,7 +165,7 @@ public class RegController_V1 implements IRegController {
         String regid = details.get("reg_id");
         //method how to send data mail/sms
         int authMethod =
-                dbController.getAuthenticationMethod("'" + details.get("state")+ "'");
+                dbController.getAuthenticationMethod(details.get("state"));
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
         HashMap<String,String> dataFilter = null;
