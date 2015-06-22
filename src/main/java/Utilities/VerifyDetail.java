@@ -39,7 +39,7 @@ public class VerifyDetail {
         String regid = details.get("reg_id");
         //method how to send data mail/sms
         int authMethod= authMethod =
-                dbController.getAuthenticationMethod("'" + details.get("state")+ "'");;
+                dbController.getAuthenticationMethod("'" + details.get("state")+ "'");
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
         HashMap<String,String> dataFilter = null;
@@ -84,7 +84,7 @@ public class VerifyDetail {
                                                         ArrayList<String> target,
                                                         HashMap<String, String> data) {
         String status = verification.getStatus(data);
-        dbController.updateStatus(cmid, "'" + status + "'", "'verifying details'");
+        dbController.updateStatus(cmid, status , "verifying details");
         HashMap<Integer, HashMap<String, String>> send =
         verification.changeStatusToVerifyDetailAndSendToApp(data);
         if (verification.ifTypeISPatientOrGuardian(code)) {

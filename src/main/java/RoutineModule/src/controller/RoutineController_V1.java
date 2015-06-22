@@ -285,7 +285,7 @@ public class RoutineController_V1 implements IRoutineController {
         if (assistent.checkCmidAndPassword(password,cmid))
         {
             String oldStatus = updates.getCurrentStatusOfPatient(cmid);
-            dbController.updateStatus(cmid, "'" + oldStatus + "'", "'verifying details'");
+            dbController.updateStatus(cmid, oldStatus, "verifying details");
         }
         return null;
     }
@@ -298,7 +298,7 @@ public class RoutineController_V1 implements IRoutineController {
         {
             HashMap<String, String> userDetails = memberDetail.getUserByCmid(cmid);
             String oldStatus = this.memberDetail.getStatus(userDetails);
-            dbController.updateStatus(cmid,"'" + oldStatus + "'","'onHold'");
+            dbController.updateStatus(cmid, oldStatus,"onHold");
 
         }
         return null;
