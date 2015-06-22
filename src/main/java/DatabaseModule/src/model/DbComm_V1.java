@@ -1121,7 +1121,7 @@ public class DbComm_V1 implements IDbComm_model {
     // the status format should be:'status-name'
     public void updateStatus(int cmid, String oldStatus, String newStatus)
     {
-        ErcLogger.println("In Update Statusץ Parametes = " + cmid + " " + oldStatus + ", " + newStatus);
+        ErcLogger.println("In Update Status Parameters = " + cmid + ", " + oldStatus + ", " + newStatus);
         try
         {
             HashMap<String,String> cond = new HashMap<String,String>();
@@ -1148,6 +1148,7 @@ public class DbComm_V1 implements IDbComm_model {
             // gets status number of the givven new status
             s = getRowsFromTable(cond, "P_Statuses");
             val = s.values();
+            ErcLogger.println("val = " + val);
             statusNum = val.iterator().next().get("status_num");
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();

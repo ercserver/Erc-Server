@@ -19,8 +19,9 @@ public class RegFieldsTest {
     public static void main(String[] args) {
         RegController_V1 rc = new RegController_V1();
         DbController_V1 dbController = new DbController_V1();
+        DbComm_V1 db = new DbComm_V1();
         RegVerify_V2 rv = new RegVerify_V2();
-        System.out.println(dbController.getAllCmidsByStatus(1000));
+        db.updateStatus(1084, null, "verifying email");
 
         /*String cmid = "1081";
         HashMap<String, String> member = new HashMap<String, String>();
