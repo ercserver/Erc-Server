@@ -365,9 +365,6 @@ public class RegController_V1 implements IRegController {
 //-------------------------------------------
 
     public Object resendAuth(HashMap<String, String> getData) {
-
-        //int cmid = Integer.parseInt(data.get("community_member_id"));
-        String password = getData.get("password");
         String regid = getData.get("reg_id");
         String requestID = null;
         String message = null;
@@ -375,27 +372,20 @@ public class RegController_V1 implements IRegController {
         //init state if get null init to israel
         String state = verification.initState(getData.get("state"));
         //get auth method
-        int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
+        int authMethod = dbController.getAuthenticationMethod(state);
 
         switch(authMethod) {
             case 0: {
                 String email = getData.get("email_address");
                 //get all useer details
                 details = verification.getUserByMail(email);
-                //check  the user with the same email
+                //checks  that there is a user with this email
                 if (null == details)
                 {
                     requestID = "rejectResend";
                     message = "Invalid email! Please try again...";
                     break;
                 }
-                //if the user's email in the db isn't the same as specified in the request
-                /*if (!details.get("email_address").equals(email)) {
-                    //change in the db
-                    updateUserMail(email, cmid);
-                    //change in the curr func
-                    details.put("email_address", email);
-                }*/
                 break;
             }
             case 1: {
