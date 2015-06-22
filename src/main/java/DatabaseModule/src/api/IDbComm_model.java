@@ -141,4 +141,5 @@ public interface IDbComm_model {
     boolean doesMedicineMatch(String cmid, String eventId);
     boolean doesEventHasEMS(String eventId);
     String getStatusByName(String statusName);
+    HashMap<String, String> getMedicationNameAndDosage(String prescriptionNum);
 }

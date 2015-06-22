@@ -37,4 +37,8 @@ public interface IEmer {
     void receiveClosestEmsAndApproach (HashMap<String, String> data);
     //From app
     void patientCancelledEvent(HashMap<String,String> data);
+
+    //TODO - Ohad - add this to the controller. the requestID is "AssistantDetails"
+    //From EMS
+    void requestAssistantDetails(HashMap<String, String> data);
 }

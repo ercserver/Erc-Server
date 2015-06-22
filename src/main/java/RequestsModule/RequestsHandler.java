@@ -2,10 +2,9 @@ package RequestsModule;
 
 
 import DatabaseModule.src.model.DbComm_V1;
-import DatabaseModule.src.model.DbInit_V1;
+import EmergencyModule.src.api.IEmerController;
+import EmergencyModule.src.controller.EmerController_V1;
 import Utilities.HashMapBuilder;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-import org.apache.commons.logging.Log;
 import org.springframework.web.bind.annotation.*;
 import registrationModule.src.api.*;
 import registrationModule.src.controller.RegController_V1;
@@ -35,8 +34,15 @@ public class RequestsHandler {
     private final String REJECT_PATIENT = "rejectPatient";
 
     /*** Routine Requests Codes ***/
-    private final String ASKWAITINGPATIENTS = "askWaitingPatients";
-    private final String CURRENTLOCATION = "routineLocation";
+    private final String ASKWAITING_PATIENTS = "askWaitingPatients";
+    private final String CURRENT_LOCATION = "routineLocation";
+
+    /*** Routine Requests Codes ***/
+    private final String AROUND_LOCATION = "AroundLocation";
+    private final String USERS_ARRIVAL_TIMES = "UsersArrivalTimes"; // Arrival times
+    private final String CLOSEST_EMS = "closestEMS";
+    private final String FOLLOW_USER = "followUser";
+
 
 
     // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
@@ -97,7 +103,7 @@ public class RequestsHandler {
                         e.printStackTrace();
                     }
 
-
+                break;
                 case SIGNUP:
                     return rc.handleReg(requestMap).toString();
 
@@ -127,7 +133,7 @@ public class RequestsHandler {
         HashMapCreator hmc = new HashMapCreator();
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
         String reqId = "";
-        String rv = "";
+        String rv = "Received Request : ";
         try {
             IRegController rc = new RegController_V1();
             IRoutineController ruc = new RoutineController_V1();
@@ -137,13 +143,76 @@ public class RequestsHandler {
                 case SIGNIN:
                     rv = rc.signIn(requestMap).toString();
                     System.out.println("rv = " + rv);
-                case ASKWAITINGPATIENTS:
-                    JSONArray respone  = (JSONArray) rc.getWaitingForDoctor(requestMap);
-                    if (respone != null){
-                        return respone.toString();
+                    break;
+                case ASKWAITING_PATIENTS:
+                    JSONArray response  = (JSONArray) rc.getWaitingForDoctor(requestMap);
+                    if (response != null){
+                        return response.toString();
                     }
-                case CURRENTLOCATION:
+                    break;
+                case CURRENT_LOCATION:
                     rv = ruc.transferLocation(requestMap).toString();
+                default:
+                    // Do nothing...
+                    rv = "Wrong request id";
+                    break;
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return rv;
+    }
+
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis-times")
+    public @ResponseBody String handleMembersArrivalTimes(@RequestBody String request){
+        JSONArray data = new JSONArray(request);
+        HashMapCreator hmc = new HashMapCreator();
+        HashMap<Integer, HashMap<String, String>> requestMap = hmc.jsonArrayToMap(data);
+        IEmerController ec = new EmerController_V1();
+        String rv = "Received Request id : ";
+        // Get request id
+        try{
+            HashMap<String, String> details = requestMap.get(1);
+            String reqId;
+            if (details != null){
+                reqId = details.get(REQ_ID);
+                switch (reqId){
+                    case USERS_ARRIVAL_TIMES:
+                        ec.receiveUsersArrivalTimesAndApproach(requestMap);
+                        rv += reqId;
+                        break;
+                    default:
+                        rv = "Wrong request id";
+                        break;
+                }
+            }
+        }catch(Exception ex){
+           ex.printStackTrace();
+        }
+        return rv;
+    }
+
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis")
+    public @ResponseBody String handleEmergencyRequests(@RequestBody String request){
+        JSONObject data = new JSONObject(request);
+        HashMapCreator hmc = new HashMapCreator();
+        HashMap<String, String> requestMap = hmc.jsonToMap(data);
+        String reqId = "";
+        String rv = "";
+        try {
+            IEmerController ec = new EmerController_V1();
+            reqId = data.getString(REQ_ID);
+
+            switch (reqId) {
+                case AROUND_LOCATION:
+                    ec.receiveUsersAroundLocation(requestMap);
+                    break;
+                case CLOSEST_EMS:
+                    ec.receiveClosestEmsAndApproach(requestMap);
+                    break;
+                case FOLLOW_USER:
+                    ec.receiveArrivalTime(requestMap);
+                    break;
                 default:
                     // Do nothing...
                     break;

@@ -23,7 +23,9 @@ public class EmerFilter_V1 implements IEmerFilter_model {
 
     //filter list received from "receiveUsersAroundLocation"
    // @Override
-    public HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter,String eventID) {
+    public HashMap<String,String> filterUsersByMatch(HashMap<String, String> listToFilter,String eventID,String region_type,String radius) {
+        /**region type and radius are not used for filtering in this version of the filter class**/
+
         // Creates arrayList of possible assistants
         ArrayList<Integer> intedList = new ArrayList<Integer>();
         Iterator<String> iter = listToFilter.keySet().iterator();

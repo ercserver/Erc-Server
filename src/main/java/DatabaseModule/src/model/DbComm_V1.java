@@ -2,10 +2,12 @@ package DatabaseModule.src.model;
 
 
 import DatabaseModule.src.api.IDbComm_model;
+import Utilities.ErcConfiguration;
 import Utilities.ErcLogger;
 import Utilities.HashMapBuilder;
 //import com.sun.deploy.util.StringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -19,14 +21,14 @@ import java.util.Date;
  */
 public class DbComm_V1 implements IDbComm_model {
 
-    final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    final String DB_URL = "jdbc:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
-    final String DBName = "socmedserver";
-    final private String USERNAME = "saaccount";
-    final private String PASS = "saaccount";
+    final String JDBC_DRIVER = ErcConfiguration.JDBC_DRIVER;
+    final String DB_URL = ErcConfiguration.DB_URL;
+    final String DBName = ErcConfiguration.DB_Name;
+    final private String USERNAME = ErcConfiguration.DB_USERNAME;
+    final private String PASS = ErcConfiguration.DB_PASS;
     private Connection connection = null;
     private Statement statement = null;
-    private String SCHEMA = "Ohad";//*
+
 
     private  void connect() throws SQLException
     {
@@ -205,9 +207,6 @@ public class DbComm_V1 implements IDbComm_model {
             e.printStackTrace();
             return null;
         }
-
-
-
     }
 
     public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)
@@ -218,6 +217,75 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<Integer,HashMap<String,String>> ret = getRowsFromTable(conds, "RegistrationFields");
         /* gets for each registration field the possible values from the proper table, if
            the field is not "free text". we put a json object that converted to string */
+        if (ret != null) {
+            for (int i = 1; i <= ret.size(); i++) {
+                HashMap<String, String> currentField = ret.get(i);
+                if ((currentField.get("get_possible_values_from") == null) ||
+                        (currentField.get("get_possible_values_from").equals("null")))
+                    continue;
+                String tableName = currentField.get("get_possible_values_from");
+                JSONObject jo;
+                // field that has few possible values from Enum table
+                if (tableName.substring(0, 5).equals("Enum.")) {
+                    ArrayList<String> l = new ArrayList<String>();
+                    l.add("enum_value");
+                    l.add("enum_code");
+                    HashMap<String, String> conds1 = new HashMap<String, String>();
+                    ErcLogger.println(tableName.split("\\.")[0].toString());
+                    conds1.put("table_name", tableName.split("\\.")[1]);
+                    conds1.put("column_name", tableName.split("\\.")[2] );
+                    HashMap<Integer, HashMap<String, String>> h = selectFromTable("Enum", l, conds1);
+                    JSONArray jarray = new JSONArray();
+
+                    for(int j = 1; j <= h.size(); j++){
+                        jarray.put(new JSONObject().put("id", h.get(j).get("enum_code"))
+                                .put("value", h.get(j).get("enum_value")));
+                    }
+                    // Add the array to the field
+                    currentField.put("get_possible_values_from", jarray.toString());
+                } else { // Not an enum - Just rows from a table
+                    JSONArray jarray = new JSONArray();
+                    HashMap<Integer, HashMap<String, String>> rowsMap = getRowsFromTable(null, tableName);
+                    for (int rowNum = 1; rowNum <= rowsMap.size(); rowNum++){
+                        HashMap<String, String> row = rowsMap.get(rowNum);
+                        JSONObject json = new JSONObject();
+                        for (Map.Entry<String, String> entry : row.entrySet()){
+                            if (json.length() == 2){
+                                // Don't override existing values...
+                                break;
+                            }
+                            String col = entry.getKey();
+                            if (json.isNull("id") && (col.toLowerCase().contains("id") ||
+                                    col.toLowerCase().contains("num")) &&
+                                    !col.toLowerCase().contains("phone")
+                                    && !col.toLowerCase().contains("fax")){
+                                // The primary key
+                                json.put("id", entry.getValue());
+                            }
+                            else if (json.isNull("value")&& (col.toLowerCase().contains("description") ||
+                                    col.toLowerCase().contains("name"))){
+                                // The value itself
+                                json.put("value", entry.getValue());
+                            }
+                        }
+                        jarray.put(json);
+                    }
+                    currentField.put("get_possible_values_from", jarray.toString());
+                }
+
+            }
+        }
+        return ret;
+    }
+
+    /*public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)
+    {
+        HashMap<String,String> conds = new HashMap<String,String>();
+        conds.put("user_type", Integer.toString(userType));
+        // gets registration fields according to the givven usetType
+        HashMap<Integer,HashMap<String,String>> ret = getRowsFromTable(conds, "RegistrationFields");
+        *//* gets for each registration field the possible values from the proper table, if
+           the field is not "free text". we put a json object that converted to string *//*
         if (ret != null) {
             for (int i = 1; i <= ret.size(); i++) {
                 if ((ret.get(i).get("get_possible_values_from") == null) ||
@@ -245,7 +313,7 @@ public class DbComm_V1 implements IDbComm_model {
             }
         }
         return ret;
-    }
+    }*/
 
     public HashMap<String,String> getUserByParameter(HashMap<String,String> whereConditions)
     {
@@ -279,6 +347,7 @@ public class DbComm_V1 implements IDbComm_model {
             Set<String> keys1 = whereConditions.keySet();
             int  parameterIndex = 1;
             for (String key1 : keys1){
+                ErcLogger.println("key: " + key1 + " val: " +  whereConditions.get(key1));
                 stmt.setObject(parameterIndex, whereConditions.get(key1));
                 parameterIndex++;
             }
@@ -438,8 +507,10 @@ public class DbComm_V1 implements IDbComm_model {
             // gets the userType by cmid
             rs = statement.executeQuery("SELECT DISTINCT * FROM P_TypeLog " +
                     "WHERE community_member_id=" + cmid + " AND date_to IS NULL");
-            rs.next();
-            return rs.getInt("user_type");
+            if (rs.next()) {
+                return rs.getInt("user_type");
+            }
+            return -1;
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {e.printStackTrace(); return -1;}
@@ -500,7 +571,7 @@ public class DbComm_V1 implements IDbComm_model {
     public HashMap<Integer,HashMap<String,String>> getDefaultInEmergency(String state)
     {
         HashMap<String,String> cond = new HashMap<String,String>();
-        cond.put("state", "'" + state + "'");
+        cond.put("state", state);
         ArrayList<String> select = new ArrayList<String>();
         select.add("default_caller");
         // gets the default caller in emergency event according to the givven state
@@ -615,6 +686,8 @@ public class DbComm_V1 implements IDbComm_model {
                     Object val = rs.getObject(i);
                     if (val != null){
                         obj.put(column, val.toString());
+                    }else{
+                        obj.put(column, "null");
                     }
                 }
                 map.put(j, obj);
@@ -647,8 +720,7 @@ public class DbComm_V1 implements IDbComm_model {
             Iterator<String> iter = whereConds.keySet().iterator();
             while (iter.hasNext()) {
                 String key = iter.next();
-                String val = whereConds.get(key);
-                whereString += String.format("%s=%s AND ", key, val);
+                whereString += String.format("%s=? AND ", key);
             }
             // Remove the last "AND"
             whereString = whereString.substring(0, whereString.length() - 4);
@@ -662,9 +734,14 @@ public class DbComm_V1 implements IDbComm_model {
             //connect();
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();
-            statement = connection.createStatement();
-            rs = statement.executeQuery(sql);
-
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            int  parameterIndex = 1;
+            Set<String> keys = whereConds.keySet();
+            for (String key : keys){
+                stmt.setObject(parameterIndex, whereConds.get(key));
+                parameterIndex++;
+            }
+            rs = stmt.executeQuery();
             return resultSetToMap(rs);
 
         } catch (SQLException e) {
@@ -802,12 +879,16 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
+            ErcLogger.println("Inserted: Login Details");
+
             // Insert contact info
             stmt = connection.prepareStatement("INSERT INTO P_EmergencyContact (community_member_id, contact_phone) VALUES (?,?)");
             stmt.setInt(1, cmid);
             stmt.setString(2, details.get("contact_phone"));
             stmt.executeUpdate();
             stmt.close();
+
+            ErcLogger.println("Inserted: Emergency contact");
 
 
             // Insert availability hours
@@ -821,20 +902,21 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
+            ErcLogger.println("Inserted: Availabilty");
 
             /* Insert the details based on the user type */
             int userType = Integer.parseInt(details.get("user_type"));
 
             // Insert to type log
-            stmt = connection.prepareStatement("INSERT INTO P_TypeLog (user_type, community_member_id, date_from) VALUES (?,?,?)");
+            stmt = connection.prepareStatement("INSERT INTO P_TypeLog (user_type, community_member_id) VALUES (?,?)");
 
             stmt.setInt(1, Integer.parseInt(details.get("user_type")));
             stmt.setInt(2, cmid);
-            stmt.setString(3, details.get("date_to"));
 
             stmt.executeUpdate();
             stmt.close();
 
+            ErcLogger.println("Inserted: Type Log");
 
             switch(userType){
                 case 0:
@@ -856,11 +938,11 @@ public class DbComm_V1 implements IDbComm_model {
 
                     // Supervision
 
-                    stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id, date_to) " +
+                    stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id, date_from) " +
                             "VALUES (?,?,?)");
                     stmt.setInt(1, getDoctorIdByLicence(details.get("P_supervision.doc_licence_number")));
                     stmt.setInt(2, patientID);
-                    stmt.setString(3, details.get("date_to"));
+                    stmt.setString(3, details.get("date_from"));
                     stmt.executeUpdate();
                     stmt.close();
 
@@ -905,20 +987,35 @@ public class DbComm_V1 implements IDbComm_model {
                     }
                     stmt.close();
 
+                    // Create medical personnel
+                    stmt = connection.prepareStatement("INSERT INTO dbo.MP_MedicalPersonnel (community_member_id)" +
+                            " VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+                    stmt.setObject(1, cmid);
+                    stmt.executeUpdate();
+                    rs = stmt.getGeneratedKeys();
+                    int mpid;
+                    if (rs.next()) {
+                        mpid = rs.getInt(1);
+                    } else{
+                        // There was a problem inserting the new member
+                        return -1;
+                    }
+                    stmt.close();
+
                     stmt = connection.prepareStatement("INSERT INTO MP_Affiliation (organization_id, medical_personnel_id," +
-                            "position_num, date_to) VALUES (?,?,?,?)");
+                            "position_num, a_date_to) VALUES (?,?,?,?)");
                     stmt.setInt(1, Integer.parseInt(details.get("organization_id")));
-                    stmt.setInt(2, doctorID);
+                    stmt.setInt(2, mpid);
                     stmt.setInt(3, Integer.parseInt(details.get("position_num")));
-                    stmt.setString(4, details.get("date_to"));
+                    stmt.setString(4, details.get("a_date_to"));
                     stmt.executeUpdate();
                     stmt.close();
 
                     stmt = connection.prepareStatement("INSERT INTO MP_Certification (certification_external_id," +
-                            "medical_personnel_id, date_to, specialization_id) VALUES (?,?,?,?)");
+                            "medical_personnel_id, c_date_to, specialization_id) VALUES (?,?,?,?)");
                     stmt.setInt(1, Integer.parseInt(details.get("certification_external_id")));
-                    stmt.setInt(2, doctorID);
-                    stmt.setString(3, details.get("date_to"));
+                    stmt.setInt(2, mpid);
+                    stmt.setString(3, details.get("c_date_to"));
                     stmt.setInt(4, Integer.parseInt(details.get("specialization_id")));
                     stmt.executeUpdate();
                     stmt.close();
@@ -1008,6 +1105,7 @@ public class DbComm_V1 implements IDbComm_model {
     // the status format should be:'status-name'
     public void updateStatus(int cmid, String oldStatus, String newStatus)
     {
+        ErcLogger.println("In Update Statusץ Parametes = " + cmid + " " + oldStatus + ", " + newStatus);
         try
         {
             HashMap<String,String> cond = new HashMap<String,String>();
@@ -1052,6 +1150,10 @@ public class DbComm_V1 implements IDbComm_model {
     // expected regID format:'redID'
     public void insertRegID(String regId, int cmid)
     {
+        if (regId.equals("0")){
+            // No need to add reg id
+            return;
+        }
         try
         {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
@@ -1560,7 +1662,7 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("community_member_id", data.get("community_member_id"));
         conds.put("event_id", data.get("event_id"));
-        updateTable("O_EmergencyEventResponse", conds, "location_remark", "'" + data.get("location_remark") + "'");
+        updateTable("O_EmergencyEventResponse", conds, "location_remark", data.get("location_remark"));
         updateTable("O_EmergencyEventResponse", conds, "eta_by_foot", data.get("eta_by_foot"));
         updateTable("O_EmergencyEventResponse", conds, "eta_by_car", data.get("eta_by_car"));
     }
@@ -1663,9 +1765,9 @@ public class DbComm_V1 implements IDbComm_model {
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("event_id", eventId);
         if(loc != null)
-            updateTable("O_EmergencyEvents", cond, "location_remark", "'"+loc+"'");
+            updateTable("O_EmergencyEvents", cond, "location_remark", loc);
         if(state != null)
-            updateTable("O_EmergencyEvents", cond, "state", "'"+state+"'");
+            updateTable("O_EmergencyEvents", cond, "state", state);
         if(radiud != null)
             updateTable("O_EmergencyEvents", cond, "radius", radiud);
         if(regType != null)
@@ -1960,6 +2062,41 @@ public class DbComm_V1 implements IDbComm_model {
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {e.printStackTrace(); return false;}
+        // Releases the resources of this method
+        finally
+        {
+            releaseResources(statement, connection);
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e) {e.printStackTrace();}
+            }
+        }
+    }
+
+    public HashMap<String, String> getMedicationNameAndDosage(String prescriptionNum)
+    {
+        ResultSet rs = null;
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            statement = connection.createStatement();
+            // gets the userType by cmid
+            rs = statement.executeQuery("SELECT DISTINCT * FROM P_Prescriptions INNER JOIN P_Medications " +
+                    "ON P_Prescriptions.medication_num=P_Medications.medication_num " +
+                    " WHERE P_Prescriptions.prescription_num=" + prescriptionNum);
+            if(!rs.next())
+                return null;
+            HashMap<String, String> res = new HashMap<String, String>();
+            res.put("medication_name", rs.getString("medication_name"));
+            res.put("dosage", rs.getString("dosage"));
+            return res;
+        }
+        // There was a fault with the connection to the server or with SQL
+        catch (SQLException e) {e.printStackTrace(); return null;}
         // Releases the resources of this method
         finally
         {

@@ -1,6 +1,7 @@
 package registrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
+import Utilities.ErcConfiguration;
 import Utilities.ErcLogger;
 import Utilities.PatientDetails;
 import registrationModule.src.api.IRegVerify_model;
@@ -235,7 +236,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     public HashMap<String, String> getUserByMail(String mail) {
 
         HashMap<String, String> member = new HashMap<String, String>();
-        member.put("P_CommunityMembers.email_address", "'" + mail + "'");
+        member.put("P_CommunityMembers.email_address",  mail );
         HashMap<String, String> details = dbController.getUserByParameter(member);
         return details;
     }
@@ -347,13 +348,14 @@ public class RegVerify_V2 implements IRegVerify_model {
 
         response.put("RequestID", "active");
 
-        responseToPatient.put(3,getFrequency("'connect_server_frequency'"));
-        responseToPatient.put(4,getFrequency("'times_to_connect_to_server'"));
+        responseToPatient.put(3,getFrequency("connect_server_frequency"));
+        responseToPatient.put(4,getFrequency("times_to_connect_to_server"));
 
         responseToPatient.put(1, response);
         //if is a patient
         if (!type.equals("0")) {
-            responseToPatient.put(2, getFrequency("'location_frequency'"));
+            responseToPatient.put(2, getFrequency("location_frequency"));
+
             responseToPatient.put(5, getDefaultInEmergency(getState(cmid)));
         }
         return responseToPatient;
@@ -378,9 +380,9 @@ public class RegVerify_V2 implements IRegVerify_model {
     public HashMap<Integer,HashMap<String,String>> verifySignIn(HashMap<String,String> details)
     {
         HashMap<String,String> conds = new HashMap<String,String>();
-        conds.put("P_CommunityMembers.community_member_id", details.get("community_member_id"));
-        conds.put("MembersLoginDetails.password", "'" + details.get("password") + "'");
-        conds.put("MembersLoginDetails.email_address", "'" + details.get("email_address") + "'");
+        //conds.put("P_CommunityMembers.community_member_id", details.get("community_member_id"));
+        conds.put("MembersLoginDetails.password", details.get("password") );
+        conds.put("MembersLoginDetails.email_address", details.get("email_address") );
         // gets the user according to the givven sign-in data
         HashMap<String,String> user = dbController.getUserByParameter(conds);
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
@@ -437,7 +439,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         switch(authMethod){
             case 0:{
                 return generateVerificationForMail(filledForm);
-            }
+        }
             case 1:{
                 return generateVerificationForSMS(filledForm);
             }/*
@@ -599,9 +601,16 @@ public class RegVerify_V2 implements IRegVerify_model {
 
         return generatedAuthMail;
     }
-    //TODO -
+
     private String generateMailLinkForVerifications(HashMap<String, String> data) {
-        return null;
+        ErcLogger.println("In mailVerification. parameters = " + data);
+        String rv = ErcConfiguration.VERIFY_EMAIL_URL;
+        String cmid = data.get("community_member_id");
+        if (cmid != null){
+            rv  += "?key=" + cmid;
+        }
+        return rv;
+
     }
 
     //TODO - Not for prototype for future releases only

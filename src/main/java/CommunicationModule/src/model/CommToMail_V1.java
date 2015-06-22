@@ -1,5 +1,7 @@
 package CommunicationModule.src.model;
 
+import Utilities.ErcConfiguration;
+
 import java.io.*;
 import java.util.*;
 import javax.mail.*;
@@ -12,9 +14,9 @@ public class CommToMail_V1 extends CommOfficial_V1  {
 
     String emailAddress = null;
 
-    private final String username = "ercserver@gmail.com";
-    private final String password = "serverpassword123";
-    private final String host = "smtp.gmail.com";
+    private final String username = ErcConfiguration.EMAIL_USERNAME;
+    private final String password = ErcConfiguration.EMAIL_PASSWORD;
+    private final String host = ErcConfiguration.EMAIL_HOST;
 
     //C'tor
     public CommToMail_V1(HashMap<String,String> data){
