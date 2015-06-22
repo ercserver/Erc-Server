@@ -238,5 +238,6 @@ public class RequestsHandler {
         return "Email Verified";
     }
 
+
     //ToDo:need links for confirmation and rejection of doctor
 }

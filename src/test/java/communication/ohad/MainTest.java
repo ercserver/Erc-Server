@@ -23,10 +23,35 @@ import java.util.List;
 public class MainTest {
     public static void main(String[] args) {
         MainTest mt = new MainTest();
-        mt.gisTest();
+        mt.emsTest();
 
     }
+    private void emsTest(){
+        // THIS WORKS!!!!
+        HashMap<Integer, HashMap<String, String>> map = new HashMap<>();
+        map.put(1, new HashMapBuilder<String, String>().put("hello", "world").build());
+        ArrayList<String> target = new ArrayList<>();
+        target.add("http://mba4.ad.biu.ac.il:3000/post1");
+        // target.add("http://mba4.ad.biu.ac.il/Erc-Server/requests/test");
+        target.add("un");
+        target.add("pwd");
+        try {
 
+            Connection.Response res = Jsoup.connect(target.get(0)).
+
+                    data("data",new JSONObject().put("hello","world").toString())
+
+                    .header("content-type", "application/json")
+                    .method(Connection.Method.POST)
+
+                    .execute();
+            System.out.println(res.body());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
     private void gisTest(){
         HashMap<Integer, HashMap<String, String>> data = new HashMap<>();
         data.put(1, new HashMapBuilder<String, String>().put("hello", "world").build());

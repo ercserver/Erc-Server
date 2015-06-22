@@ -41,6 +41,7 @@
         <element id="file-copy" path="C:\Users\User\IdeaProjects\Erc-Server\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="Erc-Server/web/Web" />
+      <element id="library" level="project" name="sqljdbc4" />
     </root>
   </artifact>
 </component>

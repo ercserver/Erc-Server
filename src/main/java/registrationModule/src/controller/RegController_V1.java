@@ -375,7 +375,7 @@ public class RegController_V1 implements IRegController {
         //init state if get null init to israel
         String state = verification.initState(getData.get("state"));
         //get auth method
-        int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
+        int authMethod = dbController.getAuthenticationMethod(state);
 
         switch(authMethod) {
             case 0: {

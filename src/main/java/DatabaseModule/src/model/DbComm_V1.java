@@ -721,7 +721,16 @@ public class DbComm_V1 implements IDbComm_model {
             Iterator<String> iter = whereConds.keySet().iterator();
             while (iter.hasNext()) {
                 String key = iter.next();
-                whereString += String.format("%s=? AND ", key);
+
+                // Check if the condition is null. If so, use "IS" instead of "="
+                if (whereConds.get(key).equalsIgnoreCase("null")){
+                    whereString += String.format("%s IS NULL AND", key);
+                    // Remove the condition from the set
+                    whereConds.remove(key);
+                }
+               else {
+                    whereString += String.format("%s=? AND ", key);
+                }
             }
             // Remove the last "AND"
             whereString = whereString.substring(0, whereString.length() - 4);
