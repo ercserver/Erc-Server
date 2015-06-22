@@ -78,13 +78,13 @@ public class RegVerify_V2 implements IRegVerify_model {
                 "Licence Number: " + licenseNumber + ".\n\n" +
                 "Workplace details: " + "\n" +
                 "   organization description: " +
-                memberDetails.equals("organization_description") + ".\n" +
-                "   organization type description" +
-                memberDetails.equals("organization_type_description") + ".\n" +
-                "   position_description: " + memberDetails.equals("position_description") + "\n" +
+                memberDetails.get("organization_description") + ".\n" +
+                "   organization type description: " +
+                memberDetails.get("organization_type_description") + ".\n" +
+                "   position_description: " + memberDetails.get("position_description") + "\n" +
                 "   email address of organization: "  +
-                memberDetails.equals("email_address_of_organization") +  ".\n" +
-                "   org phone number: " + memberDetails.equals("org_phone_number") +  ".\n" +
+                memberDetails.get("email_address_of_organization") +  ".\n" +
+                "   org phone number: " + memberDetails.get("org_phone_number") +  ".\n" +
                 "Thank you,\n" +
                 "Socmed administration team.";
     }
@@ -203,7 +203,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     public String getRegId(int cmid)
     {
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
-        String reg = "";
+        String reg = "0";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             reg = obj.get("reg_id");
@@ -234,7 +234,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         HashMap<String, String> details = dbController.getUserByParameter(member);
         ErcLogger.println("details = " + details);
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
-        String reg = "";
+        String reg = "0";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             reg = obj.get("reg_id");

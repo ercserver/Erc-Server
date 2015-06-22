@@ -34,7 +34,7 @@ public class PatientDetails {
     public String getRegId(int cmid)
     {
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
-        String reg = "";
+        String reg = "0";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             reg = obj.get("reg_id");
@@ -66,11 +66,13 @@ public class PatientDetails {
 
     public HashMap<String, String> getUserByCmid(int cmid) {
 
+        ErcLogger.println("In getUserByCmid. Parameters = " + cmid);
         HashMap<String, String> member = new HashMap<String, String>();
         member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
         HashMap<String, String> details = dbController.getUserByParameter(member);
+        ErcLogger.println("details = " + details);
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
-        String reg = "";
+        String reg = "0";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             reg = obj.get("reg_id");
