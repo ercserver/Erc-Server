@@ -423,9 +423,9 @@ public class RegController_V1 implements IRegController {
     public Object getWaitingForDoctor(HashMap<String,String> request) {
         String password = request.get("password");
         int cmid = Integer.parseInt(request.get("community_member_id"));
-        if(checkCmidAndPassword(password,cmid)){
+        /*if(checkCmidAndPassword(password,cmid)){
 
-        }
+        }*/
 
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
         //Pull from the db the list of patient that are pending the doctor's confirmation

@@ -224,7 +224,7 @@ public class RequestsHandler {
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/verify_email")
-    public @ResponseBody String handleEmailVerification(@RequestBody String key /*CMID right now*/){
+    public @ResponseBody String handleEmailVerification(@RequestParam String key /*CMID right now*/){
         String reqId = "";
 
         try {

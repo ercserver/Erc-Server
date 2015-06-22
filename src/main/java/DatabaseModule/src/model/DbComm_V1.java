@@ -815,9 +815,9 @@ public class DbComm_V1 implements IDbComm_model {
 
 
     public int addNewCommunityMember(HashMap<String,String> details) {
-        /* - I'm assuming the fields 'doc_licence_num' (from p_doctors) will
-             be in the form 'TABLENAME.doc_licence_num' to prevent ambiguity.
-             e.g. p_supervision.doc_licence_num
+        /* - I'm assuming the fields 'doc_license_num' (from p_doctors) will
+             be in the form 'TABLENAME.doc_license_num' to prevent ambiguity.
+             e.g. p_supervision.doc_license_num
 
            - Because of the multiple occurrences of the field 'date_to' and
              mainly because the lack of actual meaning of it, regarding the registration
@@ -935,36 +935,38 @@ public class DbComm_V1 implements IDbComm_model {
                         return -1;
                     }
                     stmt.close();
-
+                    ErcLogger.println("Inserted: Patient");
                     // Supervision
 
-                    stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id, date_from) " +
-                            "VALUES (?,?,?)");
-                    stmt.setInt(1, getDoctorIdByLicence(details.get("P_supervision.doc_licence_number")));
+                    stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id) " +
+                            "VALUES (?,?)");
+                    stmt.setInt(1, getDoctorIdByLicense(details.get("P_supervision.doc_license_number")));
                     stmt.setInt(2, patientID);
-                    stmt.setString(3, details.get("date_from"));
                     stmt.executeUpdate();
                     stmt.close();
+                    ErcLogger.println("Inserted: Supervision");
 
                     stmt = connection.prepareStatement("INSERT INTO P_Prescriptions (medication_num, dosage," +
                             "medical_condition_id, doctor_id, date_to, patient_id) VALUES (?,?,?,?,?,?)");
                     stmt.setInt(1, Integer.parseInt(details.get("medication_num")));
                     stmt.setFloat(2, Float.parseFloat(details.get("dosage")));
                     stmt.setInt(3, Integer.parseInt(details.get("medical_condition_id")));
-                    stmt.setInt(4, getDoctorIdByLicence(details.get("P_prescriptions.doc_licence_num")));
+                    stmt.setInt(4, getDoctorIdByLicense(details.get("P_prescriptions.doc_license_number")));
                     stmt.setString(5, details.get("date_to"));
                     stmt.setInt(6, patientID);
                     stmt.executeUpdate();
                     stmt.close();
+                    ErcLogger.println("Inserted: Prescription");
 
                     stmt = connection.prepareStatement("INSERT INTO P_Diagnosis (patient_id, medical_condition_id," +
                             "doctor_id, date_to) VALUES (?,?,?,?)");
                     stmt.setInt(1, patientID);
                     stmt.setInt(2, Integer.parseInt(details.get("medical_condition_id")));
-                    stmt.setInt(3, getDoctorIdByLicence(details.get("P_diagnosis.doc_licence_num")));
+                    stmt.setInt(3, getDoctorIdByLicense(details.get("P_diagnosis.doc_license_number")));
                     stmt.setString(4, details.get("date_to"));
                     stmt.executeUpdate();
                     stmt.close();
+                    ErcLogger.println("Inserted: Diagnosis");
 
                     break;
 
@@ -1032,11 +1034,15 @@ public class DbComm_V1 implements IDbComm_model {
 
     }
 
-    private int getDoctorIdByLicence(String licence) {
+    private int getDoctorIdByLicense(String license) {
         HashMap whereClause = new HashMap();
-        whereClause.put("doc_license_num", licence);
+        whereClause.put("doc_license_number", license);
         List select = Arrays.asList("doctor_id");
-        String docID = selectFromTable("p_doctors", select, whereClause).get(0).get("doctor_id");
+        HashMap<Integer, HashMap<String, String>> results = selectFromTable("p_doctors", select, whereClause);
+        String docID = "-1";
+        if (results.get(1) != null) {
+            docID = results.get(1).get("doctor_id");
+        }
         return Integer.parseInt(docID);
     }
 
