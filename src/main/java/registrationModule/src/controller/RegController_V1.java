@@ -556,7 +556,7 @@ public class RegController_V1 implements IRegController {
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason,
                                                                        String explantion) {
-        dbController.updateStatus(cmid, "'verifying details'", "'active'");
+        dbController.updateStatus(cmid, "verifying details", "active");
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
@@ -570,11 +570,11 @@ public class RegController_V1 implements IRegController {
     private void updateUserMail(String mail, int cmid) {
 
         HashMap<String, String> member = new HashMap<String, String>();
-        member.put("email_address", "'" + mail + "'");
+        member.put("email_address", mail);
         member.put("community_member_id", Integer.toString(cmid));
         dbController.updateUserDetails(member);
         member.remove("email_address");
-        dbController.updateTable("MembersLoginDetails", member, "email_address", "'" + mail + "'");
+        dbController.updateTable("MembersLoginDetails", member, "email_address", mail);
 
     }
 }

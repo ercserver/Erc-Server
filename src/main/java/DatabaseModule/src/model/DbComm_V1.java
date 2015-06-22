@@ -1146,7 +1146,9 @@ public class DbComm_V1 implements IDbComm_model {
             cond.clear();
             cond.put("status_name", newStatus);
             // gets status number of the givven new status
+            ErcLogger.println("cond = " + cond);
             s = getRowsFromTable(cond, "P_Statuses");
+            ErcLogger.println("s = " + s);
             val = s.values();
             ErcLogger.println("val = " + val);
             statusNum = val.iterator().next().get("status_num");
