@@ -637,17 +637,24 @@ public class RegVerify_V2 implements IRegVerify_model {
     private String generateMailLinkForVerifications(HashMap<String, String> data) {
         ErcLogger.println("In mailVerification. parameters = " + data);
         String cmid = data.get("community_member_id");
-        if(data.containsKey("confirmationOfDoctor"))
-        {
-
-        }//
-        String rv = ErcConfiguration.VERIFY_EMAIL_URL;
+        String rv = "server_error";
         if (cmid != null){
-            rv  += "?key=" + cmid;
+            String key = "?key=" + cmid;
+            if(data.containsKey("confirmationOfDoctor")){
+                rv = String.format("%s%s&accept=true\n%s%s&accept=false",
+                        ErcConfiguration.AUTH_DOCTOR_URL,
+                        key,
+                        ErcConfiguration.AUTH_DOCTOR_URL,
+                        key);
+
+            }else{
+                // Mail authorization
+                rv = String.format("%s%s", ErcConfiguration.VERIFY_EMAIL_URL, key);
+            }
         }
         return rv;
-
     }
+
 
     //TODO - Not for prototype for future releases only
     private HashMap<String,String> generateVerificationForSMS(HashMap<String, String> data){

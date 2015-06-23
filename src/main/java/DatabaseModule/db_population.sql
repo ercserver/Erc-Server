@@ -53,7 +53,9 @@ insert into registrationFields (field_name, type, user_type, fields_group, needs
   ('certification_external_id', 1, 1, 1, 1, 1, 50, null, 10, null, null, 'Certification ID'),
   ('specialization_id', 1, 1, 1, 1, 1, 50, 'MP_Specialization', 10, null, null, 'Specialization ID'),
   ('external_id_type', 1, 1, 1, 1, 1, 50, null, 10, null, null, 'ID type'),
-  ('external_id_type', 1,0, 1, 1, 1, 50, null, 10, null, null, 'ID type')
+  ('external_id_type', 1,0, 1, 1, 1, 50, null, 10, null, null, 'ID type'),
+  ('date_to', 3, 0, 1, 1, 1, 50, null, 6, null, null, 'Date to - general (prototype)')
+
 
 
 SELECT * from dbo.MP_Specialization

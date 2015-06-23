@@ -957,7 +957,7 @@ public class DbComm_V1 implements IDbComm_model {
                     ErcLogger.println("Inserted: Supervision");
 
                     stmt = connection.prepareStatement("INSERT INTO P_Prescriptions (medication_num, dosage," +
-                            " doctor_id, date_to, patient_id) VALUES (?,?,?,?,?,?)");
+                            " doctor_id, date_to, patient_id) VALUES (?,?,?,?,?)");
                     stmt.setInt(1, Integer.parseInt(details.get("medication_num")));
                     stmt.setFloat(2, Float.parseFloat(details.get("dosage")));
                     stmt.setInt(3, getDoctorIdByLicense(details.get("P_prescriptions.doc_license_number")));
