@@ -1,6 +1,7 @@
 package CommunicationModule.src.model;
 
 import Utilities.ErcConfiguration;
+import Utilities.ErcLogger;
 
 import java.io.*;
 import java.util.*;
@@ -25,7 +26,7 @@ public class CommToMail_V1 extends CommOfficial_V1  {
     }
 
     public void sendMessage() {
-
+        ErcLogger.println(String.format("In sendMessage. msg = %s, address = %s", msgToSend, emailAddress));
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.host",host);

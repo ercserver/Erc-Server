@@ -4,6 +4,7 @@ package RequestsModule;
 import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
+import Utilities.ErcLogger;
 import Utilities.HashMapBuilder;
 import org.springframework.web.bind.annotation.*;
 import registrationModule.src.api.*;
@@ -122,6 +123,7 @@ public class RequestsHandler {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+            ErcLogger.println("No response");
         }
 
         return (new JSONObject().put("Error processing: ", reqId).toString());
@@ -230,6 +232,21 @@ public class RequestsHandler {
         try {
             IRegController rc = new RegController_V1();
             rc.verifyDetail(key);
+
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return "Email Verified";
+    }
+
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/auth_doctor")
+    public @ResponseBody String handleDoctorAuth(@RequestParam String key , @RequestParam boolean accept/*CMID right now*/){
+        String reqId = "";
+
+        try {
+            IRegController rc = new RegController_V1();
+            rc.responeToDoctorAturization(key, accept);
 
 
         }catch (Exception ex){

@@ -21,7 +21,8 @@ public class RegFieldsTest {
         DbController_V1 dbController = new DbController_V1();
         DbComm_V1 db = new DbComm_V1();
         RegVerify_V2 rv = new RegVerify_V2();
-        db.updateStatus(1089, null, "verifying email");
+        System.out.println(rc.getWaitingForDoctor(new HashMapBuilder<String, String>()
+        .put("password", "asdf").put("community_member_id", "1003").build()));
 
         /*String cmid = "1081";
         HashMap<String, String> member = new HashMap<String, String>();

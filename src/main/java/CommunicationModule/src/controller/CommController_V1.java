@@ -2,6 +2,7 @@ package CommunicationModule.src.controller;
 
 import CommunicationModule.src.api.*;
 import CommunicationModule.src.model.*;
+import Utilities.ErcLogger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +45,8 @@ public class CommController_V1 implements ICommController {
     }
     public void setCommToUsers(HashMap<Integer, HashMap<String, String>> data,
                                ArrayList<String> target,boolean initiatedComm){
+        ErcLogger.println("In setCommToUsers. data = " + data + ", target = " + target +
+        ", initiatedComm = " + initiatedComm);
         ICommToUsersFactory commToUsersFact = determineCommToUsersVersion();
         commToUsers = commToUsersFact.createComm(data,target,initiatedComm);
     }

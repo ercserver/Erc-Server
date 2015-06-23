@@ -629,8 +629,8 @@ public class DbComm_V1 implements IDbComm_model {
                     Statement statement2 = connection.createStatement();
                     // gets all relevant data about related patient that waits for doctor's approval
                     rs1 = statement2.executeQuery("SELECT DISTINCT * FROM " + "P_Patients INNER JOIN "
-                            + "P_StatusLog ON P_Patients.community_member_id=P_StatusLog.community_member_id"
-                            + "INNER JOIN P_Statuses ON P_Statuses.status_num=P_StatusLog.status_num"
+                            + " P_StatusLog ON P_Patients.community_member_id=P_StatusLog.community_member_id"
+                            + " INNER JOIN P_Statuses ON P_Statuses.status_num=P_StatusLog.status_num"
                             + " WHERE P_Patients.patient_id=" + Integer.toString(patientID) +
                             " AND P_Statuses.status_name='verifying details'");
                     // this patient is not waiting for doctor's approval
@@ -957,13 +957,12 @@ public class DbComm_V1 implements IDbComm_model {
                     ErcLogger.println("Inserted: Supervision");
 
                     stmt = connection.prepareStatement("INSERT INTO P_Prescriptions (medication_num, dosage," +
-                            "medical_condition_id, doctor_id, date_to, patient_id) VALUES (?,?,?,?,?,?)");
+                            " doctor_id, date_to, patient_id) VALUES (?,?,?,?,?,?)");
                     stmt.setInt(1, Integer.parseInt(details.get("medication_num")));
                     stmt.setFloat(2, Float.parseFloat(details.get("dosage")));
-                    stmt.setInt(3, Integer.parseInt(details.get("medical_condition_id")));
-                    stmt.setInt(4, getDoctorIdByLicense(details.get("P_prescriptions.doc_license_number")));
-                    stmt.setString(5, details.get("date_to"));
-                    stmt.setInt(6, patientID);
+                    stmt.setInt(3, getDoctorIdByLicense(details.get("P_prescriptions.doc_license_number")));
+                    stmt.setString(4, details.get("date_to"));
+                    stmt.setInt(5, patientID);
                     stmt.executeUpdate();
                     stmt.close();
                     ErcLogger.println("Inserted: Prescription");
