@@ -199,6 +199,8 @@ public class RegController_V1 implements IRegController {
             dataAuthorizer.put("Subject","Doctor Authorization for Socmed App");
             dataAuthorizer.put("first name", "doctors");
             dataAuthorizer.put("last_name", "authorizer");
+            dataAuthorizer.put("community_member_id", communityMemberId);
+            dataAuthorizer.put("confirmationOfDoctor", "");
             dataAuthorizer.put("Message",verification.generateMessgeForVerfictionDoctor(dataFilter/*data*/) );
             data =
                     verification.generateDataForAuth(dataAuthorizer, authMethod);
