@@ -636,8 +636,12 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     private String generateMailLinkForVerifications(HashMap<String, String> data) {
         ErcLogger.println("In mailVerification. parameters = " + data);
-        String rv = ErcConfiguration.VERIFY_EMAIL_URL;
         String cmid = data.get("community_member_id");
+        if(data.containsKey("confirmationOfDoctor"))
+        {
+
+        }
+        String rv = ErcConfiguration.VERIFY_EMAIL_URL;
         if (cmid != null){
             rv  += "?key=" + cmid;
         }
