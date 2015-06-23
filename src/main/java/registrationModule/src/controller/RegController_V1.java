@@ -369,7 +369,6 @@ public class RegController_V1 implements IRegController {
 //-------------------------------------------
 
     public Object resendAuth(HashMap<String, String> getData) {
-        String regid = getData.get("reg_id");
         String requestID = null;
         String message = null;
         HashMap<String,String> details = null;
@@ -457,7 +456,6 @@ public class RegController_V1 implements IRegController {
                 break;
             }
             case 1: {
-                //TODO - To be implemented in later versions
                 //String phone = data.get("phone_number");
                 break;
             }
