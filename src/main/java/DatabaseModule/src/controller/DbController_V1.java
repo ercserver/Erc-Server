@@ -279,4 +279,6 @@ public class DbController_V1 implements IDbController {
     public String getStatusByName(String statusName){return DB_communicator.getStatusByName(statusName);}
 
     public HashMap<String, String> getMedicationNameAndDosage(String prescriptionNum){return DB_communicator.getMedicationNameAndDosage(prescriptionNum);}
+
+    public boolean isEmailMemberExists(String mail){return DB_communicator.isEmailMemberExists(mail);}
 }

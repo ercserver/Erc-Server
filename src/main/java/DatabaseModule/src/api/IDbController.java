@@ -78,4 +78,5 @@ public interface IDbController  extends IDbInit, IDbComm {
     boolean doesEventHasEMS(String eventId);
     String getStatusByName(String statusName);
     HashMap<String, String> getMedicationNameAndDosage(String prescriptionNum);
+    boolean isEmailMemberExists(String mail);
 }

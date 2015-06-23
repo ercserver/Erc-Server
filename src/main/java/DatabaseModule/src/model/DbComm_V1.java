@@ -814,9 +814,9 @@ public class DbComm_V1 implements IDbComm_model {
         return (res.size() != 0);
     }
 
-    public boolean isEmailMemberExists(int cmid) {
+    public boolean isEmailMemberExists(String mail) {
         HashMap<String,String> where = new HashMap<String,String>();
-        where.put("community_member_id", Integer.toString(cmid));
+        where.put("email_address", mail);
         List<String> columns = Arrays.asList("community_member_id");
         HashMap<Integer,HashMap<String,String>> res =
                 selectFromTable("P_CommunityMembers", columns, where);
