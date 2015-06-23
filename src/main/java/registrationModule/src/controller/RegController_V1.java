@@ -45,9 +45,8 @@ public class RegController_V1 implements IRegController {
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(request.get("user_type")));
         dataToSend.get(1).put("Request_ID", "registration");
-        ArrayList<String> sendTo = sendTo(request);
         //determine how to send the data
-        commController.setCommToUsers(dataToSend, sendTo, false);
+        commController.setCommToUsers(dataToSend, null, false);
         //send the data
         return commController.sendResponse();
     }
@@ -99,9 +98,8 @@ public class RegController_V1 implements IRegController {
             }
         }
         HashMap<Integer,HashMap<String,String>> dataToSend = buildResponeWithOnlyRequestID(message, responseCode);
-        ArrayList<String> sendTo = sendTo(filledForm);
         //determine how to send the data. Initiated communication - so use "false"
-        commController.setCommToUsers(dataToSend,sendTo,false);
+        commController.setCommToUsers(dataToSend,null,false);
         //send the data
         return commController.sendResponse();
     }
@@ -417,12 +415,8 @@ public class RegController_V1 implements IRegController {
             requestID = "waitResend";
             message = "Resend successful!";
         }
-
-        //determine who to send to
-        ArrayList<String> target = new ArrayList<String>();
-        target.add(regid);
         //send
-        commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), target, false);
+        commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), null, false);
         return commController.sendResponse();
     }
 
@@ -525,8 +519,7 @@ public class RegController_V1 implements IRegController {
         rejectCodes.put("Request_ID","waitingPatients");
         rejectCodes.put("subRequest","rejectReasons");
         response.put(0,rejectCodes);
-        //determine how to send the data - initiated communication so use "false"
-        ArrayList<String> sendTo = sendTo(request);
+        //determine how to send the data - not initiated communication so use "false"
         commController.setCommToUsers(response,null,false);
         //send the data
         return commController.sendResponse();
@@ -536,21 +529,7 @@ public class RegController_V1 implements IRegController {
     {
         // verify log-in details
         HashMap<Integer,HashMap<String,String>> response = verification.verifySignIn(details);
-
-        // Sign in of doctor/ems
-        if(details.get("reg_id").equals("0"))
-        {
-            ArrayList<String> sendTo = new ArrayList<String>();
-            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
-            commController.setCommToUsers(response, sendTo, true);
-        }
-        // Sign-in of patient
-        else
-        {
-            ArrayList<String> target = new ArrayList<String>();
-            target.add(details.get("reg_id"));
-            commController.setCommToUsers(response, target, false);
-        }
+        commController.setCommToUsers(response, null, false);
         // Sends response to the proper user
         return commController.sendResponse();
     }
