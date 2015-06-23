@@ -640,7 +640,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         if(data.containsKey("confirmationOfDoctor"))
         {
 
-        }
+        }//
         String rv = ErcConfiguration.VERIFY_EMAIL_URL;
         if (cmid != null){
             rv  += "?key=" + cmid;
