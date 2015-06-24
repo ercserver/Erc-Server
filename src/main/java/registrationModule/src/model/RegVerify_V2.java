@@ -32,15 +32,11 @@ public class RegVerify_V2 implements IRegVerify_model {
         HashMap<Integer, HashMap<String, String>> responseToPatient =
                 new HashMap<Integer, HashMap<String, String>>();
         String status = getStatus(data);
-        if (status.equals("verifying details"))
-        {
-            HashMap<String, String> dataToPatient = new HashMap<String, String>();
-            dataToPatient.put("RequestID", "wait");
-            dataToPatient.put("message", "mail confirm wait for verify your medical details");
-            responseToPatient.put(1, dataToPatient);
-            return responseToPatient;
-        }
-        return null;
+        HashMap<String, String> dataToPatient = new HashMap<String, String>();
+        dataToPatient.put("RequestID", "wait");
+        dataToPatient.put("message", "mail confirm wait for verify your medical details");
+        responseToPatient.put(1, dataToPatient);
+        return responseToPatient;
     }
 
     public HashMap<String,String> getPatientAndFillterDataToSendDoctor(int cmid,String code) {
