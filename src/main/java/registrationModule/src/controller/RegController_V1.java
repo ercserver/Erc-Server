@@ -337,16 +337,17 @@ public class RegController_V1 implements IRegController {
     public Object responeToDoctorAturization(String cmid,boolean isAccept) {
         //get user password
         String password = verification.getUserPassword(cmid);
-
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo = assistantFuncs.addReceiver("EMS", sendTo);
         if (isAccept) {
             dbController.updateStatus(new Integer(cmid), "verifying details", "active");
             //0 say that type is doctor
             response =  verification.proccesOfOkMember(new Integer(cmid),"0",password);
-            commController.setCommToUsers(response, null, false);
+            commController.setCommToUsers(response, sendTo, true);
         } else {
             response = buildRejectMessage(new Integer(cmid),"doctor Authorization reject you",
                     "ask Authorization");
-            commController.setCommToUsers(response, null, false);
+            commController.setCommToUsers(response, sendTo, true);
         }
         return commController.sendResponse();
     }

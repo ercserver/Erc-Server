@@ -13,7 +13,7 @@ public class AssistantFunctions {
     private static final String GIS_URL = null;
     private static final String GIS_UNAME = null;
     private static final String GIS_PW = null;
-    private static final String EMS_URL = null;
+    private static final String EMS_URL = ErcConfiguration.EMS_SERVER_URL;
     private static final String EMS_UNAME = null;
     private static final String EMS_PW = null;
 
