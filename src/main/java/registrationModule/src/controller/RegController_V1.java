@@ -264,6 +264,20 @@ public class RegController_V1 implements IRegController {
     //-----------------------------------------------------------------------
     //confirmtion or rejection by doctor
     public Object responeByDoctor(HashMap<String, String> data) {
+        /*
+        {
+            community_member_id : the_doctor_cmid,
+            password : pwd,
+            reg_id : reg_id,
+            patient_id : the_patient_id,
+
+            // Optional - in case of rejecting patient
+                reason : reason_id,
+                explantion : string_of_explanation
+
+            //
+         }
+         */
         HashMap<Integer,HashMap<String,String>> response;
         String reason = null;
         String explantion = null;
