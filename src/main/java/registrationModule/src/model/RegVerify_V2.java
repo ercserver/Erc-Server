@@ -525,9 +525,9 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     public String convertCodeToGender(String code) {
         HashMap<String,String> defalut = new HashMap<String,String>();
-        defalut.put("column_name","'gender'");
-        defalut.put("enum_code", "'" + code + "'");
-        defalut.put("table_name","'P_CommunityMembers'");
+        defalut.put("column_name","gender");
+        defalut.put("enum_code", code );
+        defalut.put("table_name","P_CommunityMembers");
         HashMap<Integer, HashMap<String, String>> data =
                 dbController.getFromEnum(defalut);
 
