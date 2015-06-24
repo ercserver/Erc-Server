@@ -420,7 +420,10 @@ public class RegVerify_V2 implements IRegVerify_model {
             res.put("RequestID", "reject");
         // correct log-in details-accept sign-in
         else
+        {
             res.put("RequestID", "accept");
+            res.put("community_member_id", details.get("community_member_id"));
+        }
         response.put(1, res);
         return response;
     }
