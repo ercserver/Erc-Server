@@ -557,11 +557,11 @@ public class RegController_V1 implements IRegController {
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason,
                                                                        String explantion) {
-        dbController.updateStatus(cmid, "verifying details", "active");
+        dbController.updateStatus(cmid, "verifying details", "cancell");
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
-        response.put("Request_ID", "reject");
+        response.put("Request_ID", "rejectReg");
         response.put("reason", Reason);
         response.put("explantion", explantion);
         responseToPatient.put(1, response);
