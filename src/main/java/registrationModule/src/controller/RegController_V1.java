@@ -557,7 +557,7 @@ public class RegController_V1 implements IRegController {
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason,
                                                                        String explantion) {
-        dbController.updateStatus(cmid, "verifying details", "cancell");
+        dbController.updateStatus(cmid, "verifying details", "not authorized");
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
