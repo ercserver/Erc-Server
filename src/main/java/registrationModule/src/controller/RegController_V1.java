@@ -81,7 +81,10 @@ public class RegController_V1 implements IRegController {
                 String method = (0 == authMethod) ? "mail" : "sms";
                 message = "Form filled successfully. A verification " + method + " was sent to you. Please verify your registration.";
                 //Add the new community member (a new CmID is generated)
+                // Something was wronge in inserting new CMID
                 int newCmid = dbController.addNewCommunityMember(filledForm);
+                if(newCmid < 0)
+                    return null;
                 ErcLogger.println("After adding a new community member. cmid = " + newCmid);
                 //Update status to "Verifying Email"
                 dbController.updateStatus(newCmid, null, "verifying email");
