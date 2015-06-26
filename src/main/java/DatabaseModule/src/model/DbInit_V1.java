@@ -9,11 +9,11 @@ import java.sql.*;
  * Created by NAOR on 06/04/2015.
  */
 public class DbInit_V1 implements IDbInit_model {
-    static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    static final String DB_URL =/* "jdbc:sqlserver://localhost/sqlserver";*/ "jdbc:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
-    static final String DBName = /*"ercserver";*/ "socmedserver";
-    static final private String USERNAME = "saaccount";
-    static final private String PASS = "saaccount";
+    private final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private final String DB_URL =/* "jdbc:sqlserver://localhost/sqlserver";*/ "jdbc:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
+    private final String DBName = /*"ercserver";*/ "socmedserver";
+    private final  String USERNAME = "saaccount";
+    private final  String PASS = "saaccount";
     private  Connection connection = null;
     private  Statement statement = null;
 

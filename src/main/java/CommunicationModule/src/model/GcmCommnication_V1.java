@@ -15,7 +15,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
 
     // The SENDER_ID here is the "Browser Key" that was generated when I
     // created the API keys for my Google APIs project.
-    private static final String SENDER_ID = "AIzaSyBPyu_l_UJGfpvouNUcjwyyjm0RwiNtuYY";//"AIzaSyBJK4AOF4swqz5zE_5mNnVDm9CCxUJ1apQ";
+    private  final String SENDER_ID = "AIzaSyBPyu_l_UJGfpvouNUcjwyyjm0RwiNtuYY";//"AIzaSyBJK4AOF4swqz5zE_5mNnVDm9CCxUJ1apQ";
 
     public GcmCommnication_V1(HashMap<Integer,HashMap<String,String>> data,
                               ArrayList<String> target) {

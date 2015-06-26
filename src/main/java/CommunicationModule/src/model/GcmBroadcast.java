@@ -15,7 +15,7 @@ public class GcmBroadcast extends javax.servlet.http.HttpServlet {
 
     // The SENDER_ID here is the "Browser Key" that was generated when I
     // created the API keys for my Google APIs project.
-    private static final String SENDER_ID = "AIzaSyBPyu_l_UJGfpvouNUcjwyyjm0RwiNtuYY";//"AIzaSyBJK4AOF4swqz5zE_5mNnVDm9CCxUJ1apQ";
+    private  final String SENDER_ID = "AIzaSyBPyu_l_UJGfpvouNUcjwyyjm0RwiNtuYY";//"AIzaSyBJK4AOF4swqz5zE_5mNnVDm9CCxUJ1apQ";
 
     // This is a *cheat*  It is a hard-coded registration ID from an Android device
     // that registered itself with GCM using the same project id shown above.

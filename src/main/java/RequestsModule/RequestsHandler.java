@@ -4,6 +4,7 @@ package RequestsModule;
 import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
+import RequestsModule.utils.TestNewDB;
 import Utilities.ErcLogger;
 import Utilities.HashMapBuilder;
 import org.springframework.web.bind.annotation.*;
@@ -59,10 +60,12 @@ public class RequestsHandler {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/db")
     public @ResponseBody String initDB()
     {
-        DbComm_V1 db = new DbComm_V1();
-        HashMapBuilder<String, String> hashMapBuilder = new HashMapBuilder<>();
-
-        return db.getUserByParameter(hashMapBuilder.put("community_member_id","1024").build()).toString();
+        try {
+            TestNewDB.test();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "db";
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test", consumes = "application/json")

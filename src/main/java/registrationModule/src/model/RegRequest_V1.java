@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Created by NAOR on 06/04/2015.
  */
 public class RegRequest_V1 implements IRegRequest_model {
-    private static final String userExistsMessage = "An active user with this mail already exists";
+    private final String userExistsMessage = "An active user with this mail already exists";
 
     private IDbController dbController = null;
 
