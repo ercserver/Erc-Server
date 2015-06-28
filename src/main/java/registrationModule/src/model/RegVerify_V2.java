@@ -667,4 +667,10 @@ public class RegVerify_V2 implements IRegVerify_model {
         int type = dbController.getUserType(cmid);
         return ((type == 0) || (type == 2));
     }
+
+    public boolean isDoctorOrEMS(String cmid)
+    {
+        int type = dbController.getUserType(cmid);
+        return ((type == 1) || (type == 3));
+    }
 }

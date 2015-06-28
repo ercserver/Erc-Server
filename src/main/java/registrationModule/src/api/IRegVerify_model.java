@@ -54,4 +54,6 @@ public interface IRegVerify_model {
     String initState(String state);
 
     boolean isPatientOrGuardian(String cmid);
+
+    boolean isDoctorOrEMS(String cmid);
 }
