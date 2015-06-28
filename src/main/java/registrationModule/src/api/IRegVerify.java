@@ -26,6 +26,4 @@ public interface IRegVerify {
     // TODO: Ohad
     Object handleForgotPassword(HashMap<String, String> data);
 
-    boolean isPatientOrGuardian(String cmid);
-
 }
