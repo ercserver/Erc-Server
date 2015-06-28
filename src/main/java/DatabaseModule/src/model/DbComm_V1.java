@@ -29,6 +29,7 @@ public class DbComm_V1 implements IDbComm_model {
     private Connection connection = null;
     private Statement statement = null;
 
+    private ErcLogger logger = new ErcLogger();
 
     private  void connect() throws SQLException
     {
@@ -231,7 +232,7 @@ public class DbComm_V1 implements IDbComm_model {
                     l.add("enum_value");
                     l.add("enum_code");
                     HashMap<String, String> conds1 = new HashMap<String, String>();
-                    ErcLogger.println(tableName.split("\\.")[0].toString());
+                    logger.println(tableName.split("\\.")[0].toString());
                     conds1.put("table_name", tableName.split("\\.")[1]);
                     conds1.put("column_name", tableName.split("\\.")[2] );
                     HashMap<Integer, HashMap<String, String>> h = selectFromTable("Enum", l, conds1);
@@ -348,7 +349,7 @@ public class DbComm_V1 implements IDbComm_model {
             Set<String> keys1 = whereConditions.keySet();
             int  parameterIndex = 1;
             for (String key1 : keys1){
-                ErcLogger.println("key: " + key1 + " val: " +  whereConditions.get(key1));
+                logger.println("key: " + key1 + " val: " +  whereConditions.get(key1));
                 stmt.setObject(parameterIndex, whereConditions.get(key1));
                 parameterIndex++;
             }
@@ -696,7 +697,7 @@ public class DbComm_V1 implements IDbComm_model {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            ErcLogger.println("exception in resultSetToMap");
+            logger.println("exception in resultSetToMap");
         }
         return map;
     }
@@ -835,7 +836,7 @@ public class DbComm_V1 implements IDbComm_model {
 
            - output: the created cmid
          */
-        ErcLogger.println("In addNewCommunityMember. Parameters = " + details);
+        logger.println("In addNewCommunityMember. Parameters = " + details);
         int cmid = -1;
         try {
             // Validate connection
@@ -869,10 +870,10 @@ public class DbComm_V1 implements IDbComm_model {
 
             if (rs.next()) {
                 cmid = rs.getInt(1);
-                ErcLogger.println("New Generated CMID = " + cmid);
+                logger.println("New Generated CMID = " + cmid);
             } else{
                 // There was a problem inserting the new member
-                ErcLogger.println("Problem getting the newly generated cmid");
+                logger.println("Problem getting the newly generated cmid");
                 return -1;
             }
             stmt.close();
@@ -889,7 +890,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
-            ErcLogger.println("Inserted: Login Details");
+            logger.println("Inserted: Login Details");
 
             // Insert contact info
             stmt = connection.prepareStatement("INSERT INTO P_EmergencyContact (community_member_id, contact_phone) VALUES (?,?)");
@@ -898,7 +899,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
-            ErcLogger.println("Inserted: Emergency contact");
+            logger.println("Inserted: Emergency contact");
 
 
             // Insert availability hours
@@ -912,7 +913,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
-            ErcLogger.println("Inserted: Availabilty");
+            logger.println("Inserted: Availabilty");
 
             /* Insert the details based on the user type */
             int userType = Integer.parseInt(details.get("user_type"));
@@ -926,7 +927,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
             stmt.close();
 
-            ErcLogger.println("Inserted: Type Log");
+            logger.println("Inserted: Type Log");
 
             switch(userType){
                 case 0:
@@ -945,7 +946,7 @@ public class DbComm_V1 implements IDbComm_model {
                         return -1;
                     }
                     stmt.close();
-                    ErcLogger.println("Inserted: Patient");
+                    logger.println("Inserted: Patient");
                     // Supervision
 
                     stmt = connection.prepareStatement("INSERT INTO P_Supervision (doctor_id, patient_id) " +
@@ -954,7 +955,7 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt.setInt(2, patientID);
                     stmt.executeUpdate();
                     stmt.close();
-                    ErcLogger.println("Inserted: Supervision");
+                    logger.println("Inserted: Supervision");
 
                     stmt = connection.prepareStatement("INSERT INTO P_Prescriptions (medication_num, dosage," +
                             " doctor_id, date_to, patient_id) VALUES (?,?,?,?,?)");
@@ -965,7 +966,7 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt.setInt(5, patientID);
                     stmt.executeUpdate();
                     stmt.close();
-                    ErcLogger.println("Inserted: Prescription");
+                    logger.println("Inserted: Prescription");
 
                     stmt = connection.prepareStatement("INSERT INTO P_Diagnosis (patient_id, medical_condition_id," +
                             "doctor_id, date_to) VALUES (?,?,?,?)");
@@ -975,7 +976,7 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt.setString(4, details.get("date_to"));
                     stmt.executeUpdate();
                     stmt.close();
-                    ErcLogger.println("Inserted: Diagnosis");
+                    logger.println("Inserted: Diagnosis");
 
                     break;
 
@@ -1120,7 +1121,7 @@ public class DbComm_V1 implements IDbComm_model {
     // the status format should be:'status-name'
     public void updateStatus(int cmid, String oldStatus, String newStatus)
     {
-        ErcLogger.println("In Update Status Parameters = " + cmid + ", " + oldStatus + ", " + newStatus);
+        logger.println("In Update Status Parameters = " + cmid + ", " + oldStatus + ", " + newStatus);
         try
         {
             HashMap<String,String> cond = new HashMap<String,String>();
@@ -1145,11 +1146,11 @@ public class DbComm_V1 implements IDbComm_model {
             cond.clear();
             cond.put("status_name", newStatus);
             // gets status number of the givven new status
-            ErcLogger.println("cond = " + cond);
+            logger.println("cond = " + cond);
             s = getRowsFromTable(cond, "P_Statuses");
-            ErcLogger.println("s = " + s);
+            logger.println("s = " + s);
             val = s.values();
-            ErcLogger.println("val = " + val);
+            logger.println("val = " + val);
             statusNum = val.iterator().next().get("status_num");
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();

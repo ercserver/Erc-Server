@@ -19,6 +19,8 @@ public class CommToMail_V1 extends CommOfficial_V1  {
     private final String password = ErcConfiguration.EMAIL_PASSWORD;
     private final String host = ErcConfiguration.EMAIL_HOST;
 
+    private ErcLogger logger=  new ErcLogger();
+
     //C'tor
     public CommToMail_V1(HashMap<String,String> data){
         super(data);
@@ -26,7 +28,7 @@ public class CommToMail_V1 extends CommOfficial_V1  {
     }
 
     public void sendMessage() {
-        ErcLogger.println(String.format("In sendMessage. msg = %s, address = %s", msgToSend, emailAddress));
+        logger.println(String.format("In sendMessage. msg = %s, address = %s", msgToSend, emailAddress));
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.host",host);

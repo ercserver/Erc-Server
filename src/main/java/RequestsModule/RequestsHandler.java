@@ -45,7 +45,7 @@ public class RequestsHandler {
     private final String CLOSEST_EMS = "closestEMS";
     private final String FOLLOW_USER = "followUser";
 
-
+    private ErcLogger logger = new ErcLogger();
 
     // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
     public RequestsHandler(){
@@ -126,7 +126,7 @@ public class RequestsHandler {
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            ErcLogger.println("No response");
+            logger.println("No response");
         }
 
         return (new JSONObject().put("Error processing: ", reqId).toString());

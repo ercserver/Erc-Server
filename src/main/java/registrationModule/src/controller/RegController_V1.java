@@ -29,6 +29,8 @@ public class RegController_V1 implements IRegController {
     private AssistantFunctions assistantFuncs = null;
     private PatientDetails patientD = null;
 
+    private ErcLogger logger = new ErcLogger();
+
     public RegController_V1(){
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
@@ -40,7 +42,7 @@ public class RegController_V1 implements IRegController {
     }
 
     public Object getRegDetails(HashMap<String,String> request) {
-        ErcLogger.println("In getRegDetails. params = " + request);
+        logger.println("In getRegDetails. params = " + request);
         //generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(request.get("user_type")));
@@ -52,7 +54,7 @@ public class RegController_V1 implements IRegController {
     }
 
     public Object handleReg(HashMap<String, String> filledForm) {
-        ErcLogger.println("In handleReg. params = " + filledForm);
+        logger.println("In handleReg. params = " + filledForm);
         //if the user exists (registration model decides how to determine that)
         String message = registrator.doesUserExist(filledForm);
         String responseCode = null;
@@ -77,7 +79,7 @@ public class RegController_V1 implements IRegController {
                 responseCode = "wait";
                 //Get authorization method from db
                 int authMethod = dbController.getAuthenticationMethod(filledForm.get("state"));
-                ErcLogger.println("authMethod = " + authMethod);
+                logger.println("authMethod = " + authMethod);
                 String method = (0 == authMethod) ? "mail" : "sms";
                 message = "Form filled successfully. A verification " + method + " was sent to you. Please verify your registration.";
                 //Add the new community member (a new CmID is generated)
@@ -85,10 +87,10 @@ public class RegController_V1 implements IRegController {
                 int newCmid = dbController.addNewCommunityMember(filledForm);
                 if(newCmid < 0)
                     return null;
-                ErcLogger.println("After adding a new community member. cmid = " + newCmid);
+                logger.println("After adding a new community member. cmid = " + newCmid);
                 //Update status to "Verifying Email"
                 dbController.updateStatus(newCmid, null, "verifying email");
-                ErcLogger.println("After updating status to verifying email");
+                logger.println("After updating status to verifying email");
                 //Generate data for the authorization message
                 filledForm.put("Message", generateMessageForAuth(newCmid,filledForm.get("Password")));
                 filledForm.put("Subject","Confirm your email for Socmed App");
@@ -158,7 +160,7 @@ public class RegController_V1 implements IRegController {
         if (null != regID){
             sendTo = new ArrayList<String>();
             sendTo.add(regID);
-            ErcLogger.println("In snedTo, regID = " + regID);
+            logger.println("In snedTo, regID = " + regID);
         }
         return sendTo;
     }

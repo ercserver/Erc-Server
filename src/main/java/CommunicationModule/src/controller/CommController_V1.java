@@ -14,6 +14,7 @@ public class CommController_V1 implements ICommController {
     //version to use - change this to change version - edit decision methos in accordance
     private final int commToUsersVersion = 1;
     private final int commOfficialVersion = 1;
+    private ErcLogger logger = new ErcLogger();
 
     //holding the implementations chosen for the interface (composition)
     private ICommToUsers_model commToUsers = null;
@@ -45,7 +46,7 @@ public class CommController_V1 implements ICommController {
     }
     public void setCommToUsers(HashMap<Integer, HashMap<String, String>> data,
                                ArrayList<String> target,boolean initiatedComm){
-        ErcLogger.println("In setCommToUsers. data = " + data + ", target = " + target +
+        logger.println("In setCommToUsers. data = " + data + ", target = " + target +
         ", initiatedComm = " + initiatedComm);
         ICommToUsersFactory commToUsersFact = determineCommToUsersVersion();
         commToUsers = commToUsersFact.createComm(data,target,initiatedComm);

@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" build-on-make="true" name="Erc-Server:war exploded">
+  <artifact type="exploded-war" name="Erc-Server:war exploded">
     <output-path>$PROJECT_DIR$/target/Erc-Server</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
@@ -34,14 +34,12 @@
           <element id="library" level="project" name="Maven: asm:asm:3.1" />
           <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.8.2" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.0" />
-          <element id="library" level="project" name="sqljdbc4" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="C:\Users\User\IdeaProjects\Erc-Server\target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/Erc-Server/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="Erc-Server/web/Web" />
-      <element id="library" level="project" name="sqljdbc4" />
     </root>
   </artifact>
 </component>

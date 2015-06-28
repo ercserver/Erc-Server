@@ -10,8 +10,11 @@ import java.util.Map;
 
 
 public class JSONResponseCreator implements IResponseCreator {
+
+    private ErcLogger logger = new ErcLogger();
+
     public JSONArray establishResponse(HashMap<Integer,HashMap<String,String>> data) {
-        ErcLogger.println("In establishResponse: param = " + data);
+        logger.println("In establishResponse: param = " + data);
         JSONArray objsToSend = new JSONArray();
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();
