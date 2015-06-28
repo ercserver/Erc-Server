@@ -661,4 +661,10 @@ public class RegVerify_V2 implements IRegVerify_model {
     private HashMap<String,String> generateVerificationForSMS(HashMap<String, String> data){
         return null;
     }
+
+    public boolean isPatientOrGuardian(String cmid)
+    {
+        int type = dbController.getUserType(cmid);
+        return ((type == 0) || (type == 2));
+    }
 }

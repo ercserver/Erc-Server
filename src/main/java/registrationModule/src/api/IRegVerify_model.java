@@ -52,4 +52,6 @@ public interface IRegVerify_model {
     String getUserPassword(String cmid);
 
     String initState(String state);
+
+    boolean isPatientOrGuardian(String cmid);
 }

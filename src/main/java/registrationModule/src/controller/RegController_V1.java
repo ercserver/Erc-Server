@@ -183,7 +183,7 @@ public class RegController_V1 implements IRegController {
         //send details to app or website that say wait, your details checking
         changeStatusToVerifyDetailAndSendToApp(cmid,regid, target,details);
 
-        if (verification.ifTypeISPatientOrGuardian(regid)) {
+        if (verification.isPatientOrGuardian(communityMemberId)) {
 
             //dataFilter = verification.getPatientAndFillterDataToSendDoctor(cmid,regid);
             HashMap<String,String> doctorData = verification.getSupervision(details.get("P_supervision.doc_license_number"));
