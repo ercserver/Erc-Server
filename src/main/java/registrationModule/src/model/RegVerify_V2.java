@@ -636,6 +636,8 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     private String generateMailLinkForVerifications(HashMap<String, String> data) {
+        if(data.keySet().contains("noLinks"))
+            return "";
         logger.println("In mailVerification. parameters = " + data);
         String cmid = data.get("community_member_id");
         String rv = "server_error";

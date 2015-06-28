@@ -190,7 +190,7 @@ public class RegController_V1 implements IRegController {
             doctorData.put("Subject", "Confirm wating patient");
             doctorData.put("Message", "you have new wating patient for your verification" + ".\n"
                     + " please enter to your website! ");
-
+            doctorData.put("noLinks", "");
             data =
                     verification.generateDataForAuth(doctorData, authMethod);
 
