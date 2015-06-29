@@ -92,7 +92,7 @@ public class RegController_V1 implements IRegController {
                 dbController.updateStatus(newCmid, null, "verifying email");
                 logger.println("After updating status to verifying email");
                 //Generate data for the authorization message
-                filledForm.put("Message", generateMessageForAuth(newCmid,filledForm.get("Password")));
+                filledForm.put("Message", generateMessageForAuth(newCmid,filledForm.get("password")));
                 filledForm.put("Subject","Confirm your email for Socmed App");
                 filledForm.put("community_member_id", Integer.toString(newCmid));
                 HashMap<String, String> data = verification.generateDataForAuth(filledForm,authMethod);
