@@ -46,7 +46,7 @@ public class RegController_V1 implements IRegController {
         //generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(request.get("user_type")));
-        dataToSend.get(1).put("Request_ID", "registration");
+        dataToSend.get(1).put("RequestID", "registration");
         //determine how to send the data
         commController.setCommToUsers(dataToSend, null, false);
         //send the data
@@ -258,7 +258,7 @@ public class RegController_V1 implements IRegController {
     {
         HashMap<Integer,HashMap<String,String>> res = new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> dataToSend = new HashMap<String, String>();
-        dataToSend.put("Request_ID", code);
+        dataToSend.put("RequestID", code);
         dataToSend.put("message", message);
         res.put(1, dataToSend);
         return res;
@@ -540,7 +540,7 @@ public class RegController_V1 implements IRegController {
         logger.println("In getWaitingForDoctor: response = " + response);
         //adding reject reasons object (with "subRequest" to make it identifiable)
         HashMap<String,String> rejectCodes = dbController.getRejectCodes();
-        rejectCodes.put("Request_ID","waitingPatients");
+        rejectCodes.put("RequestID","waitingPatients");
         rejectCodes.put("subRequest","rejectReasons");
         response.put(0,rejectCodes);
         //determine how to send the data - not initiated communication so use "false"
@@ -571,7 +571,7 @@ public class RegController_V1 implements IRegController {
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
-        response.put("Request_ID", "rejectReg");
+        response.put("RequestID", "rejectReg");
         response.put("reason", reason);
         response.put("explanation", explanation);
         responseToPatient.put(1, response);
