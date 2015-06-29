@@ -626,7 +626,6 @@ public class DbComm_V1 implements IDbComm_model {
             else
             {
                 ArrayList<String> res = new ArrayList<String>();
-                int numOfPatients = 0;
                 do
                 {
                     int patientID = rs.getInt("patient_id");
@@ -636,18 +635,13 @@ public class DbComm_V1 implements IDbComm_model {
                             + " P_StatusLog ON P_Patients.community_member_id=P_StatusLog.community_member_id"
                             + " INNER JOIN P_Statuses ON P_Statuses.status_num=P_StatusLog.status_num"
                             + " WHERE P_Patients.patient_id=" + Integer.toString(patientID) +
-                            " AND P_Statuses.status_name='verifying details'");
+                            " AND P_Statuses.status_name='verifying details' AND P_StatusLog.date_to IS NULL");
                     // this patient is not waiting for doctor's approval
-                    if (!rs1.next()) {
-
+                    if (!rs1.next())
                         continue;
-                    }
                     // gets patient's cmid
                     else
-                    {
-                        numOfPatients++;
                         res.add(Integer.toString(rs1.getInt("community_member_id")));
-                    }
                 }while (rs.next());
                 return res;
             }
