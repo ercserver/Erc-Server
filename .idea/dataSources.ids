@@ -804,9 +804,9 @@
       <foreign-key name="FK__RefreshDe__Commu__79F2F81D" columns="community_member_id" ref-table="P_CommunityMembers" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="community_member_id" update-rule="1" delete-rule="1" deferrability="2"/>
     </table>
     <table name="RegIDs" schema="dbo" catalog="socmedserver" type="TABLE">
-      <column name="reg_id" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="reg_id" sqlType="varchar" precision="200" scale="0" nullable="false" jdbcType="12"/>
       <column name="community_member_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PK__RegIDs__2C6821181F247CCC" columns="reg_id"/>
+      <primary-key name="PK__RegIDs__740387726C2EE8AB" columns="reg_id"/>
     </table>
     <table name="RegistrationFields" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="field_name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>

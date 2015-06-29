@@ -59,9 +59,19 @@
     <orderEntry type="library" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-server:1.2" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.2" level="project" />
-    <orderEntry type="library" name="Maven: javax.ws.rs:jsr311-api:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: asm:asm:3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.8.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.ws.rs:jsr311-api:1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: asm:asm:3.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.jsoup:jsoup:1.8.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.commons:commons-lang3:3.0" level="project" />
+    <orderEntry type="library" exported="" name="sqljdbc4" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/sqljdbc4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

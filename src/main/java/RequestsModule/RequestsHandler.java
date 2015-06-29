@@ -115,10 +115,10 @@ public class RequestsHandler {
                     return rc.resendAuth(requestMap).toString();
 
                 case CONFIRM_PATIENT:
-                    rc.responeByDoctor(requestMap);
+                    rc.responeByDoctor(requestMap, true);
                     break;
                 case REJECT_PATIENT:
-                    rc.responeByDoctor(requestMap);
+                    rc.responeByDoctor(requestMap, false);
                     break;
                 default:
                     // Do nothing...
@@ -134,6 +134,7 @@ public class RequestsHandler {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")
     public @ResponseBody String handleRoutineRequests(@RequestBody String request){
+        logger.println("In routine requests. param = " + request);
         JSONObject data = new JSONObject(request);
         HashMapCreator hmc = new HashMapCreator();
         HashMap<String, String> requestMap = hmc.jsonToMap(data);

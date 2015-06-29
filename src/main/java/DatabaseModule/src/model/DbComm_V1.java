@@ -605,6 +605,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     public ArrayList<String> getWaitingPatientsCMID(int docCMID)
     {
+        logger.println("In getWaitingPatientsCMID. param = " + docCMID);
         ResultSet rs = null;
         ResultSet rs1 = null;
         try
@@ -618,8 +619,10 @@ public class DbComm_V1 implements IDbComm_model {
                     + "WHERE P_Doctors.community_member_id="
                     + Integer.toString(docCMID));
             // no patient related for this doctor
-            if(!rs.next())
+            if(!rs.next()) {
+                logger.println("In getWaitingPatientsCMID. No awaiting patients found");
                 return null;
+            }
             else
             {
                 ArrayList<String> res = new ArrayList<String>();
@@ -635,8 +638,10 @@ public class DbComm_V1 implements IDbComm_model {
                             + " WHERE P_Patients.patient_id=" + Integer.toString(patientID) +
                             " AND P_Statuses.status_name='verifying details'");
                     // this patient is not waiting for doctor's approval
-                    if (!rs1.next())
+                    if (!rs1.next()) {
+
                         continue;
+                    }
                     // gets patient's cmid
                     else
                     {
@@ -1177,10 +1182,12 @@ public class DbComm_V1 implements IDbComm_model {
         {
             if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
                 connect();
-            statement = connection.createStatement();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO RegIDs (reg_id,community_member_id) VALUES " +
+                    "(?,?)");
+            stmt.setObject(1, regId);
+            stmt.setObject(2, cmid);
             // inserts the regid to the regIDs table
-            statement.execute("INSERT INTO RegIDs (reg_id,community_member_id) VALUES (" +
-                    regId + "," + Integer.toString(cmid) + ")");
+            stmt.executeUpdate();
         }
         catch (SQLException e) {e.printStackTrace();}
         finally

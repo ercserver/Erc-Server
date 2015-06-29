@@ -298,7 +298,7 @@ public class DbInit_V1 implements IDbInit_model {
                     +"date_to Datetime)");
             //connection.commit();
             statement.addBatch("CREATE TABLE RegIDs ("
-                    +"reg_id VARCHAR(100) NOT NULL PRIMARY KEY,"
+                    +"reg_id VARCHAR(200) NOT NULL PRIMARY KEY,"
                     +"community_member_id INT NOT NULL)");
 
             statement.addBatch("CREATE TABLE Availability ("

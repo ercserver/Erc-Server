@@ -15,7 +15,7 @@ public interface IRegVerify {
 
     // if doctor reject we send reason in string reason
     //else we send null
-    Object responeByDoctor(HashMap<String, String> data);
+    Object responeByDoctor(HashMap<String, String> data, boolean isConfirmation);
 
 
     //TODO

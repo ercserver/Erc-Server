@@ -268,7 +268,7 @@ public class RegController_V1 implements IRegController {
 
     //-----------------------------------------------------------------------
     //confirmtion or rejection by doctor
-    public Object responeByDoctor(HashMap<String, String> data) {
+    public Object responeByDoctor(HashMap<String, String> data, boolean isConfirmation) {
         /*
         {
             community_member_id : the_doctor_cmid,
@@ -278,19 +278,19 @@ public class RegController_V1 implements IRegController {
 
             // Optional - in case of rejecting patient
                 reason : reason_id,
-                explantion : string_of_explanation
+                explanation : string_of_explanation
 
             //
          }
          */
         HashMap<Integer,HashMap<String,String>> response;
         String reason = null;
-        String explantion = null;
+        String explanation = null;
         int cmidDoctor = Integer.parseInt(data.get("community_member_id"));
         String password = data.get("password");
-        if (data.keySet().contains("reason") && data.keySet().contains("explantion")) {
+        if (data.keySet().contains("reason") || data.keySet().contains("explanation")) {
             reason = data.get("reason");
-            explantion = data.get("explantion");
+            explanation = data.get("explanation");
         }
 
 
@@ -309,7 +309,7 @@ public class RegController_V1 implements IRegController {
         target.add(regid);
         //int cm = 0; //change
         if (checkCmidAndPassword(password, cmidDoctor)) {
-            if (reason == null) {
+            if (isConfirmation) {
                 dbController.updateStatus(cmidPatient, "verifying details", "active");
                 //we send regid != 0 to say that type is patient
                 response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid,password);
@@ -319,7 +319,7 @@ public class RegController_V1 implements IRegController {
             }
             else
             {
-                 response = buildRejectMessage(new Integer(communityMemberId), reason, explantion);
+                 response = buildRejectMessage(new Integer(communityMemberId), reason, explanation);
                  commController.setCommToUsers(response, target, false);
                  commController.sendResponse();
 
@@ -369,7 +369,7 @@ public class RegController_V1 implements IRegController {
         if (0 == type) {
             int cmid = Integer.parseInt(details.get("community_member_id"));
             dbController.deleteUser(cmid);
-            response = buildRejectMessage(cmid, "reject_by_authentication", explantion);
+            response = buildRejectMessage(cmid, "reject_by_authentication", explanation);
             commController.setCommToUsers(response, null, false);
         }
         //accept
@@ -514,27 +514,31 @@ public class RegController_V1 implements IRegController {
     }
 
     public Object getWaitingForDoctor(HashMap<String,String> request) {
+        logger.println("In getWaitingForDoctor. param = " + request);
         String password = request.get("password");
         int cmid = Integer.parseInt(request.get("community_member_id"));
         /*if(checkCmidAndPassword(password,cmid)){
 
         }*/
-
+        logger.println("In getWaitingForDoctor. cmid = " + cmid);
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
         //Pull from the db the list of patient that are pending the doctor's confirmation
         ArrayList<String> listOfPatients = dbController.getWaitingPatientsCMID(cmid);
+        logger.println("In getWaitingForDoctor: listOfPatients = " + listOfPatients);
         //user isn't a doctor - we don't serve this request. Return null
-        if(null == listOfPatients){
+        if(null == listOfPatients || listOfPatients.isEmpty()){
             return null;
         }
         //for each cmid in the list received - filter fields and add to the response
         int index = 1;
         for(String currCmid : listOfPatients){
+            logger.println("In getWaitingForDoctor: patient cmid: " + currCmid);
             HashMap<String,String> whereConditions = new HashMap<String, String>();
             whereConditions.put("P_CommunityMembers.community_member_id", currCmid);
             response.put(index,registrator.filterFieldsForDoctorAuth(dbController.getUserByParameter(whereConditions)));
             index++;
         }
+        logger.println("In getWaitingForDoctor: response = " + response);
         //adding reject reasons object (with "subRequest" to make it identifiable)
         HashMap<String,String> rejectCodes = dbController.getRejectCodes();
         rejectCodes.put("Request_ID","waitingPatients");
@@ -561,14 +565,14 @@ public class RegController_V1 implements IRegController {
     }
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason,
-                                                                       String explantion) {
+                                                                       String explanation) {
         dbController.updateStatus(cmid, "verifying details", "not authorized");
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
         response.put("Request_ID", "rejectReg");
         response.put("reason", Reason);
-        response.put("explantion", explantion);
+        response.put("explanation", explanation);
         responseToPatient.put(1, response);
         return responseToPatient;
     }
