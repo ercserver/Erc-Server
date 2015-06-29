@@ -29,7 +29,7 @@ public class AssistantFunctions {
     {
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("P_CommunityMembers.community_member_id", Integer.toString(cmid));
-        conds.put("MembersLoginDetails.password", "'" + password + "'");
+        conds.put("MembersLoginDetails.password", password);
         return(null != dbController.getUserByParameter(conds));
     }
 

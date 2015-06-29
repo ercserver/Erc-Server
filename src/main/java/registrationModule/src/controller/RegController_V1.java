@@ -564,14 +564,16 @@ public class RegController_V1 implements IRegController {
         return null;
     }
 
-    private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String Reason,
+    private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String reason,
                                                                        String explanation) {
+        logger.println(String.format("In buildRejectMessage. params = cmid=%d, Reason=%s, explanation=%s",
+                cmid, reason, explanation));
         dbController.updateStatus(cmid, "verifying details", "not authorized");
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
         HashMap<String,String> response = new HashMap<String, String>();
         response.put("Request_ID", "rejectReg");
-        response.put("reason", Reason);
+        response.put("reason", reason);
         response.put("explanation", explanation);
         responseToPatient.put(1, response);
         return responseToPatient;

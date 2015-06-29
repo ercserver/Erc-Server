@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import registrationModule.src.controller.RegController_V1;
 import sun.applet.Main;
 
 import java.io.IOException;
@@ -23,7 +24,8 @@ import java.util.List;
 public class MainTest {
     public static void main(String[] args) {
         MainTest mt = new MainTest();
-        mt.emsTest();
+        RegController_V1 rc = new RegController_V1();
+        rc.responeToDoctorAturization("1083", true);
 
     }
     private void emsTest(){
