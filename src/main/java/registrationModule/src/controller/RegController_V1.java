@@ -319,10 +319,9 @@ public class RegController_V1 implements IRegController {
             }
             else
             {
-                 response = buildRejectMessage(new Integer(communityMemberId), reason, explanation);
-                 commController.setCommToUsers(response, target, false);
-                 commController.sendResponse();
-
+                response = buildRejectMessage(cmidPatient, reason, explanation);
+                commController.setCommToUsers(response, target, false);
+                commController.sendResponse();
             }
         }   //verification.responeDoctor(cmid, reason,regid);
         return null;
