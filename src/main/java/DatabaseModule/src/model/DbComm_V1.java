@@ -706,7 +706,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     private HashMap<Integer,HashMap<String,String>> selectFromTable
             (String tableName, List<String> columns, HashMap<String,String> whereConds){
-
+        logger.println("   In selectFromTable");
         // Create the select clause
         String selectString;
         if (columns == null) { //Select *
@@ -771,6 +771,7 @@ public class DbComm_V1 implements IDbComm_model {
                 }
                 catch (Exception e) {e.printStackTrace();}
             }
+            logger.println("   Existing selectFromTable");
         }
         return null;
     }

@@ -83,11 +83,11 @@ public class RequestsHandler {
         JSONObject json = new JSONObject(data);
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         String reqId = "";
-
+        logger.println("After parsing request");
         try {
             IRegController rc = new RegController_V1();
             reqId = requestMap.get(REQ_ID);
-
+            logger.println("Before switch. reqID = " + reqId);
             switch (reqId) {
                 case REGISTRATION:
                     return rc.getRegDetails(requestMap).toString();
