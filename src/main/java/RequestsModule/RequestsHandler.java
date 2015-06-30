@@ -78,14 +78,11 @@ public class RequestsHandler {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/registration")
     public @ResponseBody String handleRegistrationRequests(@RequestBody String data){
+        logger.println("In Registration. params = " + data);
         HashMapCreator hmc = new HashMapCreator();
         JSONObject json = new JSONObject(data);
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         String reqId = "";
-        System.out.println("in registration");
-        System.out.println("data:");
-        System.out.println(data);
-
 
         try {
             IRegController rc = new RegController_V1();
@@ -93,21 +90,7 @@ public class RequestsHandler {
 
             switch (reqId) {
                 case REGISTRATION:
-                    String s = rc.getRegDetails(requestMap).toString();
-                    PrintWriter writer = null;
-                    try {
-                        writer = new PrintWriter("log.txt", "UTF-8");
-                        writer.print(s);
-
-                        writer.close();
-                        return s;
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-
-                break;
+                    return rc.getRegDetails(requestMap).toString();
                 case SIGNUP:
                     return rc.handleReg(requestMap).toString();
 
@@ -198,7 +181,7 @@ public class RequestsHandler {
         return rv;
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis")
+     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis")
     public @ResponseBody String handleEmergencyRequests(@RequestBody String request){
         JSONObject data = new JSONObject(request);
         HashMapCreator hmc = new HashMapCreator();
@@ -219,6 +202,7 @@ public class RequestsHandler {
                 case FOLLOW_USER:
                     ec.receiveArrivalTime(requestMap);
                     break;
+
                 default:
                     // Do nothing...
                     break;
@@ -228,6 +212,9 @@ public class RequestsHandler {
         }
         return rv;
     }
+
+
+
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/verify_email")
     public @ResponseBody String handleEmailVerification(@RequestParam String key /*CMID right now*/){

@@ -3,6 +3,7 @@ package DatabaseModule.src.controller;
 
 import DatabaseModule.src.api.*;
 import DatabaseModule.src.model.*;
+import Utilities.ErcLogger;
 
 import java.util.*;
 
@@ -10,6 +11,8 @@ import java.util.*;
  * Created by NAOR on 06/04/2015.
  */
 public class DbController_V1 implements IDbController {
+    ErcLogger logger = new ErcLogger();
+
     private final int dbInitVersion = 1;
     private final int dbCommVersion = 1;
 
@@ -24,7 +27,6 @@ public class DbController_V1 implements IDbController {
 
 	//key = Email/InternalID vlaue = cmid do to string by class to  string/mail('') staring a  = "'aaaa'";
     public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType) {
-        System.out.println("userType");
         return DB_communicator.getRegistrationFields(userType);
     }
 

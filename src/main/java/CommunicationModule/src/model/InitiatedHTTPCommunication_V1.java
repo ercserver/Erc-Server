@@ -20,12 +20,11 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
     }
 
     public JSONArray sendResponse () {
-
+        logger.println("In HTTP.sendResponse");
         //communicate the JSON file to each target URL provided
         for(int i = 0; i < targets.size(); i+=3) {
             try {
-                logger.println("In sendResponse. params(" + i + ") = " + targets.get(i));
-                logger.println("In sendResponse. objToSend = " + objToSend);
+
                 Jsoup.connect(targets.get(i))
                         .data("username", targets.get(i+1))
                         .data("password", targets.get(i+2))
@@ -38,6 +37,7 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
                 e.printStackTrace();
             }
         }
+        logger.println("exiting HTTP.sendResponse");
         return null;
     }
 }

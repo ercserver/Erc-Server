@@ -49,7 +49,9 @@ public class RegController_V1 implements IRegController {
         dataToSend.get(1).put("RequestID", "registration");
         //determine how to send the data
         commController.setCommToUsers(dataToSend, null, false);
+
         //send the data
+
         return commController.sendResponse();
     }
 

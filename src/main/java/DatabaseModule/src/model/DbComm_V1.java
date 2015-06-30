@@ -160,6 +160,7 @@ public class DbComm_V1 implements IDbComm_model {
     private  HashMap<Integer,HashMap<String,String>>
     getRowsFromTable(HashMap<String,String> whereConditions, String tableName)
     {
+        logger.println("   In getRowsFromTable");
         String conditions = "";
 
         if(whereConditions == null) {
@@ -200,6 +201,7 @@ public class DbComm_V1 implements IDbComm_model {
 
             rs = stmt.executeQuery();
             HashMap<Integer, HashMap<String, String>> hash = resultSetToMap(rs);
+            logger.println("   exiting getRowsFromTable");
             return hash;
 
         }
@@ -212,6 +214,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)
     {
+        logger.println("In getRegistrationFields. userType = " + userType);
         HashMap<String,String> conds = new HashMap<String,String>();
         conds.put("user_type", Integer.toString(userType));
         // gets registration fields according to the givven usetType
@@ -232,7 +235,6 @@ public class DbComm_V1 implements IDbComm_model {
                     l.add("enum_value");
                     l.add("enum_code");
                     HashMap<String, String> conds1 = new HashMap<String, String>();
-                    logger.println(tableName.split("\\.")[0].toString());
                     conds1.put("table_name", tableName.split("\\.")[1]);
                     conds1.put("column_name", tableName.split("\\.")[2] );
                     HashMap<Integer, HashMap<String, String>> h = selectFromTable("Enum", l, conds1);
@@ -276,6 +278,7 @@ public class DbComm_V1 implements IDbComm_model {
 
             }
         }
+        logger.println("   exiting getRegistrationFields");
         return ret;
     }
 

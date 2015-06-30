@@ -50,6 +50,7 @@ public class CommController_V1 implements ICommController {
         ", initiatedComm = " + initiatedComm);
         ICommToUsersFactory commToUsersFact = determineCommToUsersVersion();
         commToUsers = commToUsersFact.createComm(data,target,initiatedComm);
+        logger.println("exiting setCommToUsers");
     }
 
 

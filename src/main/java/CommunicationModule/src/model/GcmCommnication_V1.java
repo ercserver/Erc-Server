@@ -1,5 +1,6 @@
 package CommunicationModule.src.model;
 
+import Utilities.ErcLogger;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.MulticastResult;
 import com.google.android.gcm.server.Sender;
@@ -16,7 +17,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
     // The SENDER_ID here is the "Browser Key" that was generated when I
     // created the API keys for my Google APIs project.
     private  final String SENDER_ID = "AIzaSyBPyu_l_UJGfpvouNUcjwyyjm0RwiNtuYY";//"AIzaSyBJK4AOF4swqz5zE_5mNnVDm9CCxUJ1apQ";
-
+    ErcLogger logger  = new ErcLogger();
     public GcmCommnication_V1(HashMap<Integer,HashMap<String,String>> data,
                               ArrayList<String> target) {
         super(data);
@@ -24,6 +25,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
     }
 
     public JSONArray sendResponse () {
+        logger.println("In gcm.sendResponse");
         Sender sender = new Sender(SENDER_ID);
         Message message = new Message.Builder()
 
@@ -54,7 +56,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        logger.println("exiting gcm.sendResponse");
         //return objToSend; enable for debug
         return null;
 
