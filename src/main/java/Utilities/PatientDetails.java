@@ -13,10 +13,14 @@ public class PatientDetails {
     private IDbController dbController = null;
     private ErcLogger logger = new ErcLogger();
 
+
+
     public PatientDetails()
     {
+        logger.println("In PatientDetails ctor");
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
+        logger.println("Exiting PatientDetails");
     }
 
     public String getStatus(HashMap<String, String> details)

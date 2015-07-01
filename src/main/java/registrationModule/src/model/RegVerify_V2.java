@@ -425,6 +425,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         {
             res.put("RequestID", "accept");
             res.put("community_member_id", user.get("community_member_id"));
+            res.put("status_name", user.get("status_name"));
         }
         response.put(1, res);
         return response;

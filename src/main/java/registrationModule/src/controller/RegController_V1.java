@@ -32,13 +32,21 @@ public class RegController_V1 implements IRegController {
     private ErcLogger logger = new ErcLogger();
 
     public RegController_V1(){
+        logger.println("In RegController_V1 ctor");
         ModelsFactory models = new ModelsFactory();
+        logger.println("1");
         commController = models.determineCommControllerVersion();
+        logger.println("2");
         dbController = models.determineDbControllerVersion();
+        logger.println("3");
         registrator = models.determineRegRequestVersion();
+        logger.println("4");
         verification = models.determineRegVerifyVersion();
+        logger.println("5");
         assistantFuncs = new AssistantFunctions();
+        logger.println("6");
         patientD = new PatientDetails();
+        logger.println("exiting ctor");
     }
 
     public Object getRegDetails(HashMap<String,String> request) {

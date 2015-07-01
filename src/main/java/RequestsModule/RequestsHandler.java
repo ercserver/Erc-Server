@@ -1,25 +1,21 @@
 package RequestsModule;
 
 
-import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
-import RequestsModule.utils.TestNewDB;
-import Utilities.ErcLogger;
-import Utilities.HashMapBuilder;
-import org.springframework.web.bind.annotation.*;
-import registrationModule.src.api.*;
-import registrationModule.src.controller.RegController_V1;
 import RequestsModule.utils.HashMapCreator;
+import RequestsModule.utils.TestGCM;
+import RequestsModule.utils.TestNewDB;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
+import Utilities.ErcLogger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import registrationModule.src.api.IRegController;
+import registrationModule.src.controller.RegController_V1;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 @Controller
@@ -44,6 +40,9 @@ public class RequestsHandler {
     private final String USERS_ARRIVAL_TIMES = "UsersArrivalTimes"; // Arrival times
     private final String CLOSEST_EMS = "closestEMS";
     private final String FOLLOW_USER = "followUser";
+
+    /*** Routine Requests Codes ***/
+    private final String HELP = "help";
 
     private ErcLogger logger = new ErcLogger();
 
@@ -75,6 +74,12 @@ public class RequestsHandler {
 
         return reqJson.toString();
     }
+
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test-gcm")
+    public void returnGCM() {
+        new TestGCM().gcmTest();
+    }
+
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/registration")
     public @ResponseBody String handleRegistrationRequests(@RequestBody String data){
@@ -113,6 +118,31 @@ public class RequestsHandler {
         }
 
         return (new JSONObject().put("Error processing: ", reqId).toString());
+    }
+
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency")
+    public @ResponseBody String handleEmergencyRequests(@RequestBody String data) {
+        logger.println("In Emergency. params = " + data);
+        HashMapCreator hmc = new HashMapCreator();
+        JSONObject json = new JSONObject(data);
+        HashMap<String, String> requestMap = hmc.jsonToMap(json);
+        String reqId = "";
+        logger.println("After parsing request");
+        try {
+            EmerController_V1 ec = new EmerController_V1();
+            reqId = requestMap.get(REQ_ID);
+            logger.println("Before switch. reqID = " + reqId);
+            switch (reqId) {
+                case HELP:
+                    ec.emergencyCall(requestMap);
+                    break;
+                default:
+                    return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")
@@ -170,6 +200,7 @@ public class RequestsHandler {
                         ec.receiveUsersArrivalTimesAndApproach(requestMap);
                         rv += reqId;
                         break;
+
                     default:
                         rv = "Wrong request id";
                         break;
@@ -182,7 +213,7 @@ public class RequestsHandler {
     }
 
      @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis")
-    public @ResponseBody String handleEmergencyRequests(@RequestBody String request){
+    public @ResponseBody String handleEmergencyGISRequests(@RequestBody String request){
         JSONObject data = new JSONObject(request);
         HashMapCreator hmc = new HashMapCreator();
         HashMap<String, String> requestMap = hmc.jsonToMap(data);

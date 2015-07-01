@@ -19,10 +19,14 @@ public class AssistantFunctions {
 
     private IDbController dbController = null;
 
+    ErcLogger logger = new ErcLogger();
+
     public AssistantFunctions()
     {
+        logger.println("In AssistantFunctions ctor");
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
+        logger.println("exiting AssistantFunctions ctor");
     }
 
     public boolean checkCmidAndPassword(String password, int cmid)

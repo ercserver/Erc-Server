@@ -31,7 +31,10 @@ public class ModelsFactory {
         private final int emerLoggerVersion = 1;
         private final int emsRoutineVersion = 1;
 
+        ErcLogger logger = new ErcLogger();
+
         public ICommController determineCommControllerVersion(){
+            logger.println("In determineCommControllerVersion");
             switch (commControllerVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
@@ -44,9 +47,11 @@ public class ModelsFactory {
         }
 
         public IDbController determineDbControllerVersion(){
+            logger.println("In determineDbControllerVersion ctor");
             switch (dbControllerVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
+                    logger.println("case 1");
                     return new DbController_V1();
                 }
                 default: {
@@ -55,9 +60,11 @@ public class ModelsFactory {
             }
         }
         public IRegRequest_model determineRegRequestVersion(){
+            logger.println("In determineRegRequestVersion");
             switch (regRequestVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
+                    logger.println("case 1");
                     return new RegRequest_V1();
                 }
                 default: {

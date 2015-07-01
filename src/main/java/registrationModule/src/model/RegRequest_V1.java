@@ -1,6 +1,7 @@
 package registrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
+import Utilities.ErcLogger;
 import Utilities.ModelsFactory;
 import registrationModule.src.api.IRegRequest_model;
 
@@ -16,10 +17,14 @@ public class RegRequest_V1 implements IRegRequest_model {
 
     private IDbController dbController = null;
 
+    ErcLogger logger = new ErcLogger();
+
     public RegRequest_V1()
     {
+        logger.println("In RegRequest_V1 ctor");
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
+        logger.println("exiting RegRequest_V1 ctor");
     }
 
     public String doesUserExist(HashMap<String, String> filledForm) {
