@@ -1,11 +1,14 @@
+/*
 package Utilities;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+*/
 /**
  * Created by ohad on 9/6/2015.
- */
+ *//*
+
 public class ErcLogger{
     private Logger logger;
 
@@ -21,3 +24,4 @@ public class ErcLogger{
         logger.log(level, s);
     }
 }
+*/
