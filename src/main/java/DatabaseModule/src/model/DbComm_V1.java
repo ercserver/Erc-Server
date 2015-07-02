@@ -1591,6 +1591,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public int startNewEmergencyEvent(HashMap<String, String> details) {
+
         /*
         output : event_id
         input:
@@ -1609,6 +1610,7 @@ public class DbComm_V1 implements IDbComm_model {
             time_to_next_reminder - optional
             memo - optional
         */
+        logger.println("   In startNewEmergencyEvent. details = " + details);
         ResultSet rs = null;
         int eventId = -1;
         try {
@@ -1659,6 +1661,7 @@ public class DbComm_V1 implements IDbComm_model {
                 }
                 catch (Exception e) {e.printStackTrace();}
             }
+            logger.println("   Exiting startNewEmergencyEvent");
             return eventId;
         }
 

@@ -75,9 +75,10 @@ public class RequestsHandler {
         return reqJson.toString();
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test-gcm")
-    public void returnGCM() {
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/test-gcm")
+    public @ResponseBody String returnGCM() {
         new TestGCM().gcmTest();
+        return "gcm sent";
     }
 
 
@@ -125,7 +126,9 @@ public class RequestsHandler {
         logger.println("In Emergency. params = " + data);
         HashMapCreator hmc = new HashMapCreator();
         JSONObject json = new JSONObject(data);
+        logger.println("After json object");
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
+        logger.println("requestMap = " + requestMap);
         String reqId = "";
         logger.println("After parsing request");
         try {
@@ -134,9 +137,11 @@ public class RequestsHandler {
             logger.println("Before switch. reqID = " + reqId);
             switch (reqId) {
                 case HELP:
+                    logger.println(" requestID = " + reqId);
                     ec.emergencyCall(requestMap);
                     break;
                 default:
+                    logger.println(" default...");
                     return null;
             }
         } catch (Exception ex) {

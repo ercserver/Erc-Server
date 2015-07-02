@@ -31,6 +31,7 @@ public class AssistantFunctions {
 
     public boolean checkCmidAndPassword(String password, int cmid)
     {
+        logger.println("In checkCmidAndPassword. params = " + password + ", " + cmid);
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("P_CommunityMembers.community_member_id", Integer.toString(cmid));
         conds.put("MembersLoginDetails.password", password);

@@ -254,7 +254,7 @@ public class RoutineController_V1 implements IRoutineController {
             String password = obj.get("password");
             if (assistent.checkCmidAndPassword(password,cmid))
             {
-                if (obj.get("Request_ID").equals("acceptRefresh"))
+                if (obj.get("RequestID").equals("acceptRefresh"))
                {
                     //if we need verify details
                    if (updates.CheckIfNeedVerifyAndUpdateOrSendToVer(cmid,obj) != null)

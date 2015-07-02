@@ -6,6 +6,7 @@ import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.api.IEmerFilter_model;
 import EmergencyModule.src.api.IEmerLogger_model;
 import Utilities.AssistantFunctions;
+import Utilities.ErcLogger;
 import Utilities.ModelsFactory;
 
 import java.lang.Integer;
@@ -29,6 +30,8 @@ public class EmerController_V1 implements IEmerController {
     private ICommController commController = null;
     private AssistantFunctions assistantFuncs = null;
 
+    ErcLogger logger = new ErcLogger();
+
     public EmerController_V1(){
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
@@ -40,11 +43,22 @@ public class EmerController_V1 implements IEmerController {
 
     public void emergencyCall(HashMap<String, String> data)
     {
+        logger.println("In emergencyCall");
+        if (!data.containsKey("community_member_id") ||
+                !data.containsKey("medical_condition_id") ||
+                !data.containsKey("x") ||
+                !data.containsKey("y") ||
+                !data.containsKey("reg_id")){
+
+            // Invalid request
+            return;
+        }
         // Checks that this is a real user
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
         // Creates the event_id
         HashMap<String, String> details = new HashMap<String, String>();
+
         details.put("create_by_member_id", data.get("community_member_id"));
         details.put("patient_id", dbController.getPatientIDByCmid(data.get("community_member_id")));
         details.put("medical_condition_id", data.get("medical_condition_id"));
@@ -68,6 +82,7 @@ public class EmerController_V1 implements IEmerController {
         data.put("medical_condition_description",
                 dbController.getMedicalConditionByNum(details.get("medical_condition_id")).get(1).get("medical_condition_description"));
         askForUsersAroundLocation(data);
+        logger.println("Exiting emergencyCall");
     }
 
     private void askForUsersAroundLocation(HashMap<String, String> data)
