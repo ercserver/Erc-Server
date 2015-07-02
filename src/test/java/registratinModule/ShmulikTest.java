@@ -1,6 +1,5 @@
 package registratinModule;
 
-import DatabaseModule.src.model.DbComm_V1;
 import org.json.JSONArray;
 import registrationModule.src.controller.RegController_V1;
 import registrationModule.src.model.RegVerify_V2;

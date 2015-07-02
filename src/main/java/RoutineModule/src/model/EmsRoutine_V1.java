@@ -1,7 +1,6 @@
 package RoutineModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
-import RoutineModule.src.api.IEmsRoutine;
 import RoutineModule.src.api.IEmsRoutine_model;
 import Utilities.ModelsFactory;
 

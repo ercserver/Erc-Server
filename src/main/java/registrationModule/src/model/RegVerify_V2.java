@@ -2,11 +2,9 @@ package registrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
 import Utilities.ErcConfiguration;
-import Utilities.ErcLogger;
-
+import Utilities.ModelsFactory;
 import Utilities.PatientDetails;
 import registrationModule.src.api.IRegVerify_model;
-import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;

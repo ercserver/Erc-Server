@@ -1,8 +1,8 @@
 package CommunicationModule.src.model;
 
-import Utilities.ErcLogger;
 import org.json.JSONArray;
-import org.jsoup.*;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.util.ArrayList;

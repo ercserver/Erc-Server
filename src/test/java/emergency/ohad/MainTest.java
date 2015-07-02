@@ -1,6 +1,5 @@
 package emergency.ohad;
 
-import EmergencyModule.src.controller.EmerController_V1;
 import org.json.JSONObject;
 
 import java.util.HashMap;

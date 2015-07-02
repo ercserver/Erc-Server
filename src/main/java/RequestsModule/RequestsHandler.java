@@ -9,7 +9,6 @@ import RequestsModule.utils.TestGCM;
 import RequestsModule.utils.TestNewDB;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
-import Utilities.ErcLogger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;

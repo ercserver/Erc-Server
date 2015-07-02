@@ -1,6 +1,5 @@
 package CommunicationModule.src.model;
 
-import Utilities.ErcLogger;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.MulticastResult;
 import com.google.android.gcm.server.Sender;
@@ -40,6 +39,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
                 .delayWhileIdle(true)
                 .addData("message", String.valueOf(objToSend))
                 .build();
+        logger.log(Level.INFO, " message = " + message);
         try {
             // use this for multicast messages.  The second parameter
             // of sender.send() will need to be an array of register ids.

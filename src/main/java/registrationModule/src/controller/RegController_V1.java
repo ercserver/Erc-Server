@@ -2,17 +2,12 @@ package registrationModule.src.controller;
 
 import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
-
 import Utilities.AssistantFunctions;
-import Utilities.ErcLogger;
+import Utilities.ModelsFactory;
 import Utilities.PatientDetails;
 import registrationModule.src.api.IRegController;
 import registrationModule.src.api.IRegRequest_model;
 import registrationModule.src.api.IRegVerify_model;
-
-
-
-import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;

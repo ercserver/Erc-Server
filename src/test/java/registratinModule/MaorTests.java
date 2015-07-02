@@ -2,7 +2,6 @@ package registratinModule;
 
 import DatabaseModule.src.model.DbComm_V1;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

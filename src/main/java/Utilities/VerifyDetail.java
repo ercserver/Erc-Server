@@ -2,7 +2,6 @@ package Utilities;
 
 import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
-import registrationModule.src.api.IRegRequest_model;
 import registrationModule.src.api.IRegVerify_model;
 
 import java.util.ArrayList;

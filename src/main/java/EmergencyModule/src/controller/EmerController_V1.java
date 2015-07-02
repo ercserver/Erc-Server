@@ -6,16 +6,11 @@ import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.api.IEmerFilter_model;
 import EmergencyModule.src.api.IEmerLogger_model;
 import Utilities.AssistantFunctions;
-import Utilities.ErcLogger;
 import Utilities.ModelsFactory;
 
-import java.lang.Integer;
-import java.lang.String;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

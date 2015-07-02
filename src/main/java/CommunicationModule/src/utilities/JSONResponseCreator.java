@@ -1,7 +1,6 @@
 package CommunicationModule.src.utilities;
 
 import CommunicationModule.src.api.IResponseCreator;
-import Utilities.ErcLogger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

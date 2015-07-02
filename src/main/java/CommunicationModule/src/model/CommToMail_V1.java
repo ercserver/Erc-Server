@@ -1,14 +1,15 @@
 package CommunicationModule.src.model;
 
 import Utilities.ErcConfiguration;
-import Utilities.ErcLogger;
 
-import java.io.*;
-import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.*;
-import javax.mail.internet.*;
 
 /**
  * Created by NAOR on 06/04/2015.

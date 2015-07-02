@@ -3,20 +3,19 @@ package DatabaseModule.src.model;
 
 import DatabaseModule.src.api.IDbComm_model;
 import Utilities.ErcConfiguration;
-import Utilities.ErcLogger;
 import Utilities.HashMapBuilder;
-//import com.sun.deploy.util.StringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.*;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+//import com.sun.deploy.util.StringUtils;
 
 /**
  * Created by NAOR on 06/04/2015.

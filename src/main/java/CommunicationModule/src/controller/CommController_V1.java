@@ -1,8 +1,8 @@
 package CommunicationModule.src.controller;
 
 import CommunicationModule.src.api.*;
-import CommunicationModule.src.model.*;
-import Utilities.ErcLogger;
+import CommunicationModule.src.model.CommOfficialFactory_V1;
+import CommunicationModule.src.model.CommToUsersFactory_V1;
 
 import java.util.ArrayList;
 import java.util.HashMap;

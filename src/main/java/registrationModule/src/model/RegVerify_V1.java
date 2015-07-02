@@ -1,7 +1,5 @@
 package registrationModule.src.model;
 
-import CommunicationModule.src.api.ICommController;
-
 /**
  * Created by NAOR on 06/04/2015.
  */

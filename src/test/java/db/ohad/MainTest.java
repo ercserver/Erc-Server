@@ -1,13 +1,6 @@
 package db.ohad;
 
-import DatabaseModule.src.model.DbComm_V1;
-
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by ohad on 29/5/2015.

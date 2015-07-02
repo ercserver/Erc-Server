@@ -2,9 +2,7 @@ package CommunicationModule.src.model;
 
 import CommunicationModule.src.api.ICommToUsers_model;
 import CommunicationModule.src.utilities.JSONResponseCreator;
-import Utilities.ErcLogger;
 import org.json.JSONArray;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;

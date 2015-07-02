@@ -1,27 +1,17 @@
 package communication.ohad;
 
 import CommunicationModule.src.model.GcmCommnication_V1;
-import CommunicationModule.src.model.InitiatedHTTPCommunication_V1;
 import DatabaseModule.src.model.DbComm_V1;
 import RequestsModule.utils.HashMapCreator;
 import Utilities.HashMapBuilder;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONStringer;
-import org.json.JSONWriter;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.parser.Parser;
-import registrationModule.src.controller.RegController_V1;
-import sun.applet.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by ohad on 10/6/2015.
