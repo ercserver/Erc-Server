@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 public class ErcLogger {
     private Logger logger;
 
-    public ErcLogger(){
-        logger = Logger.getLogger(this.getClass().getName());
+    public ErcLogger(String className){
+        logger = Logger.getLogger(className);
     }
 
     public void println(String s){

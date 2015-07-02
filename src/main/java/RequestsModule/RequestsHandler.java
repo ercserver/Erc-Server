@@ -4,13 +4,12 @@ package RequestsModule;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
 import RequestsModule.utils.HashMapCreator;
+import RequestsModule.utils.JsonValidator;
 import RequestsModule.utils.TestGCM;
 import RequestsModule.utils.TestNewDB;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
 import Utilities.ErcLogger;
-import com.sun.glass.ui.Window;
-import org.apache.commons.logging.impl.Log4JLogger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -20,8 +19,6 @@ import registrationModule.src.api.IRegController;
 import registrationModule.src.controller.RegController_V1;
 
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Controller
 @Scope("request")
@@ -50,7 +47,7 @@ public class RequestsHandler {
     /*** Routine Requests Codes ***/
     private final String HELP = "help";
 
-    private ErcLogger logger = new ErcLogger();
+    private ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
     public RequestsHandler(){
@@ -92,7 +89,8 @@ public class RequestsHandler {
     public @ResponseBody String handleRegistrationRequests(@RequestBody String data){
         logger.println("In Registration. params = " + data);
         HashMapCreator hmc = new HashMapCreator();
-        JSONObject json = new JSONObject(data);
+        JsonValidator jv = new JsonValidator();
+        JSONObject json = jv.createJSON(data);
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         String reqId = "";
         logger.println("After parsing request");
@@ -110,10 +108,10 @@ public class RequestsHandler {
                     return rc.resendAuth(requestMap).toString();
 
                 case CONFIRM_PATIENT:
-                    rc.responeByDoctor(requestMap, true);
+                    rc.responseByDoctor(requestMap, true);
                     break;
                 case REJECT_PATIENT:
-                    rc.responeByDoctor(requestMap, false);
+                    rc.responseByDoctor(requestMap, false);
                     break;
                 default:
                     // Do nothing...
@@ -131,7 +129,8 @@ public class RequestsHandler {
     public @ResponseBody String handleEmergencyRequests(@RequestBody String data) {
         logger.println("In Emergency. params = " + data);
         HashMapCreator hmc = new HashMapCreator();
-        JSONObject json = new JSONObject(data);
+        JsonValidator jv = new JsonValidator();
+        JSONObject json = jv.createJSON(data);
         logger.println("After json object");
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         logger.println("requestMap = " + requestMap);
@@ -159,7 +158,8 @@ public class RequestsHandler {
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")
     public @ResponseBody String handleRoutineRequests(@RequestBody String request){
         logger.println("In routine requests. param = " + request);
-        JSONObject data = new JSONObject(request);
+        JsonValidator jv = new JsonValidator();
+        JSONObject data = jv.createJSON(request);
         HashMapCreator hmc = new HashMapCreator();
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
         String reqId = "";
@@ -167,7 +167,7 @@ public class RequestsHandler {
         try {
             IRegController rc = new RegController_V1();
             IRoutineController ruc = new RoutineController_V1();
-            reqId = data.getString(REQ_ID);
+            reqId = data.optString(REQ_ID, "");
 
             switch (reqId) {
                 case SIGNIN:
@@ -225,14 +225,15 @@ public class RequestsHandler {
 
      @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis")
     public @ResponseBody String handleEmergencyGISRequests(@RequestBody String request){
-        JSONObject data = new JSONObject(request);
+         JsonValidator jv = new JsonValidator();
+         JSONObject data = jv.createJSON(request);
         HashMapCreator hmc = new HashMapCreator();
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
         String reqId = "";
         String rv = "";
         try {
             IEmerController ec = new EmerController_V1();
-            reqId = data.getString(REQ_ID);
+            reqId = requestMap.get(REQ_ID);
 
             switch (reqId) {
                 case AROUND_LOCATION:

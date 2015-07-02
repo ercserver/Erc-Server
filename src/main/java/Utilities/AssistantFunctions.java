@@ -19,7 +19,7 @@ public class AssistantFunctions {
 
     private IDbController dbController = null;
 
-    ErcLogger logger = new ErcLogger();
+    ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     public AssistantFunctions()
     {

@@ -30,7 +30,7 @@ public class EmerController_V1 implements IEmerController {
     private ICommController commController = null;
     private AssistantFunctions assistantFuncs = null;
 
-    ErcLogger logger = new ErcLogger();
+    ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     public EmerController_V1(){
         ModelsFactory models = new ModelsFactory();

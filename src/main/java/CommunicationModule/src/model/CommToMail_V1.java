@@ -19,7 +19,7 @@ public class CommToMail_V1 extends CommOfficial_V1  {
     private final String password = ErcConfiguration.EMAIL_PASSWORD;
     private final String host = ErcConfiguration.EMAIL_HOST;
 
-    private ErcLogger logger=  new ErcLogger();
+    private ErcLogger logger=  new ErcLogger(this.getClass().getName());
 
     //C'tor
     public CommToMail_V1(HashMap<String,String> data){

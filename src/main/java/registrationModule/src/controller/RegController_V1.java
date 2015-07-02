@@ -29,7 +29,7 @@ public class RegController_V1 implements IRegController {
     private AssistantFunctions assistantFuncs = null;
     private PatientDetails patientD = null;
 
-    private ErcLogger logger = new ErcLogger();
+    private ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     public RegController_V1(){
         logger.println("In RegController_V1 ctor");
@@ -278,7 +278,7 @@ public class RegController_V1 implements IRegController {
 
     //-----------------------------------------------------------------------
     //confirmtion or rejection by doctor
-    public Object responeByDoctor(HashMap<String, String> data, boolean isConfirmation) {
+    public Object responseByDoctor(HashMap<String, String> data, boolean isConfirmation) {
         /*
         {
             community_member_id : the_doctor_cmid,

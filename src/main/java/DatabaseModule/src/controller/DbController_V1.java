@@ -11,7 +11,7 @@ import java.util.*;
  * Created by NAOR on 06/04/2015.
  */
 public class DbController_V1 implements IDbController {
-    ErcLogger logger = new ErcLogger();
+    ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     private final int dbInitVersion = 1;
     private final int dbCommVersion = 1;

@@ -17,7 +17,7 @@ public class CommToUsers_V1 implements ICommToUsers_model {
     protected JSONArray objToSend = null;
     protected ArrayList<String> targets = null;
 
-    ErcLogger logger = new ErcLogger();
+    ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     public CommToUsers_V1(HashMap<Integer, HashMap<String, String>> data) {
         JSONResponseCreator responseCreator = new JSONResponseCreator();

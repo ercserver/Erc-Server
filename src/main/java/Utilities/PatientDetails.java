@@ -11,7 +11,7 @@ import java.util.Map;
 public class PatientDetails {
 
     private IDbController dbController = null;
-    private ErcLogger logger = new ErcLogger();
+    private ErcLogger logger = new ErcLogger(this.getClass().getName());
 
 
 

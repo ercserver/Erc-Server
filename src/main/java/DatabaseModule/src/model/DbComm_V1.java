@@ -29,7 +29,7 @@ public class DbComm_V1 implements IDbComm_model {
     private Connection connection = null;
     private Statement statement = null;
 
-    private ErcLogger logger = new ErcLogger();
+    private ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     private  void connect() throws SQLException
     {

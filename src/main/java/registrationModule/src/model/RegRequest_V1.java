@@ -17,7 +17,7 @@ public class RegRequest_V1 implements IRegRequest_model {
 
     private IDbController dbController = null;
 
-    ErcLogger logger = new ErcLogger();
+    ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     public RegRequest_V1()
     {
@@ -56,6 +56,7 @@ public class RegRequest_V1 implements IRegRequest_model {
         decision.add("first_name");
         decision.add("last_name");
         decision.add("community_member_id");
+        decision.add("patient_id");
         decision.add("external_id");
         //TODO - More fields?
         //decision.add("medical_condition");

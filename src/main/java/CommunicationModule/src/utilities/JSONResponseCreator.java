@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class JSONResponseCreator implements IResponseCreator {
 
-    private ErcLogger logger = new ErcLogger();
+    private ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     public JSONArray establishResponse(HashMap<Integer,HashMap<String,String>> data) {
         logger.println("In establishResponse: param = " + data);

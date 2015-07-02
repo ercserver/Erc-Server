@@ -31,7 +31,7 @@ public class ModelsFactory {
         private final int emerLoggerVersion = 1;
         private final int emsRoutineVersion = 1;
 
-        ErcLogger logger = new ErcLogger();
+        ErcLogger logger = new ErcLogger(this.getClass().getName());
 
         public ICommController determineCommControllerVersion(){
             logger.println("In determineCommControllerVersion");

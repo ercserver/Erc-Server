@@ -19,7 +19,7 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     IDbController dbController = null;
     private PatientDetails patientD = null;
-    private ErcLogger logger = new ErcLogger();
+    private ErcLogger logger = new ErcLogger(this.getClass().getName());
 
     public RegVerify_V2() {
         ModelsFactory models = new ModelsFactory();
