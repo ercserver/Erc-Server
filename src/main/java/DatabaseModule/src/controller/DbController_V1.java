@@ -1,17 +1,20 @@
 package DatabaseModule.src.controller;
 
 
-import DatabaseModule.src.api.*;
-import DatabaseModule.src.model.*;
-import Utilities.ErcLogger;
+import DatabaseModule.src.api.IDbComm_model;
+import DatabaseModule.src.api.IDbController;
+import DatabaseModule.src.api.IDbInit_model;
+import DatabaseModule.src.model.DbComm_V1;
+import DatabaseModule.src.model.DbInit_V1;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 06/04/2015.
  */
 public class DbController_V1 implements IDbController {
-    ErcLogger logger = new ErcLogger(this.getClass().getName());
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     private final int dbInitVersion = 1;
     private final int dbCommVersion = 1;
