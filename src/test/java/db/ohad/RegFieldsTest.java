@@ -21,7 +21,7 @@ public class RegFieldsTest {
         DbController_V1 dbController = new DbController_V1();
         DbComm_V1 db = new DbComm_V1();
         RegVerify_V2 rv = new RegVerify_V2();
-       // System.out.println(dbController.doesUser);
+        //System.out.println(rc.getWaitingForDoctor(1083));
 
         /*String cmid = "1081";
         HashMap<String, String> member = new HashMap<String, String>();

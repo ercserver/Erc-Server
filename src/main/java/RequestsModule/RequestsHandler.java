@@ -9,16 +9,22 @@ import RequestsModule.utils.TestNewDB;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
 import Utilities.ErcLogger;
+import com.sun.glass.ui.Window;
+import org.apache.commons.logging.impl.Log4JLogger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import registrationModule.src.api.IRegController;
 import registrationModule.src.controller.RegController_V1;
 
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
+@Scope("request")
 @RequestMapping("/requests")
 public class RequestsHandler {
     private final String REQ_ID = "RequestID"; // This is the requests identifier's field name
@@ -48,7 +54,7 @@ public class RequestsHandler {
 
     // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
     public RequestsHandler(){
-        System.out.println("constructor");
+        logger.println("Controller Ctor");
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/welcome")

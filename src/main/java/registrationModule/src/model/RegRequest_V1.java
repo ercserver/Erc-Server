@@ -55,7 +55,7 @@ public class RegRequest_V1 implements IRegRequest_model {
         ArrayList<String> decision = new ArrayList<String>();
         decision.add("first_name");
         decision.add("last_name");
-        decision.add("patient_id");
+        decision.add("community_member_id");
         decision.add("external_id");
         //TODO - More fields?
         //decision.add("medical_condition");
