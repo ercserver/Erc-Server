@@ -5,6 +5,8 @@ import Utilities.ErcLogger;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.*;
 import javax.mail.internet.*;
 
@@ -19,7 +21,7 @@ public class CommToMail_V1 extends CommOfficial_V1  {
     private final String password = ErcConfiguration.EMAIL_PASSWORD;
     private final String host = ErcConfiguration.EMAIL_HOST;
 
-    private ErcLogger logger=  new ErcLogger(this.getClass().getName());
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     //C'tor
     public CommToMail_V1(HashMap<String,String> data){
@@ -28,7 +30,7 @@ public class CommToMail_V1 extends CommOfficial_V1  {
     }
 
     public void sendMessage() {
-        logger.println(String.format("In sendMessage. msg = %s, address = %s", msgToSend, emailAddress));
+        logger.log(Level.INFO, String.format("In sendMessage. msg = %s, address = %s", msgToSend, emailAddress));
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.host",host);

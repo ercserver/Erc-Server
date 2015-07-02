@@ -8,6 +8,8 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 05/04/2015.
@@ -17,7 +19,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
     // The SENDER_ID here is the "Browser Key" that was generated when I
     // created the API keys for my Google APIs project.
     private  final String SENDER_ID = "AIzaSyBPyu_l_UJGfpvouNUcjwyyjm0RwiNtuYY";//"AIzaSyBJK4AOF4swqz5zE_5mNnVDm9CCxUJ1apQ";
-    ErcLogger logger  = new ErcLogger(this.getClass().getName());
+    private Logger logger  = Logger.getLogger(this.getClass().getName());
     public GcmCommnication_V1(HashMap<Integer,HashMap<String,String>> data,
                               ArrayList<String> target) {
         super(data);
@@ -25,7 +27,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
     }
 
     public JSONArray sendResponse () {
-        logger.println("In gcm.sendResponse");
+        logger.log(Level.INFO, "In gcm.sendResponse");
         Sender sender = new Sender(SENDER_ID);
         Message message = new Message.Builder()
 
@@ -56,7 +58,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.println("exiting gcm.sendResponse");
+        logger.log(Level.INFO, "exiting gcm.sendResponse");
         //return objToSend; enable for debug
         return null;
 

@@ -5,6 +5,8 @@ import DatabaseModule.src.api.IDbController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by מאור on 18/05/2015.
@@ -19,19 +21,19 @@ public class AssistantFunctions {
 
     private IDbController dbController = null;
 
-    ErcLogger logger = new ErcLogger(this.getClass().getName());
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     public AssistantFunctions()
     {
-        logger.println("In AssistantFunctions ctor");
+        logger.log(Level.INFO, "In AssistantFunctions ctor");
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
-        logger.println("exiting AssistantFunctions ctor");
+        logger.log(Level.INFO, "exiting AssistantFunctions ctor");
     }
 
     public boolean checkCmidAndPassword(String password, int cmid)
     {
-        logger.println("In checkCmidAndPassword. params = " + password + ", " + cmid);
+        logger.log(Level.INFO, "In checkCmidAndPassword. params = " + password + ", " + cmid);
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("P_CommunityMembers.community_member_id", Integer.toString(cmid));
         conds.put("MembersLoginDetails.password", password);

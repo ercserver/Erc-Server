@@ -7,12 +7,14 @@ import org.jsoup.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 05/04/2015..
  */
 public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
-    private ErcLogger logger = new ErcLogger(this.getClass().getName());
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     public InitiatedHTTPCommunication_V1(HashMap<Integer,HashMap<String,String>> data, ArrayList<String> target) {
         super(data);
@@ -20,7 +22,7 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
     }
 
     public JSONArray sendResponse () {
-        logger.println("In HTTP.sendResponse");
+        logger.log(Level.INFO, "In HTTP.sendResponse");
         //communicate the JSON file to each target URL provided
         for(int i = 0; i < targets.size(); i+=3) {
             try {
@@ -37,7 +39,7 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
                 e.printStackTrace();
             }
         }
-        logger.println("exiting HTTP.sendResponse");
+        logger.log(Level.INFO, "exiting HTTP.sendResponse");
         return null;
     }
 }

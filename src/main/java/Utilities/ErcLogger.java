@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 /**
  * Created by ohad on 9/6/2015.
  */
-public class ErcLogger {
+public class ErcLogger{
     private Logger logger;
 
     public ErcLogger(String className){

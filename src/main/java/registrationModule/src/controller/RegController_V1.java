@@ -16,6 +16,8 @@ import Utilities.ModelsFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 06/04/2015.dd
@@ -29,28 +31,28 @@ public class RegController_V1 implements IRegController {
     private AssistantFunctions assistantFuncs = null;
     private PatientDetails patientD = null;
 
-    private ErcLogger logger = new ErcLogger(this.getClass().getName());
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     public RegController_V1(){
-        logger.println("In RegController_V1 ctor");
+        logger.log(Level.INFO, "In RegController_V1 ctor");
         ModelsFactory models = new ModelsFactory();
-        logger.println("1");
+        logger.log(Level.INFO, "1");
         commController = models.determineCommControllerVersion();
-        logger.println("2");
+        logger.log(Level.INFO, "2");
         dbController = models.determineDbControllerVersion();
-        logger.println("3");
+        logger.log(Level.INFO, "3");
         registrator = models.determineRegRequestVersion();
-        logger.println("4");
+        logger.log(Level.INFO, "4");
         verification = models.determineRegVerifyVersion();
-        logger.println("5");
+        logger.log(Level.INFO, "5");
         assistantFuncs = new AssistantFunctions();
-        logger.println("6");
+        logger.log(Level.INFO, "6");
         patientD = new PatientDetails();
-        logger.println("exiting ctor");
+        logger.log(Level.INFO, "exiting ctor");
     }
 
     public Object getRegDetails(HashMap<String,String> request) {
-        logger.println("In getRegDetails. params = " + request);
+        logger.log(Level.INFO, "In getRegDetails. params = " + request);
         //generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(request.get("user_type")));
@@ -64,7 +66,7 @@ public class RegController_V1 implements IRegController {
     }
 
     public Object handleReg(HashMap<String, String> filledForm) {
-        logger.println("In handleReg. params = " + filledForm);
+        logger.log(Level.INFO, "In handleReg. params = " + filledForm);
         //if the user exists (registration model decides how to determine that)
         String message = registrator.doesUserExist(filledForm);
         String responseCode = null;
@@ -89,7 +91,7 @@ public class RegController_V1 implements IRegController {
                 responseCode = "wait";
                 //Get authorization method from db
                 int authMethod = dbController.getAuthenticationMethod(filledForm.get("state"));
-                logger.println("authMethod = " + authMethod);
+                logger.log(Level.INFO, "authMethod = " + authMethod);
                 String method = (0 == authMethod) ? "mail" : "sms";
                 message = "Form filled successfully. A verification " + method + " was sent to you. Please verify your registration.";
                 //Add the new community member (a new CmID is generated)
@@ -97,10 +99,10 @@ public class RegController_V1 implements IRegController {
                 int newCmid = dbController.addNewCommunityMember(filledForm);
                 if(newCmid < 0)
                     return null;
-                logger.println("After adding a new community member. cmid = " + newCmid);
+                logger.log(Level.INFO, "After adding a new community member. cmid = " + newCmid);
                 //Update status to "Verifying Email"
                 dbController.updateStatus(newCmid, null, "verifying email");
-                logger.println("After updating status to verifying email");
+                logger.log(Level.INFO, "After updating status to verifying email");
                 //Generate data for the authorization message
                 filledForm.put("Message", generateMessageForAuth(newCmid,filledForm.get("password")));
                 filledForm.put("Subject","Confirm your email for Socmed App");
@@ -170,7 +172,7 @@ public class RegController_V1 implements IRegController {
         if (null != regID){
             sendTo = new ArrayList<String>();
             sendTo.add(regID);
-            logger.println("In snedTo, regID = " + regID);
+            logger.log(Level.INFO, "In snedTo, regID = " + regID);
         }
         return sendTo;
     }
@@ -523,17 +525,17 @@ public class RegController_V1 implements IRegController {
     }
 
     public Object getWaitingForDoctor(HashMap<String,String> request) {
-        logger.println("In getWaitingForDoctor. param = " + request);
+        logger.log(Level.INFO, "In getWaitingForDoctor. param = " + request);
         String password = request.get("password");
         int cmid = Integer.parseInt(request.get("community_member_id"));
         /*if(checkCmidAndPassword(password,cmid)){
 
         }*/
-        logger.println("In getWaitingForDoctor. cmid = " + cmid);
+        logger.log(Level.INFO, "In getWaitingForDoctor. cmid = " + cmid);
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
         //Pull from the db the list of patient that are pending the doctor's confirmation
         ArrayList<String> listOfPatients = dbController.getWaitingPatientsCMID(cmid);
-        logger.println("In getWaitingForDoctor: listOfPatients = " + listOfPatients);
+        logger.log(Level.INFO, "In getWaitingForDoctor: listOfPatients = " + listOfPatients);
         //user isn't a doctor - we don't serve this request. Return null
         if(null == listOfPatients || listOfPatients.isEmpty()){
             return null;
@@ -541,13 +543,13 @@ public class RegController_V1 implements IRegController {
         //for each cmid in the list received - filter fields and add to the response
         int index = 1;
         for(String currCmid : listOfPatients){
-            logger.println("In getWaitingForDoctor: patient cmid: " + currCmid);
+            logger.log(Level.INFO, "In getWaitingForDoctor: patient cmid: " + currCmid);
             HashMap<String,String> whereConditions = new HashMap<String, String>();
             whereConditions.put("P_CommunityMembers.community_member_id", currCmid);
             response.put(index,registrator.filterFieldsForDoctorAuth(dbController.getUserByParameter(whereConditions)));
             index++;
         }
-        logger.println("In getWaitingForDoctor: response = " + response);
+        logger.log(Level.INFO, "In getWaitingForDoctor: response = " + response);
         //adding reject reasons object (with "subRequest" to make it identifiable)
         HashMap<String,String> rejectCodes = dbController.getRejectCodes();
         rejectCodes.put("RequestID","waitingPatients");
@@ -575,7 +577,7 @@ public class RegController_V1 implements IRegController {
 
     private HashMap<Integer,HashMap<String,String>> buildRejectMessage(int cmid, String reason,
                                                                        String explanation) {
-        logger.println(String.format("In buildRejectMessage. params = cmid=%d, Reason=%s, explanation=%s",
+        logger.log(Level.INFO, String.format("In buildRejectMessage. params = cmid=%d, Reason=%s, explanation=%s",
                 cmid, reason, explanation));
         dbController.updateStatus(cmid, "verifying details", "not authorized");
         HashMap<Integer,HashMap<String,String>> responseToPatient =

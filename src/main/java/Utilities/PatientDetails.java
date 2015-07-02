@@ -4,6 +4,8 @@ import DatabaseModule.src.api.IDbController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by User on 21/05/2015.
@@ -11,16 +13,16 @@ import java.util.Map;
 public class PatientDetails {
 
     private IDbController dbController = null;
-    private ErcLogger logger = new ErcLogger(this.getClass().getName());
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
 
 
     public PatientDetails()
     {
-        logger.println("In PatientDetails ctor");
+        logger.log(Level.INFO, "In PatientDetails ctor");
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
-        logger.println("Exiting PatientDetails");
+        logger.log(Level.INFO, "Exiting PatientDetails");
     }
 
     public String getStatus(HashMap<String, String> details)
@@ -71,11 +73,11 @@ public class PatientDetails {
 
     public HashMap<String, String> getUserByCmid(int cmid) {
 
-        logger.println("In getUserByCmid. Parameters = " + cmid);
+        logger.log(Level.INFO, "In getUserByCmid. Parameters = " + cmid);
         HashMap<String, String> member = new HashMap<String, String>();
         member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
         HashMap<String, String> details = dbController.getUserByParameter(member);
-        logger.println("details = " + details);
+        logger.log(Level.INFO, "details = " + details);
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
         String reg = "0";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){

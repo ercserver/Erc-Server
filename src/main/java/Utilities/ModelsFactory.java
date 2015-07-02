@@ -19,6 +19,9 @@ import registrationModule.src.api.IRegVerify_model;
 import registrationModule.src.model.RegRequest_V1;
 import registrationModule.src.model.RegVerify_V2;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Created by Maor on 30/04/2015.
  */
@@ -31,10 +34,10 @@ public class ModelsFactory {
         private final int emerLoggerVersion = 1;
         private final int emsRoutineVersion = 1;
 
-        ErcLogger logger = new ErcLogger(this.getClass().getName());
+        private Logger logger = Logger.getLogger(this.getClass().getName());
 
         public ICommController determineCommControllerVersion(){
-            logger.println("In determineCommControllerVersion");
+            logger.log(Level.INFO, "In determineCommControllerVersion");
             switch (commControllerVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
@@ -47,11 +50,11 @@ public class ModelsFactory {
         }
 
         public IDbController determineDbControllerVersion(){
-            logger.println("In determineDbControllerVersion ctor");
+            logger.log(Level.INFO, "In determineDbControllerVersion ctor");
             switch (dbControllerVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
-                    logger.println("case 1");
+                    logger.log(Level.INFO, "case 1");
                     return new DbController_V1();
                 }
                 default: {
@@ -60,11 +63,11 @@ public class ModelsFactory {
             }
         }
         public IRegRequest_model determineRegRequestVersion(){
-            logger.println("In determineRegRequestVersion");
+            logger.log(Level.INFO, "In determineRegRequestVersion");
             switch (regRequestVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
-                    logger.println("case 1");
+                    logger.log(Level.INFO, "case 1");
                     return new RegRequest_V1();
                 }
                 default: {

@@ -8,28 +8,30 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by ohad on 5/5/2015.
  */
 public class HashMapCreator {
-    ErcLogger logger = new ErcLogger(this.getClass().getName());
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     public  HashMap<String, String> jsonToMap(JSONObject jObject) throws JSONException {
-        logger.println("In jsonToMap");
+        logger.log(Level.INFO, "In jsonToMap");
         HashMap<String, String> map = new HashMap<String, String>();
         Set<String> keys = jObject.keySet();
 
         for (String key : keys){
             try {
                 map.put(key, jObject.get(key).toString());
-                logger.println("map <-- " + key);
+                logger.log(Level.INFO, "map <-- " + key);
             }catch (Exception ex){
                 System.err.println("Error in key : " + key);
             }
 
         }
-        logger.println("After while");
+        logger.log(Level.INFO, "After while");
         return map;
     }
 

@@ -11,6 +11,8 @@ import Utilities.ModelsFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by User on 29/04/2015.
@@ -19,7 +21,7 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     IDbController dbController = null;
     private PatientDetails patientD = null;
-    private ErcLogger logger = new ErcLogger(this.getClass().getName());
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     public RegVerify_V2() {
         ModelsFactory models = new ModelsFactory();
@@ -226,11 +228,11 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     public HashMap<String, String> getUserByCmid(int cmid) {
-        logger.println("In getUserByCmid. Parameters = " + cmid);
+        logger.log(Level.INFO, "In getUserByCmid. Parameters = " + cmid);
         HashMap<String, String> member = new HashMap<String, String>();
         member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
         HashMap<String, String> details = dbController.getUserByParameter(member);
-        logger.println("details = " + details);
+        logger.log(Level.INFO, "details = " + details);
         HashMap<Integer, HashMap<String, String>> reg_id = dbController.getRegIDsOfUser(cmid);
         String reg = "0";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
@@ -639,7 +641,7 @@ public class RegVerify_V2 implements IRegVerify_model {
     private String generateMailLinkForVerifications(HashMap<String, String> data) {
         if(data.keySet().contains("noLinks"))
             return "";
-        logger.println("In mailVerification. parameters = " + data);
+        logger.log(Level.INFO, "In mailVerification. parameters = " + data);
         String cmid = data.get("community_member_id");
         String rv = "server_error";
         if (cmid != null){

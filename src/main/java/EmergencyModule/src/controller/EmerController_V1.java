@@ -16,6 +16,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 16/05/2015.
@@ -30,7 +32,7 @@ public class EmerController_V1 implements IEmerController {
     private ICommController commController = null;
     private AssistantFunctions assistantFuncs = null;
 
-    ErcLogger logger = new ErcLogger(this.getClass().getName());
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     public EmerController_V1(){
         ModelsFactory models = new ModelsFactory();
@@ -43,7 +45,7 @@ public class EmerController_V1 implements IEmerController {
 
     public void emergencyCall(HashMap<String, String> data)
     {
-        logger.println("In emergencyCall");
+        logger.log(Level.INFO, "In emergencyCall");
         if (!data.containsKey("community_member_id") ||
                 !data.containsKey("medical_condition_id") ||
                 !data.containsKey("x") ||
@@ -82,7 +84,7 @@ public class EmerController_V1 implements IEmerController {
         data.put("medical_condition_description",
                 dbController.getMedicalConditionByNum(details.get("medical_condition_id")).get(1).get("medical_condition_description"));
         askForUsersAroundLocation(data);
-        logger.println("Exiting emergencyCall");
+        logger.log(Level.INFO, "Exiting emergencyCall");
     }
 
     private void askForUsersAroundLocation(HashMap<String, String> data)

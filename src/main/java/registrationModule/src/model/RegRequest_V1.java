@@ -8,6 +8,8 @@ import registrationModule.src.api.IRegRequest_model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 06/04/2015.
@@ -17,14 +19,14 @@ public class RegRequest_V1 implements IRegRequest_model {
 
     private IDbController dbController = null;
 
-    ErcLogger logger = new ErcLogger(this.getClass().getName());
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     public RegRequest_V1()
     {
-        logger.println("In RegRequest_V1 ctor");
+        logger.log(Level.INFO, "In RegRequest_V1 ctor");
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
-        logger.println("exiting RegRequest_V1 ctor");
+        logger.log(Level.INFO, "exiting RegRequest_V1 ctor");
     }
 
     public String doesUserExist(HashMap<String, String> filledForm) {

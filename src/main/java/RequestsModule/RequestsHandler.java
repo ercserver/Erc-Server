@@ -19,6 +19,8 @@ import registrationModule.src.api.IRegController;
 import registrationModule.src.controller.RegController_V1;
 
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 @Scope("request")
@@ -47,11 +49,11 @@ public class RequestsHandler {
     /*** Routine Requests Codes ***/
     private final String HELP = "help";
 
-    private ErcLogger logger = new ErcLogger(this.getClass().getName());
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
     public RequestsHandler(){
-        logger.println("Controller Ctor");
+        logger.log(Level.INFO, "Controller Ctor");
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/welcome")
@@ -87,17 +89,17 @@ public class RequestsHandler {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/registration")
     public @ResponseBody String handleRegistrationRequests(@RequestBody String data){
-        logger.println("In Registration. params = " + data);
+        logger.log(Level.INFO, "In Registration. params = " + data);
         HashMapCreator hmc = new HashMapCreator();
         JsonValidator jv = new JsonValidator();
         JSONObject json = jv.createJSON(data);
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         String reqId = "";
-        logger.println("After parsing request");
+        logger.log(Level.INFO, "After parsing request");
         try {
             IRegController rc = new RegController_V1();
             reqId = requestMap.get(REQ_ID);
-            logger.println("Before switch. reqID = " + reqId);
+            logger.log(Level.INFO, "Before switch. reqID = " + reqId);
             switch (reqId) {
                 case REGISTRATION:
                     return rc.getRegDetails(requestMap).toString();
@@ -119,7 +121,7 @@ public class RequestsHandler {
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            logger.println("No response");
+            logger.log(Level.INFO, "No response");
         }
 
         return (new JSONObject().put("Error processing: ", reqId).toString());
@@ -127,26 +129,26 @@ public class RequestsHandler {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency")
     public @ResponseBody String handleEmergencyRequests(@RequestBody String data) {
-        logger.println("In Emergency. params = " + data);
+        logger.log(Level.INFO, "In Emergency. params = " + data);
         HashMapCreator hmc = new HashMapCreator();
         JsonValidator jv = new JsonValidator();
         JSONObject json = jv.createJSON(data);
-        logger.println("After json object");
+        logger.log(Level.INFO, "After json object");
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
-        logger.println("requestMap = " + requestMap);
+        logger.log(Level.INFO, "requestMap = " + requestMap);
         String reqId = "";
-        logger.println("After parsing request");
+        logger.log(Level.INFO, "After parsing request");
         try {
             EmerController_V1 ec = new EmerController_V1();
             reqId = requestMap.get(REQ_ID);
-            logger.println("Before switch. reqID = " + reqId);
+            logger.log(Level.INFO, "Before switch. reqID = " + reqId);
             switch (reqId) {
                 case HELP:
-                    logger.println(" requestID = " + reqId);
+                    logger.log(Level.INFO, " requestID = " + reqId);
                     ec.emergencyCall(requestMap);
                     break;
                 default:
-                    logger.println(" default...");
+                    logger.log(Level.INFO, " default...");
                     return null;
             }
         } catch (Exception ex) {
@@ -157,7 +159,7 @@ public class RequestsHandler {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")
     public @ResponseBody String handleRoutineRequests(@RequestBody String request){
-        logger.println("In routine requests. param = " + request);
+        logger.log(Level.INFO, "In routine requests. param = " + request);
         JsonValidator jv = new JsonValidator();
         JSONObject data = jv.createJSON(request);
         HashMapCreator hmc = new HashMapCreator();
