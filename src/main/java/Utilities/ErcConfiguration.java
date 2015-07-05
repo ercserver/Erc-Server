@@ -14,6 +14,8 @@ public class ErcConfiguration {
 
     public final static String EMS_SERVER_URL = "http://mba4.ad.biu.ac.il:3000/doc_ems";
 
+    public static final String GIS_SERVER_URL = "http://mba4.ad.biu.ac.il/gisWebProject/Mapping";
+
 
     /********* DB configurations ***********/
     public final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -33,4 +35,5 @@ public class ErcConfiguration {
     public static final String EMAIL_PASSWORD = "serverpassword123";
 
     public static final String EMAIL_HOST = "smtp.gmail.com";
+
 }

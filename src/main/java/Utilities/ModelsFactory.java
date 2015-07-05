@@ -17,8 +17,8 @@ import registrationModule.src.api.IRegVerify_model;
 import registrationModule.src.model.RegRequest_V1;
 import registrationModule.src.model.RegVerify_V2;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Level;
 
 /**
  * Created by Maor on 30/04/2015.
@@ -35,6 +35,7 @@ public class ModelsFactory {
         private Logger logger = Logger.getLogger(this.getClass().getName());
 
         public ICommController determineCommControllerVersion(){
+
             logger.log(Level.INFO, "In determineCommControllerVersion");
             switch (commControllerVersion) {
                 //Communicate the DB to retrieve the data
@@ -52,7 +53,6 @@ public class ModelsFactory {
             switch (dbControllerVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
-                    logger.log(Level.INFO, "case 1");
                     return new DbController_V1();
                 }
                 default: {
@@ -65,7 +65,6 @@ public class ModelsFactory {
             switch (regRequestVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
-                    logger.log(Level.INFO, "case 1");
                     return new RegRequest_V1();
                 }
                 default: {

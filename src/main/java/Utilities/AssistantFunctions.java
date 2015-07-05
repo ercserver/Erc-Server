@@ -4,16 +4,16 @@ import DatabaseModule.src.api.IDbController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Level;
 
 /**
  * Created by מאור on 18/05/2015.
  */
 public class AssistantFunctions {
-    private final String GIS_URL = null;
-    private final String GIS_UNAME = null;
-    private final String GIS_PW = null;
+    private final String GIS_URL = ErcConfiguration.GIS_SERVER_URL;
+    private final String GIS_UNAME = "";
+    private final String GIS_PW = "";
     private final String EMS_URL = ErcConfiguration.EMS_SERVER_URL;
     private final String EMS_UNAME = "";
     private final String EMS_PW = "";

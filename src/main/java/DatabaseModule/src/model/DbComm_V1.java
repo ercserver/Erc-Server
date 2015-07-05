@@ -12,8 +12,8 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Level;
 
 //import com.sun.deploy.util.StringUtils;
 
@@ -211,6 +211,30 @@ public class DbComm_V1 implements IDbComm_model {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /* Debugging functions*/
+    public int testDelete(String cmid){
+
+        try {
+            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                connect();
+            ResultSet rs = null;
+            String sql = "DELETE FROM RegIDs WHERE community_member_id=?;" +
+                    "update dbo.P_CommunityMembers set email_address='bla' where community_member_id=?;" +
+                    "update dbo.MembersLoginDetails set email_address='bla' where community_member_id=?"
+                    ;
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setObject(1, cmid);
+            stmt.setObject(2, cmid);
+            stmt.setObject(3, cmid);
+            return stmt.executeUpdate();
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return 0;
     }
 
     public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)

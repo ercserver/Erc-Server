@@ -11,8 +11,8 @@ import registrationModule.src.api.IRegVerify_model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Level;
 
 /**
  * Created by NAOR on 06/04/2015.dd
@@ -31,19 +31,12 @@ public class RegController_V1 implements IRegController {
     public RegController_V1(){
         logger.log(Level.INFO, "In RegController_V1 ctor");
         ModelsFactory models = new ModelsFactory();
-        logger.log(Level.INFO, "1");
         commController = models.determineCommControllerVersion();
-        logger.log(Level.INFO, "2");
         dbController = models.determineDbControllerVersion();
-        logger.log(Level.INFO, "3");
         registrator = models.determineRegRequestVersion();
-        logger.log(Level.INFO, "4");
         verification = models.determineRegVerifyVersion();
-        logger.log(Level.INFO, "5");
         assistantFuncs = new AssistantFunctions();
-        logger.log(Level.INFO, "6");
         patientD = new PatientDetails();
-        logger.log(Level.INFO, "exiting ctor");
     }
 
     public Object getRegDetails(HashMap<String,String> request) {

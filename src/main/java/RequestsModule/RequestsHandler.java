@@ -1,6 +1,7 @@
 package RequestsModule;
 
 
+import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
 import RequestsModule.utils.HashMapCreator;
@@ -9,6 +10,8 @@ import RequestsModule.utils.TestGCM;
 import RequestsModule.utils.TestNewDB;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -18,8 +21,7 @@ import registrationModule.src.api.IRegController;
 import registrationModule.src.controller.RegController_V1;
 
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 @Controller
 @Scope("request")
@@ -44,11 +46,14 @@ public class RequestsHandler {
     private final String USERS_ARRIVAL_TIMES = "UsersArrivalTimes"; // Arrival times
     private final String CLOSEST_EMS = "closestEMS";
     private final String FOLLOW_USER = "followUser";
+    private final String UPDATE_REQ = "updateReq";
+    private final String UPDATE_DETAILS = "updateDetails";
 
-    /*** Routine Requests Codes ***/
+
+    /*** Emergency Requests Codes ***/
     private final String HELP = "help";
 
-    Logger logger = Logger.getLogger(this.getClass().getName());
+    final static Logger logger = Logger.getLogger(RequestsHandler.class);
 
     // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
     public RequestsHandler(){
@@ -70,6 +75,17 @@ public class RequestsHandler {
         }
         return "db";
     }
+
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/delete/{cmid}")
+    public @ResponseBody String deleteUser(@PathVariable String cmid ){
+        DbComm_V1 db = new DbComm_V1();
+        if (db.testDelete(cmid) > 0) {
+            return cmid + " deleted";
+        }else{
+            return "Email not found";
+        }
+    }
+
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/test", consumes = "application/json")
     public @ResponseBody String returnJson(@RequestBody String request) {
@@ -183,6 +199,13 @@ public class RequestsHandler {
                     break;
                 case CURRENT_LOCATION:
                     rv = ruc.transferLocation(requestMap).toString();
+                    break;
+                case UPDATE_REQ:
+                    rv = rc.getRegDetails(requestMap).toString();
+                    break;
+                case UPDATE_DETAILS:
+                    rv = ruc.updateMemberDetails(requestMap).toString();
+                    break;
                 default:
                     // Do nothing...
                     rv = "Wrong request id";

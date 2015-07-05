@@ -6,8 +6,10 @@ import CommunicationModule.src.model.CommToUsersFactory_V1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 
 /**
  * Created by NAOR on 06/04/2015.

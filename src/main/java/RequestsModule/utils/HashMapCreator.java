@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Level;
 
 /**
  * Created by ohad on 5/5/2015.
