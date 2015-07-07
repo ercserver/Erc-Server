@@ -18,9 +18,9 @@ public class ErcConfiguration {
 
 
     /********* DB configurations ***********/
-    public final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    public final static String JDBC_DRIVER = "net.sourceforge.jtds.jdbc.Driver";
 
-    public final static String DB_URL = "jdbc:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
+    public final static String DB_URL = "jdbc:jtds:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
 
     public final static String DB_Name = "socmedserver";
 

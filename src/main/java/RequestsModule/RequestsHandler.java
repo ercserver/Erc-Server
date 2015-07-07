@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 
 @Controller
-@Scope("request")
+@Scope("session")
 @RequestMapping("/requests")
 public class RequestsHandler {
     private final String REQ_ID = "RequestID"; // This is the requests identifier's field name
@@ -53,11 +53,22 @@ public class RequestsHandler {
     /*** Emergency Requests Codes ***/
     private final String HELP = "help";
 
+    /*** Class Members */
+
+    HashMapCreator hmc = new HashMapCreator();
+    JsonValidator jv = new JsonValidator();
+
+    /****** Controlers ******/
     final static Logger logger = Logger.getLogger(RequestsHandler.class);
+    IRegController rc = new RegController_V1();
+    IRoutineController ruc = new RoutineController_V1();
+    EmerController_V1 ec = new EmerController_V1();
+
 
     // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
     public RequestsHandler(){
         logger.log(Level.INFO, "Controller Ctor");
+
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/welcome")
@@ -105,16 +116,14 @@ public class RequestsHandler {
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/registration")
     public @ResponseBody String handleRegistrationRequests(@RequestBody String data){
         logger.log(Level.INFO, "In Registration. params = " + data);
-        HashMapCreator hmc = new HashMapCreator();
-        JsonValidator jv = new JsonValidator();
         JSONObject json = jv.createJSON(data);
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         String reqId = "";
         logger.log(Level.INFO, "After parsing request");
         try {
-            IRegController rc = new RegController_V1();
+
             reqId = requestMap.get(REQ_ID);
-            logger.log(Level.INFO, "Before switch. reqID = " + reqId);
+            //logger.log(Level.INFO, "Before switch. reqID = " + reqId);
             switch (reqId) {
                 case REGISTRATION:
                     return rc.getRegDetails(requestMap).toString();
@@ -145,8 +154,6 @@ public class RequestsHandler {
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency")
     public @ResponseBody String handleEmergencyRequests(@RequestBody String data) {
         logger.log(Level.INFO, "In Emergency. params = " + data);
-        HashMapCreator hmc = new HashMapCreator();
-        JsonValidator jv = new JsonValidator();
         JSONObject json = jv.createJSON(data);
         logger.log(Level.INFO, "After json object");
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
@@ -154,7 +161,6 @@ public class RequestsHandler {
         String reqId = "";
         logger.log(Level.INFO, "After parsing request");
         try {
-            EmerController_V1 ec = new EmerController_V1();
             reqId = requestMap.get(REQ_ID);
             logger.log(Level.INFO, "Before switch. reqID = " + reqId);
             switch (reqId) {
@@ -220,9 +226,7 @@ public class RequestsHandler {
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis-times")
     public @ResponseBody String handleMembersArrivalTimes(@RequestBody String request){
         JSONArray data = new JSONArray(request);
-        HashMapCreator hmc = new HashMapCreator();
         HashMap<Integer, HashMap<String, String>> requestMap = hmc.jsonArrayToMap(data);
-        IEmerController ec = new EmerController_V1();
         String rv = "Received Request id : ";
         // Get request id
         try{
@@ -249,14 +253,11 @@ public class RequestsHandler {
 
      @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis")
     public @ResponseBody String handleEmergencyGISRequests(@RequestBody String request){
-         JsonValidator jv = new JsonValidator();
          JSONObject data = jv.createJSON(request);
-        HashMapCreator hmc = new HashMapCreator();
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
         String reqId = "";
         String rv = "";
         try {
-            IEmerController ec = new EmerController_V1();
             reqId = requestMap.get(REQ_ID);
 
             switch (reqId) {
@@ -288,7 +289,6 @@ public class RequestsHandler {
         String reqId = "";
 
         try {
-            IRegController rc = new RegController_V1();
             rc.verifyDetail(key);
 
 
@@ -303,10 +303,7 @@ public class RequestsHandler {
         String reqId = "";
 
         try {
-            IRegController rc = new RegController_V1();
             rc.responeToDoctorAturization(key, accept);
-
-
         }catch (Exception ex){
             ex.printStackTrace();
         }

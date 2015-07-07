@@ -24,13 +24,13 @@ import org.apache.log4j.Level;
  * Created by Maor on 30/04/2015.
  */
 public class ModelsFactory {
-        private final int commControllerVersion = 1;
-        private final int dbControllerVersion = 1;
-        private final int regRequestVersion = 1;
-        private final int regVerifyVersion = 2;
-        private final int emerFilterVersion = 1;
-        private final int emerLoggerVersion = 1;
-        private final int emsRoutineVersion = 1;
+        private static final int commControllerVersion = 1;
+        private static final int dbControllerVersion = 1;
+        private static final int regRequestVersion = 1;
+        private static final int regVerifyVersion = 2;
+        private static final int emerFilterVersion = 1;
+        private static final int emerLoggerVersion = 1;
+        private static final int emsRoutineVersion = 1;
 
         private Logger logger = Logger.getLogger(this.getClass().getName());
 

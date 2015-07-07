@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
+import org.jsoup.helper.HttpConnection;
 
 /**
  * Created by NAOR on 05/04/2015..
@@ -23,15 +24,17 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
 
     public JSONArray sendResponse () {
         logger.log(Level.INFO, "In HTTP.sendResponse");
+        Connection.Response response = null;
         //communicate the JSON file to each target URL provided
         for(int i = 0; i < targets.size(); i+=3) {
             try {
 
-                Jsoup.connect(targets.get(i))
+                response = Jsoup.connect(targets.get(i))
                         .data("username", targets.get(i+1))
                         .data("password", targets.get(i+2))
                         .data("JSONFile", objToSend.toString())
-                        .header("Content-Type", "Application/json")
+                        //.header("Content-Type", "Application/json")
+                        .ignoreContentType(true)
                         .timeout(10 * 1000 * 60) // milliseconds
                         .method(Connection.Method.POST)
                         .execute();
@@ -39,7 +42,15 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
                 e.printStackTrace();
             }
         }
-        logger.log(Level.INFO, "exiting HTTP.sendResponse");
-        return null;
+        logger.log(Level.INFO, "exiting HTTP.sendResponse. Response = " + response);
+
+        try {
+            return new JSONArray(response.body());
+        }catch (Exception ex){
+
+            ex.printStackTrace();
+        }
+        return new JSONArray();
+
     }
 }

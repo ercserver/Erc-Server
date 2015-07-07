@@ -27,43 +27,36 @@ public class DbComm_V1 implements IDbComm_model {
     final String DBName = ErcConfiguration.DB_Name;
     final private String USERNAME = ErcConfiguration.DB_USERNAME;
     final private String PASS = ErcConfiguration.DB_PASS;
-    private Connection connection = null;
+    private static Connection connection = null;
     private Statement statement = null;
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 
-    private  void connect() throws SQLException
-    {
-        try
-        {
+    private void connect() throws SQLException {
+        try {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USERNAME, PASS);
-            connection.setAutoCommit(true);
+            //connection.setAutoCommit(true);
+
             statement = connection.createStatement();
-            //statement.addBatch("DROP DATABASE " + DBName);
-            //statement.addBatch("CREATE database " + DBName);
-            statement.addBatch("USE " + DBName);
 
-            connection.commit();
-            statement.executeBatch();
-
-            DatabaseMetaData dbm = connection.getMetaData();
+            statement.execute("USE " + DBName);
 
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();}
+            e.printStackTrace();
+        }
     }
 
-    private  void releaseResources(Statement statement, Connection connection)
-    {
+    private void releaseResources(Statement statement, Connection connection) {
 
-        if (statement != null)
-        {
-            try
-            {
+        if (statement != null) {
+            try {
                 statement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            catch (Exception e) {e.printStackTrace();}
         }
+        // Discouraged
         /*if (connection != null)
         {
             try
@@ -72,130 +65,46 @@ public class DbComm_V1 implements IDbComm_model {
             }
             catch (Exception e) {e.printStackTrace();}
         }*/
+
     }
 
     /*For all of the methods:in each HashMap if the value represent value of column with type varchar,
       the value need to be in this format: 'value' */
 
-    /*private HashMap<Integer,HashMap<String,String>>
-    getRowsFromTable(HashMap<String,String> whereConditions, String tableName)
-    {
-        String conditions = "";
-        // select *....
-        if(whereConditions == null)
-            conditions = "1=1";
-        else
-        {
-            int numOfConditions = whereConditions.size();
-            Set<String> keys = whereConditions.keySet();
-            Iterator<String> iter = keys.iterator();
-            // creates the where condition for sql query
-            String key = iter.next();
-            conditions = key + "=" + whereConditions.get(key);
-            for (int i = 1; i < numOfConditions; i++)
-            {
-                key = iter.next();
-                conditions += " AND " + key + "=" + whereConditions.get(key);
-            }
-        }
-        ResultSet rs = null;
-        try
-        {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
-                connect();
-            statement = connection.createStatement();
-            rs = statement.executeQuery("SELECT DISTINCT * FROM " + tableName +
-                    " WHERE " + conditions);
-            // gets columns names
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-            ArrayList<String> columnNames = new ArrayList<String>();
-            for (int i = 1; i <= columnCount; i++ )
-                columnNames.add(rsmd.getColumnName(i));
-            HashMap<Integer,HashMap<String,String>> results= new HashMap<Integer,HashMap<String,String>>();
-            // no data this time
-            if (!rs.next())
-                return null;
-            else
-            {
-                int j = 1;
-                *//* each simple HashMap represent a tuple from the resultSet: key=column-name, value=column-value
-                 * the complex HashMap has all of the tuples: key=serial number from the resultSet(begins with 1)
-                  * value=the tuple*//*
-                do
-                {
-                    HashMap<String,String> line = new HashMap<String,String>();
-                    Iterator<String> iter = columnNames.iterator();
-                    for (int i = 0; i < columnCount; i++)
-                    {
-                        String column = iter.next();
-                        if(rs.getObject(column) != null)
-                            line.put(column, rs.getObject(column).toString());
-                        // no data in this column ofthat tuple
-                        else
-                            line.put(column, "null");
-                    }
-                    results.put(new Integer(j), line);
-                    j++;
-                }while (rs.next());
-                return results;
-            }
-        }
-        // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
-        // Releases the resources of this method
-        finally
-        {
-            releaseResources(statement, connection);
-            if (rs != null)
-            {
-                try
-                {
-                    rs.close();
-                }
-                catch (Exception e) {e.printStackTrace();}
-            }
-        }
-    }*/
 
-    private  HashMap<Integer,HashMap<String,String>>
-    getRowsFromTable(HashMap<String,String> whereConditions, String tableName)
-    {
+    private HashMap<Integer, HashMap<String, String>>
+    getRowsFromTable(HashMap<String, String> whereConditions, String tableName) {
         logger.log(Level.INFO, "   In getRowsFromTable");
         String conditions = "";
 
-        if(whereConditions == null) {
+        if (whereConditions == null) {
             // No conditions - get all the rows from the table
             conditions = "1=1";
             whereConditions = new HashMap<String, String>();
-        }
-        else
-        {
+        } else {
             int numOfConditions = whereConditions.size();
             Set<String> keys = whereConditions.keySet();
             Iterator<String> iter = keys.iterator();
             // creates the where condition for sql query
             String key = iter.next();
             conditions = key + "=?";
-            for (int i = 1; i < numOfConditions; i++)
-            {
+            for (int i = 1; i < numOfConditions; i++) {
                 key = iter.next();
                 conditions += " AND " + key + "=?";
             }
 
         }
         ResultSet rs = null;
-        try
-        {
+        try {
             // Create the query
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             String query = "SELECT * FROM " + tableName + " WHERE " + conditions;
             // Assign the values to the where clause
             PreparedStatement stmt = connection.prepareStatement(query);
             Set<String> keys = whereConditions.keySet();
-            int  parameterIndex = 1;
-            for (String key : keys){
+            int parameterIndex = 1;
+            for (String key : keys) {
                 stmt.setObject(parameterIndex, whereConditions.get(key));
                 parameterIndex++;
             }
@@ -214,16 +123,15 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     /* Debugging functions*/
-    public int testDelete(String cmid){
+    public int testDelete(String cmid) {
 
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             ResultSet rs = null;
             String sql = "DELETE FROM RegIDs WHERE community_member_id=?;" +
                     "update dbo.P_CommunityMembers set email_address='bla' where community_member_id=?;" +
-                    "update dbo.MembersLoginDetails set email_address='bla' where community_member_id=?"
-                    ;
+                    "update dbo.MembersLoginDetails set email_address='bla' where community_member_id=?";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setObject(1, cmid);
@@ -231,19 +139,18 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.setObject(3, cmid);
             return stmt.executeUpdate();
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return 0;
     }
 
-    public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)
-    {
+    public HashMap<Integer, HashMap<String, String>> getRegistrationFields(int userType) {
         logger.log(Level.INFO, "In getRegistrationFields. userType = " + userType);
-        HashMap<String,String> conds = new HashMap<String,String>();
+        HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("user_type", Integer.toString(userType));
         // gets registration fields according to the givven usetType
-        HashMap<Integer,HashMap<String,String>> ret = getRowsFromTable(conds, "RegistrationFields");
+        HashMap<Integer, HashMap<String, String>> ret = getRowsFromTable(conds, "RegistrationFields");
         /* gets for each registration field the possible values from the proper table, if
            the field is not "free text". we put a json object that converted to string */
         if (ret != null) {
@@ -261,11 +168,11 @@ public class DbComm_V1 implements IDbComm_model {
                     l.add("enum_code");
                     HashMap<String, String> conds1 = new HashMap<String, String>();
                     conds1.put("table_name", tableName.split("\\.")[1]);
-                    conds1.put("column_name", tableName.split("\\.")[2] );
+                    conds1.put("column_name", tableName.split("\\.")[2]);
                     HashMap<Integer, HashMap<String, String>> h = selectFromTable("Enum", l, conds1);
                     JSONArray jarray = new JSONArray();
 
-                    for(int j = 1; j <= h.size(); j++){
+                    for (int j = 1; j <= h.size(); j++) {
                         jarray.put(new JSONObject().put("id", h.get(j).get("enum_code"))
                                 .put("value", h.get(j).get("enum_value")));
                     }
@@ -274,11 +181,11 @@ public class DbComm_V1 implements IDbComm_model {
                 } else { // Not an enum - Just rows from a table
                     JSONArray jarray = new JSONArray();
                     HashMap<Integer, HashMap<String, String>> rowsMap = getRowsFromTable(null, tableName);
-                    for (int rowNum = 1; rowNum <= rowsMap.size(); rowNum++){
+                    for (int rowNum = 1; rowNum <= rowsMap.size(); rowNum++) {
                         HashMap<String, String> row = rowsMap.get(rowNum);
                         JSONObject json = new JSONObject();
-                        for (Map.Entry<String, String> entry : row.entrySet()){
-                            if (json.length() == 2){
+                        for (Map.Entry<String, String> entry : row.entrySet()) {
+                            if (json.length() == 2) {
                                 // Don't override existing values...
                                 break;
                             }
@@ -286,12 +193,11 @@ public class DbComm_V1 implements IDbComm_model {
                             if (json.isNull("id") && (col.toLowerCase().contains("id") ||
                                     col.toLowerCase().contains("num")) &&
                                     !col.toLowerCase().contains("phone")
-                                    && !col.toLowerCase().contains("fax")){
+                                    && !col.toLowerCase().contains("fax")) {
                                 // The primary key
                                 json.put("id", entry.getValue());
-                            }
-                            else if (json.isNull("value")&& (col.toLowerCase().contains("description") ||
-                                    col.toLowerCase().contains("name"))){
+                            } else if (json.isNull("value") && (col.toLowerCase().contains("description") ||
+                                    col.toLowerCase().contains("name"))) {
                                 // The value itself
                                 json.put("value", entry.getValue());
                             }
@@ -307,45 +213,8 @@ public class DbComm_V1 implements IDbComm_model {
         return ret;
     }
 
-    /*public HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType)
-    {
-        HashMap<String,String> conds = new HashMap<String,String>();
-        conds.put("user_type", Integer.toString(userType));
-        // gets registration fields according to the givven usetType
-        HashMap<Integer,HashMap<String,String>> ret = getRowsFromTable(conds, "RegistrationFields");
-        *//* gets for each registration field the possible values from the proper table, if
-           the field is not "free text". we put a json object that converted to string *//*
-        if (ret != null) {
-            for (int i = 1; i <= ret.size(); i++) {
-                if ((ret.get(i).get("get_possible_values_from") == null) ||
-                        (ret.get(i).get("get_possible_values_from").equals("null")))
-                    continue;
-                String tableName = ret.get(i).get("get_possible_values_from");
-                JSONObject jo;
-                // field that has few possible values from Enum table
-                if (tableName.substring(0, 5).equals("Enum.")) {
-                    ArrayList<String> l = new ArrayList<String>();
-                    l.add("enum_value");
-                    l.add("enum_code");
-                    HashMap<String, String> conds1 = new HashMap<String, String>();
-                    Erclogger.log(Level.INFO, tableName.split("\\.")[0].toString());
-                    conds1.put("table_name", "'" + tableName.split("\\.")[1] + "'");
-                    conds1.put("column_name", "'" + tableName.split("\\.")[2] + "'");
-                    HashMap<Integer, HashMap<String, String>> h = selectFromTable("Enum", l, conds1);
-                    jo = new JSONObject();
-                    for(int j = 1; j <= h.size(); j++)
-                        jo.put(h.get(j).get("enum_code"), h.get(j).get("enum_value"));
-                } else
-                    jo = new JSONObject(getRowsFromTable(null, tableName));
-                ret.get(i).remove("get_possible_values_from");
-                ret.get(i).put("get_possible_values_from", jo.toString());
-            }
-        }
-        return ret;
-    }*/
 
-    public HashMap<String,String> getUserByParameter(HashMap<String,String> whereConditions)
-    {
+    public HashMap<String, String> getUserByParameter(HashMap<String, String> whereConditions) {
         String conditions = "";
         int numOfConditions = whereConditions.size();
         Set<String> keys = whereConditions.keySet();
@@ -354,15 +223,13 @@ public class DbComm_V1 implements IDbComm_model {
            table-name.column-name */
         String key = iter.next();
         conditions = key + "=?";
-        for (int i = 1; i < numOfConditions; i++)
-        {
+        for (int i = 1; i < numOfConditions; i++) {
             key = iter.next();
             conditions += " AND " + key + "=?";
         }
         ResultSet rs = null;
-        try
-        {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+        try {
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             // gets basic data about the user
             System.err.println("SELECT DISTINCT * FROM P_CommunityMembers INNER JOIN MembersLoginDetails " +
@@ -375,21 +242,21 @@ public class DbComm_V1 implements IDbComm_model {
             // Assign the values to the where clause
             PreparedStatement stmt = connection.prepareStatement(query);
             Set<String> keys1 = whereConditions.keySet();
-            int  parameterIndex = 1;
-            for (String key1 : keys1){
+            int parameterIndex = 1;
+            for (String key1 : keys1) {
                 logger.log(Level.INFO, "key: " + key1 + " val: " + whereConditions.get(key1));
                 stmt.setObject(parameterIndex, whereConditions.get(key1));
                 parameterIndex++;
             }
             rs = stmt.executeQuery();
             // no user exists for the given conditions
-            if(!rs.next())
+            if (!rs.next())
                 return null;
             String cmid = rs.getObject("community_member_id").toString();
             // gets the userType by the user's cmid
             int userType = getUserType(cmid);
             // gets all important data about Patient user
-            if(userType == 0) {
+            if (userType == 0) {
                 query = "SELECT DISTINCT * FROM " + "P_CommunityMembers INNER JOIN "
                         + "P_Patients ON P_CommunityMembers.community_member_id=P_Patients.community_member_id "
                         + "INNER JOIN P_EmergencyContact ON P_Patients.community_member_id=P_EmergencyContact.community_member_id "
@@ -406,7 +273,7 @@ public class DbComm_V1 implements IDbComm_model {
                 stmt = connection.prepareStatement(query);
                 keys1 = whereConditions.keySet();
                 parameterIndex = 1;
-                for (String key1 : keys1){
+                for (String key1 : keys1) {
                     stmt.setObject(parameterIndex, whereConditions.get(key1));
                     parameterIndex++;
                 }
@@ -432,7 +299,7 @@ public class DbComm_V1 implements IDbComm_model {
                 stmt = connection.prepareStatement(query);
                 keys1 = whereConditions.keySet();
                 parameterIndex = 1;
-                for (String key1 : keys1){
+                for (String key1 : keys1) {
                     stmt.setObject(parameterIndex, whereConditions.get(key1));
                     parameterIndex++;
                 }
@@ -442,37 +309,32 @@ public class DbComm_V1 implements IDbComm_model {
             int columnCount = rsmd.getColumnCount();
             ArrayList<String> columnNames = new ArrayList<String>();
             // gets all column names from the executed query
-            for (int i = 1; i <= columnCount; i++ )
+            for (int i = 1; i <= columnCount; i++)
                 columnNames.add(rsmd.getColumnName(i));
 
             // no user for the given conditions  exists
             if (!rs.next())
                 return null;
-            else
-            {
-                HashMap<String,String> user = new HashMap<String,String>();
+            else {
+                HashMap<String, String> user = new HashMap<String, String>();
                 // gets the data about the user:key=column-name, value=column-value-needs the most updated data
-                do
-                {
+                do {
                     user.clear();
                     iter = columnNames.iterator();
-                    for (int i = 0; i < columnCount; i++)
-                    {
+                    for (int i = 0; i < columnCount; i++) {
                         String column = iter.next();
                         // no need for duplications or data about dates in this system
-                        if((!user.containsKey(column)) && (column != "date_from") && (column != "date_to"))
-                        {
+                        if ((!user.containsKey(column)) && (column != "date_from") && (column != "date_to")) {
                             if (rs.getObject(column) != null)
                                 user.put(column, rs.getObject(column).toString());
-                            // no data about the user in this column
+                                // no data about the user in this column
                             else
                                 user.put(column, "null");
                         }
                     }
-                }while (rs.next());
+                } while (rs.next());
                 // for patient user-gets his doctor's license
-                if(userType == 0)
-                {
+                if (userType == 0) {
                     query = "SELECT DISTINCT P_Doctors.doc_license_number as sup,doc1.doc_license_number as pre,doc2.doc_license_number as dia FROM P_CommunityMembers INNER JOIN \n" +
                             "P_Patients ON P_CommunityMembers.community_member_id=P_Patients.community_member_id \n" +
                             "INNER JOIN P_Supervision ON P_Patients.patient_id=P_Supervision.patient_id\n" +
@@ -486,22 +348,21 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt = connection.prepareStatement(query);
                     keys1 = whereConditions.keySet();
                     parameterIndex = 1;
-                    for (String key1 : keys1){
+                    for (String key1 : keys1) {
                         stmt.setObject(parameterIndex, whereConditions.get(key1));
                         parameterIndex++;
                     }
                     rs = stmt.executeQuery();
-                    if(rs.next())
-                    {
-                        if(rs.getObject("sup") != null)
-                        user.put("P_supervision.doc_license_number", rs.getObject("sup").toString());
+                    if (rs.next()) {
+                        if (rs.getObject("sup") != null)
+                            user.put("P_supervision.doc_license_number", rs.getObject("sup").toString());
                         else
                             user.put("P_supervision.doc_license_number", "null");
-                        if(rs.getObject("pre") != null)
+                        if (rs.getObject("pre") != null)
                             user.put("P_prescriptions.doc_license_number", rs.getObject("pre").toString());
                         else
                             user.put("P_prescriptions.doc_license_number", "null");
-                        if(rs.getObject("dia") != null)
+                        if (rs.getObject("dia") != null)
                             user.put("P_diagnosis.doc_license_number", rs.getObject("dia").toString());
                         else
                             user.put("P_diagnosis.doc_license_number", "null");
@@ -511,27 +372,27 @@ public class DbComm_V1 implements IDbComm_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
         // Releases the resources of this method
-        finally
-        {
+        finally {
             releaseResources(statement, connection);
-            if (rs != null)
-            {
-                try
-                {
+            if (rs != null) {
+                try {
                     rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                catch (Exception e) {e.printStackTrace();}
             }
         }
     }
 
-    public int getUserType(String cmid)
-    {
+    public int getUserType(String cmid) {
         ResultSet rs = null;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets the userType by cmid
@@ -543,24 +404,24 @@ public class DbComm_V1 implements IDbComm_model {
             return -1;
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return -1;}
+        catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
         // Releases the resources of this method
-        finally
-        {
+        finally {
             releaseResources(statement, connection);
-            if (rs != null)
-            {
-                try
-                {
+            if (rs != null) {
+                try {
                     rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                catch (Exception e) {e.printStackTrace();}
             }
         }
     }
 
-    public void updateUserDetails(HashMap<String,String> updates)
-    {
+    public void updateUserDetails(HashMap<String, String> updates) {
         int CMID = Integer.parseInt(updates.get("community_member_id"));
         updates.remove("community_member_id");
         String Supdates = "";
@@ -570,37 +431,33 @@ public class DbComm_V1 implements IDbComm_model {
         // gets personal updates for this user. the input format should be:key=column-name,value=column-new-value
         String key = iter.next();
         Supdates = key + "=" + updates.get(key);
-        for (int i = 1; i < numOfUpdates; i++)
-        {
+        for (int i = 1; i < numOfUpdates; i++) {
             key = iter.next();
             Supdates += ", " + key + "=" + updates.get(key);
         }
         // update user's personal details
-        try
-        {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+        try {
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
-            statement.execute("UPDATE " +  "P_CommunityMembers SET " +
+            statement.execute("UPDATE " + "P_CommunityMembers SET " +
                     Supdates + " WHERE community_member_id=" + Integer.toString(CMID));
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
-        finally
-        {
+        catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             releaseResources(statement, connection);
         }
     }
 
-    public HashMap<Integer,HashMap<String,String>> getFrequency(HashMap<String,String> kindOfFrequency)
-    {
+    public HashMap<Integer, HashMap<String, String>> getFrequency(HashMap<String, String> kindOfFrequency) {
         // gets all data about specific frequency
         return selectFromTable("Frequencies", null, kindOfFrequency);
     }
 
-    public HashMap<Integer,HashMap<String,String>> getDefaultInEmergency(String state)
-    {
-        HashMap<String,String> cond = new HashMap<String,String>();
+    public HashMap<Integer, HashMap<String, String>> getDefaultInEmergency(String state) {
+        HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("state", state);
         ArrayList<String> select = new ArrayList<String>();
         select.add("default_caller");
@@ -608,89 +465,78 @@ public class DbComm_V1 implements IDbComm_model {
         return selectFromTable("DefaultCallerSettings", select, cond);
     }
 
-    public HashMap<String,String> getRejectCodes()
-    {
+    public HashMap<String, String> getRejectCodes() {
         // gets all reject codes of patient that can givven by doctor
-        HashMap<Integer,HashMap<String,String>> rejectCodes = getRowsFromTable(null, "RejectCodes");
+        HashMap<Integer, HashMap<String, String>> rejectCodes = getRowsFromTable(null, "RejectCodes");
         int numOfCodes = rejectCodes.size();
-        HashMap<String,String> codes = new HashMap<String,String>();
-        Collection<HashMap<String,String>> col = rejectCodes.values();
-        Iterator<HashMap<String,String>> iter = col.iterator();
+        HashMap<String, String> codes = new HashMap<String, String>();
+        Collection<HashMap<String, String>> col = rejectCodes.values();
+        Iterator<HashMap<String, String>> iter = col.iterator();
         // The returned HashMap will be in this format:key=id-of-reject-code, value=the-reject-code
-        for(int i = 0; i < numOfCodes; i++)
-        {
-            HashMap<String,String> m = iter.next();
+        for (int i = 0; i < numOfCodes; i++) {
+            HashMap<String, String> m = iter.next();
             codes.put(m.get("id"), m.get("description"));
         }
         return codes;
     }
 
     // gets value of enum by the enum number(or the opposite) from specific table and column
-    public HashMap<Integer,HashMap<String,String>> getFromEnum(HashMap<String,String> cond)
-    {
+    public HashMap<Integer, HashMap<String, String>> getFromEnum(HashMap<String, String> cond) {
         return selectFromTable("Enum", null, cond);
     }
 
-    public ArrayList<String> getWaitingPatientsCMID(int docCMID)
-    {
+    public ArrayList<String> getWaitingPatientsCMID(int docCMID) {
+        long s = System.currentTimeMillis();
+
         logger.log(Level.INFO, "In getWaitingPatientsCMID. param = " + docCMID);
         ResultSet rs = null;
-        ResultSet rs1 = null;
-        try
-        {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+        try {
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
-            statement = connection.createStatement();
-            // gets all related patients for this doctor
-            rs = statement.executeQuery("SELECT DISTINCT * FROM " + "P_Doctors INNER JOIN "+
-                    "P_Supervision ON P_Doctors.doctor_id=P_Supervision.doctor_id "
-                    + "WHERE P_Doctors.community_member_id="
-                    + Integer.toString(docCMID));
-            // no patient related for this doctor
-            if(!rs.next()) {
+            String sql = "select dbo.P_Patients.community_member_id from dbo.P_Patients INNER JOIN dbo.P_Supervision ON" +
+                    "  dbo.P_Patients.patient_id = dbo.P_Supervision.patient_id INNER JOIN dbo.P_StatusLog ON" +
+                    "   dbo.P_Patients.community_member_id=dbo.P_StatusLog.community_member_id INNER JOIN dbo.P_Doctors" +
+                    "  on dbo.P_Doctors.doctor_id=dbo.P_Supervision.doctor_id INNER JOIN dbo.P_Statuses ON" +
+                    "  dbo.P_StatusLog.status_num=dbo.P_Statuses.status_num" +
+                    "  where dbo.P_Doctors.community_member_id=? AND dbo.P_StatusLog.date_to is NULL" +
+                    " AND dbo.P_Statuses.status_name='verifying details'";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setObject(1, docCMID);
+
+            rs = stmt.executeQuery();
+            if (!rs.next()) {
                 logger.log(Level.INFO, "In getWaitingPatientsCMID. No awaiting patients found");
                 return null;
+            } else {
+                ArrayList<String> rv = new ArrayList<>();
+                do {
+                    rv.add(Integer.toString(rs.getInt("community_member_id")));
+                } while (rs.next());
+
+                return rv;
             }
-            else
-            {
-                ArrayList<String> res = new ArrayList<String>();
-                do
-                {
-                    int patientID = rs.getInt("patient_id");
-                    Statement statement2 = connection.createStatement();
-                    // gets all relevant data about related patient that waits for doctor's approval
-                    rs1 = statement2.executeQuery("SELECT DISTINCT * FROM " + "P_Patients INNER JOIN "
-                            + " P_StatusLog ON P_Patients.community_member_id=P_StatusLog.community_member_id"
-                            + " INNER JOIN P_Statuses ON P_Statuses.status_num=P_StatusLog.status_num"
-                            + " WHERE P_Patients.patient_id=" + Integer.toString(patientID) +
-                            " AND P_Statuses.status_name='verifying details' AND P_StatusLog.date_to IS NULL");
-                    // this patient is not waiting for doctor's approval
-                    if (!rs1.next())
-                        continue;
-                    // gets patient's cmid
-                    else
-                        res.add(Integer.toString(rs1.getInt("community_member_id")));
-                }while (rs.next());
-                return res;
-            }
+
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
         // Releases the resources of this method
-        finally
-        {
+        finally {
             releaseResources(statement, connection);
-            if (rs != null)
-            {
-                try
-                {
+            if (rs != null) {
+                try {
                     rs.close();
-                    rs1.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                catch (Exception e) {e.printStackTrace();}
             }
         }
     }
+
+
 
     public void updateUrgentInRefreshDetailsTime(int CMID, String fieldName, int urgentBit)
     {
@@ -770,7 +616,7 @@ public class DbComm_V1 implements IDbComm_model {
         // System.out.println(sql);
         try {
             //connect();
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             PreparedStatement stmt = connection.prepareStatement(sql);
             int  parameterIndex = 1;
@@ -819,7 +665,7 @@ public class DbComm_V1 implements IDbComm_model {
         String sql = String.format("UPDATE %s SET %s=%s WHERE %s", tableName, columnToUpdate, newValue.toString(), whereString);
         //System.out.println(sql);
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute(sql);
@@ -868,7 +714,7 @@ public class DbComm_V1 implements IDbComm_model {
         int cmid = -1;
         try {
             // Validate connection
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
 
             // Insert basic details and get the new cmid
@@ -1163,7 +1009,7 @@ public class DbComm_V1 implements IDbComm_model {
                 s = getRowsFromTable(cond, "P_Statuses");
                 val = s.values();
                 statusNum = val.iterator().next().get("status_num");
-                if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+                if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                     connect();
                 // closed time of this user in the old status
                 statement = connection.createStatement();
@@ -1180,7 +1026,7 @@ public class DbComm_V1 implements IDbComm_model {
             val = s.values();
             logger.log(Level.INFO, "val = " + val);
             statusNum = val.iterator().next().get("status_num");
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // updates the givven user with the givven new status
@@ -1203,7 +1049,7 @@ public class DbComm_V1 implements IDbComm_model {
         }
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO RegIDs (reg_id,community_member_id) VALUES " +
                     "(?,?)");
@@ -1239,7 +1085,7 @@ public class DbComm_V1 implements IDbComm_model {
         String[] mpTables = {"MP_Affiliation", "MP_Certification", "MP_MedicalPersonnel"};
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             HashMap<String,String> cond = new HashMap<String,String>();
             cond.put("community_member_id", Integer.toString(cmid));
@@ -1363,7 +1209,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,created_date,location_remark) VALUES (" +
@@ -1397,7 +1243,7 @@ public class DbComm_V1 implements IDbComm_model {
         whereString = whereString.substring(0, whereString.length() - 4);
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("UPDATE O_EmergencyEventResponse SET response_date=current_timestamp WHERE " + whereString);
@@ -1413,7 +1259,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("UPDATE O_EmergencyEventResponse SET arrival_date=current_timestamp WHERE community_member_id="
@@ -1430,7 +1276,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("UPDATE O_EmergencyEventResponse SET activation_date=current_timestamp WHERE community_member_id="
@@ -1447,7 +1293,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("UPDATE O_EmergencyEventResponse SET result=" + result + " WHERE community_member_id="
@@ -1464,7 +1310,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         ResultSet rs = null;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets the userType by cmid
@@ -1530,7 +1376,7 @@ public class DbComm_V1 implements IDbComm_model {
         ArrayList<Integer> cmids = new ArrayList<Integer>();
         ResultSet rs = null;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             String sql = "SELECT community_member_id FROM P_StatusLog JOIN" +
                     "Availability WHERE status_name='active' and " +
@@ -1581,7 +1427,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         ResultSet rs = null;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets the userType by cmid
@@ -1639,7 +1485,7 @@ public class DbComm_V1 implements IDbComm_model {
         ResultSet rs = null;
         int eventId = -1;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
 
             // Prepare the statement
@@ -1696,7 +1542,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("INSERT INTO O_EmergencyMedicationUse (event_id,providing_member_id,approved_by_id,medication_num) VALUES (" +
@@ -1825,7 +1671,7 @@ public class DbComm_V1 implements IDbComm_model {
         if(regType != null)
             updateTable("O_EmergencyEvents", cond, "region_type", regType);
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE event_id=" + eventId);
@@ -1851,7 +1697,7 @@ public class DbComm_V1 implements IDbComm_model {
         ResultSet rs = null;
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets all related patients for this doctor
@@ -1886,7 +1732,7 @@ public class DbComm_V1 implements IDbComm_model {
         cond.put("event_id", eventId);
         updateTable("O_EmergencyEvents", cond, "ems_member_id", cmid);
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE event_id=" + eventId);
@@ -1905,7 +1751,7 @@ public class DbComm_V1 implements IDbComm_model {
         ResultSet rs = null;
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets all related patients for this doctor
@@ -1939,7 +1785,7 @@ public class DbComm_V1 implements IDbComm_model {
         ResultSet rs = null;
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets all related patients for this doctor
@@ -2013,7 +1859,7 @@ public class DbComm_V1 implements IDbComm_model {
         String num = getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num");
         try
         {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             statement.execute("INSERT INTO O_EmergencyEventActions (event_id,action_type_num) VALUES (" +
@@ -2038,7 +1884,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         ResultSet rs = null;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets the userType by cmid
@@ -2071,7 +1917,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         ResultSet rs = null;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets the userType by cmid
@@ -2104,7 +1950,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         ResultSet rs = null;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets the userType by cmid
@@ -2133,7 +1979,7 @@ public class DbComm_V1 implements IDbComm_model {
     {
         ResultSet rs = null;
         try {
-            if (!(connection != null && !connection.isClosed() && connection.isValid(1)))
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
             // gets the userType by cmid

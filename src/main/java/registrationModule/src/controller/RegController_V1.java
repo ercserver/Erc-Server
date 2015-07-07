@@ -30,6 +30,7 @@ public class RegController_V1 implements IRegController {
 
     public RegController_V1(){
         logger.log(Level.INFO, "In RegController_V1 ctor");
+
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
         dbController = models.determineDbControllerVersion();

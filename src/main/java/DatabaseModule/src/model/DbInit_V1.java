@@ -1,6 +1,7 @@
 package DatabaseModule.src.model;
 
 import DatabaseModule.src.api.IDbInit_model;
+import Utilities.ErcConfiguration;
 
 import java.sql.*;
 
@@ -9,17 +10,14 @@ import java.sql.*;
  * Created by NAOR on 06/04/2015.
  */
 public class DbInit_V1 implements IDbInit_model {
-    private final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private final String DB_URL =/* "jdbc:sqlserver://localhost/sqlserver";*/ "jdbc:sqlserver://socmedserver.mssql.somee.com;";//databaseName=ercserver-socmed";
-    private final String DBName = /*"ercserver";*/ "socmedserver";
-    private final  String USERNAME = "saaccount";
-    private final  String PASS = "saaccount";
-    private  Connection connection = null;
+    private final String JDBC_DRIVER = ErcConfiguration.JDBC_DRIVER;
+    private final String DB_URL = ErcConfiguration.DB_URL;
+    private final String DBName = ErcConfiguration.DB_Name;
+    private final  String USERNAME = ErcConfiguration.DB_USERNAME;
+    private final  String PASS = ErcConfiguration.DB_PASS;
+    private static Connection connection = null;
     private  Statement statement = null;
 
-    public DbInit_V1(){
-        connect();
-    }
 
 
     public  void initializeAndConnect()

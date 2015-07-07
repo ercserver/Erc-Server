@@ -16,8 +16,8 @@ import org.apache.log4j.Logger;
  */
 public class CommController_V1 implements ICommController {
     //version to use - change this to change version - edit decision methos in accordance
-    private final int commToUsersVersion = 1;
-    private final int commOfficialVersion = 1;
+    private static final int commToUsersVersion = 1;
+    private static final int commOfficialVersion = 1;
     private Logger logger = Logger.getLogger(getClass().getName());
 
     //holding the implementations chosen for the interface (composition)

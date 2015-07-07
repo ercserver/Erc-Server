@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 public class DbController_V1 implements IDbController {
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
-    private final int dbInitVersion = 1;
-    private final int dbCommVersion = 1;
+    private final static int dbInitVersion = 1;
+    private final static int dbCommVersion = 1;
 
     //holding the implementations chosen for the interface (composition)
     private IDbInit_model DB_initializer = determineDbInitVersion();
