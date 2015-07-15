@@ -1501,15 +1501,16 @@ public class DbComm_V1 implements IDbComm_model {
                     " status_num, x, y," +
                     " time_to_next_reminder) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            HashMap<String, String> cond = new HashMap<String, String>();
+            cond.put("status_name", "open");
+            String statusNum = getRowsFromTable(cond, "O_EventStatuses").get(1).get("status_num");
             stmt.setInt(1, Integer.parseInt(details.get("create_by_member_id")));
             stmt.setInt(2, Integer.parseInt(details.get("patient_id")));
             stmt.setInt(3, Integer.parseInt(details.get("medical_condition_id")));
-            //ToDo:I think that this is something that you need to get from the statuses table because it's clear that we are oppening event
-            stmt.setInt(4, Integer.parseInt(details.get("status_num")));
+            stmt.setInt(4, Integer.parseInt(statusNum));
             stmt.setFloat(5, Float.parseFloat(details.get("x")));
             stmt.setFloat(6, Float.parseFloat(details.get("y")));
-            //ToDo:I think that we need to get this from something else
-            stmt.setInt(7, Integer.parseInt(details.get("time_to_next_reminder")));
+            //stmt.setInt(7, Integer.parseInt(details.get("time_to_next_reminder")));
 
             stmt.executeUpdate();
 
