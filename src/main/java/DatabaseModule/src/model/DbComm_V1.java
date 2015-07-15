@@ -12,8 +12,14 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+/*
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+*/
 
 //import com.sun.deploy.util.StringUtils;
 
@@ -1481,6 +1487,7 @@ public class DbComm_V1 implements IDbComm_model {
             time_to_next_reminder - optional
             memo - optional
         */
+
         logger.log(Level.INFO, "   In startNewEmergencyEvent. details = " + details);
         ResultSet rs = null;
         int eventId = -1;
@@ -1512,8 +1519,10 @@ public class DbComm_V1 implements IDbComm_model {
 
             if (rs.next()) {
                 eventId = rs.getInt(1);
+                logger.log(Level.INFO, "   new eventid = " + eventId);
             } else{
                 // There was a problem inserting the new event
+                logger.log(Level.INFO, "   error creating eventid");
                 return -1;
             }
             stmt.close();
@@ -1854,11 +1863,13 @@ public class DbComm_V1 implements IDbComm_model {
 
     public void updateLogs(String eventId, String actionTypeName)
     {
+        logger.log(Level.INFO, "In updateLogs");
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("action_type_name", actionTypeName);
-        String num = getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num");
+
         try
         {
+            String num = getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num");
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();

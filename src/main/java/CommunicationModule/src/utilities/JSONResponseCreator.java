@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 
 public class JSONResponseCreator implements IResponseCreator {

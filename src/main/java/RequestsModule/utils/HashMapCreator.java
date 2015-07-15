@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Set;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Created by ohad on 5/5/2015.
@@ -23,13 +23,13 @@ public class HashMapCreator {
         for (String key : keys){
             try {
                 map.put(key, jObject.get(key).toString());
-                logger.log(Level.INFO, "map <-- " + key);
+                //logger.log(Level.INFO, "map <-- " + key);
             }catch (Exception ex){
                 System.err.println("Error in key : " + key);
             }
 
         }
-        logger.log(Level.INFO, "After while");
+        logger.log(Level.INFO, "Exiting jsonToMap");
         return map;
     }
 

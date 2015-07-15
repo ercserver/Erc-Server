@@ -1,8 +1,8 @@
 /*
 package Utilities;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 */
 /**

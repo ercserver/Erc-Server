@@ -11,8 +11,8 @@ import Utilities.ModelsFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Created by NAOR on 16/05/2015.
@@ -61,7 +61,9 @@ public class EmerController_V1 implements IEmerController {
         details.put("medical_condition_id", data.get("medical_condition_id"));
         details.put("x", data.get("x"));
         details.put("y", data.get("y"));
+
         int event = dbController.startNewEmergencyEvent(details);
+
         emergencyLogger.handleHelpCalling(Integer.toString(event));
         //Updates the patient's app
         ArrayList<String> sendTo = new ArrayList<String>();

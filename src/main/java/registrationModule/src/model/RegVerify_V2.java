@@ -9,8 +9,8 @@ import registrationModule.src.api.IRegVerify_model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Created by User on 29/04/2015.

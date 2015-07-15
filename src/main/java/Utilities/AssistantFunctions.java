@@ -4,8 +4,8 @@ import DatabaseModule.src.api.IDbController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Created by מאור on 18/05/2015.

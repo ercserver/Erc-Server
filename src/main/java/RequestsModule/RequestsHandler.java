@@ -10,8 +10,7 @@ import RequestsModule.utils.TestGCM;
 import RequestsModule.utils.TestNewDB;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -21,6 +20,8 @@ import registrationModule.src.api.IRegController;
 import registrationModule.src.controller.RegController_V1;
 
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Controller
@@ -59,7 +60,7 @@ public class RequestsHandler {
     JsonValidator jv = new JsonValidator();
 
     /****** Controlers ******/
-    final static Logger logger = Logger.getLogger(RequestsHandler.class);
+    final static Logger logger = Logger.getLogger(RequestsHandler.class.getName());
     IRegController rc = new RegController_V1();
     IRoutineController ruc = new RoutineController_V1();
     EmerController_V1 ec = new EmerController_V1();

@@ -17,8 +17,8 @@ import registrationModule.src.api.IRegVerify_model;
 import registrationModule.src.model.RegRequest_V1;
 import registrationModule.src.model.RegVerify_V2;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Created by Maor on 30/04/2015.

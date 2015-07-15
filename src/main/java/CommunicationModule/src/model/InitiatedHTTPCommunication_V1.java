@@ -7,8 +7,8 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import org.jsoup.helper.HttpConnection;
 
 /**
@@ -42,7 +42,7 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
                 e.printStackTrace();
             }
         }
-        logger.log(Level.INFO, "exiting HTTP.sendResponse. Response = " + response);
+        logger.log(Level.INFO, "exiting HTTP.sendResponse. Response = " + response.body());
 
         try {
             return new JSONArray(response.body());

@@ -6,8 +6,8 @@ import registrationModule.src.api.IRegRequest_model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Created by NAOR on 06/04/2015.
