@@ -1873,7 +1873,7 @@ public class DbComm_V1 implements IDbComm_model {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventActions (event_id, action_type_num) VALUES (" +
+            statement.execute("INSERT INTO O_EmergencyEventActions  action_type_num) VALUES (" +
                      num + ")");
         }
         catch (SQLException e) {e.printStackTrace();}
