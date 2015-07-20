@@ -1861,7 +1861,7 @@ public class DbComm_V1 implements IDbComm_model {
                 "medication_provision_date", date.toString());
     }
 
-    public void updateLogs(String eventId, String actionTypeName)
+    public void updateLogs(String eventId, String actionTypeName, String descr)
     {
         logger.log(Level.INFO, "In updateLogs");
         HashMap<String, String> cond = new HashMap<String, String>();
@@ -1873,8 +1873,8 @@ public class DbComm_V1 implements IDbComm_model {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventActions  action_type_num) VALUES (" +
-                     num + ")");
+            statement.execute("INSERT INTO O_EmergencyEventActions  (event_id,action_type_num, more_description) VALUES (" +
+                     eventId + "," + num + "," + descr + ")");
         }
         catch (SQLException e) {e.printStackTrace();}
         finally

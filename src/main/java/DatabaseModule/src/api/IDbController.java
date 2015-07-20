@@ -70,7 +70,7 @@ public interface IDbController  extends IDbInit, IDbComm {
     int getHowManySendToEvent(String state);
     void updateMedicineGiven(int cmid, int eventID);
     void updateMedicineGiven(int cmid, int eventID, Date date);
-    void updateLogs(String eventId, String actionTypeName);
+    void updateLogs(String eventId, String actionTypeName, String descr);
     HashMap<String, String> getFieldDetails(String name, String userType);
     boolean isCmidStatusActive(String cmid);
     boolean doesMedicineMatch(String cmid, String eventId);

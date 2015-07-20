@@ -271,7 +271,7 @@ public class DbController_V1 implements IDbController {
         DB_communicator.updateMedicineGiven(cmid, eventID, date);
     }
 
-    public void updateLogs(String eventId, String actionTypeName){DB_communicator.updateLogs(eventId, actionTypeName);}
+    public void updateLogs(String eventId, String actionTypeName, String descr){DB_communicator.updateLogs(eventId, actionTypeName, descr);}
 
     public  HashMap<String, String> getFieldDetails(String name, String userType){return DB_communicator.getFieldDetails(name, userType);}
 

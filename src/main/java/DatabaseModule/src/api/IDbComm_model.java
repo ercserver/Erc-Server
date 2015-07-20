@@ -129,7 +129,7 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> getGoingAssistantsAndTimes(String eventId);
 
     int getHowManySendToEvent(String state);
-    void updateLogs(String eventId, String actionTypeName);
+    void updateLogs(String eventId, String actionTypeName, String descr);
     HashMap<String, String> getFieldDetails(String name, String userType);
 
 
