@@ -1498,11 +1498,10 @@ public class DbComm_V1 implements IDbComm_model {
             // Prepare the statement
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO O_EmergencyEvents " +
                     "(create_by_member_id, patient_id, medical_condition_id," +
-                    " status_num, x, y," +
-                    " time_to_next_reminder) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+                    " status_num, x, y) " +
+                    "VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             HashMap<String, String> cond = new HashMap<String, String>();
-            cond.put("status_name", "open");
+            cond.put("status_name", "active");
             String statusNum = getRowsFromTable(cond, "O_EventStatuses").get(1).get("status_num");
             stmt.setInt(1, Integer.parseInt(details.get("create_by_member_id")));
             stmt.setInt(2, Integer.parseInt(details.get("patient_id")));
@@ -1874,8 +1873,8 @@ public class DbComm_V1 implements IDbComm_model {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventActions (event_id,action_type_num) VALUES (" +
-                    eventId + "," + num + ")");
+            statement.execute("INSERT INTO O_EmergencyEventActions (event_id, action_type_num) VALUES (" +
+                     num + ")");
         }
         catch (SQLException e) {e.printStackTrace();}
         finally
