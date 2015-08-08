@@ -1,6 +1,8 @@
 package RequestsModule.utils;
 
 
+import Utilities.ErcConfiguration;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,22 +16,22 @@ import java.util.Properties;
 public class TestNewDB {
 
 
-    private final String USER_AGENT = "Mozilla/5.0";
-    final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+
+    final static String JDBC_DRIVER = ErcConfiguration.JDBC_DRIVER;
     final static String DB_URL = "jdbc:sqlserver://localhost\\sqlexpress";
 
 
-    public static void test() throws Exception {
+    public static void test(String url) throws Exception {
         try
         {
             Class.forName(JDBC_DRIVER);
             Properties props = new Properties();
             //props.setProperty("integratedSecurity", "true");
 
-            Connection connection = DriverManager.getConnection(DB_URL);
+            Connection connection = DriverManager.getConnection(url);
 
             connection.setAutoCommit(true);
-            Statement statement = connection.createStatement();
+            /*Statement statement = connection.createStatement();
             //statement.addBatch("DROP DATABASE " + DBName);
             //statement.addBatch("CREATE database " + DBName);
             ResultSet rs = statement.executeQuery("SELECT * FROM p_communityMembers ");
@@ -38,7 +40,7 @@ public class TestNewDB {
             }
 
             connection.commit();
-            statement.executeBatch();
+            statement.executeBatch();*/
 
 
         } catch (ClassNotFoundException e) {

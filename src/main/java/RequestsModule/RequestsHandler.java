@@ -78,10 +78,10 @@ public class RequestsHandler {
 	}
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/db")
-    public @ResponseBody String initDB()
+    public @ResponseBody String initDB(@RequestParam String url)
     {
         try {
-            TestNewDB.test();
+            TestNewDB.test(url);
         } catch (Exception e) {
             e.printStackTrace();
         }

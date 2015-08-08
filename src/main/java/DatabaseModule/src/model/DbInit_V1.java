@@ -123,7 +123,7 @@ public class DbInit_V1 implements IDbInit_model {
 //            connection.commit();
 
             statement.addBatch("CREATE TABLE M_Substitutives ("
-                    +"subsitutive_num INT NOT NULL IDENTITY(1000,1) PRIMARY KEY,"
+                    +"substitutive_num INT NOT NULL IDENTITY(1000,1) PRIMARY KEY,"
                     +"brand_name_id1 INT NOT NULL FOREIGN KEY REFERENCES M_BrandNames(brand_name_id),"
                     +"brand_name_id2 INT NOT NULL FOREIGN KEY REFERENCES M_BrandNames(brand_name_id),"
                     +"conversion_ratio FLOAT NOT NULL,"
@@ -852,7 +852,7 @@ public class DbInit_V1 implements IDbInit_model {
                         " create_by_member_id INTEGER not NULL FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " patient_id INTEGER not NULL, " +
                         " medical_condition_id INTEGER not null FOREIGN KEY REFERENCES M_MedicalConditions(medical_condition_id)," +
-                        " created_date TIMESTAMP not NULL DEFAULT CURRENT_TIMESTAMP , " +
+                        " created_date TIMESTAMP , " +
                         " finished_date DATETIME, " +
                         " ems_member_id INTEGER FOREIGN KEY REFERENCES P_CommunityMembers(community_member_id), " +
                         " status_num INTEGER not NULL FOREIGN KEY REFERENCES O_EventStatuses(status_num), " +

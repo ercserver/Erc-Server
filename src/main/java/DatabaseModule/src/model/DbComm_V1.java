@@ -724,7 +724,7 @@ public class DbComm_V1 implements IDbComm_model {
                 connect();
 
             // Insert basic details and get the new cmid
-            PreparedStatement stmt = connection.prepareStatement("insert into P_CommunityMembers (external_id, external_id_type, first_name, last_name,\n" +
+            PreparedStatement stmt = connection.prepareStatement("insert into P_CommunityMembers (external_id, external_id_type, first_name, last_name," +
                     "birth_date, gender, state, city, street, house_number, zip_code, home_phone_number, mobile_phone_number," +
                     "email_address) VALUES " +
                     "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);

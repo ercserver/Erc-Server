@@ -169,7 +169,11 @@ public class RegController_V1 implements IRegController {
 
     public Object verifyDetail(String communityMemberId) {
         //data contain onlt cmid as string
+        if (communityMemberId.isEmpty()){
+            return null;
+        }
         int cmid = Integer.parseInt(communityMemberId);
+
         //ArrayList<String> mail = null;
         HashMap<String,String> data = null;
         HashMap<String, String> details =  verification.getUserByCmid(cmid);
