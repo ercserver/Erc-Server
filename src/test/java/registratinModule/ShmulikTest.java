@@ -1,10 +1,16 @@
 package registratinModule;
 
+import EmergencyModule.src.api.IEmerController;
+import EmergencyModule.src.controller.EmerController_V1;
+import RoutineModule.src.api.IRoutineController;
+import RoutineModule.src.controller.RoutineController_V1;
 import org.json.JSONArray;
 import registrationModule.src.controller.RegController_V1;
 import registrationModule.src.model.RegVerify_V2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 /**
  * Created by User on 06/05/2015.
@@ -12,9 +18,7 @@ import java.util.HashMap;
 
 public class ShmulikTest {
     public static void main(String[] args) {
-        RegController_V1 v = new RegController_V1();
-        v.verifyDetail("1083");
-
+        testNaor4("10005");
        /* DbComm_V1 d = new DbComm_V1();
         testNaor1();
 
@@ -61,6 +65,8 @@ public class ShmulikTest {
         System.out.println(objToSend.toString());
     }
 
+
+
     public static void testNaor2() {
         RegController_V1 rc = new RegController_V1();
         HashMap<String, String> fakeDetails = new HashMap<String, String>();
@@ -101,6 +107,29 @@ public class ShmulikTest {
         JSONArray objToSend = (JSONArray) rc.handleReg(fakeDetails);
         System.out.println(objToSend.toString());
 
+    }
+    //Transfer fake location to GIS
+    public static void testNaor3(String cmid) {
+        IRoutineController controller = new RoutineController_V1();
+        HashMap<String, String> fakeDetails = new HashMap<String, String>();
+        fakeDetails.put("community_member_id", cmid);
+        fakeDetails.put("RequestID", "routineLocation");
+        fakeDetails.put("x", "34.729817");
+        fakeDetails.put("y", "31.879638");
+        controller.transferLocation(fakeDetails);
+    }
+    //start emergency process
+    public static void testNaor4(String cmid) {
+        IEmerController controller = new EmerController_V1();
+        HashMap<String, String> fakeDetails = new HashMap<String, String>();
+        fakeDetails.put("community_member_id", cmid);
+        fakeDetails.put("RequestID", "AroundLocation");
+        fakeDetails.put("x", "34.729517");
+        fakeDetails.put("y", "31.879038");
+        fakeDetails.put("medical_condition_id", "1000");
+        fakeDetails.put("reg_id", "0");
+
+        controller.emergencyCall(fakeDetails);
     }
 
 

@@ -407,7 +407,7 @@ public class RegController_V1 implements IRegController {
         switch(authMethod) {
             case 0: {
                 String email = getData.get("email_address");
-                //get all useer details
+                //get all user details
                 details = verification.getUserByMail(email);
                 //checks  that there is a user with this email
                 if (null == details)

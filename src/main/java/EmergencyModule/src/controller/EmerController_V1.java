@@ -51,8 +51,9 @@ public class EmerController_V1 implements IEmerController {
             return;
         }
         // Checks that this is a real user
-        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
-            return;
+        //TODO need to bring back later
+ //       if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+   //         return;
         // Creates the event_id
         HashMap<String, String> details = new HashMap<String, String>();
 
@@ -76,8 +77,9 @@ public class EmerController_V1 implements IEmerController {
         commController.sendResponse();
         emergencyLogger.handleGettingCall(Integer.toString(event));
         data.put("event_id", Integer.toString(event));
-        askForClosestEMS(data);
-        emergencyLogger.handleSearchingClosestEMS(Integer.toString(event));
+        //TODO - LEAVING OUT SINCE GIS CANNOT ACCOMPLISH YET
+        //askForClosestEMS(data);
+        //emergencyLogger.handleSearchingClosestEMS(Integer.toString(event));
         data.put("medical_condition_description",
                 dbController.getMedicalConditionByNum(details.get("medical_condition_id")).get(1).get("medical_condition_description"));
         askForUsersAroundLocation(data);
