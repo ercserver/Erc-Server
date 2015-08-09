@@ -100,7 +100,7 @@ public class EmerController_V1 implements IEmerController {
 
     private String turnBirthDateIntoAge(String stringedBirth) {
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss", Locale.ENGLISH);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         try {
             //parse and get birth date
             long birth = format.parse(stringedBirth).getTime();
@@ -116,7 +116,7 @@ public class EmerController_V1 implements IEmerController {
         return null;
     }
 
-    // called from emergencyCall
+    //called from emergencyCall
     private void askForClosestEMS(HashMap<String, String> data) {
         // Asks from GIS the closest EMS to the emergency event
         HashMap<String, String> response = new HashMap<String, String>();

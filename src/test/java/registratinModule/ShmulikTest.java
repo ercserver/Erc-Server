@@ -18,6 +18,7 @@ import java.util.logging.Level;
 
 public class ShmulikTest {
     public static void main(String[] args) {
+        testNaor3("10005");
         testNaor4("10005");
        /* DbComm_V1 d = new DbComm_V1();
         testNaor1();
