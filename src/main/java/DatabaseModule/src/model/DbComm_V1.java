@@ -679,24 +679,30 @@ public class DbComm_V1 implements IDbComm_model {
                              String columnToUpdate, Object newValue)
     {
         // Create the where clause
-        String whereString = "";
         Iterator<String> iter = whereConds.keySet().iterator();
+        String whereString = iter.next() + "=?";
         while (iter.hasNext()){
             String key = iter.next();
-            String val = whereConds.get(key);
-            whereString += String.format("%s=%s AND ", key, val);
+           // String val = whereConds.get(key);
+            whereString += " AND " + key + "=?";
         }
-        // Remove the last "AND"
-        whereString = whereString.substring(0, whereString.length() - 4);
 
         // Create the sql query
-        String sql = String.format("UPDATE %s SET %s=%s WHERE %s", tableName, columnToUpdate, newValue.toString(), whereString);
+        String sql = "UPDATE " + tableName + " SET " + columnToUpdate + "=? WHERE " + whereString;
         //System.out.println(sql);
         try {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
-            statement = connection.createStatement();
-            statement.execute(sql);
+            // Assign the values to the where and set clauses
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setObject(1, newValue);
+            Set<String> keys = whereConds.keySet();
+            int parameterIndex = 2;
+            for (String key : keys) {
+                stmt.setObject(parameterIndex, whereConds.get(key));
+                parameterIndex++;
+            }
+            stmt.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
