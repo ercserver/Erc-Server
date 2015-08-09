@@ -183,7 +183,8 @@ public class DbController_V1 implements IDbController {
     }
 
     public String getPatientIDByCmid(String cmid){
-        return DB_communicator.getPatientIDByCmid(cmid);
+        String patientIDByCmid = DB_communicator.getPatientIDByCmid(cmid);
+        return patientIDByCmid;
     }
 
     @Override

@@ -1258,7 +1258,7 @@ public class DbComm_V1 implements IDbComm_model {
         cond.clear();
         // Add the prescription num
         cond.put("patient_id", data.get("patient_id"));
-        data.putAll(selectFromTable("P_Prescription", Arrays.asList("prescription_num"), cond).get(1));
+        data.putAll(selectFromTable("P_Prescriptions", Arrays.asList("prescription_num"), cond).get(1));
         return data;
     }
 
