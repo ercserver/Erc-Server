@@ -37,7 +37,7 @@ public class EmerController_V1 implements IEmerController {
         emergencyLogger = models.determineEmerLoggerVersion();
         assistantFuncs = new AssistantFunctions();
     }
-
+//
     public void emergencyCall(HashMap<String, String> data)
     {
         logger.log(Level.INFO, "In emergencyCall");
