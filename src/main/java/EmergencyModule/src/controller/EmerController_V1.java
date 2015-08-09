@@ -88,7 +88,8 @@ public class EmerController_V1 implements IEmerController {
 
     private void askForUsersAroundLocation(HashMap<String, String> data)
     {
-        String age = turnBirthDateIntoAge(dbController.getBirthDate(data.get("community_member_id")));
+        //TODO - fix age
+        String age = "32";//turnBirthDateIntoAge(dbController.getBirthDate(data.get("community_member_id")));
         data.put("age",age);
         //add the GIS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
@@ -99,7 +100,7 @@ public class EmerController_V1 implements IEmerController {
 
     private String turnBirthDateIntoAge(String stringedBirth) {
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM:ss", Locale.ENGLISH);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss", Locale.ENGLISH);
         try {
             //parse and get birth date
             long birth = format.parse(stringedBirth).getTime();
