@@ -23,7 +23,7 @@ public interface IRegVerify {
 
     Object signIn(HashMap<String,String> details);
 
-    // TODO: Ohad
+
     Object handleForgotPassword(HashMap<String, String> data);
 
 }

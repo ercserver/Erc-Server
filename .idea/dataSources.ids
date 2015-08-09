@@ -485,7 +485,6 @@
       <column name="status_name" sqlType="varchar" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <column name="action_status_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <primary-key name="PK__O_Action__B023E68232E0915F" columns="action_status_num"/>
-      <exported-key name="FK__O_Emergen__actio__30C33EC3" table="O_EmergencyEventActions" schema="dbo" catalog="socmedserver" columns="action_status_num"/>
     </table>
     <table name="O_ActionTypes" schema="dbo" catalog="socmedserver" type="TABLE">
       <column name="action_type_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -503,11 +502,9 @@
       <column name="emergency_action_num" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="event_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="action_type_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="action_status_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="created_date" sqlType="timestamp" precision="8" scale="0" nullable="false" jdbcType="-2" version="true"/>
-      <column name="finished_date" sqlType="datetime" precision="23" scale="3" nullable="false" jdbcType="93"/>
+      <column name="more_description" sqlType="nvarchar" precision="500" scale="0" nullable="true" jdbcType="-9"/>
       <primary-key name="PK__O_Emerge__AC0BBFFF2B0A656D" columns="emergency_action_num"/>
-      <foreign-key name="FK__O_Emergen__actio__30C33EC3" columns="action_status_num" ref-table="O_ActionStatus" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="action_status_num" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK__O_Emergen__event__2CF2ADDF" columns="event_id" ref-table="O_EmergencyEvents" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="event_id" update-rule="1" delete-rule="1" deferrability="2"/>
     </table>
     <table name="O_EmergencyEventResponse" schema="dbo" catalog="socmedserver" type="TABLE">

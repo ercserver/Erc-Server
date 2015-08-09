@@ -860,7 +860,7 @@ public class DbComm_V1 implements IDbComm_model {
 
                     break;
 
-                default:
+                case 1:
                     // Doctor or EMS
                     stmt = connection.prepareStatement("INSERT INTO P_Doctors (first_name, last_name, doc_license_number," +
                             "community_member_id) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -913,7 +913,31 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt.close();
 
                     break;
+                case 2: // EMS
+                    // Create medical personnel
+                    stmt = connection.prepareStatement("INSERT INTO dbo.MP_MedicalPersonnel (community_member_id)" +
+                            " VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+                    stmt.setObject(1, cmid);
+                    stmt.executeUpdate();
+                    rs = stmt.getGeneratedKeys();
 
+                    if (rs.next()) {
+                        mpid = rs.getInt(1);
+                    } else{
+                        // There was a problem inserting the new member
+                        return -1;
+                    }
+                    stmt.close();
+
+                    stmt = connection.prepareStatement("INSERT INTO MP_Affiliation (organization_id, medical_personnel_id," +
+                            "position_num, a_date_to) VALUES (?,?,?,?)");
+                    stmt.setInt(1, Integer.parseInt(details.get("organization_id")));
+                    stmt.setInt(2, mpid);
+                    stmt.setInt(3, Integer.parseInt(details.get("position_num")));
+                    stmt.setString(4, details.get("a_date_to"));
+                    stmt.executeUpdate();
+                    stmt.close();
+                    break;
 
             }
 
@@ -1870,10 +1894,22 @@ public class DbComm_V1 implements IDbComm_model {
         try
         {
             String num = getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num");
+
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
+            if (num == null || num.equals("")){
+                // Insert new action type
+                PreparedStatement stmt = connection.prepareStatement("insert dbo.O_ActionTypes values (?)", Statement.RETURN_GENERATED_KEYS);
+                stmt.executeUpdate();
+
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()){
+                    num = Integer.toString(rs.getInt(1));
+                }
+
+            }
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventActions  (event_id,action_type_num, more_description) VALUES (" +
+            statement.execute("INSERT INTO O_EmergencyEventActions  (event_id, action_type_num, more_description) VALUES (" +
                      eventId + "," + num + "," + descr + ")");
         }
         catch (SQLException e) {e.printStackTrace();}

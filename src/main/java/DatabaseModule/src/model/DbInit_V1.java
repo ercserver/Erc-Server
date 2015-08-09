@@ -901,7 +901,7 @@ public class DbInit_V1 implements IDbInit_model {
                         "(emergency_action_num INTEGER not NULL IDENTITY(1000,1) PRIMARY KEY, " +
                         " event_id INTEGER not NULL FOREIGN KEY REFERENCES O_EmergencyEvents(event_id), " +
                         " action_type_num INTEGER not NULL FOREIGN KEY REFERENCES O_ActionTypes(action_type_num), " +
-                        " more_description VARCHAR(500), " +
+                        " description VARCHAR(500), " +
                         " created_date TIMESTAMP not NULL DEFAULT CURRENT_TIMESTAMP)");
             }
         }
