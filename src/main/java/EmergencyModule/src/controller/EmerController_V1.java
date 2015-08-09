@@ -389,7 +389,7 @@ public class EmerController_V1 implements IEmerController {
         if(send) {
             HashMap<String, String>h = dbController.getAssistDetails(response.get("community_member_id"), response.get("event_id"));
             updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(response.get("community_member_id")),
-                    response.get("event_id"), eta, h.get("location_remark"));
+                    response.get("event_id"), eta, h.get("location_remark"), response.get("x"), response.get("y"));
             askGisToFollow(response.get("event_id"), response.get("community_member_id"));
             emergencyLogger.handleAskingGISFollowUser(response.get("event_id"), response.get("community_member_id"));
         }
@@ -431,7 +431,7 @@ public class EmerController_V1 implements IEmerController {
         String eta = (assistDetails.get("transformation_mean").equals("0")) ?
                 data.get("eta_by_foot") : data.get("eta_by_car");
         updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(data.get("community_member_id")),
-                data.get("event_id"), eta, data.get("location_remark"));
+                data.get("event_id"), eta, data.get("location_remark"), data.get("x"), data.get("y"));
     }
 
     //This function will be called by "receiveArrivalTime" - for updates and by
@@ -439,7 +439,7 @@ public class EmerController_V1 implements IEmerController {
     //Division to different cases logic is done on the EMS side:
     // If they don't have that patient in
     //that event - it's an addition. If they do - it's an update.
-    private void updateOrAddAssistantToEMS(String patientId, String eventId, String eta, String locationRemark) {
+    private void updateOrAddAssistantToEMS(String patientId, String eventId, String eta, String locationRemark, String x, String y) {
         //generate
         HashMap<String,String> updateOrAddToEms = new HashMap<String,String>();
         updateOrAddToEms.put("RequestID", "updateOrAddAssistant");
@@ -447,6 +447,8 @@ public class EmerController_V1 implements IEmerController {
         updateOrAddToEms.put("event_id", eventId);
         updateOrAddToEms.put("eta", eta);
         updateOrAddToEms.put("location_remark", locationRemark);
+        updateOrAddToEms.put("x", x);
+        updateOrAddToEms.put("y", y);
         //send
         ArrayList<String> sendTo = new ArrayList<>();
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);

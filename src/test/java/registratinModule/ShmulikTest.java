@@ -133,6 +133,18 @@ public class ShmulikTest {
         controller.emergencyCall(fakeDetails);
     }
 
+    public static void testNaor4(String cmid) {
+        IEmerController controller = new EmerController_V1();
+        HashMap<String, String> fakeDetails = new HashMap<String, String>();
+        fakeDetails.put("community_member_id", cmid);
+        fakeDetails.put("RequestID", "AroundLocation");
+        fakeDetails.put("x", "34.729517");
+        fakeDetails.put("y", "31.879038");
+        fakeDetails.put("medical_condition_id", "1000");
+        fakeDetails.put("reg_id", "0");
+
+        controller.emergencyCall(fakeDetails);
+    }
 
 
     }
