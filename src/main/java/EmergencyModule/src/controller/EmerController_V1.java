@@ -85,7 +85,7 @@ public class EmerController_V1 implements IEmerController {
         askForUsersAroundLocation(data);
         logger.log(Level.INFO, "Exiting emergencyCall");
     }
-
+//
     private void askForUsersAroundLocation(HashMap<String, String> data)
     {
         //TODO - fix age
