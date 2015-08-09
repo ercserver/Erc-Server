@@ -55,7 +55,7 @@ public class EmerController_V1 implements IEmerController {
  //       if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
    //         return;
         // Creates the event_id
-        HashMap<String, String> details = new HashMap<String, String>();
+        HashMap<String, String> details = new HashMap<String, String>() ;
 
         details.put("create_by_member_id", data.get("community_member_id"));
         details.put("patient_id", dbController.getPatientIDByCmid(data.get("community_member_id")));
