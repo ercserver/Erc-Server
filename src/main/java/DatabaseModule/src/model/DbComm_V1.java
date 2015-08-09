@@ -286,7 +286,7 @@ public class DbComm_V1 implements IDbComm_model {
                 rs = stmt.executeQuery();
             }
             // gets all important data about Doctor or ems user
-            else {
+            if (userType == 1) {
                 query = "SELECT DISTINCT * FROM " + "P_CommunityMembers INNER JOIN "
                         + "P_Doctors ON P_CommunityMembers.community_member_id=P_Doctors.community_member_id "
                         + "INNER JOIN P_EmergencyContact ON P_Doctors.community_member_id=P_EmergencyContact.community_member_id "
@@ -302,6 +302,28 @@ public class DbComm_V1 implements IDbComm_model {
                         + "INNER JOIN MP_OrganizationTypes ON MP_Organizations.organization_type_num=MP_OrganizationTypes.organization_type_num "
                         + "INNER JOIN Availability ON Availability.community_member_id=P_CommunityMembers.community_member_id "
                         + "WHERE " + conditions + " ORDER BY " + "P_StatusLog.date_from";
+                stmt = connection.prepareStatement(query);
+                keys1 = whereConditions.keySet();
+                parameterIndex = 1;
+                for (String key1 : keys1) {
+                    stmt.setObject(parameterIndex, whereConditions.get(key1));
+                    parameterIndex++;
+                }
+                rs = stmt.executeQuery();
+            }
+            if (userType == 3){
+                query = "SELECT DISTINCT * FROM " + "P_CommunityMembers "
+                        + " INNER JOIN P_EmergencyContact ON P_CommunityMembers.community_member_id=P_EmergencyContact.community_member_id "
+                        + " INNER JOIN MembersLoginDetails ON P_EmergencyContact.community_member_id=MembersLoginDetails.community_member_id "
+                        + " INNER JOIN P_StatusLog ON MembersLoginDetails.community_member_id=P_StatusLog.community_member_id "
+                        + " INNER JOIN P_Statuses ON P_StatusLog.status_num=P_Statuses.status_num "
+                        + " INNER JOIN MP_MedicalPersonnel ON MP_MedicalPersonnel.community_member_id=P_CommunityMembers.community_member_id "
+                        + " INNER JOIN MP_Affiliation ON MP_MedicalPersonnel.medical_personnel_id=MP_Affiliation.medical_personnel_id "
+                        + " INNER JOIN MP_Positions ON MP_Positions.position_num=MP_Affiliation.position_num "
+                        + " INNER JOIN MP_Organizations ON MP_Organizations.organization_id=MP_Affiliation.organization_id "
+                        + " INNER JOIN MP_OrganizationTypes ON MP_Organizations.organization_type_num=MP_OrganizationTypes.organization_type_num "
+                        + " INNER JOIN Availability ON Availability.community_member_id=P_CommunityMembers.community_member_id "
+                        + " WHERE " + conditions + " ORDER BY " + "P_StatusLog.date_from";
                 stmt = connection.prepareStatement(query);
                 keys1 = whereConditions.keySet();
                 parameterIndex = 1;
@@ -913,7 +935,7 @@ public class DbComm_V1 implements IDbComm_model {
                     stmt.close();
 
                     break;
-                case 2: // EMS
+                case 3: // EMS
                     // Create medical personnel
                     stmt = connection.prepareStatement("INSERT INTO dbo.MP_MedicalPersonnel (community_member_id)" +
                             " VALUES (?)", Statement.RETURN_GENERATED_KEYS);
@@ -1232,7 +1254,12 @@ public class DbComm_V1 implements IDbComm_model {
     {
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("event_id", eventId);
-        return getRowsFromTable(cond, "O_EmergencyEvents").get(1);
+        HashMap<String, String> data = getRowsFromTable(cond, "O_EmergencyEvents").get(1);
+        cond.clear();
+        // Add the prescription num
+        cond.put("patient_id", data.get("patient_id"));
+        data.putAll(selectFromTable("P_Prescription", Arrays.asList("prescription_num"), cond).get(1));
+        return data;
     }
 
     public void insertAssistant(HashMap<String, String> insert)
