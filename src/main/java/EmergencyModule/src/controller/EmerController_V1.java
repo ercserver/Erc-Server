@@ -138,7 +138,7 @@ public class EmerController_V1 implements IEmerController {
         data.put("y", eventDetails.get("y"));
         String cmid = dbController.getCmidByPatientID(eventDetails.get("patient_id"));
         HashMap<String,String> dbRequest = new HashMap<String,String>();
-        dbRequest.put("community_member_id",cmid);
+        dbRequest.put("P_CommunityMembers.community_member_id",cmid);
         HashMap<String,String> userDetails = dbController.getUserByParameter(dbRequest);
         data.put("full_name", userDetails.get("first_name") + " " + userDetails.get("last_name"));
         data.put("age",userDetails.get("age"));
