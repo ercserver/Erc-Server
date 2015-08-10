@@ -186,6 +186,9 @@ public class EmerController_V1 implements IEmerController {
         data.remove("state");
         data.remove("region_type");
         data.remove("radius");
+        data.remove("location_remark");
+        data.remove("x");
+        data.remove("y");
         dbController.updateEventDetails(eventID, state, region_type, radius, location_remark);
         //add the radius to the EMS
         boolean isEmsInEvent = (null != (dbController.getEventDetails(eventID)).get("ems_member_id"));
