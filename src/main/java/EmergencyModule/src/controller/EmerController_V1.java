@@ -89,7 +89,7 @@ public class EmerController_V1 implements IEmerController {
     private void askForUsersAroundLocation(HashMap<String, String> data)
     {
         //TODO - fix age
-        String age = "32";//turnBirthDateIntoAge(dbController.getBirthDate(data.get("community_member_id")));
+        String age = turnBirthDateIntoAge(dbController.getBirthDate(data.get("community_member_id")));
         data.put("age",age);
         //add the GIS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
