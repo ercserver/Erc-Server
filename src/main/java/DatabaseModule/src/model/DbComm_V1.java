@@ -2089,4 +2089,10 @@ public class DbComm_V1 implements IDbComm_model {
             }
         }
     }
+
+    public static void main(String[] args) {
+        DbComm_V1 db = new DbComm_V1();
+        db.getRowsFromTable(new HashMapBuilder<String, String>().put("event_id","1003").build(),"O_emergencyevents");
+    }
+
 }
