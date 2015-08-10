@@ -2,7 +2,6 @@ package RequestsModule;
 
 
 import DatabaseModule.src.model.DbComm_V1;
-import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
 import RequestsModule.utils.HashMapCreator;
 import RequestsModule.utils.JsonValidator;
@@ -120,7 +119,7 @@ public class RequestsHandler {
         JSONObject json = jv.createJSON(data);
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         String reqId = "";
-        logger.log(Level.INFO, "After parsing request");
+        logger.log(Level.INFO, "After parsing JSONFile");
         try {
 
             reqId = requestMap.get(REQ_ID);
@@ -160,7 +159,7 @@ public class RequestsHandler {
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         logger.log(Level.INFO, "requestMap = " + requestMap);
         String reqId = "";
-        logger.log(Level.INFO, "After parsing request");
+        logger.log(Level.INFO, "After parsing JSONFile");
         try {
             reqId = requestMap.get(REQ_ID);
             logger.log(Level.INFO, "Before switch. reqID = " + reqId);
@@ -215,7 +214,7 @@ public class RequestsHandler {
                     break;
                 default:
                     // Do nothing...
-                    rv = "Wrong request id";
+                    rv = "Wrong JSONFile id";
                     break;
             }
         }catch (Exception ex){
@@ -229,7 +228,7 @@ public class RequestsHandler {
         JSONArray data = new JSONArray(request);
         HashMap<Integer, HashMap<String, String>> requestMap = hmc.jsonArrayToMap(data);
         String rv = "Received Request id : ";
-        // Get request id
+        // Get JSONFile id
         try{
             HashMap<String, String> details = requestMap.get(1);
             String reqId;
@@ -242,7 +241,7 @@ public class RequestsHandler {
                         break;
 
                     default:
-                        rv = "Wrong request id";
+                        rv = "Wrong JSONFile id";
                         break;
                 }
             }
@@ -253,14 +252,18 @@ public class RequestsHandler {
     }
 
      @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis")
-    public @ResponseBody String handleEmergencyGISRequests(@RequestBody String request){
-         JSONObject data = jv.createJSON(request);
+    public @ResponseBody String handleEmergencyGISRequests(@RequestParam String JSONFile){
+        logger.log(Level.INFO, "JSONFile = " + JSONFile);
+         JSONObject data = jv.createJSON(JSONFile);
+         logger.log(Level.INFO, "data = " + data);
+         logger.log(Level.INFO, "Location_remark=" + data.get("location_remark"));
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
+         logger.log(Level.INFO, "requestMap = " + requestMap);
         String reqId = "";
         String rv = "";
         try {
             reqId = requestMap.get(REQ_ID);
-
+            logger.log(Level.INFO, "reqId = " + reqId);
             switch (reqId) {
                 case AROUND_LOCATION:
                     ec.receiveUsersAroundLocation(requestMap);

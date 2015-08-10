@@ -25,8 +25,8 @@
         <module name="Erc-Server" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.7">
-      <module name="Erc-Server" target="1.6" />
+    <bytecodeTargetLevel>
+      <module name="Erc-Server" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

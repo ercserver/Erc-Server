@@ -33,7 +33,6 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
                         .data("username", targets.get(i+1))
                         .data("password", targets.get(i+2))
                         .data("JSONFile", objToSend.toString())
-                        //.header("Content-Type", "Application/json")
                         .ignoreContentType(true)
                         .timeout(10 * 1000 * 60) // milliseconds
                         .method(Connection.Method.POST)

@@ -173,6 +173,7 @@ public class EmerController_V1 implements IEmerController {
     //-1 for all 0 Not responded 1 - approved 2 - rejected - 3 -  cancelled
     @Override
     public void receiveUsersAroundLocation(HashMap<String,String> data) {
+        logger.log(Level.INFO, "data = " + data);
         data.remove("RequestID");
         //pop the event data
         String state = data.get("state");
