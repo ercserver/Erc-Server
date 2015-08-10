@@ -49,7 +49,7 @@ public class EmerController_V1 implements IEmerController {
 
             // Invalid request
             return;
-        }
+        }//
         // Checks that this is a real user
         //TODO need to bring back later
  //       if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
