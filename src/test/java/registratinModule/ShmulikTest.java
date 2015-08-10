@@ -18,8 +18,9 @@ import java.util.logging.Level;
 
 public class ShmulikTest {
     public static void main(String[] args) {
-        testNaor3("10005");
-        testNaor4("10005");
+        //testNaor3("10005");
+        //testNaor4("10005");
+        testNaor5();
        /* DbComm_V1 d = new DbComm_V1();
         testNaor1();
 
@@ -132,8 +133,22 @@ public class ShmulikTest {
 
         controller.emergencyCall(fakeDetails);
     }
+    public static void testNaor5() {
+        HashMap<String, String> fakeDetails = new HashMap<String, String>();
 
 
+        fakeDetails.put("state", "israel");
+        fakeDetails.put("RequestID", "AroundLocation");
+        fakeDetails.put("location_remark", "sitvanit");
+        fakeDetails.put("radius", "5");
+        fakeDetails.put("RequestID", "AroundLocation");
+        fakeDetails.put("region_type", "1");
+        fakeDetails.put("event_id", "1045");
 
+        IEmerController controller = new EmerController_V1();
+        controller.receiveUsersAroundLocation(fakeDetails);
+
+
+    }
 
     }

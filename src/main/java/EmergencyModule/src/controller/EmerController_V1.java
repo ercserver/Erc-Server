@@ -180,7 +180,7 @@ public class EmerController_V1 implements IEmerController {
         String region_type = data.get("region_type");
         String radius = data.get("radius");
         String eventID = data.get("event_id");
-
+//
         int eventIDInted = Integer.parseInt(eventID);
         data.remove("event_id");
         data.remove("state");
@@ -191,7 +191,7 @@ public class EmerController_V1 implements IEmerController {
         data.remove("y");
         dbController.updateEventDetails(eventID, state, region_type, radius, location_remark);
         //add the radius to the EMS
-        boolean isEmsInEvent = (null != (dbController.getEventDetails(eventID)).get("ems_member_id"));
+        boolean isEmsInEvent = (!(dbController.getEventDetails(eventID)).get("ems_member_id").equals("null"));
         if (isEmsInEvent) {
             updateRadiusToEMS(radius, eventID);
         }
