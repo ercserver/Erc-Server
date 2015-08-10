@@ -88,7 +88,6 @@ public class EmerController_V1 implements IEmerController {
 //
     private void askForUsersAroundLocation(HashMap<String, String> data)
     {
-        //TODO - fix age
         String age = turnBirthDateIntoAge(dbController.getBirthDate(data.get("community_member_id")));
         data.put("age",age);
         //add the GIS URL to the receivers
@@ -189,7 +188,7 @@ public class EmerController_V1 implements IEmerController {
         data.remove("radius");
         dbController.updateEventDetails(eventID, state, region_type, radius, location_remark);
         //add the radius to the EMS
-        boolean isEmsInEvent = (null != dbController.getEventDetails(eventID));
+        boolean isEmsInEvent = (null != (dbController.getEventDetails(eventID)).get("ems_member_id"));
         if (isEmsInEvent) {
             updateRadiusToEMS(radius, eventID);
         }
