@@ -165,8 +165,12 @@ public class RequestsHandler {
             logger.log(Level.INFO, "Before switch. reqID = " + reqId);
             switch (reqId) {
                 case HELP:
-                    logger.log(Level.INFO, " requestID = " + reqId);
                     ec.emergencyCall(requestMap);
+                    break;
+                case "arrivalAcceptionOnFoot":
+                case "arrivalAcceptionMounted":
+                case "arrivalRejection":
+                    ec.assistantRespondsToApproach(requestMap);
                     break;
                 default:
                     logger.log(Level.INFO, " default...");

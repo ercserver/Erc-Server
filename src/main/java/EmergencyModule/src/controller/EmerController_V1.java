@@ -343,7 +343,7 @@ public class EmerController_V1 implements IEmerController {
             // The assistants that are going to the event now and their proper arrival times
             HashMap<Integer, HashMap<String, String>> relevantAssistants = dbController.getGoingAssistantsAndTimes(response.get("event_id"));
             // Tells how much assistants we want in this state
-            int howManyToSend = dbController.getHowManySendToEvent("'Israel'");
+            int howManyToSend = dbController.getHowManySendToEvent("Israel");
             // We want to send this assistant-Sends proper message to app
             if(toSend(relevantAssistants, howManyToSend, eta))
             {

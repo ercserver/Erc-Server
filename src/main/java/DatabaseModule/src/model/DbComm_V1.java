@@ -1926,24 +1926,35 @@ public class DbComm_V1 implements IDbComm_model {
 
         try
         {
-            String num = getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num");
-
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
-            if (num == null || num.equals("")){
+
+            int num = -1;
+            try{
+               num = Integer.parseInt(getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num"));
+            } catch (NullPointerException ex){
+                //pass
+            }
+
+
+            if (num < -1){
                 // Insert new action type
                 PreparedStatement stmt = connection.prepareStatement("insert dbo.O_ActionTypes values (?)", Statement.RETURN_GENERATED_KEYS);
                 stmt.executeUpdate();
 
                 ResultSet rs = stmt.getGeneratedKeys();
                 if (rs.next()){
-                    num = Integer.toString(rs.getInt(1));
+                    num = rs.getInt(1);
                 }
 
             }
-            statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventActions  (event_id, action_type_num, more_description) VALUES (" +
-                     eventId + "," + num + "," + descr + ")");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO O_EmergencyEventActions  " +
+                    "(event_id, action_type_num, more_description) VALUES (?,?,?)");
+            stmt.setObject(1, Integer.parseInt(eventId));
+            stmt.setObject(2, num);
+            stmt.setObject(3, descr);
+
+            stmt.executeUpdate();
         }
         catch (SQLException e) {e.printStackTrace();}
         finally
