@@ -290,6 +290,7 @@ public class EmerController_V1 implements IEmerController {
     // we use "filterUsersByArrivalTime" and "approachAssistants" here
     @Override
     public void receiveUsersArrivalTimesAndApproach(HashMap<Integer, HashMap<String, String>> data) {
+        logger.log(Level.INFO, "in receiveUsersArrivalTimesAndApproach. data = " + data);
         String eventId = getEventId(data);
         emergencyLogger.handleReceivingUsersArrivalTimes(eventId);
         //filter
