@@ -71,6 +71,15 @@ public class PatientDetails {
             return true;
     }
 
+    public HashMap<String, String> getUserByMail(String mail) {
+
+        HashMap<String, String> member = new HashMap<String, String>();
+        member.put("P_CommunityMembers.email_address",  mail );
+        HashMap<String, String> details = dbController.getUserByParameter(member);
+        return details;
+    }
+
+
     public HashMap<String, String> getUserByCmid(int cmid) {
 
         logger.log(Level.INFO, "In getUserByCmid. Parameters = " + cmid);

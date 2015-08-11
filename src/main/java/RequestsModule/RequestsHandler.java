@@ -255,8 +255,6 @@ public class RequestsHandler {
     public @ResponseBody String handleEmergencyGISRequests(@RequestParam String JSONFile){
         logger.log(Level.INFO, "JSONFile = " + JSONFile);
          JSONObject data = jv.createJSON(JSONFile);
-         logger.log(Level.INFO, "data = " + data);
-         logger.log(Level.INFO, "Location_remark=" + data.get("location_remark"));
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
          logger.log(Level.INFO, "requestMap = " + requestMap);
         String reqId = "";

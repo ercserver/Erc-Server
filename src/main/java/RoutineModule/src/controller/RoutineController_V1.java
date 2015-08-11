@@ -129,6 +129,20 @@ public class RoutineController_V1 implements IRoutineController {
         return null;
     }
 
+    @Override
+    public Object forgotPassword(HashMap<String, String> data) {
+        String email = data.get("email_address");
+        HashMap<String, String> userD = memberDetail.getUserByMail(email);
+        if (userD != null || userD.size() != 0) {
+            int authMethod = dbController.getAuthenticationMethod(userD.get("state"));
+            HashMap<String,String> sendData =  updates.forgotPassword(email, userD,authMethod);
+            ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
+            commAuthMethod.setCommOfficial(sendData,authMethod);
+            commAuthMethod.sendMessage();
+        }
+        return null;
+    }
+
 
     @Override
     public Object updateMemberDetails(HashMap<String, String> data) {

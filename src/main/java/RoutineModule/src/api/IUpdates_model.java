@@ -22,4 +22,6 @@ public interface IUpdates_model {
     void updateUrgentInRefreshDetailsTimeToField(int cmid, HashMap<String, String> obj);
 
     String getCurrentStatusOfPatient(int cmid);
+
+    HashMap<String,String> forgotPassword(String email, HashMap<String, String> userD, int authMethod);
 }
