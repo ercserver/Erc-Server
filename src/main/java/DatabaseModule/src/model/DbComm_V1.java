@@ -1279,7 +1279,9 @@ public class DbComm_V1 implements IDbComm_model {
                     insert.get("community_member_id") + "," + insert.get("event_id") + "," +
                     insert.get("prescription_num") + "," +
                     insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
-                    ",'" + insert.get("created_date") + "','" + insert.get("location_remark") +
+                    ",'" + insert.get("created_date") + "','"
+                   // ", (select created_date from O_EmergencyEvents where event_id=" + insert.get("event_id") + "),'"
+                    + insert.get("location_remark") +
                     "')");
         }
         catch (SQLException e) {e.printStackTrace();}
