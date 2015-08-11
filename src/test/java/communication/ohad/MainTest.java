@@ -1,5 +1,7 @@
 package communication.ohad;
 
+import CommunicationModule.src.model.CommOfficial_V1;
+import CommunicationModule.src.model.CommToMail_V1;
 import CommunicationModule.src.model.GcmCommnication_V1;
 import DatabaseModule.src.model.DbComm_V1;
 import RequestsModule.utils.HashMapCreator;
@@ -18,8 +20,11 @@ import java.util.HashMap;
  */
 public class MainTest {
     public static void main(String[] args) {
-        MainTest mt = new MainTest();
-        mt.gcmTest();
+        /*MainTest mt = new MainTest();
+        mt.gcmTest();*/
+        CommOfficial_V1 mail = new CommToMail_V1(new HashMapBuilder<String,String>().
+                put("Message","blabla").put("Subject", "subject").put("Email","ohadgur@gmail.com").build() );
+        mail.sendMessage();
     }
     private void emsTest(){
         // THIS WORKS!!!!
