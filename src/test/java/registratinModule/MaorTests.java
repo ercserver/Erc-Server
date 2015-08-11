@@ -4,6 +4,7 @@ import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -13,6 +14,9 @@ public class MaorTests {
     public static void main(String[] args) {
         IEmerController controller = new EmerController_V1();
         //controller.askGisToFollow("1053", "10010");
+        ArrayList<String> cmids = new ArrayList<String>();
+        cmids.add("10010");
+        //controller.stopFollow("1053", cmids);
     }
 
     /*public Object updatedFromPatient(HashMap<String, String> filledForm)

@@ -858,7 +858,7 @@ public class EmerController_V1 implements IEmerController {
         req.put("event_id", eventId);
         HashMap<Integer, HashMap<String, String>> response = new  HashMap<Integer, HashMap<String, String>>();
         for(int i = 0; i < cmids.size(); i++)
-            req.put(cmids.get(i), null);
+            req.put(cmids.get(i), "null");
         response.put(1, req);
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("GIS",sendTo);
