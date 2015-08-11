@@ -1441,9 +1441,10 @@ public class DbComm_V1 implements IDbComm_model {
         try {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
-            String sql = "SELECT community_member_id FROM P_StatusLog JOIN " +
-                    "Availability WHERE status_name='active' and " +
-                    "community_member_id in ";
+            String sql = "SELECT P_StatusLog.community_member_id FROM P_StatusLog JOIN " +
+                    "Availability ON P_StatusLog.community_member_id=Availability.community_member_id " +
+                    "JOIN P_Statuses ON P_Statuses.status_num=P_StatusLog.status_num WHERE status_name='active' AND " +
+                    "P_StatusLog.community_member_id IN ";
             // Add the string "(cmid1, cmid2,...)"
             sql += cmidList.toString().replace('[','(').replace(']', ')');
 
