@@ -3,11 +3,6 @@
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="Erc-Server.war">
       <element id="artifact" artifact-name="Erc-Server:war exploded" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="jtds-1.3.1" />
-        </element>
-      </element>
     </root>
   </artifact>
 </component>

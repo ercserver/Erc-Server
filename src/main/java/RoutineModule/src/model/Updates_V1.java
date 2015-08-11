@@ -176,4 +176,55 @@ public class Updates_V1 implements IUpdates_model {
         return memberDetail.getStatus(data);
     }
 
+    @Override
+    public HashMap<String,String> forgotPassword(String email, HashMap<String, String> userD,int authMethod) {
+        String first = userD.get("first_name");
+        String last =  userD.get("last_name");
+        //int authMethod = dbController.getAuthenticationMethod(userD.get("state"));
+        //HashMap<String,String> ret = null;
+        HashMap<String,String> data = new HashMap<String,String>();
+        //dataAuthorizer = verification.getdoctorsAuthorizer(regid,dataFilter);
+        data.put("Subject","Your password for Socmed App");
+        data.put("first name", first);
+        data.put("last_name", last);
+        //data.put("community_member_id", "");
+        //data.put("confirmationOfDoctor", "");
+          data.put("Message", generateMessgeForForgotPass(userD) );
+        //ret = verification.generateDataForAuth(data, authMethod);
+        return data;
+
+    }
+
+    private String generateMessgeForForgotPass(HashMap<String, String> userD) {
+        String first = userD.get("first_name");
+        String last =  userD.get("last_name");
+        return "Hi " + first + " " + last + "\n" + "Your password in Socmed App is: " + userD.get("password") +
+        "\n" + "Thank you,\n" +
+        "Socmed administration team.";
+    }
+
+
+    private String generateMessgeForVerfictionDoctor(HashMap<String, String> memberDetails)
+    {
+        String firstName = memberDetails.get("first_name");
+        String lastName = memberDetails.get("last_name");
+        String licenseNumber = memberDetails.get("doc_license_number");
+
+        return "Please confirm/reject the following doctor be a valid doctor:\n" +
+                "First Name: " + firstName + ".\n" +
+                "Last Name: " + lastName + ".\n" +
+                "Licence Number: " + licenseNumber + ".\n\n" +
+                "Workplace details: " + "\n" +
+                "   organization description: " +
+                memberDetails.get("organization_description") + ".\n" +
+                "   organization type description: " +
+                memberDetails.get("organization_type_description") + ".\n" +
+                "   position_description: " + memberDetails.get("position_description") + "\n" +
+                "   email address of organization: "  +
+                memberDetails.get("email_address_of_organization") +  ".\n" +
+                "   org phone number: " + memberDetails.get("org_phone_number") +  ".\n" +
+                "Thank you,\n" +
+                "Socmed administration team.";
+    }
+
 }
