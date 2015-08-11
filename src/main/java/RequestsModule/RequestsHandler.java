@@ -228,9 +228,11 @@ public class RequestsHandler {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis-times")
-    public @ResponseBody String handleMembersArrivalTimes(@RequestBody String request){
-        JSONArray data = new JSONArray(request);
+    public @ResponseBody String handleMembersArrivalTimes(@RequestParam String JSONFile){
+        logger.info("in handleMembersArrivalTimes. json = " + JSONFile);
+        JSONArray data = new JSONArray(JSONFile);
         HashMap<Integer, HashMap<String, String>> requestMap = hmc.jsonArrayToMap(data);
+        logger.info("in map = " + requestMap);
         String rv = "Received Request id : ";
         // Get JSONFile id
         try{
@@ -240,6 +242,7 @@ public class RequestsHandler {
                 reqId = details.get(REQ_ID);
                 switch (reqId){
                     case USERS_ARRIVAL_TIMES:
+                        logger.info("in  USERS_ARRIVAL_TIMES");
                         ec.receiveUsersArrivalTimesAndApproach(requestMap);
                         rv += reqId;
                         break;
