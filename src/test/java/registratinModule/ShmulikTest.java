@@ -19,8 +19,8 @@ import java.util.logging.Level;
 public class ShmulikTest {
     public static void main(String[] args) {
         //testNaor3("10005");
-        testNaor4("10005");
-       // testNaor5();
+        //testNaor4("10005");
+       testNaor5();
        /* DbComm_V1 d = new DbComm_V1();
         testNaor1();
 
@@ -143,7 +143,12 @@ public class ShmulikTest {
         fakeDetails.put("radius", "5");
         fakeDetails.put("RequestID", "AroundLocation");
         fakeDetails.put("region_type", "1");
-        fakeDetails.put("event_id", "1045");
+        fakeDetails.put("event_id", "1053");
+        fakeDetails.put("10010", null);
+        fakeDetails.put("6666", null);
+        fakeDetails.put("7777", null);
+        fakeDetails.put("112", null);
+        fakeDetails.put("5555", null);
 
         IEmerController controller = new EmerController_V1();
         controller.receiveUsersAroundLocation(fakeDetails);
