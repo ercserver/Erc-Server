@@ -427,6 +427,7 @@ public class EmerController_V1 implements IEmerController {
 
     public void receiveArrivalTime(HashMap<String,String> data)
     {
+        logger.log(Level.INFO, "in receiveArrivalTime. data = " + data);
         emergencyLogger.handleReceivingUserArrivalTime(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base about the location and arrival times of an assistant
         dbController.updateAssistantArrivalTimesAndLocation(data);

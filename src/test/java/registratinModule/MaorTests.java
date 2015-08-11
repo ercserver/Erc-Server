@@ -1,6 +1,8 @@
 package registratinModule;
 
 import DatabaseModule.src.model.DbComm_V1;
+import EmergencyModule.src.api.IEmerController;
+import EmergencyModule.src.controller.EmerController_V1;
 
 import java.util.HashMap;
 
@@ -9,11 +11,8 @@ import java.util.HashMap;
  */
 public class MaorTests {
     public static void main(String[] args) {
-        DbComm_V1 d = new DbComm_V1();
-        HashMap<String,String> h = new HashMap<String,String>();
-        h.put("P_CommunityMembers.community_member_id","1003");
-        HashMap<String,String> h1 = d.getUserByParameter(h);
-        System.out.println(h1);
+        IEmerController controller = new EmerController_V1();
+        //controller.askGisToFollow("1053", "10010");
     }
 
     /*public Object updatedFromPatient(HashMap<String, String> filledForm)
