@@ -290,6 +290,7 @@ public class EmerController_V1 implements IEmerController {
     // we use "filterUsersByArrivalTime" and "approachAssistants" here
     @Override
     public void receiveUsersArrivalTimesAndApproach(HashMap<Integer, HashMap<String, String>> data) {
+        logger.log(Level.INFO, "in receiveUsersArrivalTimesAndApproach. data = " + data);
         String eventId = getEventId(data);
         emergencyLogger.handleReceivingUsersArrivalTimes(eventId);
         //filter
@@ -343,7 +344,7 @@ public class EmerController_V1 implements IEmerController {
             // The assistants that are going to the event now and their proper arrival times
             HashMap<Integer, HashMap<String, String>> relevantAssistants = dbController.getGoingAssistantsAndTimes(response.get("event_id"));
             // Tells how much assistants we want in this state
-            int howManyToSend = dbController.getHowManySendToEvent("'Israel'");
+            int howManyToSend = dbController.getHowManySendToEvent("Israel");
             // We want to send this assistant-Sends proper message to app
             if(toSend(relevantAssistants, howManyToSend, eta))
             {
@@ -426,6 +427,7 @@ public class EmerController_V1 implements IEmerController {
 
     public void receiveArrivalTime(HashMap<String,String> data)
     {
+        logger.log(Level.INFO, "in receiveArrivalTime. data = " + data);
         emergencyLogger.handleReceivingUserArrivalTime(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base about the location and arrival times of an assistant
         dbController.updateAssistantArrivalTimesAndLocation(data);
@@ -856,7 +858,7 @@ public class EmerController_V1 implements IEmerController {
         req.put("event_id", eventId);
         HashMap<Integer, HashMap<String, String>> response = new  HashMap<Integer, HashMap<String, String>>();
         for(int i = 0; i < cmids.size(); i++)
-            req.put(cmids.get(i), null);
+            req.put(cmids.get(i), "null");
         response.put(1, req);
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("GIS",sendTo);

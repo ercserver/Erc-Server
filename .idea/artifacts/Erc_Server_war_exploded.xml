@@ -39,7 +39,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="C:\Users\User\IdeaProjects\m\Erc-Server\target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/Erc-Server/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="Erc-Server/web/Web" />
     </root>

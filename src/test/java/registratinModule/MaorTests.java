@@ -1,7 +1,10 @@
 package registratinModule;
 
 import DatabaseModule.src.model.DbComm_V1;
+import EmergencyModule.src.api.IEmerController;
+import EmergencyModule.src.controller.EmerController_V1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -9,11 +12,25 @@ import java.util.HashMap;
  */
 public class MaorTests {
     public static void main(String[] args) {
-        DbComm_V1 d = new DbComm_V1();
-        HashMap<String,String> h = new HashMap<String,String>();
-        h.put("P_CommunityMembers.community_member_id","1003");
-        HashMap<String,String> h1 = d.getUserByParameter(h);
-        System.out.println(h1);
+        IEmerController controller = new EmerController_V1();
+        //controller.askGisToFollow("1053", "10010");
+       // ArrayList<String> cmids = new ArrayList<String>();
+        //cmids.add("10010");
+        //controller.stopFollow("1053", cmids);
+        HashMap<String, String>h = new HashMap<String,String>();
+        h.put("event_id", "1053");
+        h.put("RequestID", "UsersArrivalTimes");
+        h.put("radius", "5");
+        HashMap<String,String> h1 = new HashMap<String,String>();
+        h1.put("subRequest", "cmid");
+        h1.put("community_member_id", "10010");
+        h1.put("location_remark", "Sitvanit Street 17-31, Yavne, Israel");
+        h1.put("eta_by_car", "1");
+        h1.put("eta_by_foot", "1");
+        HashMap<Integer, HashMap<String,String>> hh = new HashMap<Integer, HashMap<String,String>>();
+        hh.put(1, h);
+        hh.put(2, h1);
+        controller.receiveUsersArrivalTimesAndApproach(hh);
     }
 
     /*public Object updatedFromPatient(HashMap<String, String> filledForm)

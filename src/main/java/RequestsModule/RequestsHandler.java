@@ -165,8 +165,12 @@ public class RequestsHandler {
             logger.log(Level.INFO, "Before switch. reqID = " + reqId);
             switch (reqId) {
                 case HELP:
-                    logger.log(Level.INFO, " requestID = " + reqId);
                     ec.emergencyCall(requestMap);
+                    break;
+                case "arrivalAcceptionOnFoot":
+                case "arrivalAcceptionMounted":
+                case "arrivalRejection":
+                    ec.assistantRespondsToApproach(requestMap);
                     break;
                 default:
                     logger.log(Level.INFO, " default...");
@@ -224,9 +228,11 @@ public class RequestsHandler {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis-times")
-    public @ResponseBody String handleMembersArrivalTimes(@RequestBody String request){
-        JSONArray data = new JSONArray(request);
+    public @ResponseBody String handleMembersArrivalTimes(@RequestParam String JSONFile){
+        logger.info("in handleMembersArrivalTimes. json = " + JSONFile);
+        JSONArray data = new JSONArray(JSONFile);
         HashMap<Integer, HashMap<String, String>> requestMap = hmc.jsonArrayToMap(data);
+        logger.info("in map = " + requestMap);
         String rv = "Received Request id : ";
         // Get JSONFile id
         try{
@@ -236,6 +242,7 @@ public class RequestsHandler {
                 reqId = details.get(REQ_ID);
                 switch (reqId){
                     case USERS_ARRIVAL_TIMES:
+                        logger.info("in  USERS_ARRIVAL_TIMES");
                         ec.receiveUsersArrivalTimesAndApproach(requestMap);
                         rv += reqId;
                         break;
@@ -255,8 +262,6 @@ public class RequestsHandler {
     public @ResponseBody String handleEmergencyGISRequests(@RequestParam String JSONFile){
         logger.log(Level.INFO, "JSONFile = " + JSONFile);
          JSONObject data = jv.createJSON(JSONFile);
-         logger.log(Level.INFO, "data = " + data);
-         logger.log(Level.INFO, "Location_remark=" + data.get("location_remark"));
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
          logger.log(Level.INFO, "requestMap = " + requestMap);
         String reqId = "";
