@@ -2,6 +2,7 @@
   <library name="jtds-1.3.1">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/src/main/java/jtds-1.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/java/sqljdbc4.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

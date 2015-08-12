@@ -29,6 +29,13 @@ public class Updates_V1 implements IUpdates_model {
 
     public HashMap<Integer,HashMap<String,String>> getFieldsForUpdate(HashMap<String, String> data)
     {
+        HashMap<Integer,HashMap<String,String>> dataToSend =
+                dbController.getRegistrationFields(Integer.parseInt(data.get("userType")));
+                //new HashMap<Integer,HashMap<String,String>>();
+        int cmid = Integer.parseInt(data.get("community_member_id"));
+        HashMap<String,String> userD = memberDetail.getUserByCmid(cmid);
+
+
         /*//generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(data.get("userType")));
@@ -187,9 +194,10 @@ public class Updates_V1 implements IUpdates_model {
         data.put("Subject","Your password for Socmed App");
         data.put("first name", first);
         data.put("last_name", last);
+        data.put("Email",email);
         //data.put("community_member_id", "");
         //data.put("confirmationOfDoctor", "");
-          data.put("Message", generateMessgeForForgotPass(userD) );
+        data.put("Message", generateMessgeForForgotPass(userD) );
         //ret = verification.generateDataForAuth(data, authMethod);
         return data;
 

@@ -55,12 +55,18 @@ public class RoutineController_V1 implements IRoutineController {
     //ToDo-need for changes in the next future
     public Object getUpdatesFields(HashMap<String, String> data)
     {
-        // ToDo-need to verify cmid and password
+        //Checks whether the password is correct
+        int cmid = Integer.parseInt(data.get("community_member_id"));
+        String password = data.get("password");
+        if(!assistent.checkCmidAndPassword(password,cmid)) {
+            return null;
+        }
+
         HashMap<Integer,HashMap<String,String>> fields = updates.getFieldsForUpdate(data);
         //Todo-maby need to insert requestID....
         ArrayList<String> target = new ArrayList<String>();
         // Request update of doctor/ems
-        if(data.get("reg_id") == "0")
+        if(data.get("reg_id").equals("0"))
         {
             commController.setCommToUsers(fields, null, false);
         }
@@ -132,6 +138,7 @@ public class RoutineController_V1 implements IRoutineController {
     @Override
     public Object forgotPassword(HashMap<String, String> data) {
         String email = data.get("email_address");
+        //HashMap<String, String> userD12 = memberDetail.getUserByCmid(1002);
         HashMap<String, String> userD = memberDetail.getUserByMail(email);
         if (userD != null || userD.size() != 0) {
             int authMethod = dbController.getAuthenticationMethod(userD.get("state"));
