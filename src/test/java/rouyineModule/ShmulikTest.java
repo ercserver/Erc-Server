@@ -15,12 +15,9 @@ public class ShmulikTest {
         PatientDetails d = new PatientDetails();
         DbComm_V1 c = new DbComm_V1();
        // HashMap<String, String> aa = c.getRejectCodes();
-        HashMap<String,String> data = new HashMap<String,String>();
+        //HashMap<String,String> data = new HashMap<String,String>();
         HashMap<String,String> data1 = d.getUserByCmid(10018);
-        //r.getUpdatesFields(data1);
-        data.put("email_address","shbe77@gmail.com");
-        r.forgotPassword(data);
-        //r.updateCommunicationParameters("dasd");
-                //r.handleRefreshDetails();
+        r.getUpdatesFields(data1);
+
     }
 }
