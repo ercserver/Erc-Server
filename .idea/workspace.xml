@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2528bf4-afdc-4339-83d1-823f1d97c247" name="Default" comment="maccbi">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/AppTests.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/AppTests.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Erc-Server.iml" afterPath="$PROJECT_DIR$/Erc-Server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/Erc_Server_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/Erc_Server_war.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/Erc_Server_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/Erc_Server_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Utilities/PatientDetails.java" afterPath="$PROJECT_DIR$/src/main/java/Utilities/PatientDetails.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java" afterPath="$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java" afterPath="$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java" afterPath="$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/jtds_1_3_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/jtds_1_3_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/sqljdbc4.xml" afterPath="$PROJECT_DIR$/.idea/libraries/sqljdbc4.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="c2528bf4-afdc-4339-83d1-823f1d97c247" name="Default" comment="maccbi" />
     <ignored path=".idea/dataSources.local.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -61,7 +47,6 @@
               <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#557#572#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -100,7 +85,7 @@
       <file leaf-file-name="CommToMail_V1.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommToMail_V1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="227" max-vertical-offset="1071">
+            <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="1105">
               <caret line="29" column="38" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="38" />
               <folding />
             </state>
@@ -130,12 +115,11 @@
       <file leaf-file-name="Updates_V1.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6165803" vertical-offset="2499" max-vertical-offset="3553">
+            <state vertical-scroll-proportion="0.4" vertical-offset="2499" max-vertical-offset="3553">
               <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
               <folding>
                 <element signature="method#getCommunicationParameters#0;class#Updates_V1#0" expanded="false" />
                 <element signature="method#buildBasicResponse#0;class#Updates_V1#0" expanded="false" />
-                <element signature="e#6896#6911#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -144,68 +128,10 @@
       <file leaf-file-name="DbComm_V1.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6534" max-vertical-offset="35530">
+            <state vertical-scroll-proportion="0.0" vertical-offset="6647" max-vertical-offset="35768">
               <caret line="403" column="0" selection-start-line="403" selection-start-column="0" selection-end-line="403" selection-end-column="0" />
               <folding>
                 <element signature="e#25408#25424#0" expanded="true" />
-                <marker date="1439290578701" expanded="true" signature="3329:3367" placeholder="SELECT * FRO..missingValue..." />
-                <marker date="1439290578701" expanded="true" signature="4430:4476" placeholder="DELETE FROM ..." />
-                <marker date="1439290578701" expanded="true" signature="4502:4583" placeholder="update dbo.P..." />
-                <marker date="1439290578701" expanded="true" signature="4609:4691" placeholder="update dbo.M..." />
-                <marker date="1439290578701" expanded="true" signature="10165:10376" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1439290578701" expanded="true" signature="11309:12771" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1439290578701" expanded="true" signature="13276:15080" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1439290578701" expanded="true" signature="15520:16960" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1439290578701" expanded="true" signature="18950:20110" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1439290578701" expanded="true" signature="22312:22428" placeholder="SELECT DISTI..P_TypeLog..." />
-                <marker date="1439290578701" expanded="true" signature="24026:24124" placeholder="UPDATE P_Com..." />
-                <marker date="1439290578701" expanded="true" signature="26492:27190" placeholder="select dbo.P..P_Patients..." />
-                <marker date="1439290578701" expanded="true" signature="32999:33059" placeholder="UPDATE missi..." />
-                <marker date="1439290578701" expanded="true" signature="35633:35961" placeholder="insert into ..." />
-                <marker date="1439290578701" expanded="true" signature="37491:37609" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="37972:38052" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="38371:38507" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="39172:39239" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="39612:39667" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="40384:40479" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="40839:40975" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="41565:41692" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="42291:42426" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="43233:43334" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="43868:44008" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="44421:44578" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="45112:45213" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="45718:45858" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="50643:50785" placeholder="UPDATE P_Sta..." />
-                <marker date="1439290578701" expanded="true" signature="51557:51691" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="52255:52340" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="54524:54604" placeholder="DELETE FROM ..." />
-                <marker date="1439290578701" expanded="true" signature="54732:54881" placeholder="DELETE FROM ..." />
-                <marker date="1439290578701" expanded="true" signature="55267:55343" placeholder="DELETE FROM ..." />
-                <marker date="1439290578701" expanded="true" signature="55718:55805" placeholder="DELETE FROM ..." />
-                <marker date="1439290578701" expanded="true" signature="55931:56013" placeholder="DELETE FROM ..." />
-                <marker date="1439290578701" expanded="true" signature="59344:59845" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="61048:61122" placeholder="UPDATE O_Eme..." />
-                <marker date="1439290578701" expanded="true" signature="61595:61761" placeholder="UPDATE O_Eme..." />
-                <marker date="1439290578701" expanded="true" signature="62245:62387" placeholder="UPDATE O_Eme..." />
-                <marker date="1439290578701" expanded="true" signature="62865:62995" placeholder="UPDATE O_Eme..." />
-                <marker date="1439290578701" expanded="true" signature="63518:63670" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-                <marker date="1439290578701" expanded="true" signature="65872:66037" placeholder="SELECT commu..P_StatusLog..." />
-                <marker date="1439290578701" expanded="true" signature="67864:67982" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-                <marker date="1439290578701" expanded="true" signature="68225:68363" placeholder="UPDATE O_Eme..." />
-                <marker date="1439290578701" expanded="true" signature="68408:68549" placeholder="UPDATE O_Eme..." />
-                <marker date="1439290578701" expanded="true" signature="70007:70211" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="72378:72566" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="77993:78077" placeholder="UPDATE O_Eme..." />
-                <marker date="1439290578701" expanded="true" signature="79035:79239" placeholder="SELECT DISTI..P_Patients..." />
-                <marker date="1439290578701" expanded="true" signature="80388:80472" placeholder="UPDATE O_Eme..." />
-                <marker date="1439290578701" expanded="true" signature="81140:81344" placeholder="SELECT DISTI..P_Patients..." />
-                <marker date="1439290578701" expanded="true" signature="82436:82753" placeholder="SELECT DISTI..P_Patients..." />
-                <marker date="1439290578701" expanded="true" signature="86236:86390" placeholder="INSERT INTO ..." />
-                <marker date="1439290578701" expanded="true" signature="87223:87448" placeholder="SELECT DISTI..P_StatusLog..." />
-                <marker date="1439290578701" expanded="true" signature="88469:89064" placeholder="SELECT DISTI..P_Patients..." />
-                <marker date="1439290578701" expanded="true" signature="89963:90085" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-                <marker date="1439290578701" expanded="true" signature="91012:91229" placeholder="SELECT DISTI..P_Prescriptions..." />
               </folding>
             </state>
           </provider>
@@ -1108,6 +1034,7 @@
       <updated>1439290590996</updated>
       <workItem from="1439290591540" duration="15113000" />
       <workItem from="1439374102380" duration="876000" />
+      <workItem from="1439375128952" duration="24000" />
     </task>
     <task id="LOCAL-00001" summary="maccbi">
       <created>1439296185635</created>
@@ -1119,42 +1046,42 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15989000" />
+    <option name="totallyTimeSpent" value="16013000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20204978" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22254759" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39937106" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32861635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32861635" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32861635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20204978" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39937106" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32861635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32861635" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32861635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1206,11 +1133,97 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="190" max-vertical-offset="544">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2216" max-vertical-offset="5933">
+          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/controller/CommController_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="562" max-vertical-offset="1394">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommOfficialFactory_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="561">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommToMail_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="1105">
+          <caret line="29" column="38" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommOfficial_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="20" max-vertical-offset="374">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/ModelsFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="2108">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3553">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#getCommunicationParameters#0;class#Updates_V1#0" expanded="false" />
+            <element signature="method#buildBasicResponse#0;class#Updates_V1#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6647" max-vertical-offset="35768">
+          <caret line="403" column="0" selection-start-line="403" selection-start-column="0" selection-end-line="403" selection-end-column="0" />
+          <folding>
+            <element signature="e#25408#25424#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbInit_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2346" max-vertical-offset="21403">
+          <caret line="147" column="55" selection-start-line="147" selection-start-column="45" selection-end-line="147" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="dbDummy://db-console:/6d9b81c/0dea1675-760e-4885-a33a-65423bed7931/">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="187">
           <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1220,7 +1233,6 @@
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#557#572#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1239,7 +1251,6 @@
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#296#311#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1250,12 +1261,6 @@
           <caret line="23" column="40" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#1608#1623#0" expanded="false" />
-            <element signature="e#1943#1958#0" expanded="false" />
-            <element signature="e#2329#2345#0" expanded="false" />
-            <element signature="e#4232#4248#0" expanded="false" />
-            <element signature="e#4702#4718#0" expanded="false" />
-            <element signature="e#5163#5179#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1278,64 +1283,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#25408#25424#0" expanded="true" />
-            <marker date="1439290578701" expanded="true" signature="3329:3367" placeholder="SELECT * FRO..missingValue..." />
-            <marker date="1439290578701" expanded="true" signature="4430:4476" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="4502:4583" placeholder="update dbo.P..." />
-            <marker date="1439290578701" expanded="true" signature="4609:4691" placeholder="update dbo.M..." />
-            <marker date="1439290578701" expanded="true" signature="10165:10376" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="11309:12771" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="13276:15080" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="15520:16960" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="18950:20110" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="22312:22428" placeholder="SELECT DISTI..P_TypeLog..." />
-            <marker date="1439290578701" expanded="true" signature="24026:24124" placeholder="UPDATE P_Com..." />
-            <marker date="1439290578701" expanded="true" signature="26492:27190" placeholder="select dbo.P..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="32999:33059" placeholder="UPDATE missi..." />
-            <marker date="1439290578701" expanded="true" signature="35633:35961" placeholder="insert into ..." />
-            <marker date="1439290578701" expanded="true" signature="37491:37609" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="37972:38052" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="38371:38507" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="39172:39239" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="39612:39667" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="40384:40479" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="40839:40975" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="41565:41692" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="42291:42426" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="43233:43334" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="43868:44008" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="44421:44578" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="45112:45213" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="45718:45858" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="50643:50785" placeholder="UPDATE P_Sta..." />
-            <marker date="1439290578701" expanded="true" signature="51557:51691" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="52255:52340" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="54524:54604" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="54732:54881" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="55267:55343" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="55718:55805" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="55931:56013" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="59344:59845" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="61048:61122" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="61595:61761" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="62245:62387" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="62865:62995" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="63518:63670" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1439290578701" expanded="true" signature="65872:66037" placeholder="SELECT commu..P_StatusLog..." />
-            <marker date="1439290578701" expanded="true" signature="67864:67982" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1439290578701" expanded="true" signature="68225:68363" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="68408:68549" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="70007:70211" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="72378:72566" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="77993:78077" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="79035:79239" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="80388:80472" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="81140:81344" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="82436:82753" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="86236:86390" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="87223:87448" placeholder="SELECT DISTI..P_StatusLog..." />
-            <marker date="1439290578701" expanded="true" signature="88469:89064" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="89963:90085" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1439290578701" expanded="true" signature="91012:91229" placeholder="SELECT DISTI..P_Prescriptions..." />
           </folding>
         </state>
       </provider>
@@ -1366,38 +1313,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="346" max-vertical-offset="4437">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#839#840#0" expanded="false" />
-            <element signature="e#892#893#0" expanded="false" />
-            <element signature="e#1420#1421#0" expanded="false" />
-            <element signature="e#1478#1479#0" expanded="false" />
-            <element signature="e#1861#1862#0" expanded="false" />
-            <element signature="e#1916#1917#0" expanded="false" />
-            <element signature="e#2445#2446#0" expanded="false" />
-            <element signature="e#2513#2514#0" expanded="false" />
-            <element signature="e#2708#2709#0" expanded="false" />
-            <element signature="e#2777#2778#0" expanded="false" />
-            <element signature="e#2994#2995#0" expanded="false" />
-            <element signature="e#3055#3056#0" expanded="false" />
-            <element signature="e#3126#3127#0" expanded="false" />
-            <element signature="e#3187#3188#0" expanded="false" />
-            <element signature="e#3261#3262#0" expanded="false" />
-            <element signature="e#3320#3321#0" expanded="false" />
-            <element signature="e#4665#4666#0" expanded="false" />
-            <element signature="e#4727#4728#0" expanded="false" />
-            <element signature="e#5426#5427#0" expanded="false" />
-            <element signature="e#5488#5489#0" expanded="false" />
-            <element signature="e#5766#5767#0" expanded="false" />
-            <element signature="e#5793#5794#0" expanded="false" />
-            <element signature="e#5885#5886#0" expanded="false" />
-            <element signature="e#5912#5913#0" expanded="false" />
-            <element signature="e#6539#6548#0" expanded="false" />
-            <element signature="e#6897#6898#0" expanded="false" />
-            <element signature="e#6959#6960#0" expanded="false" />
-            <element signature="e#10310#10311#0" expanded="false" />
-            <element signature="e#10376#10377#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1482,7 +1397,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="293" max-vertical-offset="765">
           <caret line="32" column="68" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1508,38 +1422,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="346" max-vertical-offset="4437">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#839#840#0" expanded="false" />
-            <element signature="e#892#893#0" expanded="false" />
-            <element signature="e#1420#1421#0" expanded="false" />
-            <element signature="e#1478#1479#0" expanded="false" />
-            <element signature="e#1861#1862#0" expanded="false" />
-            <element signature="e#1916#1917#0" expanded="false" />
-            <element signature="e#2445#2446#0" expanded="false" />
-            <element signature="e#2513#2514#0" expanded="false" />
-            <element signature="e#2708#2709#0" expanded="false" />
-            <element signature="e#2777#2778#0" expanded="false" />
-            <element signature="e#2994#2995#0" expanded="false" />
-            <element signature="e#3055#3056#0" expanded="false" />
-            <element signature="e#3126#3127#0" expanded="false" />
-            <element signature="e#3187#3188#0" expanded="false" />
-            <element signature="e#3261#3262#0" expanded="false" />
-            <element signature="e#3320#3321#0" expanded="false" />
-            <element signature="e#4665#4666#0" expanded="false" />
-            <element signature="e#4727#4728#0" expanded="false" />
-            <element signature="e#5426#5427#0" expanded="false" />
-            <element signature="e#5488#5489#0" expanded="false" />
-            <element signature="e#5766#5767#0" expanded="false" />
-            <element signature="e#5793#5794#0" expanded="false" />
-            <element signature="e#5885#5886#0" expanded="false" />
-            <element signature="e#5912#5913#0" expanded="false" />
-            <element signature="e#6539#6548#0" expanded="false" />
-            <element signature="e#6897#6898#0" expanded="false" />
-            <element signature="e#6959#6960#0" expanded="false" />
-            <element signature="e#10310#10311#0" expanded="false" />
-            <element signature="e#10376#10377#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1549,7 +1431,6 @@
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#296#311#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1560,12 +1441,6 @@
           <caret line="23" column="40" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#1608#1623#0" expanded="false" />
-            <element signature="e#1943#1958#0" expanded="false" />
-            <element signature="e#2329#2345#0" expanded="false" />
-            <element signature="e#4232#4248#0" expanded="false" />
-            <element signature="e#4702#4718#0" expanded="false" />
-            <element signature="e#5163#5179#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1597,7 +1472,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="187">
           <caret line="0" column="32" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1607,64 +1481,6 @@
           <caret line="403" column="0" selection-start-line="403" selection-start-column="0" selection-end-line="403" selection-end-column="0" />
           <folding>
             <element signature="e#25408#25424#0" expanded="true" />
-            <marker date="1439290578701" expanded="true" signature="3329:3367" placeholder="SELECT * FRO..missingValue..." />
-            <marker date="1439290578701" expanded="true" signature="4430:4476" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="4502:4583" placeholder="update dbo.P..." />
-            <marker date="1439290578701" expanded="true" signature="4609:4691" placeholder="update dbo.M..." />
-            <marker date="1439290578701" expanded="true" signature="10165:10376" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="11309:12771" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="13276:15080" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="15520:16960" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="18950:20110" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1439290578701" expanded="true" signature="22312:22428" placeholder="SELECT DISTI..P_TypeLog..." />
-            <marker date="1439290578701" expanded="true" signature="24026:24124" placeholder="UPDATE P_Com..." />
-            <marker date="1439290578701" expanded="true" signature="26492:27190" placeholder="select dbo.P..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="32999:33059" placeholder="UPDATE missi..." />
-            <marker date="1439290578701" expanded="true" signature="35633:35961" placeholder="insert into ..." />
-            <marker date="1439290578701" expanded="true" signature="37491:37609" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="37972:38052" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="38371:38507" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="39172:39239" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="39612:39667" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="40384:40479" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="40839:40975" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="41565:41692" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="42291:42426" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="43233:43334" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="43868:44008" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="44421:44578" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="45112:45213" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="45718:45858" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="50643:50785" placeholder="UPDATE P_Sta..." />
-            <marker date="1439290578701" expanded="true" signature="51557:51691" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="52255:52340" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="54524:54604" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="54732:54881" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="55267:55343" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="55718:55805" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="55931:56013" placeholder="DELETE FROM ..." />
-            <marker date="1439290578701" expanded="true" signature="59344:59845" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="61048:61122" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="61595:61761" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="62245:62387" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="62865:62995" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="63518:63670" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1439290578701" expanded="true" signature="65872:66037" placeholder="SELECT commu..P_StatusLog..." />
-            <marker date="1439290578701" expanded="true" signature="67864:67982" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1439290578701" expanded="true" signature="68225:68363" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="68408:68549" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="70007:70211" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="72378:72566" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="77993:78077" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="79035:79239" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="80388:80472" placeholder="UPDATE O_Eme..." />
-            <marker date="1439290578701" expanded="true" signature="81140:81344" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="82436:82753" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="86236:86390" placeholder="INSERT INTO ..." />
-            <marker date="1439290578701" expanded="true" signature="87223:87448" placeholder="SELECT DISTI..P_StatusLog..." />
-            <marker date="1439290578701" expanded="true" signature="88469:89064" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1439290578701" expanded="true" signature="89963:90085" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1439290578701" expanded="true" signature="91012:91229" placeholder="SELECT DISTI..P_Prescriptions..." />
           </folding>
         </state>
       </provider>
@@ -1731,19 +1547,17 @@
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#557#572#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6165803" vertical-offset="2499" max-vertical-offset="3553">
+        <state vertical-scroll-proportion="0.4" vertical-offset="2499" max-vertical-offset="3553">
           <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
           <folding>
             <element signature="method#getCommunicationParameters#0;class#Updates_V1#0" expanded="false" />
             <element signature="method#buildBasicResponse#0;class#Updates_V1#0" expanded="false" />
-            <element signature="e#6896#6911#0" expanded="true" />
           </folding>
         </state>
       </provider>
