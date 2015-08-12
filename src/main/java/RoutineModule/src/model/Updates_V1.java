@@ -44,7 +44,7 @@ public class Updates_V1 implements IUpdates_model {
             //field.containsKey()
             String name = field.get("field_name");
             String value = data.get(name);
-            field.put(name,value);
+            field.put("value",value);
         }
         return dataToSend;
     }
