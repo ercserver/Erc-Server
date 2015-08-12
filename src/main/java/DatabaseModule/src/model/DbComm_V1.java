@@ -1275,14 +1275,11 @@ public class DbComm_V1 implements IDbComm_model {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,created_date,location_remark) VALUES (" +
+            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,location_remark) VALUES (" +
                     insert.get("community_member_id") + "," + insert.get("event_id") + "," +
                     insert.get("prescription_num") + "," +
                     insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
-                    ",'" + insert.get("created_date") + "','"
-                   // ", (select created_date from O_EmergencyEvents where event_id=" + insert.get("event_id") + "),'"
-                    + insert.get("location_remark") +
-                    "')");
+                    ",'" + insert.get("location_remark") + "')");
         }
         catch (SQLException e) {e.printStackTrace();}
         finally
