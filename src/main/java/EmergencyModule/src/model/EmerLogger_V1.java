@@ -100,7 +100,7 @@ public class EmerLogger_V1 implements IEmerLogger_model {
     }
 
     @Override
-    public void handleAskEMSMedicationGivving(String event_id) {
+    public void handleAskEMSMedicationgiving(String event_id) {
         dbController.updateLogs(event_id, "Server asked EMS for medication giving", null);
     }
 

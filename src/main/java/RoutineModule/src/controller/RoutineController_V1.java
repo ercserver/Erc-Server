@@ -6,10 +6,13 @@ import RoutineModule.src.api.IEmsRoutine_model;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.api.IUpdates_model;
 import Utilities.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 28/04/2015.
@@ -26,6 +29,7 @@ public class RoutineController_V1 implements IRoutineController {
     private SendAssistant sendAssist = null;
     private AssistantFunctions assistantFuncs = null;
 
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     public RoutineController_V1()
     {
@@ -137,17 +141,22 @@ public class RoutineController_V1 implements IRoutineController {
 
     @Override
     public Object forgotPassword(HashMap<String, String> data) {
+        logger.info("data = " + data);
         String email = data.get("email_address");
         //HashMap<String, String> userD12 = memberDetail.getUserByCmid(1002);
         HashMap<String, String> userD = memberDetail.getUserByMail(email);
+        logger.info("userD != null = " + (userD != null));
+        boolean ok = false;
         if (userD != null || userD.size() != 0) {
             int authMethod = dbController.getAuthenticationMethod(userD.get("state"));
             HashMap<String,String> sendData =  updates.forgotPassword(email, userD,authMethod);
             ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
             commAuthMethod.setCommOfficial(sendData,authMethod);
             commAuthMethod.sendMessage();
+            ok = true;
         }
-        return null;
+        return new JSONArray().put(new JSONObject().put("status", ok? "ok" : "error"));
+
     }
 
 

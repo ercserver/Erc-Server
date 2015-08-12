@@ -72,7 +72,7 @@ public class MaorTests {
         return null;
     }
 
-    public Object getResponseFromEmsAboutGivvingMed(HashMap<String, String> filledForm)
+    public Object getResponseFromEmsAboutgivingMed(HashMap<String, String> filledForm)
     {
         HashMap<String,String> h = new HashMap<String,String>();
         h.put("event_id", filledForm.get("event_id"));
@@ -98,7 +98,7 @@ public class MaorTests {
         HashMap<String,String> cond = new HashMap<String,String>();
         cond.put("P_CommunityMembers.community_member_id", filledForm.get("community_member_id"));
         h.put("patient_id", dbController.getUserByParameter(cond).get("patient_id"));
-        h.put("RequestID", "needConfirmMedicationGivving");
+        h.put("RequestID", "confirmMedicationGiving");
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer,HashMap<String,String>>();
         response.put(1, h);
         commController.setCommToUsers(response, null, false);

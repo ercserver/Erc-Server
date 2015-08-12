@@ -35,7 +35,7 @@ public interface IEmerLogger_model {
 
     void handleReceivingUserArrivalTime(String event_id, String community_member_id);
 
-    void handleAskEMSMedicationGivving(String event_id);
+    void handleAskEMSMedicationgiving(String event_id);
 
     void handleTellingAssistantAboutMedicationGiving(String event_id);
 
