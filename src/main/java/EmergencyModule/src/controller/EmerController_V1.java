@@ -48,9 +48,8 @@ public class EmerController_V1 implements IEmerController {
         }
 
         // Checks that this is a real user
-        //TODO need to bring back later
- //       if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
-   //         return;
+        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+            return;
         // Creates the event_id
         HashMap<String, String> details = new HashMap<String, String>() ;
 
@@ -87,6 +86,7 @@ public class EmerController_V1 implements IEmerController {
     {
         String age = turnBirthDateIntoAge(dbController.getBirthDate(data.get("community_member_id")));
         data.put("age",age);
+        data.put("RequestID","AroundLocation");
         //add the GIS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("GIS", sendTo);
@@ -658,10 +658,10 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void updatePatientStatus(HashMap<String, String> data) {
-        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
-        {
-            return;
-        }
+//        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+//        {
+//            return;
+//        }
         String eventId = dbController.getEventByCmid(data.get("community_member_id"));
         emergencyLogger.handleUpdatePatientStatus(eventId, data.get("community_member_id"));
         dbController.updatePatientRemarks(data.get("community_member_id"), eventId, data.get("message"));
@@ -746,12 +746,6 @@ public class EmerController_V1 implements IEmerController {
         cancelEventOnGISorEMS(eventID, "EMS");
         //cancel with GIS
         cancelEventOnGISorEMS(eventID,"GIS");
-    }
-
-    private void cancelEventOnEMS(HashMap<String, String> data) {
-
-
-
     }
 
     private void cancelEventOnGISorEMS(String eventID,String where) {
