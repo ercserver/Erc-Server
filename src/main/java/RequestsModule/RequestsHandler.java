@@ -29,6 +29,10 @@ import java.util.logging.Logger;
 public class RequestsHandler {
 
 
+    private static final String EMSID = "EMSId";
+    private static final String ASSISTANT_DETAILS = "AssistantDetails";
+    private static final String UPDATE_PATIENT_AT_RISK = "updatePatientAtRisk";
+    private static final String GAVE_MEDICATION = "gaveMedication";
     private final String REQ_ID = "RequestID"; // This is the requests identifier's field name
 
     /*** Registration Process Requests Codes ***/
@@ -203,7 +207,18 @@ public class RequestsHandler {
                 case REJECT_MEDICATION:
                     ec.approveOrRejectMed(requestMap);
                     break;
-
+                case GAVE_MEDICATION:
+                    ec.assistantGaveMed(requestMap);
+                    break;
+                case EMSID:
+                    ec.getCmidOfEms(requestMap);
+                    break;
+                case ASSISTANT_DETAILS:
+                    ec.requestAssistantDetails(requestMap);
+                    break;
+                case UPDATE_PATIENT_AT_RISK:
+                    ec.updatePatientStatus(requestMap);
+                    break;
                 default:
                     logger.log(Level.INFO, " default...");
                     return null;
@@ -251,6 +266,8 @@ public class RequestsHandler {
                 case FORGOT_PASSWORD:
                     rv = ruc.forgotPassword(requestMap).toString();
                     break;
+
+
                 default:
                     // Do nothing...
                     rv = "Wrong JSONFile id";

@@ -165,7 +165,7 @@ public class EmerController_V1 implements IEmerController {
         emergencyLogger.handleGettingCmidOfEMS(data.get("event_id"));
     }
 
-    //this methos will be called from the emergency event initiation
+    //this method will be called from the emergency event initiation
     //-1 for all 0 Not responded 1 - approved 2 - rejected - 3 -  cancelled
     @Override
     public void receiveUsersAroundLocation(HashMap<String,String> data) {
