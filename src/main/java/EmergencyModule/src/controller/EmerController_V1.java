@@ -490,6 +490,11 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void rejectAssistantsByEMS(HashMap<String, String> toReject) {
+        // Verify parameters
+        ParametersVerifier verifier = new ParametersVerifier(toReject);
+        if (!verifier.verify("password", "community_member_id", "RequestID", "event_id")){
+            return;
+        }
         //Verify credentials
         if (assistantFuncs.checkCmidAndPassword(toReject.get("password"), Integer.parseInt(toReject.get("community_member_id")))) {
             //remove unrequired keys
@@ -517,7 +522,7 @@ public class EmerController_V1 implements IEmerController {
 
     private void rejectAssistants(HashMap<String, String> toReject,String eventID,String reason){
         //remove every assistant from the database and inform. "1" to inform the assistants here.
-        for(String patientID : toReject.values()){
+        for(String patientID : toReject.keySet()){
             //Update the assistant's status on the DB
             dbController.removeAssistantFromEvent(eventID, patientID);//
             //inform. "1" to inform helpers here.
@@ -693,7 +698,7 @@ public class EmerController_V1 implements IEmerController {
             request.put("event_id",data.get("event_id"));
             //Handle radius change logs
             emergencyLogger.changedRadius(request);
-            request.put("RequestID","Locations");
+            request.put("RequestID","AroundLocation");
 
             //send request to GIS
             ArrayList<String> sendTo = new ArrayList<String>();

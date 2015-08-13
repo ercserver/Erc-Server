@@ -1410,7 +1410,7 @@ public class DbComm_V1 implements IDbComm_model {
     @Override
     public void closeEvent(int eventId, String newStatus) {
         // status = {CANCELED, ACTIVE, FINISHED}
-
+        logger.info("eventId = " + eventId + " newStatus = " + newStatus);
        try {
            HashMapBuilder<String, String> hmb = new HashMapBuilder<String, String>();
             // Get the status code from O_EventStatuses
