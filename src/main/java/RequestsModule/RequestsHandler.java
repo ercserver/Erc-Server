@@ -215,7 +215,7 @@ public class RequestsHandler {
                 default:
                     // Do nothing...
                     rv = "Wrong JSONFile id";
-                    break;
+                    break;//
             }
         }catch (Exception ex){
             ex.printStackTrace();
