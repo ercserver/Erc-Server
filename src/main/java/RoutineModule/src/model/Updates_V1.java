@@ -29,25 +29,24 @@ public class Updates_V1 implements IUpdates_model {
 
     public HashMap<Integer,HashMap<String,String>> getFieldsForUpdate(HashMap<String, String> data)
     {
-        HashMap<Integer,HashMap<String,String>> dataToSend =
-                dbController.getRegistrationFields(Integer.parseInt(data.get("userType")));
+
                 //new HashMap<Integer,HashMap<String,String>>();
         int cmid = Integer.parseInt(data.get("community_member_id"));
-        HashMap<String,String> userD = memberDetail.getUserByCmid(cmid);
 
-
-        /*//generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
-                dbController.getRegistrationFields(Integer.parseInt(data.get("userType")));
-        dataToSend.get(1).put("RequestID", "registration");
-        ArrayList<String> sendTo = sendTo(request);
-        //determine how to send the data
-        commController.setCommToUsers(dataToSend, sendTo, false);
-        //send the data
-        return commController.sendResponse();
+                dbController.getRegistrationFields(dbController.getUserType(data.get("community_member_id")));
 
-        return null;*/
-        return null;
+        HashMap<String,String> userD = memberDetail.getUserByCmid(cmid);
+        dataToSend.get(1).put("RequestID", "updateDetails");
+        for (Map.Entry<Integer,HashMap<String,String>> fields : dataToSend.entrySet())
+        {
+            HashMap<String, String> field = fields.getValue();
+            //field.containsKey()
+            String name = field.get("field_name");
+            String value = data.get(name);
+            field.put("value",value);
+        }
+        return dataToSend;
     }
 
     @Override
@@ -187,18 +186,12 @@ public class Updates_V1 implements IUpdates_model {
     public HashMap<String,String> forgotPassword(String email, HashMap<String, String> userD,int authMethod) {
         String first = userD.get("first_name");
         String last =  userD.get("last_name");
-        //int authMethod = dbController.getAuthenticationMethod(userD.get("state"));
-        //HashMap<String,String> ret = null;
         HashMap<String,String> data = new HashMap<String,String>();
-        //dataAuthorizer = verification.getdoctorsAuthorizer(regid,dataFilter);
         data.put("Subject","Your password for Socmed App");
         data.put("first name", first);
         data.put("last_name", last);
         data.put("Email",email);
-        //data.put("community_member_id", "");
-        //data.put("confirmationOfDoctor", "");
         data.put("Message", generateMessgeForForgotPass(userD) );
-        //ret = verification.generateDataForAuth(data, authMethod);
         return data;
 
     }
