@@ -18,19 +18,51 @@ public class MaorTests {
         //cmids.add("10010");
         //controller.stopFollow("1053", cmids);
         HashMap<String, String>h = new HashMap<String,String>();
-        h.put("event_id", "1053");
+        /*h.put("event_id", "1003");
         h.put("RequestID", "UsersArrivalTimes");
         h.put("radius", "5");
         HashMap<String,String> h1 = new HashMap<String,String>();
         h1.put("subRequest", "cmid");
-        h1.put("community_member_id", "10010");
+        h1.put("community_member_id", "10014");
         h1.put("location_remark", "Sitvanit Street 17-31, Yavne, Israel");
         h1.put("eta_by_car", "1");
         h1.put("eta_by_foot", "1");
         HashMap<Integer, HashMap<String,String>> hh = new HashMap<Integer, HashMap<String,String>>();
         hh.put(1, h);
         hh.put(2, h1);
-        controller.receiveUsersArrivalTimesAndApproach(hh);
+        controller.receiveUsersArrivalTimesAndApproach(hh);*/
+        //controller.updateRadiusToEMS("10", "1003");
+        /*h.put("event_id", "1003");
+        h.put("RequestID", "followUser");
+        h.put("location_remark", "Sitvanit Street 17-31, Yavne, Israel");
+        h.put("community_member_id", "10014");
+        h.put("eta_by_car", "1");
+        h.put("eta_by_foot", "1");
+        h.put("x", "34.728817");
+        h.put("y", "31.878638");
+        controller.receiveArrivalTime(h);*/
+
+       /* h.put("community_member_id", "10014");
+        h.put("password", "f");
+        h.put("event_id", "1003");
+        h.put("RequestID", "arrivalAcceptionMounted");
+        h.put("eta_by_car", "1");
+        h.put("eta_by_foot", "1");
+        h.put("x", "34.729817");
+        h.put("y", "31.879638");
+        h.put("reg_id","543534");
+        controller.assistantRespondsToApproach(h);*/
+
+        /*h.put("password", "a123");
+        h.put("event_id", "1003");
+        h.put("community_member_id", "10010");
+        h.put("RequestID", "EMSId");
+        controller.getCmidOfEms(h);*/
+
+        h.put("password", "f");
+        h.put("community_member_id", "10014");
+        h.put("event_id", "1003");
+        controller.assistantCancelsArrival(h);
     }
 
     /*public Object updatedFromPatient(HashMap<String, String> filledForm)

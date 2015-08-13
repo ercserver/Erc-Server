@@ -275,8 +275,8 @@ public class EmerController_V1 implements IEmerController {
 
     private void updateRadiusToEMS(String radius,String eventID) {
         HashMap<String,String> data = new HashMap<>();
-        data.put("eventID",eventID);
-        data.put("Radius",radius);
+        data.put("event_id",eventID);
+        data.put("radius",radius);
         data.put("RequestID","SetEventSearchRadius");
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
@@ -635,6 +635,8 @@ public class EmerController_V1 implements IEmerController {
             return;
         String eventID = data.get("event_id");
         dbController.updateMedicineGiven(Integer.parseInt(cmid), Integer.parseInt(eventID));
+        data.put("patient_id", dbController.getPatientIDByCmid(cmid));
+        data.remove("RequestID");
         data.put("RequestID", "AssistantGaveMed");
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
