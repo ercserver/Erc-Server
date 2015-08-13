@@ -159,10 +159,12 @@ public class EmerController_V1 implements IEmerController {
 
     public void getCmidOfEms(HashMap<String, String> data)
     {
+        logger.info("entered getCmidOfEms");
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
         dbController.updateEMSOfEvent(data.get("community_member_id"), data.get("event_id"));
         emergencyLogger.handleGettingCmidOfEMS(data.get("event_id"));
+        logger.info("exit getCmidOfEms");
     }
 
     //this method will be called from the emergency event initiation

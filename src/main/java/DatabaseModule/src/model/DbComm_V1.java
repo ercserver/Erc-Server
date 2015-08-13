@@ -4,6 +4,7 @@ package DatabaseModule.src.model;
 import DatabaseModule.src.api.IDbComm_model;
 import Utilities.ErcConfiguration;
 import Utilities.HashMapBuilder;
+import net.sourceforge.jtds.jdbc.DateTime;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -1416,14 +1417,15 @@ public class DbComm_V1 implements IDbComm_model {
             // Get the status code from O_EventStatuses
             String statusNum = selectFromTable("O_EventStatuses",
                     Arrays.asList("status_num"),
-                    hmb.put("status_name", newStatus).build()).get(0).get("status_num");
+                    hmb.put("status_name", newStatus).build()).get(1).get("status_num");
 
             // Update the finish date and the status
-            //hmb = new HashMapBuilder<>();
-            updateTable("O_EmergencyEvents", hmb.put("event_id", Integer.toString(eventId)).build(),
-                    "finished_date", getCurrentDateTime());
-            updateTable("O_EmergencyEvents", hmb.put("event_id", Integer.toString(eventId)).build(),
-                    "status_num", statusNum);
+           String sql = "UPDATE O_EmergencyEvents SET finished_date=current_timestamp" +
+                   ", status_num=? WHERE event_id=?";
+           PreparedStatement stmt = connection.prepareStatement(sql);
+           stmt.setObject(1, statusNum);
+           stmt.setObject(2, eventId);
+            stmt.executeUpdate();
 
         }catch(Exception ex){
             ex.printStackTrace();

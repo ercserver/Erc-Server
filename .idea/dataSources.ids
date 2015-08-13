@@ -539,7 +539,6 @@
       <column name="patient_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="medical_condition_id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="created_date" sqlType="timestamp" precision="8" scale="0" nullable="false" jdbcType="-2" version="true"/>
-      <column name="finished_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <column name="ems_member_id" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="status_num" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="x" sqlType="real" precision="24" scale="0" nullable="false" jdbcType="7"/>
@@ -552,6 +551,7 @@
       <column name="last_action_time" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" def="JyhnZXRkYXRlKCkpJw=="/>
       <column name="time_to_next_reminder" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="memo" sqlType="varchar" precision="300" scale="0" nullable="true" jdbcType="12"/>
+      <column name="finished_date" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <primary-key name="PK__O_Emerge__2370F727571DF1D5" columns="event_id"/>
       <foreign-key name="FK__O_Emergen__medic__59FA5E80" columns="medical_condition_id" ref-table="M_MedicalConditions" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="medical_condition_id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK__O_Emergen__statu__5BE2A6F2" columns="status_num" ref-table="O_EventStatuses" ref-schema="dbo" ref-catalog="socmedserver" ref-columns="status_num" update-rule="1" delete-rule="1" deferrability="2"/>

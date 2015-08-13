@@ -1,6 +1,7 @@
 package emergency.ohad;
 
 import DatabaseModule.src.controller.DbController_V1;
+import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
 import Utilities.HashMapBuilder;
@@ -14,7 +15,9 @@ import java.util.HashMap;
 public class MainTest {
 
     public static void main(String[] args) {
-      testNaor6("10042");
+        DbComm_V1 db = new DbComm_V1();
+        db.closeEvent(1003, "FINISHED");
+      //testNaor6("10042");
       /*  EmerController_V1 em = new EmerController_V1();
         em.receiveUsersAroundLocation(new HashMap<String, String>());*/
     //    DbController_V1 dbc = new DbController_V1();
