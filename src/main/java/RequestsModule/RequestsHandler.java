@@ -27,6 +27,12 @@ import java.util.logging.Logger;
 @Scope("session")
 @RequestMapping("/requests")
 public class RequestsHandler {
+
+
+    private static final String EMSID = "EMSId";
+    private static final String ASSISTANT_DETAILS = "AssistantDetails";
+    private static final String UPDATE_PATIENT_AT_RISK = "updatePatientAtRisk";
+    private static final String GAVE_MEDICATION = "gaveMedication";
     private final String REQ_ID = "RequestID"; // This is the requests identifier's field name
 
     /*** Registration Process Requests Codes ***/
@@ -36,6 +42,7 @@ public class RequestsHandler {
     private final String RESEND_EMAIL = "resendAuth";
     private final String CONFIRM_PATIENT = "confirmPatient";
     private final String REJECT_PATIENT = "rejectPatient";
+    private final String FORGOT_PASSWORD = "forgotPassword";
 
     /*** Routine Requests Codes ***/
     private final String ASKWAITING_PATIENTS = "askWaitingPatients";
@@ -52,6 +59,14 @@ public class RequestsHandler {
 
     /*** Emergency Requests Codes ***/
     private final String HELP = "help";
+    private static final String ARRIVAL_ACCEPTION_ON_FOOT = "arrivalAcceptionOnFoot";
+    private static final String ARRIVAL_ACCEPTION_MOUNTED = "arrivalAcceptionMounted";
+    private static final String ARRIVAL_REJECTION = "arrivalRejection";
+    private static final String EMSTAKE_OVER = "EMStakeOver";
+    private static final String CANCEL_ASSIST = "cancelAssist";
+    private static final String I_AM_HERE = "iAmHere";
+    private static final String CONFIRM_MEDICATION = "confirmMedication";
+    private static final String REJECT_MEDICATION = "rejectMedication";
 
     /*** Class Members */
 
@@ -85,6 +100,12 @@ public class RequestsHandler {
             e.printStackTrace();
         }
         return "db";
+    }
+
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/stuck")
+    public @ResponseBody String checkStuck()
+    {
+      return "Not stuck :)";
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/delete/{cmid}")
@@ -139,6 +160,7 @@ public class RequestsHandler {
                 case REJECT_PATIENT:
                     rc.responseByDoctor(requestMap, false);
                     break;
+
                 default:
                     // Do nothing...
                     break;
@@ -165,9 +187,40 @@ public class RequestsHandler {
             logger.log(Level.INFO, "Before switch. reqID = " + reqId);
             switch (reqId) {
                 case HELP:
-                    logger.log(Level.INFO, " requestID = " + reqId);
                     ec.emergencyCall(requestMap);
                     break;
+                case ARRIVAL_ACCEPTION_ON_FOOT:
+                case ARRIVAL_ACCEPTION_MOUNTED:
+                case ARRIVAL_REJECTION:
+                    ec.assistantRespondsToApproach(requestMap);
+                    break;
+                case EMSTAKE_OVER:
+                    ec.emsTakeover(requestMap);
+                    break;
+                case CANCEL_ASSIST:
+                    ec.rejectAssistantsByEMS(requestMap);
+                    break;
+                case I_AM_HERE: // from application
+                    ec.arrivalToDestination(requestMap);
+                    break;
+                case CONFIRM_MEDICATION:
+                case REJECT_MEDICATION:
+                    ec.approveOrRejectMed(requestMap);
+                    break;
+                case GAVE_MEDICATION:
+                    ec.assistantGaveMed(requestMap);
+                    break;
+                case EMSID:
+                    ec.getCmidOfEms(requestMap);
+                    break;
+                case ASSISTANT_DETAILS:
+                    ec.requestAssistantDetails(requestMap);
+                    break;
+                case UPDATE_PATIENT_AT_RISK:
+                    ec.updatePatientStatus(requestMap);
+                    break;
+
+
                 default:
                     logger.log(Level.INFO, " default...");
                     return null;
@@ -212,6 +265,11 @@ public class RequestsHandler {
                 case UPDATE_DETAILS:
                     rv = ruc.updateMemberDetails(requestMap).toString();
                     break;
+                case FORGOT_PASSWORD:
+                    rv = ruc.forgotPassword(requestMap).toString();
+                    break;
+
+
                 default:
                     // Do nothing...
                     rv = "Wrong JSONFile id";
@@ -224,9 +282,11 @@ public class RequestsHandler {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/emergency-gis-times")
-    public @ResponseBody String handleMembersArrivalTimes(@RequestBody String request){
-        JSONArray data = new JSONArray(request);
+    public @ResponseBody String handleMembersArrivalTimes(@RequestParam String JSONFile){
+        logger.info("in handleMembersArrivalTimes. json = " + JSONFile);
+        JSONArray data = new JSONArray(JSONFile);
         HashMap<Integer, HashMap<String, String>> requestMap = hmc.jsonArrayToMap(data);
+        logger.info("in map = " + requestMap);
         String rv = "Received Request id : ";
         // Get JSONFile id
         try{
@@ -236,6 +296,7 @@ public class RequestsHandler {
                 reqId = details.get(REQ_ID);
                 switch (reqId){
                     case USERS_ARRIVAL_TIMES:
+                        logger.info("in  USERS_ARRIVAL_TIMES");
                         ec.receiveUsersArrivalTimesAndApproach(requestMap);
                         rv += reqId;
                         break;
@@ -255,8 +316,6 @@ public class RequestsHandler {
     public @ResponseBody String handleEmergencyGISRequests(@RequestParam String JSONFile){
         logger.log(Level.INFO, "JSONFile = " + JSONFile);
          JSONObject data = jv.createJSON(JSONFile);
-         logger.log(Level.INFO, "data = " + data);
-         logger.log(Level.INFO, "Location_remark=" + data.get("location_remark"));
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
          logger.log(Level.INFO, "requestMap = " + requestMap);
         String reqId = "";

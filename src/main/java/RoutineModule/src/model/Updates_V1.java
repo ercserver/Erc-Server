@@ -29,18 +29,24 @@ public class Updates_V1 implements IUpdates_model {
 
     public HashMap<Integer,HashMap<String,String>> getFieldsForUpdate(HashMap<String, String> data)
     {
-        /*//generate data to send
-        HashMap<Integer,HashMap<String,String>> dataToSend =
-                dbController.getRegistrationFields(Integer.parseInt(data.get("userType")));
-        dataToSend.get(1).put("RequestID", "registration");
-        ArrayList<String> sendTo = sendTo(request);
-        //determine how to send the data
-        commController.setCommToUsers(dataToSend, sendTo, false);
-        //send the data
-        return commController.sendResponse();
 
-        return null;*/
-        return null;
+                //new HashMap<Integer,HashMap<String,String>>();
+        int cmid = Integer.parseInt(data.get("community_member_id"));
+
+        HashMap<Integer,HashMap<String,String>> dataToSend =
+                dbController.getRegistrationFields(dbController.getUserType(data.get("community_member_id")));
+
+        HashMap<String,String> userD = memberDetail.getUserByCmid(cmid);
+        dataToSend.get(1).put("RequestID", "updateDetails");
+        for (Map.Entry<Integer,HashMap<String,String>> fields : dataToSend.entrySet())
+        {
+            HashMap<String, String> field = fields.getValue();
+            //field.containsKey()
+            String name = field.get("field_name");
+            String value = data.get(name);
+            field.put("value",value);
+        }
+        return dataToSend;
     }
 
     @Override
@@ -174,6 +180,52 @@ public class Updates_V1 implements IUpdates_model {
     public String getCurrentStatusOfPatient(int cmid) {
         HashMap<String, String> data = memberDetail.getUserByCmid(cmid);
         return memberDetail.getStatus(data);
+    }
+
+    @Override
+    public HashMap<String,String> forgotPassword(String email, HashMap<String, String> userD,int authMethod) {
+        String first = userD.get("first_name");
+        String last =  userD.get("last_name");
+        HashMap<String,String> data = new HashMap<String,String>();
+        data.put("Subject","Your password for Socmed App");
+        data.put("first name", first);
+        data.put("last_name", last);
+        data.put("Email",email);
+        data.put("Message", generateMessgeForForgotPass(userD) );
+        return data;
+
+    }
+
+    private String generateMessgeForForgotPass(HashMap<String, String> userD) {
+        String first = userD.get("first_name");
+        String last =  userD.get("last_name");
+        return "Hi " + first + " " + last + "\n" + "Your password in Socmed App is: " + userD.get("password") +
+        "\n" + "Thank you,\n" +
+        "Socmed administration team.";
+    }
+
+
+    private String generateMessgeForVerfictionDoctor(HashMap<String, String> memberDetails)
+    {
+        String firstName = memberDetails.get("first_name");
+        String lastName = memberDetails.get("last_name");
+        String licenseNumber = memberDetails.get("doc_license_number");
+
+        return "Please confirm/reject the following doctor be a valid doctor:\n" +
+                "First Name: " + firstName + ".\n" +
+                "Last Name: " + lastName + ".\n" +
+                "Licence Number: " + licenseNumber + ".\n\n" +
+                "Workplace details: " + "\n" +
+                "   organization description: " +
+                memberDetails.get("organization_description") + ".\n" +
+                "   organization type description: " +
+                memberDetails.get("organization_type_description") + ".\n" +
+                "   position_description: " + memberDetails.get("position_description") + "\n" +
+                "   email address of organization: "  +
+                memberDetails.get("email_address_of_organization") +  ".\n" +
+                "   org phone number: " + memberDetails.get("org_phone_number") +  ".\n" +
+                "Thank you,\n" +
+                "Socmed administration team.";
     }
 
 }

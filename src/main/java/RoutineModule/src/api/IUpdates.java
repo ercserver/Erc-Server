@@ -14,6 +14,8 @@ public interface IUpdates {
     // Send to all users the most recent comm. params.
     public Object updateCommunicationParameters(String code);
 
+    //get email and send his password to email
+    public Object forgotPassword(HashMap<String, String> data);
 
     // Update the details in the db
     public Object updateMemberDetails(HashMap<String, String> data);

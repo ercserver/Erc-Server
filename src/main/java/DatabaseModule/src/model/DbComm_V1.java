@@ -1275,12 +1275,11 @@ public class DbComm_V1 implements IDbComm_model {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
             statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,created_date,location_remark) VALUES (" +
+            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,location_remark) VALUES (" +
                     insert.get("community_member_id") + "," + insert.get("event_id") + "," +
                     insert.get("prescription_num") + "," +
                     insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
-                    ",'" + insert.get("created_date") + "','" + insert.get("location_remark") +
-                    "')");
+                    ",'" + insert.get("location_remark") + "')");
         }
         catch (SQLException e) {e.printStackTrace();}
         finally
@@ -1411,7 +1410,7 @@ public class DbComm_V1 implements IDbComm_model {
     @Override
     public void closeEvent(int eventId, String newStatus) {
         // status = {CANCELED, ACTIVE, FINISHED}
-
+        logger.info("eventId = " + eventId + " newStatus = " + newStatus);
        try {
            HashMapBuilder<String, String> hmb = new HashMapBuilder<String, String>();
             // Get the status code from O_EventStatuses
@@ -1441,9 +1440,10 @@ public class DbComm_V1 implements IDbComm_model {
         try {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
-            String sql = "SELECT community_member_id FROM P_StatusLog JOIN " +
-                    "Availability WHERE status_name='active' and " +
-                    "community_member_id in ";
+            String sql = "SELECT P_StatusLog.community_member_id FROM P_StatusLog JOIN " +
+                    "Availability ON P_StatusLog.community_member_id=Availability.community_member_id " +
+                    "JOIN P_Statuses ON P_Statuses.status_num=P_StatusLog.status_num WHERE status_name='active' AND " +
+                    "P_StatusLog.community_member_id IN ";
             // Add the string "(cmid1, cmid2,...)"
             sql += cmidList.toString().replace('[','(').replace(']', ')');
 
@@ -1926,24 +1926,35 @@ public class DbComm_V1 implements IDbComm_model {
 
         try
         {
-            String num = getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num");
-
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
-            if (num == null || num.equals("")){
+
+            int num = -1;
+            try{
+               num = Integer.parseInt(getRowsFromTable(cond, "O_ActionTypes").get(1).get("action_type_num"));
+            } catch (NullPointerException ex){
+                //pass
+            }
+
+
+            if (num < -1){
                 // Insert new action type
                 PreparedStatement stmt = connection.prepareStatement("insert dbo.O_ActionTypes values (?)", Statement.RETURN_GENERATED_KEYS);
                 stmt.executeUpdate();
 
                 ResultSet rs = stmt.getGeneratedKeys();
                 if (rs.next()){
-                    num = Integer.toString(rs.getInt(1));
+                    num = rs.getInt(1);
                 }
 
             }
-            statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventActions  (event_id, action_type_num, more_description) VALUES (" +
-                     eventId + "," + num + "," + descr + ")");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO O_EmergencyEventActions  " +
+                    "(event_id, action_type_num, more_description) VALUES (?,?,?)");
+            stmt.setObject(1, Integer.parseInt(eventId));
+            stmt.setObject(2, num);
+            stmt.setObject(3, descr);
+
+            stmt.executeUpdate();
         }
         catch (SQLException e) {e.printStackTrace();}
         finally

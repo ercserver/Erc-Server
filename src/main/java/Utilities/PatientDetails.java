@@ -71,10 +71,20 @@ public class PatientDetails {
             return true;
     }
 
+    public HashMap<String, String> getUserByMail(String mail) {
+
+        HashMap<String, String> member = new HashMap<String, String>();
+        member.put("P_CommunityMembers.email_address",  mail );
+        HashMap<String, String> details = dbController.getUserByParameter(member);
+        return details;
+    }
+
+
     public HashMap<String, String> getUserByCmid(int cmid) {
 
         logger.log(Level.INFO, "In getUserByCmid. Parameters = " + cmid);
         HashMap<String, String> member = new HashMap<String, String>();
+        //P_CommunityMembers.
         member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
         HashMap<String, String> details = dbController.getUserByParameter(member);
         logger.log(Level.INFO, "details = " + details);
@@ -84,7 +94,8 @@ public class PatientDetails {
             HashMap<String,String> obj = objs.getValue();
             reg = obj.get("reg_id");
         }
-        details.put("reg_id",reg);
+        if (details != null)
+            details.put("reg_id",reg);
         return details;
     }
 

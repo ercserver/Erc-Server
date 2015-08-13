@@ -35,7 +35,7 @@ public class EmerFilter_V1 implements IEmerFilter_model {
         ArrayList<Integer> filterL = dbController.filterAvailableMembers(intedList, eventID);
         HashMap<String, String> filter = new HashMap<String, String>();
         for(int i = 0; i < filterL.size(); i++)
-            filter.put(Integer.toString(filterL.get(i)), null);
+            filter.put(Integer.toString(filterL.get(i)), "null");
 
         return filter;
 
