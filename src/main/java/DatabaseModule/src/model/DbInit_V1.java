@@ -705,7 +705,6 @@ public class DbInit_V1 implements IDbInit_model {
                         " prescription_num INTEGER not null foreign key references P_Prescriptions(prescription_num), " +
                         " eta_by_foot INTEGER not NULL, " +
                         " eta_by_car INTEGER not NULL, " +
-                        " created_date TIMESTAMP not NULL, " +
                         " location_remark VARCHAR(250) not NULL, " +
                         " request_sent_date DATETIME not NULL DEFAULT current_timestamp, " +
                         " response_date DATETIME, " +
