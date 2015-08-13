@@ -1377,10 +1377,10 @@ public class DbComm_V1 implements IDbComm_model {
             statement = connection.createStatement();
             // gets the userType by cmid
             rs = statement.executeQuery("SELECT DISTINCT * FROM O_EmergencyEvents " +
-                    "WHERE community_member_id=" + cmid + " AND finished_date IS NULL order by created_date");
+                    "WHERE create_by_member_id=" + cmid + " AND finished_date IS NULL order by created_date");
             String eventId = null;
             while(rs.next())
-                eventId = (String)rs.getObject("event_id");
+                eventId = rs.getObject("event_id").toString();
             return eventId;
         }
         // There was a fault with the connection to the server or with SQL
@@ -1495,15 +1495,15 @@ public class DbComm_V1 implements IDbComm_model {
             statement = connection.createStatement();
             // gets the userType by cmid
             rs = statement.executeQuery("SELECT DISTINCT * FROM O_EmergencyEvents " +
-                    "WHERE community_member_id=" + cmid + " AND event_id=" + eventID);
+                    "WHERE create_by_member_id=" + cmid + " AND event_id=" + eventID);
             rs.next();
             String re = (String)rs.getObject("patient_condition_remarks");
             if(re == null)
                 re = "";
             re = "'" + re + "," + remark + "'";
-            statement.execute("UPDATE O_EmergencyEvents SET patient_condition_remarks=" + re + " WHERE community_member_id="
+            statement.execute("UPDATE O_EmergencyEvents SET patient_condition_remarks=" + re + " WHERE create_by_member_id="
                     + cmid + " AND event_id=" + eventID);
-            statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE community_member_id="
+            statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE create_by_member_id="
                     + cmid + " AND event_id=" + eventID);
         }
         // There was a fault with the connection to the server or with SQL

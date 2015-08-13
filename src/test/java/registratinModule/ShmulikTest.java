@@ -18,7 +18,7 @@ import java.util.logging.Level;
 
 public class ShmulikTest {
     public static void main(String[] args) {
-        testNaor6("10042");
+        //testNaor6("10042");
         //testNaor4("10005");
        //testNaor5();
        /* DbComm_V1 d = new DbComm_V1();
@@ -156,16 +156,5 @@ public class ShmulikTest {
 
     }
 
-    //test message of patient at risk
-    public static void testNaor6(String cmid) {
-        HashMap<String, String> fakeDetails = new HashMap<String, String>();
 
-        fakeDetails.put("community_member_id", cmid);
-        fakeDetails.put("message", "TEST MESSAGE");
-
-        IEmerController controller = new EmerController_V1();
-        controller.updatePatientStatus(fakeDetails);
-
-
-    }
     }

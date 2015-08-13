@@ -1,6 +1,7 @@
 package emergency.ohad;
 
 import DatabaseModule.src.controller.DbController_V1;
+import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
 import Utilities.HashMapBuilder;
 import org.json.JSONObject;
@@ -13,11 +14,27 @@ import java.util.HashMap;
 public class MainTest {
 
     public static void main(String[] args) {
+      testNaor6("10042");
       /*  EmerController_V1 em = new EmerController_V1();
         em.receiveUsersAroundLocation(new HashMap<String, String>());*/
-        DbController_V1 dbc = new DbController_V1();
-        System.out.println(dbc.getEventDetails("1032"));
+    //    DbController_V1 dbc = new DbController_V1();
+    //    System.out.println(dbc.getEventDetails("1032"));
        /* EmerController_V1 ec = new EmerController_V1();
         ec.emergencyCall(new HashMapBuilder<String,String>().put("community_member_id","10005").build());*/
+    }
+
+
+
+    //test message of patient at risk
+    public static void testNaor6(String cmid) {
+        HashMap<String, String> fakeDetails = new HashMap<String, String>();
+
+        fakeDetails.put("community_member_id", cmid);
+        fakeDetails.put("message", "TEST MESSAGE");
+
+        IEmerController controller = new EmerController_V1();
+        controller.updatePatientStatus(fakeDetails);
+
+
     }
 }

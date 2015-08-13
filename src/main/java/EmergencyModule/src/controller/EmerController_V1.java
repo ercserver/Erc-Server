@@ -666,22 +666,37 @@ public class EmerController_V1 implements IEmerController {
         emergencyLogger.handleUpdatePatientStatus(eventId, data.get("community_member_id"));
         dbController.updatePatientRemarks(data.get("community_member_id"), eventId, data.get("message"));
         // Sends the patient's message to EMS and the assistants
-        HashMap<String, String> response = new HashMap<String, String>();
-        response.put("event_id", eventId);
-        response.put("message", data.get("message"));
-        response.put("RequestID", "newInfo");
+
         ArrayList<String> regIds = dbController.getHelpersRegIds(eventId);
-        HashMap<Integer,HashMap<String,String>> h = new HashMap<Integer, HashMap<String,String>>();
-        h.put(1, response);
-        popUpMessage(h, regIds, true);
+        popUpMessage(eventId, data.get("message"), regIds, true);
         emergencyLogger.handlePopupMessage(eventId);
     }
 
+    // we call this from "updatePatientStatus"
+    /*If we want to send to EMS we set "sendToEms" to true.
+     To whoever app we want to send to, we add the reg id of the app to the regId's list*/
+    private void popUpMessage(String eventId, String Message, ArrayList<String> regIds, boolean sendToEms){
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("RequestID", "newInfo");
+        // Sends message to EMS
+        if(sendToEms)
+        {
+            ArrayList<String> sendTo = new ArrayList<String>();
+            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
+            initiatedOneObjectRequest(data, sendTo);
+        }
+        // Sends message to apps
+        if(null != regIds)
+        {
+            HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer, HashMap<String,String>>();
+            response.put(1, data);
+            commController.setCommToUsers(response, regIds, false);
+            commController.sendResponse();
+        }
+    }
     @Override
     public void emsTakeover(HashMap<String, String> data) {
         // Check params
-
-
         if(null != data.get("status")){
             cancelEvent(data.get("event_id"), "FINISHED");
             //close the event within the GIS
@@ -729,11 +744,11 @@ public class EmerController_V1 implements IEmerController {
         //get all helpers and cancel them
         List<Integer> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),-1);
         HashMap<String,String> rejectRequest = turnIntListIntoHashMap(eventHelpers);
-        rejectAssistants(rejectRequest,eventID,"Event is over");
+        rejectAssistants(rejectRequest, eventID, "Event is over");
         //close the event within the DB
         dbController.closeEvent(Integer.parseInt(eventID), status);
         //Hanle event termination logs
-        emergencyLogger.terminateEvent(eventID,status);
+        emergencyLogger.terminateEvent(eventID, status);
     }
 
     public void patientCancelledEvent(HashMap<String,String> data){
@@ -745,7 +760,7 @@ public class EmerController_V1 implements IEmerController {
         //cancel with EMS
         cancelEventOnGISorEMS(eventID, "EMS");
         //cancel with GIS
-        cancelEventOnGISorEMS(eventID,"GIS");
+        cancelEventOnGISorEMS(eventID, "GIS");
     }
 
     private void cancelEventOnGISorEMS(String eventID,String where) {
@@ -760,28 +775,7 @@ public class EmerController_V1 implements IEmerController {
     }
 
 
-    private void popUpMessage(HashMap<Integer,HashMap<String,String>> response, ArrayList<String> regIds, boolean sendToEms){
-        // we call this from "updatePatientStatus"
-        if(sendToEms)
-        {
-            ArrayList<String> sendTo = new ArrayList<String>();
-            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
-            initiatedOneObjectRequest(response.get(1), sendTo);
-            // Sends message to apps and to EMS
-            if(null != regIds)
-            {
-                commController.setCommToUsers(response, regIds, false);
-                commController.sendResponse();
-                return;
-            }
-        }
-        // Sends message only to apps
-        if(null != regIds)
-        {
-            commController.setCommToUsers(response, regIds, false);
-            commController.sendResponse();
-        }
-    }
+
 
     private void initiatedOneObjectRequest(HashMap<String, String> request,ArrayList<String> URLs){
         HashMap<Integer,HashMap<String,String>> dataToSend = new HashMap<Integer,HashMap<String,String>>();
