@@ -675,16 +675,10 @@ public class EmerController_V1 implements IEmerController {
     // we call this from "updatePatientStatus"
     /*If we want to send to EMS we set "sendToEms" to true.
      To whoever app we want to send to, we add the reg id of the app to the regId's list*/
-    private void popUpMessage(String eventId, String Message, ArrayList<String> regIds, boolean sendToEms){
+    private void popUpMessage(String eventId, String message, ArrayList<String> regIds, boolean sendToEms){
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("RequestID", "newInfo");
-        // Sends message to EMS
-        if(sendToEms)
-        {
-            ArrayList<String> sendTo = new ArrayList<String>();
-            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
-            initiatedOneObjectRequest(data, sendTo);
-        }
+        data.put("message",message);
         // Sends message to apps
         if(null != regIds)
         {
@@ -692,6 +686,14 @@ public class EmerController_V1 implements IEmerController {
             response.put(1, data);
             commController.setCommToUsers(response, regIds, false);
             commController.sendResponse();
+        }
+        // Sends message to EMS
+        if(sendToEms)
+        {
+            data.put("event_id",eventId);
+            ArrayList<String> sendTo = new ArrayList<String>();
+            sendTo = assistantFuncs.addReceiver("EMS", sendTo);
+            initiatedOneObjectRequest(data, sendTo);
         }
     }
     @Override
