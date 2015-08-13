@@ -219,6 +219,8 @@ public class RequestsHandler {
                 case UPDATE_PATIENT_AT_RISK:
                     ec.updatePatientStatus(requestMap);
                     break;
+
+
                 default:
                     logger.log(Level.INFO, " default...");
                     return null;
