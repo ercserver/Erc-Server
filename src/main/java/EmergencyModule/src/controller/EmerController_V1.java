@@ -603,6 +603,7 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void approveOrRejectMed(HashMap<String, String> data) {
+        logger.info("In approveOrRejectMed. data = " + data);
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
         emergencyLogger.handleApproveOrRejectMed(data.get("event_id"));
@@ -621,6 +622,7 @@ public class EmerController_V1 implements IEmerController {
             dbController.updateResult(cmid, data.get("event_id"), "'EMS rejected medication giving'");
         // Sends EMS response to the assistant
         String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
+        logger.info("regid = " + regid);
         ArrayList<String> target = new ArrayList<String>();
         target.add(regid);
         HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer, HashMap<String, String>>();
@@ -628,6 +630,7 @@ public class EmerController_V1 implements IEmerController {
         commController.setCommToUsers(response, target, false);
         commController.sendResponse();
         emergencyLogger.handleTellingAssistantAboutMedicationGiving(data.get("event_id"));
+        logger.info("exiting approveOrRejectMed");
     }
 
     @Override

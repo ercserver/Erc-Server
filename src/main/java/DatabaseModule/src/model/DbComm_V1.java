@@ -1422,6 +1422,9 @@ public class DbComm_V1 implements IDbComm_model {
             // Update the finish date and the status
            String sql = "UPDATE O_EmergencyEvents SET finished_date=current_timestamp" +
                    ", status_num=? WHERE event_id=?";
+           if (connection == null || connection.isClosed()){
+               connect();
+           }
            PreparedStatement stmt = connection.prepareStatement(sql);
            stmt.setObject(1, statusNum);
            stmt.setObject(2, eventId);
@@ -1905,19 +1908,41 @@ public class DbComm_V1 implements IDbComm_model {
     @Override
     public void updateMedicineGiven(int cmid, int eventID) {
         HashMapBuilder<String, String> hmb = new HashMapBuilder<String, String>();
-        updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
-                "providing_member_id", Integer.toString(cmid));
-        updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
-                "medication_provision_date", new Date());
+        try {
+            if (connection == null || connection.isClosed()){
+                connect();
+            }
+            String sql = "UPDATE dbo.O_EmergencyMedicationUse SET providing_member_id=?, " +
+                    "medication_provision_date=CURRENT_TIMESTAMP WHERE event_id=?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setObject(1, cmid); // providing_member_id
+            stmt.setObject(2, eventID);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void updateMedicineGiven(int cmid, int eventID, Date date) {
         HashMapBuilder<String, String> hmb = new HashMapBuilder<String, String>();
-        updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
-                "providing_member_id", Integer.toString(cmid));
-        updateTable("O_EmergencyMedicationUse", hmb.put("event_id", Integer.toString(eventID)).build(),
-                "medication_provision_date", date.toString());
+        try {
+            if (connection == null || connection.isClosed()){
+                connect();
+            }
+            String sql = "UPDATE dbo.O_EmergencyMedicationUse SET providing_member_id=?, " +
+                    "medication_provision_date=? WHERE event_id=?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setObject(1, cmid); // providing_member_id
+            stmt.setDate(2, new java.sql.Date(date.getTime()));
+            stmt.setObject(3, eventID);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateLogs(String eventId, String actionTypeName, String descr)
