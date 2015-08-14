@@ -42,7 +42,7 @@ public class MaorTests {
         h.put("y", "31.878638");
         controller.receiveArrivalTime(h);*/
 
-       /* h.put("community_member_id", "10014");
+        /*h.put("community_member_id", "10014");
         h.put("password", "f");
         h.put("event_id", "1003");
         h.put("RequestID", "arrivalAcceptionMounted");
@@ -59,10 +59,36 @@ public class MaorTests {
         h.put("RequestID", "EMSId");
         controller.getCmidOfEms(h);*/
 
-        h.put("password", "f");
+        /*h.put("password", "f");
         h.put("community_member_id", "10014");
         h.put("event_id", "1003");
-        controller.assistantCancelsArrival(h);
+        controller.assistantCancelsArrival(h);*/
+
+        /*h.put("password", "f");
+        h.put("community_member_id", "10014");
+        h.put("event_id", "1003");
+        controller.arrivalToDestination(h);*/
+
+       /* h.put("community_member_id", "10006");
+        h.put("message", "blablabla");
+        controller.updatePatientStatus(h);*/
+
+        /*h.put("community_member_id", "10006");
+        h.put("event_id", "1002");
+        h.put("password", "asdf");
+        controller.patientCancelledEvent(h);*/
+
+        h.put("community_member_id", "10014");
+        h.put("password", "f");
+        h.put("event_id", "1003");
+        controller.assistantGaveMed(h);
+
+        /*h.put("password", "a123");
+        h.put("event_id", "1003");
+        h.put("community_member_id", "10010");
+        h.put("RequestID", "rejectMedication");
+        h.put("patient_id", "10005");
+        controller.approveOrRejectMed(h);*/
     }
 
     /*public Object updatedFromPatient(HashMap<String, String> filledForm)

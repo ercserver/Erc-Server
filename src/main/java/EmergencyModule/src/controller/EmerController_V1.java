@@ -618,7 +618,7 @@ public class EmerController_V1 implements IEmerController {
         }
         // Ems reject medication giving-updates the data base
         else
-            dbController.updateResult(cmid, data.get("event_id"), "EMS rejected medication giving");
+            dbController.updateResult(cmid, data.get("event_id"), "'EMS rejected medication giving'");
         // Sends EMS response to the assistant
         String regid = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
         ArrayList<String> target = new ArrayList<String>();
@@ -750,7 +750,7 @@ public class EmerController_V1 implements IEmerController {
         //get all helpers and cancel them
         List<Integer> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),-1);
         HashMap<String,String> rejectRequest = turnIntListIntoHashMap(eventHelpers);
-        rejectAssistants(rejectRequest, eventID, "Event is over");
+       // rejectAssistants(rejectRequest, eventID, "Event is over");
         //close the event within the DB
         dbController.closeEvent(Integer.parseInt(eventID), status);
         //Hanle event termination logs
