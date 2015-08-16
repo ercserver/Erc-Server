@@ -74,9 +74,9 @@ public class EmerController_V1 implements IEmerController {
         commController.sendResponse();
         emergencyLogger.handleGettingCall(Integer.toString(event));
         data.put("event_id", Integer.toString(event));
-        //TODO - LEAVING OUT SINCE GIS CANNOT ACCOMPLISH YET
-        //askForClosestEMS(data);
-        //emergencyLogger.handleSearchingClosestEMS(Integer.toString(event));
+        logger.info("Before closest EMS");
+        askForClosestEMS(data);
+        emergencyLogger.handleSearchingClosestEMS(Integer.toString(event));
         data.put("medical_condition_description",
                 dbController.getMedicalConditionByNum(details.get("medical_condition_id")).get(1).get("medical_condition_description"));
         askForUsersAroundLocation(data);
