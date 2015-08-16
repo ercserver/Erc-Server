@@ -338,16 +338,15 @@ public class EmerController_V1 implements IEmerController {
         if(!response.get("RequestID").equals("arrivalRejection")) {
             eta = (response.get("RequestID").equals("arrivalAcceptionOnFoot")) ?
                     response.get("eta_by_foot") : response.get("eta_by_car");
-            if(EMSArrivalTime != null)
-            {}
-            HashMap<String,String> res = new HashMap<String, String>();
+            if (EMSArrivalTime != null) {
+            }
+            HashMap<String, String> res = new HashMap<String, String>();
             // The assistants that are going to the event now and their proper arrival times
             HashMap<Integer, HashMap<String, String>> relevantAssistants = dbController.getGoingAssistantsAndTimes(response.get("event_id"));
             // Tells how much assistants we want in this state
             int howManyToSend = dbController.getHowManySendToEvent("Israel");
             // We want to send this assistant-Sends proper message to app
-            if(toSend(relevantAssistants, howManyToSend, eta))
-            {
+            if (toSend(relevantAssistants, howManyToSend, eta)) {
                 updates.put("response_type", "1");
                 send = true;
                 res.put("RequestID", "go");
@@ -362,12 +361,14 @@ public class EmerController_V1 implements IEmerController {
                 message += "\n Thank you anyway and have a good day!";
                 res.put("message", message);
             }
-            HashMap<Integer, HashMap<String,String>> re = new HashMap<Integer,HashMap<String,String>>();
+            HashMap<Integer, HashMap<String, String>> re = new HashMap<Integer, HashMap<String, String>>();
             re.put(1, res);
             ArrayList<String> target = new ArrayList<String>();
-            target.add(response.get("reg_id"));
-            commController.setCommToUsers(re, target, false);
-            commController.sendResponse();
+            if (null != response.get("reg_id")){
+                target.add(response.get("reg_id"));
+                commController.setCommToUsers(re, target, false);
+                commController.sendResponse();
+            }
             if(send)
                 emergencyLogger.handleSendingAssistant(response.get("event_id"), response.get("community_member_id"));
             else
@@ -391,9 +392,14 @@ public class EmerController_V1 implements IEmerController {
 
         // Adds this assistant to EMS, and to the following emergency of GIS
         if(send) {
-            HashMap<String, String>h = dbController.getAssistDetails(response.get("community_member_id"), response.get("event_id"));
+            HashMap<String, String> assistantDetails = dbController.getAssistDetails(response.get("community_member_id"), response.get("event_id"));
+            //TODO - FOR DEBUG PURPOSES, WE NEED TO REMOVE THIS IF
+            if (null == assistantDetails){
+                assistantDetails = new HashMap<String,String>();
+                assistantDetails.put("location_remark","SomeLocation");
+            }
             updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(response.get("community_member_id")),
-                    response.get("event_id"), eta, h.get("location_remark"), response.get("x"), response.get("y"));
+                    response.get("event_id"), eta, assistantDetails.get("location_remark"), response.get("x"), response.get("y"));
             askGisToFollow(response.get("event_id"), response.get("community_member_id"));
             emergencyLogger.handleAskingGISFollowUser(response.get("event_id"), response.get("community_member_id"));
         }
@@ -448,6 +454,8 @@ public class EmerController_V1 implements IEmerController {
         //generate
         HashMap<String,String> updateOrAddToEms = new HashMap<String,String>();
         String patientCmid = dbController.getCmidByPatientID(patientId);
+        //HashMap<String,String> conds = new HashMap<String,String>();
+        //HashMap<String, String> user
         HashMap<String, String> user = dbController.getUserByParameter(
                 new HashMapBuilder<String, String>().put("P_communityMembers.community_member_id", patientCmid).build());
 
