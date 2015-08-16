@@ -734,6 +734,8 @@ public class EmerController_V1 implements IEmerController {
             cancelEvent(data.get("event_id"), "FINISHED");
             //close the event within the GIS
             cancelEventOnGISorEMS(data.get("event_id"), "GIS");
+            // Close the event within the app of the patient
+            sendEventEndingToApp(data.get("event_id"));
             return;
         }
         //If the EMS wants to change the radius - ask for locations for GIS with the new radius
@@ -761,6 +763,21 @@ public class EmerController_V1 implements IEmerController {
 
         }
         */
+    }
+
+    // By this we let the app of the patient know about the event ending
+    private void sendEventEndingToApp(String eventId)
+    {
+        String cmid = dbController.getEventDetails(eventId).get("create_by_member_id");
+
+        ArrayList<String> sendTo = new ArrayList<String>();
+        sendTo.add(dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id"));
+        HashMap<String, String> response = new HashMap<String, String>();
+        response.put("RequestID", "done");
+        HashMap<Integer, HashMap<String, String>> res = new HashMap<Integer, HashMap<String, String>>();
+        res.put(1, response);
+        commController.setCommToUsers(res, sendTo, false);
+        commController.sendResponse();
     }
 
     private HashMap<String,String> turnIntListIntoHashMap(List<Integer> eventHelpers){

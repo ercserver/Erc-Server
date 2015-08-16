@@ -69,19 +69,19 @@ public class MaorTests {
         h.put("event_id", "1003");
         controller.arrivalToDestination(h);*/
 
-       /* h.put("community_member_id", "10006");
+        h.put("community_member_id", "10042");
         h.put("message", "blablabla");
-        controller.updatePatientStatus(h);*/
+        controller.updatePatientStatus(h);
 
         /*h.put("community_member_id", "10006");
         h.put("event_id", "1002");
         h.put("password", "asdf");
         controller.patientCancelledEvent(h);*/
 
-        h.put("community_member_id", "10014");
+       /* h.put("community_member_id", "10014");
         h.put("password", "f");
         h.put("event_id", "1003");
-        controller.assistantGaveMed(h);
+        controller.assistantGaveMed(h);*/
 
         /*h.put("password", "a123");
         h.put("event_id", "1003");
