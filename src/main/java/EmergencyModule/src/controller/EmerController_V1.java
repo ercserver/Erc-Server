@@ -806,7 +806,7 @@ public class EmerController_V1 implements IEmerController {
             return;
         String eventID = dbController.getEventByCmid(data.get("community_member_id"));
         //cancel with assistants and db
-        cancelEvent(eventID, "CANCELLED");
+        cancelEvent(eventID, "canceled");
         //cancel with EMS
         cancelEventOnGISorEMS(eventID, "EMS");
         //cancel with GIS
