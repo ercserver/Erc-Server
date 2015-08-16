@@ -223,12 +223,12 @@ public class RequestsHandler {
 
                 default:
                     logger.log(Level.INFO, " default...");
-                    return null;
+                    return new JSONArray().put(new JSONObject().put("status", "failed")).toString();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;
+        return new JSONArray().put(new JSONObject().put("status", "success")).toString();
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.HEAD}, value = "/routine")

@@ -691,6 +691,7 @@ public class DbComm_V1 implements IDbComm_model {
         // Create the sql query
         String sql = "UPDATE " + tableName + " SET " + columnToUpdate + "=? WHERE " + whereString;
         //System.out.println(sql);
+        logger.info("In updateTable. sql = " + sql);
         try {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
@@ -1799,6 +1800,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     public void updateEMSOfEvent(String cmid, String eventId)
     {
+        logger.info("in updateEMSOfEvent. cmid = " + cmid + " eventID = " + eventId);
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("event_id", eventId);
         updateTable("O_EmergencyEvents", cond, "ems_member_id", cmid);

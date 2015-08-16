@@ -6,6 +6,7 @@ import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.api.IEmerFilter_model;
 import EmergencyModule.src.api.IEmerLogger_model;
 import Utilities.AssistantFunctions;
+import Utilities.HashMapBuilder;
 import Utilities.ModelsFactory;
 import Utilities.ParametersVerifier;
 
@@ -446,13 +447,28 @@ public class EmerController_V1 implements IEmerController {
     private void updateOrAddAssistantToEMS(String patientId, String eventId, String eta, String locationRemark, String x, String y) {
         //generate
         HashMap<String,String> updateOrAddToEms = new HashMap<String,String>();
+        String patientCmid = dbController.getCmidByPatientID(patientId);
+        HashMap<String, String> user = dbController.getUserByParameter(
+                new HashMapBuilder<String, String>().put("patient_id", patientId.toString()).build());
+
         updateOrAddToEms.put("RequestID", "updateOrAddAssistant");
+        updateOrAddToEms.put("First name", user.get("first_name"));
+        updateOrAddToEms.put("Last name", user.get("last_name"));
+
+        // Get mediaction name
+        String medName = dbController.getMedicationByNum(
+                user.get("medication_num")).get(1).get("medication_name");
+
+        updateOrAddToEms.put("Medication Name",medName);
+        updateOrAddToEms.put("Dosage",user.get("dosage"));
+        updateOrAddToEms.put("Mobile phone number",user.get("mobile_phone_number"));
         updateOrAddToEms.put("patient_id",patientId);
         updateOrAddToEms.put("event_id", eventId);
         updateOrAddToEms.put("eta", eta);
         updateOrAddToEms.put("location_remark", locationRemark);
         updateOrAddToEms.put("x", x);
         updateOrAddToEms.put("y", y);
+
         //send
         ArrayList<String> sendTo = new ArrayList<>();
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
