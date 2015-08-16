@@ -804,7 +804,7 @@ public class EmerController_V1 implements IEmerController {
     public void patientCancelledEvent(HashMap<String,String> data){
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
-        String eventID = data.get("event_id");
+        String eventID = dbController.getEventByCmid(data.get("community_member_id"));
         //cancel with assistants and db
         cancelEvent(eventID, "CANCELLED");
         //cancel with EMS
