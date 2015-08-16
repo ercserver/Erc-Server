@@ -449,19 +449,19 @@ public class EmerController_V1 implements IEmerController {
         HashMap<String,String> updateOrAddToEms = new HashMap<String,String>();
         String patientCmid = dbController.getCmidByPatientID(patientId);
         HashMap<String, String> user = dbController.getUserByParameter(
-                new HashMapBuilder<String, String>().put("patient_id", patientId.toString()).build());
+                new HashMapBuilder<String, String>().put("P_communityMembers.community_member_id", patientCmid).build());
 
         updateOrAddToEms.put("RequestID", "updateOrAddAssistant");
-        updateOrAddToEms.put("First name", user.get("first_name"));
-        updateOrAddToEms.put("Last name", user.get("last_name"));
+        updateOrAddToEms.put("first_name", user.get("first_name"));
+        updateOrAddToEms.put("last_name", user.get("last_name"));
 
         // Get mediaction name
         String medName = dbController.getMedicationByNum(
                 user.get("medication_num")).get(1).get("medication_name");
 
-        updateOrAddToEms.put("Medication Name",medName);
-        updateOrAddToEms.put("Dosage",user.get("dosage"));
-        updateOrAddToEms.put("Mobile phone number",user.get("mobile_phone_number"));
+        updateOrAddToEms.put("medication_name",medName);
+        updateOrAddToEms.put("dosage",user.get("dosage"));
+        updateOrAddToEms.put("mobile_phone_number",user.get("mobile_phone_number"));
         updateOrAddToEms.put("patient_id",patientId);
         updateOrAddToEms.put("event_id", eventId);
         updateOrAddToEms.put("eta", eta);

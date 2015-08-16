@@ -426,6 +426,13 @@ public class RegVerify_V2 implements IRegVerify_model {
             res.put("RequestID", "accept");
             res.put("community_member_id", user.get("community_member_id"));
             res.put("status_name", user.get("status_name"));
+
+            int userType = dbController.getUserType(user.get("community_member_id"));
+            if (userType == 1 || userType == 3 ){
+                // Add the organization name and id
+                res.put("organization_id", user.get("organization_id"));
+                res.put("organization_description", user.get("organization_description"));
+            }
         }
         response.put(1, res);
         return response;
