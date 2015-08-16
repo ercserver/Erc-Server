@@ -203,6 +203,7 @@ public class RequestsHandler {
                 case I_AM_HERE: // from application
                     ec.arrivalToDestination(requestMap);
                     break;
+
                 case CONFIRM_MEDICATION:
                 case REJECT_MEDICATION:
                     ec.approveOrRejectMed(requestMap);
@@ -218,6 +219,9 @@ public class RequestsHandler {
                     break;
                 case UPDATE_PATIENT_AT_RISK:
                     ec.updatePatientStatus(requestMap);
+                    break;
+                case "cancelPatientAtRisk":
+                    ec.patientCancelledEvent(requestMap);
                     break;
 
 

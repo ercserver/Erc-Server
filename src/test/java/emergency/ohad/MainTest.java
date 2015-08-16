@@ -21,7 +21,8 @@ public class MainTest {
     public static void main(String[] args) {
       //  DbComm_V1 db = new DbComm_V1();
       //  db.closeEvent(1003, "FINISHED");
-      testNaor7("10017", "ff", "1077");
+      testNaor7("10017", "ff", "1076");
+        testNaor4("10042");
       /*  EmerController_V1 em = new EmerController_V1();
         em.receiveUsersAroundLocation(new HashMap<String, String>());*/
     //    DbController_V1 dbc = new DbController_V1();

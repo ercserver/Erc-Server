@@ -34,12 +34,16 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
                         .data("password", targets.get(i+2))
                         .data("JSONFile", objToSend.toString())
                         .ignoreContentType(true)
-                        .timeout(10 * 1000 * 10) // milliseconds
+
+                        .timeout(10 * 1000) // milliseconds
                         .method(Connection.Method.POST)
                         .execute();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        if (response == null){
+            return new JSONArray();
         }
         logger.log(Level.INFO, "exiting HTTP.sendResponse. Response = " + response.body());
 
