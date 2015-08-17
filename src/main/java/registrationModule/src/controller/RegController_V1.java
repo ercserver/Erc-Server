@@ -29,7 +29,7 @@ public class RegController_V1 implements IRegController {
     Logger logger = Logger.getLogger(this.getClass().getName());
 
     public RegController_V1(){
-        logger.log(Level.INFO, "In RegController_V1 ctor");
+
 
         ModelsFactory models = new ModelsFactory();
         commController = models.determineCommControllerVersion();
@@ -41,7 +41,7 @@ public class RegController_V1 implements IRegController {
     }
 
     public Object getRegDetails(HashMap<String,String> request) {
-        logger.log(Level.INFO, "In getRegDetails. params = " + request);
+        //logger.log(Level.INFO, "In getRegDetails. params = " + request);
         //generate data to send
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(Integer.parseInt(request.get("user_type")));
@@ -55,7 +55,7 @@ public class RegController_V1 implements IRegController {
     }
 
     public Object handleReg(HashMap<String, String> filledForm) {
-        logger.log(Level.INFO, "In handleReg. params = " + filledForm);
+        //logger.log(Level.INFO, "In handleReg. params = " + filledForm);
         //if the user exists (registration model decides how to determine that)
         String message = registrator.doesUserExist(filledForm);
         String responseCode = null;

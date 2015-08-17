@@ -81,7 +81,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     private HashMap<Integer, HashMap<String, String>>
     getRowsFromTable(HashMap<String, String> whereConditions, String tableName) {
-        logger.log(Level.INFO, "   In getRowsFromTable");
+
         String conditions = "";
 
         if (whereConditions == null) {
@@ -118,7 +118,7 @@ public class DbComm_V1 implements IDbComm_model {
 
             rs = stmt.executeQuery();
             HashMap<Integer, HashMap<String, String>> hash = resultSetToMap(rs);
-            logger.log(Level.INFO, "   exiting getRowsFromTable");
+
             return hash;
 
         }
@@ -606,7 +606,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     private HashMap<Integer,HashMap<String,String>> selectFromTable
             (String tableName, List<String> columns, HashMap<String,String> whereConds){
-        logger.log(Level.INFO, "   In selectFromTable");
+        //logger.log(Level.INFO, "   In selectFromTable");
         // Create the select clause
         String selectString;
         if (columns == null) { //Select *
@@ -671,7 +671,7 @@ public class DbComm_V1 implements IDbComm_model {
                 }
                 catch (Exception e) {e.printStackTrace();}
             }
-            logger.log(Level.INFO, "   Existing selectFromTable");
+            //logger.log(Level.INFO, "   Existing selectFromTable");
         }
         return null;
     }
@@ -691,7 +691,7 @@ public class DbComm_V1 implements IDbComm_model {
         // Create the sql query
         String sql = "UPDATE " + tableName + " SET " + columnToUpdate + "=? WHERE " + whereString;
         //System.out.println(sql);
-        logger.info("In updateTable. sql = " + sql);
+        //logger.info("In updateTable. sql = " + sql);
         try {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
@@ -1455,14 +1455,12 @@ public class DbComm_V1 implements IDbComm_model {
 
             // Check availabilty by hours and minutes
             Date currentTime = new Date();
-            sql += " AND hour_from<=? AND hour_to>? AND minutes_from<=? AND minutes_to>? ;";
+            sql += " AND hour_from<=? AND hour_to>?";//AND minutes_from<=? AND minutes_to>? ;";
 
             // Prepare the statement
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, currentTime.getHours());
             stmt.setInt(2, currentTime.getHours());
-            stmt.setInt(3, currentTime.getMinutes());
-            stmt.setInt(4, currentTime.getMinutes());
 
             rs = stmt.executeQuery();
             // Extract list
@@ -1487,6 +1485,7 @@ public class DbComm_V1 implements IDbComm_model {
                 }
                 catch (Exception e) {e.printStackTrace();}
             }
+            logger.info("cmids after filter = " + cmids);
             return cmids;
         }
 
@@ -1949,7 +1948,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     public void updateLogs(String eventId, String actionTypeName, String descr)
     {
-        logger.log(Level.INFO, "In updateLogs");
+        //logger.log(Level.INFO, "In updateLogs");
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("action_type_name", actionTypeName);
 

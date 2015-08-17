@@ -36,7 +36,7 @@ public class ModelsFactory {
 
         public ICommController determineCommControllerVersion(){
 
-            logger.log(Level.INFO, "In determineCommControllerVersion");
+
             switch (commControllerVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
@@ -49,7 +49,7 @@ public class ModelsFactory {
         }
 
         public IDbController determineDbControllerVersion(){
-            logger.log(Level.INFO, "In determineDbControllerVersion ctor");
+
             switch (dbControllerVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {
@@ -61,7 +61,7 @@ public class ModelsFactory {
             }
         }
         public IRegRequest_model determineRegRequestVersion(){
-            logger.log(Level.INFO, "In determineRegRequestVersion");
+
             switch (regRequestVersion) {
                 //Communicate the DB to retrieve the data
                 case 1: {

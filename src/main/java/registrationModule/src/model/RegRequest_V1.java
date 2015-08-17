@@ -21,10 +21,10 @@ public class RegRequest_V1 implements IRegRequest_model {
 
     public RegRequest_V1()
     {
-        logger.log(Level.INFO, "In RegRequest_V1 ctor");
+        //logger.log(Level.INFO, "In RegRequest_V1 ctor");
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
-        logger.log(Level.INFO, "exiting RegRequest_V1 ctor");
+        //logger.log(Level.INFO, "exiting RegRequest_V1 ctor");
     }
 
     public String doesUserExist(HashMap<String, String> filledForm) {

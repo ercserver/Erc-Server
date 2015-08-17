@@ -4,6 +4,7 @@ import DatabaseModule.src.controller.DbController_V1;
 import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
+import EmergencyModule.src.model.EmerFilter_V1;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
 import Utilities.HashMapBuilder;
@@ -11,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import registrationModule.src.controller.RegController_V1;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -21,10 +23,8 @@ public class MainTest {
     public static void main(String[] args) {
       //  DbComm_V1 db = new DbComm_V1();
       //  db.closeEvent(1003, "FINISHED");
-      testNaor7("10017", "ff", "1076");
-        testNaor4("10042");
-      /*  EmerController_V1 em = new EmerController_V1();
-        em.receiveUsersAroundLocation(new HashMap<String, String>());*/
+
+
     //    DbController_V1 dbc = new DbController_V1();
     //    System.out.println(dbc.getEventDetails("1032"));
        /* EmerController_V1 ec = new EmerController_V1();

@@ -25,10 +25,10 @@ public class AssistantFunctions {
 
     public AssistantFunctions()
     {
-        logger.log(Level.INFO, "In AssistantFunctions ctor");
+
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
-        logger.log(Level.INFO, "exiting AssistantFunctions ctor");
+
     }
 
     public boolean checkCmidAndPassword(String password, int cmid)

@@ -19,10 +19,10 @@ public class PatientDetails {
 
     public PatientDetails()
     {
-        logger.log(Level.INFO, "In PatientDetails ctor");
+
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
-        logger.log(Level.INFO, "Exiting PatientDetails");
+
     }
 
     public String getStatus(HashMap<String, String> details)

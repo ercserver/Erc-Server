@@ -5,6 +5,9 @@ import DatabaseModule.src.model.DbComm_V1;
 import registrationModule.src.controller.RegController_V1;
 import registrationModule.src.model.RegVerify_V2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by ohad on 10/6/2015.
  */
@@ -20,6 +23,7 @@ public class RegFieldsTest {
         DbController_V1 dbController = new DbController_V1();
         DbComm_V1 db = new DbComm_V1();
         RegVerify_V2 rv = new RegVerify_V2();
+        db.filterAvailableMembers(new ArrayList(Arrays.asList(10042)), "10020");
         //System.out.println(rc.getWaitingForDoctor(1083));
 
         /*String cmid = "1081";

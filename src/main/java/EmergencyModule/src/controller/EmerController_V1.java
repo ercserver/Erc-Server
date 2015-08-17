@@ -192,11 +192,15 @@ public class EmerController_V1 implements IEmerController {
         dbController.updateEventDetails(eventID, state, region_type, radius, location_remark);
         //add the radius to the EMS
         boolean isEmsInEvent = (!(dbController.getEventDetails(eventID)).get("ems_member_id").equals("null"));
-        if (isEmsInEvent) {
+        logger.info("ems_member_id != null : " + isEmsInEvent);
+       //TODO: Check with the EMS if they support those lines
+       /* if (isEmsInEvent) {
             updateRadiusToEMS(radius, eventID);
-        }
+        }*/
         //filter
+
         HashMap<String,String> filteredData = emergencyFilter.filterUsersByMatch(data,eventID,region_type,radius);
+        logger.info("After filter");
         /*get all of the users to which a request was sent for the event
         and did not reject or cancelled (either approved or not yet responded)*/
         HashMap<String,String> allHelpersRequested = turnIntListIntoHashMap(dbController.getAllAssistantsByEventId(eventIDInted, -1));
@@ -277,6 +281,7 @@ public class EmerController_V1 implements IEmerController {
     }
 
     private void updateRadiusToEMS(String radius,String eventID) {
+        logger.info("radius = " + radius);
         HashMap<String,String> data = new HashMap<>();
         data.put("event_id",eventID);
         data.put("radius",radius);
