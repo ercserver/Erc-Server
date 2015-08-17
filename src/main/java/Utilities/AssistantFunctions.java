@@ -37,7 +37,8 @@ public class AssistantFunctions {
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("P_CommunityMembers.community_member_id", Integer.toString(cmid));
         conds.put("MembersLoginDetails.password", password);
-        return(null != dbController.getUserByParameter(conds));
+        HashMap<String,String> exists = dbController.getUserByParameter(conds);
+        return(null != exists);
     }
 
     public ArrayList<String> addReceiver(String receiver,ArrayList<String> sendTo) {

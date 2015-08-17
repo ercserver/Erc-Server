@@ -1466,8 +1466,8 @@ public class DbComm_V1 implements IDbComm_model {
             // Extract list
             while (rs.next()) {
                 int i = rs.getInt("community_member_id");
-                // TODO: check this method
-                //if(doesMedicineMatch(Integer.toString(i), eventId))
+
+                if(doesMedicineMatch(Integer.toString(i), eventId))
                     cmids.add(i);
             }
 

@@ -459,8 +459,6 @@ public class EmerController_V1 implements IEmerController {
         //generate
         HashMap<String,String> updateOrAddToEms = new HashMap<String,String>();
         String patientCmid = dbController.getCmidByPatientID(patientId);
-        //HashMap<String,String> conds = new HashMap<String,String>();
-        //HashMap<String, String> user
         HashMap<String, String> user = dbController.getUserByParameter(
                 new HashMapBuilder<String, String>().put("P_communityMembers.community_member_id", patientCmid).build());
 
@@ -485,7 +483,8 @@ public class EmerController_V1 implements IEmerController {
         //send
         ArrayList<String> sendTo = new ArrayList<>();
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
-        initiatedOneObjectRequest(updateOrAddToEms, sendTo);
+        //todo - bring back
+   //     initiatedOneObjectRequest(updateOrAddToEms, sendTo);
     }
 
     @Override
@@ -716,7 +715,7 @@ public class EmerController_V1 implements IEmerController {
         data.put("RequestID", "newInfo");
         data.put("message",message);
         // Sends message to apps
-        if(null != regIds)
+        if(null != regIds && !regIds.isEmpty())
         {
             HashMap<Integer,HashMap<String,String>> response = new HashMap<Integer, HashMap<String,String>>();
             response.put(1, data);

@@ -30,21 +30,16 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
             try {
 
                 response = Jsoup.connect(targets.get(i))
-                        .data("username", targets.get(i + 1))
-                        .data("password", targets.get(i + 2))
+                        .data("username", targets.get(i+1))
+                        .data("password", targets.get(i+2))
                         .data("JSONFile", objToSend.toString())
                         .ignoreContentType(true)
-                        .userAgent("Mozilla")
-                        .timeout(20 * 1000) // milliseconds
+                        .timeout(10 * 1000 * 10) // milliseconds
                         .method(Connection.Method.POST)
                         .execute();
-
-            } catch (Exception e) {
-                logger.info(e.getMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
-        if (response == null){
-            return new JSONArray();
         }
         logger.log(Level.INFO, "exiting HTTP.sendResponse. Response = " + response.body());
 

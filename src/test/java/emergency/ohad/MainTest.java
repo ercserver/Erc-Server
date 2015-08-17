@@ -1,10 +1,10 @@
 package emergency.ohad;
 
+import DatabaseModule.src.api.IDbController;
 import DatabaseModule.src.controller.DbController_V1;
 import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
-import EmergencyModule.src.model.EmerFilter_V1;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
 import Utilities.HashMapBuilder;
@@ -12,7 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import registrationModule.src.controller.RegController_V1;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -21,10 +21,17 @@ import java.util.HashMap;
 public class MainTest {
 
     public static void main(String[] args) {
+
+        ArrayList<Integer> cmidList = new ArrayList<Integer>();
+        cmidList.add(10042);
+        String event_id = "1125";
+        testNaor9(cmidList,event_id);
+
       //  DbComm_V1 db = new DbComm_V1();
       //  db.closeEvent(1003, "FINISHED");
-
-
+//      testNaor7("10017", "ff", "1077");
+      /*  EmerController_V1 em = new EmerController_V1();
+        em.receiveUsersAroundLocation(new HashMap<String, String>());*/
     //    DbController_V1 dbc = new DbController_V1();
     //    System.out.println(dbc.getEventDetails("1032"));
        /* EmerController_V1 ec = new EmerController_V1();
@@ -34,7 +41,7 @@ public class MainTest {
     public static void testNaor1() {
         RegController_V1 rc = new RegController_V1();
         HashMap<String,String> fakeDetails = new HashMap<String,String>();
-        fakeDetails.put("reg_id","111111");
+        fakeDetails.put("reg_id", "111111");
         fakeDetails.put("user_type", "0");
         JSONArray objToSend = (JSONArray) rc.getRegDetails(fakeDetails);
         System.out.println(objToSend.toString());
@@ -158,5 +165,15 @@ public class MainTest {
 
         IEmerController controller = new EmerController_V1();
         controller.assistantRespondsToApproach(fakeDetails);
+    }
+
+    public static void testNaor9(ArrayList<Integer> cmidList, String event_id) {
+
+
+        IDbController db = new DbController_V1();
+        ArrayList<Integer> response = db.filterAvailableMembers(cmidList,event_id);
+        for(Integer i : response){
+            System.out.println(i.toString() + "\n");
+        }
     }
 }
