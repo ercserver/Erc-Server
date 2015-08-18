@@ -2046,7 +2046,7 @@ public class DbComm_V1 implements IDbComm_model {
                     "INNER JOIN M_BrandNames ON M_BrandNames.medication_num=P_Prescriptions.medication_num " +
                     "INNER JOIN M_Indications ON M_BrandNames.brand_name_id=M_Indications.brand_name_id " +
                     "INNER JOIN O_EmergencyEvents ON O_EmergencyEvents.medical_condition_id=M_Indications.medical_condition_id " +
-                    " WHERE P_Patients.community_member_id=" + cmid + " AND O_EmergencyEvents.event_id=" + eventId);
+                    "WHERE P_Patients.community_member_id=" + cmid + " AND O_EmergencyEvents.event_id=" + eventId);
             return rs.next();
         }
         // There was a fault with the connection to the server or with SQL

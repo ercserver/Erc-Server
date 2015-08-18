@@ -1,5 +1,6 @@
 package emergency.ohad;
 
+import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
 import DatabaseModule.src.controller.DbController_V1;
 import DatabaseModule.src.model.DbComm_V1;
@@ -8,6 +9,7 @@ import EmergencyModule.src.controller.EmerController_V1;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
 import Utilities.HashMapBuilder;
+import Utilities.ModelsFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import registrationModule.src.controller.RegController_V1;
@@ -21,12 +23,13 @@ import java.util.HashMap;
 public class MainTest {
 
     public static void main(String[] args) {
-
+/*
         ArrayList<Integer> cmidList = new ArrayList<Integer>();
         cmidList.add(10042);
         String event_id = "1125";
         testNaor9(cmidList,event_id);
-
+*/
+        testNaor10("10042","1127");
       //  DbComm_V1 db = new DbComm_V1();
       //  db.closeEvent(1003, "FINISHED");
 //      testNaor7("10017", "ff", "1077");
@@ -175,5 +178,38 @@ public class MainTest {
         for(Integer i : response){
             System.out.println(i.toString() + "\n");
         }
+    }
+
+    //approach assistant for help
+    public static void testNaor10(String cmid,String event_id) {
+        IDbController db = new DbController_V1();
+        HashMap<String, String> fakeDetails = new HashMap<String, String>();
+        ModelsFactory models = new ModelsFactory();
+        ICommController commController = models.determineCommControllerVersion();
+        //populate date
+        fakeDetails.put("eta_by_car", "1");
+        fakeDetails.put("eta_by_foot", "2");
+        fakeDetails.put("location_remark", "Sitvanit Street 30, Yavne, Israel");
+        fakeDetails.put("RequestID", "helpAssist");
+        fakeDetails.put("event_id", event_id);
+        fakeDetails.put("dosage", "6.0");
+        fakeDetails.put("medication_name", "akamol4");
+        fakeDetails.put("subRequest", "cmid");
+        fakeDetails.put("x", "31.879038");
+        fakeDetails.put("y", "34.72952");
+        //TODO - if she really keeps insisting, just give it to her... =\
+        //fakeDetails.put("community_member_id", cmid);
+
+
+        //add reg_id of the relevant cmid to the list to send and execute sending
+        ArrayList<String> target = new ArrayList<String>();
+        HashMap<Integer,HashMap<String,String>> regId = db.getRegIDsOfUser(Integer.parseInt(cmid));
+        target.add(regId.get(1).get("reg_id"));
+        HashMap<Integer, HashMap<String, String>> request = new HashMap<Integer, HashMap<String, String>>();
+        request.put(1, fakeDetails);
+        commController.setCommToUsers(request, target, false);
+        commController.sendResponse();
+
+
     }
 }
