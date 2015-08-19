@@ -75,9 +75,9 @@ public class MaorTests {
         h.put("message", "blablabla");
         controller.updatePatientStatus(h);*/
 
-        h.put("community_member_id", "10005");
+        /*h.put("community_member_id", "10005");
         h.put("password", "a1234");
-        controller.patientCancelledEvent(h);
+        controller.patientCancelledEvent(h);*/
 
        /*h.put("community_member_id", "10042");
         h.put("password", "a1234");

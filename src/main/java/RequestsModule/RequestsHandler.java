@@ -32,6 +32,7 @@ public class RequestsHandler {
     private static final String EMSID = "EMSId";
     private static final String ASSISTANT_DETAILS = "AssistantDetails";
     private static final String UPDATE_PATIENT_AT_RISK = "updatePatientAtRisk";
+    private static final String CANCEL_ARRIVAL = "cancelArrival";
     private static final String GAVE_MEDICATION = "gaveMedication";
     private final String REQ_ID = "RequestID"; // This is the requests identifier's field name
 
@@ -219,6 +220,9 @@ public class RequestsHandler {
                     break;
                 case UPDATE_PATIENT_AT_RISK:
                     ec.updatePatientStatus(requestMap);
+                    break;
+                case CANCEL_ARRIVAL:
+                    ec.assistantCancelsArrival(requestMap);
                     break;
                 case "cancelPatientAtRisk":
                     ec.patientCancelledEvent(requestMap);
