@@ -23,7 +23,7 @@ public class MaorTests {
         h.put("radius", "5");
         HashMap<String,String> h1 = new HashMap<String,String>();
         h1.put("subRequest", "cmid");
-        h1.put("community_member_id", "10042");
+        h1.put("community_member_id", "10019");
         h1.put("location_remark", "Sitvanit Street 17-31, Yavne, Israel");
         h1.put("eta_by_car", "1");
         h1.put("eta_by_foot", "1");
@@ -42,15 +42,16 @@ public class MaorTests {
         h.put("y", "31.878638");
         controller.receiveArrivalTime(h);*/
 
-        /*h.put("community_member_id", "10042");
-        h.put("password", "a1234");
+        /*h.put("community_member_id", "10019");
+        h.put("password", "ff");
         h.put("event_id", "1027");
         h.put("RequestID", "arrivalAcceptionMounted");
         h.put("eta_by_car", "1");
         h.put("eta_by_foot", "1");
         h.put("x", "34.729817");
         h.put("y", "31.879638");
-        h.put("reg_id","APA91bHIuXMXn2Y4uermQmcpmJSqkHGGjo38UloJDqGt2jBB6w1Ok79B7FZXgRiqrmwhbf6gAFnMYu4JllAeFL7RIEyGB44E_HNfMgja9rR2piOFZfdCOXtSycFOlyEp6nkrshPw33Sq");
+       // h.put("reg_id","APA91bHIuXMXn2Y4uermQmcpmJSqkHGGjo38UloJDqGt2jBB6w1Ok79B7FZXgRiqrmwhbf6gAFnMYu4JllAeFL7RIEyGB44E_HNfMgja9rR2piOFZfdCOXtSycFOlyEp6nkrshPw33Sq");
+        h.put("reg_id","APA91bEP314fADLSbwAt6lHdRm3G9TUl5vHxjE1JJi2kRzjPUo0ODqkG8xdTkV8YQ0OIv-mP2eCRFpaykZLelWSTBBFEzdWVuMAFqcfpoKi_064mvSxq6o1sXVz1FoZQOr-Pcu8ofnC2");
         controller.assistantRespondsToApproach(h);*/
 
         /*h.put("password", "a123");
@@ -64,18 +65,19 @@ public class MaorTests {
         h.put("event_id", "1027");
         controller.assistantCancelsArrival(h);*/
 
-       /* h.put("password", "a1234");
-        h.put("community_member_id", "10042");
+        /*h.put("password", "ff");
+        h.put("community_member_id", "10019");
         h.put("event_id", "1027");
+        h.put("reg_id","APA91bEP314fADLSbwAt6lHdRm3G9TUl5vHxjE1JJi2kRzjPUo0ODqkG8xdTkV8YQ0OIv-mP2eCRFpaykZLelWSTBBFEzdWVuMAFqcfpoKi_064mvSxq6o1sXVz1FoZQOr-Pcu8ofnC2");
         controller.arrivalToDestination(h);*/
 
-        h.put("community_member_id", "10005");
+        /*h.put("community_member_id", "10005");
         h.put("message", "blablabla");
-        controller.updatePatientStatus(h);
+        controller.updatePatientStatus(h);*/
 
-        /*h.put("community_member_id", "10042");
+        h.put("community_member_id", "10005");
         h.put("password", "a1234");
-        controller.patientCancelledEvent(h);*/
+        controller.patientCancelledEvent(h);
 
        /*h.put("community_member_id", "10042");
         h.put("password", "a1234");
@@ -86,7 +88,7 @@ public class MaorTests {
         h.put("event_id", "1027");
         h.put("community_member_id", "10010");
         h.put("RequestID", "confirmMedication");
-        h.put("patient_id", "10019");
+        h.put("patient_id", "10010");
         controller.approveOrRejectMed(h);*/
     }
 

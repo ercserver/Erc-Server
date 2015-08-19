@@ -359,7 +359,8 @@ public class EmerController_V1 implements IEmerController {
                 res.put("message", message);
             }
             // We don't want to send this assistant-Sends proper message to app
-            else {
+            else
+            {
                 updates.put("response_type", "4");
                 res.put("RequestID", "noNeed");
                 String message = "We have enough assistants that closer than you and confirmed their arrival.";
@@ -798,7 +799,7 @@ public class EmerController_V1 implements IEmerController {
         //get all helpers and cancel them
         List<Integer> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),-1);
         HashMap<String,String> rejectRequest = turnIntListIntoHashMap(eventHelpers);
-       // rejectAssistants(rejectRequest, eventID, "Event is over");
+        rejectAssistants(rejectRequest, eventID, "Event is over");
         //close the event within the DB
         dbController.closeEvent(Integer.parseInt(eventID), status);
         //Hanle event termination logs
