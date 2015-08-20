@@ -34,6 +34,7 @@ public class RequestsHandler {
     private static final String UPDATE_PATIENT_AT_RISK = "updatePatientAtRisk";
     private static final String CANCEL_ARRIVAL = "cancelArrival";
     private static final String GAVE_MEDICATION = "gaveMedication";
+    private static final String CANCEL_PATIENT_AT_RISK = "cancelPatientAtRisk";
     private final String REQ_ID = "RequestID"; // This is the requests identifier's field name
 
     /*** Registration Process Requests Codes ***/
@@ -224,7 +225,7 @@ public class RequestsHandler {
                 case CANCEL_ARRIVAL:
                     ec.assistantCancelsArrival(requestMap);
                     break;
-                case "cancelPatientAtRisk":
+                case CANCEL_PATIENT_AT_RISK:
                     ec.patientCancelledEvent(requestMap);
                     break;
 

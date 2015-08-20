@@ -484,8 +484,7 @@ public class EmerController_V1 implements IEmerController {
         //send
         ArrayList<String> sendTo = new ArrayList<>();
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
-        //todo - bring back
-   //     initiatedOneObjectRequest(updateOrAddToEms, sendTo);
+        initiatedOneObjectRequest(updateOrAddToEms, sendTo);
     }
 
     @Override
@@ -694,10 +693,10 @@ public class EmerController_V1 implements IEmerController {
 
     @Override
     public void updatePatientStatus(HashMap<String, String> data) {
-//        if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
-//        {
-//            return;
-//        }
+       if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
+        {
+            return;
+        }
         String eventId = dbController.getEventByCmid(data.get("community_member_id"));
         emergencyLogger.handleUpdatePatientStatus(eventId, data.get("community_member_id"));
         dbController.updatePatientRemarks(data.get("community_member_id"), eventId, data.get("message"));

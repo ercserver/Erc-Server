@@ -29,7 +29,7 @@ public class MainTest {
         String event_id = "1125";
         testNaor9(cmidList,event_id);
 */
-        testNaor10("10042","1127");
+        testNaor6("10042");
       //  DbComm_V1 db = new DbComm_V1();
       //  db.closeEvent(1003, "FINISHED");
 //      testNaor7("10017", "ff", "1077");
@@ -146,6 +146,7 @@ public class MainTest {
 
         fakeDetails.put("community_member_id", cmid);
         fakeDetails.put("message", "TEST MESSAGE");
+        fakeDetails.put("password", "a1234");
 
         IEmerController controller = new EmerController_V1();
         controller.updatePatientStatus(fakeDetails);
