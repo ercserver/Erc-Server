@@ -41,7 +41,8 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
                 e.printStackTrace();
             }
         }
-        logger.log(Level.INFO, "exiting HTTP.sendResponse. Response = " + response.body());
+        logger.log(Level.INFO, "exiting HTTP.sendResponse. Response = " + response.body() +
+                "\nFrom: " + targets.get(0));
 
         try {
             return new JSONArray(response.body());
