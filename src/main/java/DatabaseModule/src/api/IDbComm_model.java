@@ -110,7 +110,7 @@ public interface IDbComm_model {
 
     String getRegIDOfPatient(String patientId);
 
-    void removeAssistantFromEvent(String eventId, String patient_id);
+    void removeAssistantFromEvent(String eventId, String patient_id, boolean assistantCancelled);
 
     void updateEventDetails(String eventId, String state, String regType, String radiud, String loc);
 

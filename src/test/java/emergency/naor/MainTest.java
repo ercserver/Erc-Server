@@ -1,24 +1,21 @@
-package emergency.ohad;
+package emergency.naor;
 
 import CommunicationModule.src.api.ICommController;
 import DatabaseModule.src.api.IDbController;
 import DatabaseModule.src.controller.DbController_V1;
-import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
-import Utilities.HashMapBuilder;
 import Utilities.ModelsFactory;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import registrationModule.src.controller.RegController_V1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by ohad on 20/6/2015.
+ * Created by naor on 20/6/2015.
  */
 public class MainTest {
 

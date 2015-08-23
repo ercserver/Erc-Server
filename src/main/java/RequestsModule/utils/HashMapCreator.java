@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /**
- * Created by ohad on 5/5/2015.
+ * Created by naor on 5/5/2015.
  */
 public class HashMapCreator {
     private Logger logger = Logger.getLogger(this.getClass().getName());

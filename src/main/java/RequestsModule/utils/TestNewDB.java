@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by ohad on
+ * Created by naor on
  * 27/4/2015.
  */
 public class TestNewDB {

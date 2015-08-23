@@ -6,7 +6,7 @@ import java.util.logging.Level;
 
 */
 /**
- * Created by ohad on 9/6/2015.
+ * Created by naor on 9/6/2015.
  *//*
 
 public class ErcLogger{

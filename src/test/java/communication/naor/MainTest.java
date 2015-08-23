@@ -1,4 +1,4 @@
-package communication.ohad;
+package communication.naor;
 
 import CommunicationModule.src.model.CommOfficial_V1;
 import CommunicationModule.src.model.CommToMail_V1;
@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by ohad on 10/6/2015.
+ * Created by naor on 10/6/2015.
  */
 public class MainTest {
 

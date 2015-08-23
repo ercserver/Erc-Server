@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by ohad on 1/7/2015.
+ * Created by naor on 1/7/2015.
  */
 public class TestGCM {
     public void gcmTest(){

@@ -3,7 +3,7 @@ package Utilities;
 import java.util.HashMap;
 
 /**
- * Created by ohad on 21/5/2015.
+ * Created by naor on 21/5/2015.
  */
 /* This is meant to be a regular hashmap with one liners methods*/
 public class HashMapBuilder<K, T> {

@@ -1,12 +1,11 @@
-package db.ohad;
+package db.naor;
 
 import java.sql.*;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by ohad on 29/5/2015.
+ * Created by naor on 29/5/2015.
  */
 public class MainTest {
     static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
