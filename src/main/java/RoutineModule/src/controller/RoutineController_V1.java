@@ -71,7 +71,8 @@ public class RoutineController_V1 implements IRoutineController {
         //Todo-maby need to insert requestID....
         ArrayList<String> target = new ArrayList<String>();
         // Request update of doctor/ems
-        if(data.get("reg_id").equals("0"))
+        String type = data.get("user_type");
+        if(type.equals("2") ||type.equals("3"))
         {
             commController.setCommToUsers(fields, null, false);
         }

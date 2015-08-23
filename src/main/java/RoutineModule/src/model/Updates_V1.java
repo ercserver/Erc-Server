@@ -109,17 +109,6 @@ public class Updates_V1 implements IUpdates_model {
         Date d2 = new Date(lastUpdate);
         int timeToRefresh = Integer.parseInt(obj.get("refresh_time"));
         return compareDate(d1,d2,timeToRefresh);
-
-        //timeRef.setTime(date);
-        //timeRef.add(Calendar.DAY_OF_YEAR, new Integer(timeToRefresh));
-
-        //Calendar currentTime = Calendar.getInstance();
-        //if last update time + refresh_time > current time
-        //then we need to refresh
-        //if(currentTime.before(timeRef))
-        //        return true;
-        //else
-        //    return false;
     }
 
     @Override

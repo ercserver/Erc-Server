@@ -29,11 +29,12 @@ public class MainTest {
         String event_id = "1125";
         testNaor9(cmidList,event_id);
 */
-       // testNaor6("10042");
+        testNaor10("10042","1127");
       //  DbComm_V1 db = new DbComm_V1();
       //  db.closeEvent(1003, "FINISHED");
 //      testNaor7("10017", "ff", "1077");
-      // EmerController_V1 em = new EmerController_V1();
+      /*  EmerController_V1 em = new EmerController_V1();
+        em.receiveUsersAroundLocation(new HashMap<String, String>());*/
     //    DbController_V1 dbc = new DbController_V1();
     //    System.out.println(dbc.getEventDetails("1032"));
        /* EmerController_V1 ec = new EmerController_V1();
@@ -145,7 +146,6 @@ public class MainTest {
 
         fakeDetails.put("community_member_id", cmid);
         fakeDetails.put("message", "TEST MESSAGE");
-        fakeDetails.put("password", "a1234");
 
         IEmerController controller = new EmerController_V1();
         controller.updatePatientStatus(fakeDetails);

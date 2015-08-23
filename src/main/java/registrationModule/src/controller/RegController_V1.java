@@ -104,7 +104,7 @@ public class RegController_V1 implements IRegController {
                 commAuthMethod.setCommOfficial(data,authMethod);
                 //Communicate authorization (email/sms/...)
                 commAuthMethod.sendMessage();
-            }
+                }
         }
         HashMap<Integer,HashMap<String,String>> dataToSend = buildResponeWithOnlyRequestID(message, responseCode);
         //determine how to send the data. Initiated communication - so use "false"
@@ -225,16 +225,6 @@ public class RegController_V1 implements IRegController {
         return null;
     }
 
-   /* private void sendMailD(String emailAddress, String emailMessage, String subject) {
-        //we  dont need state here
-        int authMethod = dbController.getAuthenticationMethod("'israel'");
-        HashMap<String, String> mail =  verification.generateDataForAuthD(emailAddress, emailMessage, subject, authMethod);
-        ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
-        commAuthMethod.setCommOfficial(mail,authMethod);
-        //Communicate authorization (email/sms/...)
-        commAuthMethod.sendMessage();
-    }*/
-
     private void changeStatusToVerifyDetailAndSendToApp(int cmid, String code,
                                                         ArrayList<String> target,
                                                         HashMap<String, String> data) {
@@ -276,20 +266,6 @@ public class RegController_V1 implements IRegController {
     //-----------------------------------------------------------------------
     //confirmtion or rejection by doctor
     public Object responseByDoctor(HashMap<String, String> data, boolean isConfirmation) {
-        /*
-        {
-            community_member_id : the_doctor_cmid,
-            password : pwd,
-            reg_id : reg_id,
-            patient_id : the_patient_id,
-
-            // Optional - in case of rejecting patient
-                reason : reason_id,
-                explanation : string_of_explanation
-
-            //
-         }
-         */
         HashMap<Integer,HashMap<String,String>> response;
         String reason = null;
         String explanation = null;
@@ -330,7 +306,7 @@ public class RegController_V1 implements IRegController {
                 commController.setCommToUsers(response, target, false);
                 commController.sendResponse();
             }
-        }   //verification.responeDoctor(cmid, reason,regid);
+        }
         return new JSONArray().put(new JSONObject().put("status", "ok"));
     }
 //--------------------------------------------------------------
@@ -363,37 +339,6 @@ public class RegController_V1 implements IRegController {
         return commController.sendResponse();
     }
 
-/*
-    public Object responeToDoctorIfHeAccept(HashMap<String,String> details)
-    {
-        HashMap<Integer,HashMap<String,String>> response = new
-                HashMap<Integer,HashMap<String,String>>();
-
-        String email = details.get("email_address");
-        //reject
-        int type = verification.checkIfDoctorIsaccept(email);
-        if (0 == type) {
-            int cmid = Integer.parseInt(details.get("community_member_id"));
-            dbController.deleteUser(cmid);
-            response = buildRejectMessage(cmid, "reject_by_authentication", explanation);
-            commController.setCommToUsers(response, null, false);
-        }
-        //accept
-        if (1 == type)
-        {
-            response.get(1).put("RequestID", "active");
-            commController.setCommToUsers(response, null, false);
-        }
-        //in other status
-        else
-        {
-            // is equal to 2
-            response.get(1).put("RequestID", "wait");
-            commController.setCommToUsers(response, null, false);
-        }
-        return commController.sendResponse();
-    }
-*/
 
 //-------------------------------------------
 
@@ -448,72 +393,6 @@ public class RegController_V1 implements IRegController {
         return commController.sendResponse();
     }
 
-
-    /*
-    public Object resendAuth(HashMap<String, String> data) {
-
-        int cmid = Integer.parseInt(data.get("community_member_id"));
-        String password = data.get("password");
-        String regid = data.get("reg_id");
-        String requestID = null;
-        String message = null;
-        //if cannot verify cmid and password - return null
-        if(checkCmidAndPassword(password, cmid)) {
-            return null;
-        }
-        //get auth method
-        String state = data.get("state");
-        int authMethod = dbController.getAuthenticationMethod("'" + state + "'");
-        //get all useer details
-        HashMap<String,String> details = verification.getUserByCmid(cmid);
-        switch(authMethod) {
-            case 0: {
-                String email = data.get("email_address");
-                //verify mail doesn't already exist in the system
-                if (!verification.checkCondForResendMail(details, email, cmid)) {
-                    requestID = "rejectResend";
-                    message = "Invalid email! Please try again...";
-                    break;
-                }
-                //if the user's email in the db isn't the same as specified in the request
-                if (!details.get("email_address").equals(email)) {
-                    //change in the db
-                    updateUserMail(email, cmid);
-                    //change in the curr func
-                    details.put("email_address", email);
-                }
-                break;
-            }
-            case 1: {
-                //String phone = data.get("phone_number");
-                break;
-            }
-            default: {
-                //throw some nasty error?
-                return null;
-            }
-        }
-
-        //get and send the auth mail/sms/...
-        if  (null == requestID) {
-            details.put("Message", generateMessageForAuth(Integer.parseInt(data.get("community_member_id")),data.get("Password")));
-            details.put("Subject","Resend email:\n\nConfirm your email for Socmed App");
-            HashMap<String, String> dataForAuth = verification.generateDataForAuth(details, authMethod);
-            ICommController commAuthMethod = new ModelsFactory().determineCommControllerVersion();
-            commAuthMethod.setCommOfficial(dataForAuth, authMethod);
-            commAuthMethod.sendMessage();
-            requestID = "waitResend";
-            message = "Resend successful!";
-        }
-
-        //determine who to send to
-        ArrayList<String> target = new ArrayList<String>();
-        target.add(regid);
-        //send
-        commController.setCommToUsers(buildResponeWithOnlyRequestID(message, requestID), target, false);
-        return commController.sendResponse();
-    }
-*/
     //TODO- Not for prototype for future releases
     private Object resendSMS(HashMap<String, String> data) {
         return null;
