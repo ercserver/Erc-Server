@@ -795,8 +795,11 @@ public class EmerController_V1 implements IEmerController {
 
     //called from EMSTakeover or patientCancelledEvent
     private void cancelEvent(String eventID,String status) {
-        //get all helpers and cancel them
-        List<Integer> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),1);
+        //get all helpers that have yet to respond
+        List<Integer> eventHelpers = dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),0);
+        //get all helpers that are on the way
+        eventHelpers.addAll(dbController.getAllAssistantsByEventId(Integer.parseInt(eventID),1));
+        //Send case is resolved to them
         HashMap<String,String> rejectRequest = turnIntListIntoHashMap(eventHelpers);
         rejectAssistants(rejectRequest, eventID, "Event is over");
         //close the event within the DB
