@@ -38,7 +38,7 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
                         .method(Connection.Method.POST)
                         .execute();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.WARNING, "Exception: ", e);
             }
         }
         logger.log(Level.INFO, "exiting HTTP.sendResponse. Response = " + response.body() +
@@ -47,8 +47,8 @@ public class InitiatedHTTPCommunication_V1 extends CommToUsers_V1 {
         try {
             return new JSONArray(response.body());
         }catch (Exception ex){
-
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
+            //logger.log(Level.WARNING, "Exception: ", ex);
         }
         return new JSONArray();
 

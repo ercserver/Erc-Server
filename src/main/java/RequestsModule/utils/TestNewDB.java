@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by ohad on
@@ -19,7 +21,7 @@ public class TestNewDB {
 
     final static String JDBC_DRIVER = ErcConfiguration.JDBC_DRIVER;
     final static String DB_URL = "jdbc:sqlserver://localhost\\sqlexpress";
-
+    private static Logger logger = Logger.getLogger(TestNewDB.class.getName());
 
     public static void test(String url) throws Exception {
         try
@@ -44,7 +46,7 @@ public class TestNewDB {
 
 
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();}
+            logger.log(Level.WARNING, "Exception: ", e);}
 
     }
 }

@@ -7,12 +7,14 @@ import com.google.android.gcm.server.Sender;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by User on 21/04/2015.
  */
 public class GcmBroadcast extends javax.servlet.http.HttpServlet {
-
+    private Logger logger = Logger.getLogger(this.getClass().getName());
     // The SENDER_ID here is the "Browser Key" that was generated when I
     // created the API keys for my Google APIs project.
     private  final String SENDER_ID = "AIzaSyBPyu_l_UJGfpvouNUcjwyyjm0RwiNtuYY";//"AIzaSyBJK4AOF4swqz5zE_5mNnVDm9CCxUJ1apQ";
@@ -48,7 +50,7 @@ public class GcmBroadcast extends javax.servlet.http.HttpServlet {
             userMessage = request.getParameter("Message");
             collapseKey = request.getParameter("CollapseKey");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
             return;
         }
 
@@ -87,7 +89,7 @@ public class GcmBroadcast extends javax.servlet.http.HttpServlet {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
 
         // We'll pass the CollapseKey and Message values back to index.jsp, only so

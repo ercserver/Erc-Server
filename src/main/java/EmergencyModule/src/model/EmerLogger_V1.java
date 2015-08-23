@@ -128,15 +128,15 @@ public class EmerLogger_V1 implements IEmerLogger_model {
     }
 
     @Override
-    public void updateAssistantRemovalFromEvent(String patientId, String eventId, int inform) {
+    public void updateAssistantRemovalFromEvent(String cmid, String eventId, int inform) {
         //Document an assistant cancellation
         if (0 == inform) {
-            dbController.updateLogs(eventId, "Assistant has cancelled his offer to assist in the event", "Assistant " + dbController.getCmidByPatientID(patientId) +
+            dbController.updateLogs(eventId, "Assistant has cancelled his offer to assist in the event", "Assistant " + cmid +
                     " has cancelled his offer to assist in the event.");
         }
         //Document an Ems/system rejection
         else{
-            dbController.updateLogs(eventId, "Assistant was cancelled from the event due to EMS rejection/radius changes", "Assistant " + dbController.getCmidByPatientID(patientId) +
+            dbController.updateLogs(eventId, "Assistant was cancelled from the event due to EMS rejection/radius changes", "Assistant " + cmid +
                     " was cancelled from the event due to EMS rejection/radius changes.");
         }
     }

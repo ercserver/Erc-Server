@@ -56,7 +56,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
         logger.log(Level.INFO, "exiting gcm.sendResponse");
         //return objToSend; enable for debug

@@ -1,6 +1,9 @@
 package db.ohad;
 
 import java.sql.*;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by ohad on 29/5/2015.
@@ -12,7 +15,7 @@ public class MainTest {
     /*static final private String USERNAME = "saaccount";
     static final private String PASS = "saaccount";*/
     private static Connection connection = null;
-
+    private static Logger logger = Logger.getLogger(MainTest.class.getName());
     public static void main(String[] args) {
         try {
             Class.forName(JDBC_DRIVER);
@@ -25,9 +28,9 @@ public class MainTest {
             }
 
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
 
 

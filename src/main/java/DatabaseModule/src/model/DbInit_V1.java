@@ -4,6 +4,8 @@ import DatabaseModule.src.api.IDbInit_model;
 import Utilities.ErcConfiguration;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -18,6 +20,7 @@ public class DbInit_V1 implements IDbInit_model {
     private static Connection connection = null;
     private  Statement statement = null;
 
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
 
     public  void initializeAndConnect()
@@ -50,9 +53,9 @@ public class DbInit_V1 implements IDbInit_model {
             }
 
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();}
+            logger.log(Level.WARNING, "Exception: ", e);}
         catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
     }
 
@@ -65,7 +68,7 @@ public class DbInit_V1 implements IDbInit_model {
             {
                 statement.close();
             }
-            catch (Exception e) {e.printStackTrace();}
+            catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
         }
         if (connection != null)
         {
@@ -73,7 +76,7 @@ public class DbInit_V1 implements IDbInit_model {
             {
                 connection.close();
             }
-            catch (Exception e) {e.printStackTrace();}
+            catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
         }
     }
 
@@ -338,7 +341,7 @@ public class DbInit_V1 implements IDbInit_model {
             createDefaultCallerSettings();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
 
     }
@@ -376,7 +379,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -387,7 +390,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -411,7 +414,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -421,7 +424,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -449,7 +452,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -459,7 +462,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -483,7 +486,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -493,7 +496,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -521,7 +524,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -531,7 +534,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -555,7 +558,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -565,7 +568,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -599,7 +602,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -609,7 +612,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -636,7 +639,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -646,7 +649,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -670,7 +673,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -680,7 +683,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -716,7 +719,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -726,7 +729,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -750,7 +753,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -760,7 +763,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -784,7 +787,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -794,7 +797,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -818,7 +821,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -828,7 +831,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -868,7 +871,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -878,7 +881,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -905,7 +908,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -915,7 +918,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -946,7 +949,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -956,7 +959,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -981,7 +984,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -991,7 +994,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1027,7 +1030,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1037,7 +1040,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }*/
@@ -1062,7 +1065,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1072,7 +1075,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1100,7 +1103,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1110,7 +1113,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1134,7 +1137,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1144,7 +1147,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1168,7 +1171,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1178,7 +1181,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1202,7 +1205,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1212,7 +1215,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1236,7 +1239,7 @@ public class DbInit_V1 implements IDbInit_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1246,7 +1249,7 @@ public class DbInit_V1 implements IDbInit_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }

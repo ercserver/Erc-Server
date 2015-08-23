@@ -21,9 +21,7 @@ public class RegFieldsTest {
 
         RegController_V1 rc = new RegController_V1();
         DbController_V1 dbController = new DbController_V1();
-        DbComm_V1 db = new DbComm_V1();
-        RegVerify_V2 rv = new RegVerify_V2();
-        db.filterAvailableMembers(new ArrayList(Arrays.asList(10042)), "10020");
+        System.out.println(dbController.getAssistDetails("10019","1163"));
         //System.out.println(rc.getWaitingForDoctor(1083));
 
         /*String cmid = "1081";

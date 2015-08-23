@@ -99,7 +99,7 @@ public class RequestsHandler {
         try {
             TestNewDB.test(url);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
         return "db";
     }
@@ -168,7 +168,7 @@ public class RequestsHandler {
                     break;
             }
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
             logger.log(Level.INFO, "No response");
         }
 
@@ -235,7 +235,7 @@ public class RequestsHandler {
                     return new JSONArray().put(new JSONObject().put("status", "failed")).toString();
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
         }
         return new JSONArray().put(new JSONObject().put("status", "success")).toString();
     }
@@ -285,7 +285,7 @@ public class RequestsHandler {
                     break;//
             }
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
         }
         return rv;
     }
@@ -316,7 +316,7 @@ public class RequestsHandler {
                 }
             }
         }catch(Exception ex){
-           ex.printStackTrace();
+           logger.log(Level.WARNING, "Exception: ", ex);
         }
         return rv;
     }
@@ -348,7 +348,7 @@ public class RequestsHandler {
                     break;
             }
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
         }
         return rv;
     }
@@ -365,7 +365,7 @@ public class RequestsHandler {
 
 
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
         }
         return "Email Verified";
     }
@@ -377,7 +377,7 @@ public class RequestsHandler {
         try {
             rc.responeToDoctorAturization(key, accept);
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
         }
         return "Email Verified";
     }

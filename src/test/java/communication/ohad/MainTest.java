@@ -14,11 +14,16 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by ohad on 10/6/2015.
  */
 public class MainTest {
+
+    private  Logger logger = Logger.getLogger(this.getClass().getName());
+
     public static void main(String[] args) {
         /*MainTest mt = new MainTest();
         mt.gcmTest();*/
@@ -50,7 +55,7 @@ public class MainTest {
 
             System.out.println(new JSONObject(res.body()));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
             System.out.println(e.getMessage());
         }
 
@@ -72,7 +77,7 @@ public class MainTest {
             System.out.println(res.body());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
             System.out.println(e.getMessage());
         }
     }

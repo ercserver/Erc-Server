@@ -60,9 +60,9 @@ public class CommToMail_V1 extends CommOfficial_V1  {
 
             Transport.send(msg);
         }catch (MessagingException mex){
-            mex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", mex);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
     }
 }

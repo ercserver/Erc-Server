@@ -108,7 +108,7 @@ public class EmerController_V1 implements IEmerController {
             return Integer.toString(yearsBetween);
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
         return null;
     }

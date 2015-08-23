@@ -50,7 +50,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("USE " + DBName);
 
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
     }
 
@@ -60,7 +60,7 @@ public class DbComm_V1 implements IDbComm_model {
             try {
                 statement.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.log(Level.WARNING, "Exception: ", e);
             }
         }
         // Discouraged
@@ -70,7 +70,7 @@ public class DbComm_V1 implements IDbComm_model {
             {
                 connection.close();
             }
-            catch (Exception e) {e.printStackTrace();}
+            catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
         }*/
 
     }
@@ -124,7 +124,7 @@ public class DbComm_V1 implements IDbComm_model {
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
             return null;
         }
     }
@@ -147,7 +147,7 @@ public class DbComm_V1 implements IDbComm_model {
             return stmt.executeUpdate();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
         }
         return 0;
     }
@@ -402,7 +402,7 @@ public class DbComm_V1 implements IDbComm_model {
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
             return null;
         }
         // Releases the resources of this method
@@ -412,7 +412,7 @@ public class DbComm_V1 implements IDbComm_model {
                 try {
                     rs.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.WARNING, "Exception: ", e);
                 }
             }
         }
@@ -434,7 +434,7 @@ public class DbComm_V1 implements IDbComm_model {
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
             return -1;
         }
         // Releases the resources of this method
@@ -444,7 +444,7 @@ public class DbComm_V1 implements IDbComm_model {
                 try {
                     rs.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.WARNING, "Exception: ", e);
                 }
             }
         }
@@ -474,7 +474,7 @@ public class DbComm_V1 implements IDbComm_model {
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         } finally {
             releaseResources(statement, connection);
         }
@@ -548,7 +548,7 @@ public class DbComm_V1 implements IDbComm_model {
         }
         // There was a fault with the connection to the server or with SQL
         catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
             return null;
         }
         // Releases the resources of this method
@@ -559,7 +559,7 @@ public class DbComm_V1 implements IDbComm_model {
                     rs.close();
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.WARNING, "Exception: ", e);
                 }
             }
         }
@@ -598,7 +598,7 @@ public class DbComm_V1 implements IDbComm_model {
                 j++;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
             logger.log(Level.INFO, "exception in resultSetToMap");
         }
         return map;
@@ -658,7 +658,7 @@ public class DbComm_V1 implements IDbComm_model {
             return resultSetToMap(rs);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
         finally
         {
@@ -669,7 +669,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
             //logger.log(Level.INFO, "   Existing selectFromTable");
         }
@@ -707,7 +707,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
         finally
         {
@@ -972,7 +972,7 @@ public class DbComm_V1 implements IDbComm_model {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
         return cmid;
 
@@ -1093,7 +1093,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("INSERT INTO P_StatusLog (status_num,community_member_id) VALUES (" +
                     statusNum + "," + Integer.toString(cmid) + ")");
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1118,7 +1118,7 @@ public class DbComm_V1 implements IDbComm_model {
             // inserts the regid to the regIDs table
             stmt.executeUpdate();
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1189,7 +1189,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("DELETE FROM P_CommunityMembers" +
                     " WHERE community_member_id=" + Integer.toString(cmid));
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1241,6 +1241,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     public String getCmidByPatientID(String pID)
     {
+        logger.info("in getCmidByPatientID. patient_id = " + pID);
         HashMap<String,String> cond = new HashMap<String,String>();
         cond.put("patient_id", pID);
         return getRowsFromTable(cond, "P_Patients").get(1).get("community_member_id");
@@ -1276,14 +1277,27 @@ public class DbComm_V1 implements IDbComm_model {
         {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
-            statement = connection.createStatement();
-            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num,eta_by_foot,eta_by_car,location_remark) VALUES (" +
+           /* statement = connection.createStatement();
+            statement.execute("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num," +
+                    "eta_by_foot,eta_by_car,location_remark) VALUES (" +
                     insert.get("community_member_id") + "," + insert.get("event_id") + "," +
                     insert.get("prescription_num") + "," +
                     insert.get("eta_by_foot") + "," + insert.get("eta_by_car") +
-                    ",'" + insert.get("location_remark") + "')");
+                    ",'" + insert.get("location_remark") + "')");*/
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO O_EmergencyEventResponse (community_member_id,event_id,prescription_num," +
+                    "eta_by_foot,eta_by_car,location_remark) VALUES (?,?,?,?,?,?)");
+            stmt.setObject(1, insert.get("community_member_id"));
+            stmt.setObject(2, insert.get("event_id"));
+            stmt.setObject(3, insert.get("prescription_num"));
+            stmt.setObject(4, insert.get("eta_by_car"));
+            stmt.setObject(5, insert.get("eta_by_foot"));
+            stmt.setObject(6, insert.get("location_remark"));
+
+            stmt.executeUpdate();
+
+
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1312,7 +1326,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement = connection.createStatement();
             statement.execute("UPDATE O_EmergencyEventResponse SET response_date=current_timestamp WHERE " + whereString);
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1329,7 +1343,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("UPDATE O_EmergencyEventResponse SET arrival_date=current_timestamp WHERE community_member_id="
                     + data.get("community_member_id") + " AND event_id=" + data.get("event_id"));
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1346,7 +1360,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("UPDATE O_EmergencyEventResponse SET activation_date=current_timestamp WHERE community_member_id="
                     + cmid + " AND event_id=" + eventId);
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1363,7 +1377,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("UPDATE O_EmergencyEventResponse SET result=" + result + " WHERE community_member_id="
                     + cmid + " AND event_id=" + eventId);
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1386,7 +1400,7 @@ public class DbComm_V1 implements IDbComm_model {
             return eventId;
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return null;}
         // Releases the resources of this method
         finally
         {
@@ -1397,7 +1411,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1432,7 +1446,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.executeUpdate();
 
         }catch(Exception ex){
-            ex.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", ex);
         }
 
 
@@ -1473,7 +1487,7 @@ public class DbComm_V1 implements IDbComm_model {
 
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return null;}
         // Releases the resources of this method
         finally
         {
@@ -1484,7 +1498,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
             logger.info("cmids after filter = " + cmids);
             return cmids;
@@ -1513,7 +1527,7 @@ public class DbComm_V1 implements IDbComm_model {
                     + cmid + " AND event_id=" + eventID);
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1524,7 +1538,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1591,7 +1605,7 @@ public class DbComm_V1 implements IDbComm_model {
             stmt.close();
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1602,7 +1616,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
             logger.log(Level.INFO, "   Exiting startNewEmergencyEvent");
             return eventId;
@@ -1620,7 +1634,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("INSERT INTO O_EmergencyMedicationUse (event_id,providing_member_id,approved_by_id,medication_num) VALUES (" +
                     eventId + "," + proCmid + "," + aproId + "," + medNum + ")");
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -1721,9 +1735,9 @@ public class DbComm_V1 implements IDbComm_model {
         return getRegIDsOfUser(Integer.parseInt(getCmidByPatientID(patientId))).get(1).get("reg_id");
     }
 
-    public void removeAssistantFromEvent(String eventId, String patient_id)
+    public void removeAssistantFromEvent(String eventId, String cmid)
     {
-        String cmid = getCmidByPatientID(patient_id);
+        //String cmid = getCmidByPatientID(patient_id);
         HashMap<String, String> conds = new HashMap<String, String>();
         conds.put("community_member_id", cmid);
         conds.put("event_id", eventId);
@@ -1749,7 +1763,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE event_id=" + eventId);
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1783,7 +1797,7 @@ public class DbComm_V1 implements IDbComm_model {
                 return rs.getObject("medication_num").toString();
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return null;}
         // Releases the resources of this method
         finally
         {
@@ -1793,7 +1807,7 @@ public class DbComm_V1 implements IDbComm_model {
                 try {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1811,7 +1825,7 @@ public class DbComm_V1 implements IDbComm_model {
             statement.execute("UPDATE O_EmergencyEvents SET last_action_time=CURRENT_TIMESTAMP" + " WHERE event_id=" + eventId);
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         // Releases the resources of this method
         finally
         {
@@ -1838,7 +1852,7 @@ public class DbComm_V1 implements IDbComm_model {
                 return rs.getObject("prescription_num").toString();
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return null;}
         // Releases the resources of this method
         finally
         {
@@ -1848,7 +1862,7 @@ public class DbComm_V1 implements IDbComm_model {
                 try {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1878,7 +1892,7 @@ public class DbComm_V1 implements IDbComm_model {
             }
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return null;}
         // Releases the resources of this method
         finally
         {
@@ -1888,7 +1902,7 @@ public class DbComm_V1 implements IDbComm_model {
                 try {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -1922,7 +1936,7 @@ public class DbComm_V1 implements IDbComm_model {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
 
     }
@@ -1943,7 +1957,7 @@ public class DbComm_V1 implements IDbComm_model {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Exception: ", e);
         }
     }
 
@@ -1985,7 +1999,7 @@ public class DbComm_V1 implements IDbComm_model {
 
             stmt.executeUpdate();
         }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e);}
         finally
         {
             releaseResources(statement, connection);
@@ -2016,7 +2030,7 @@ public class DbComm_V1 implements IDbComm_model {
             return rs.getString("status_name").equals("active");
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return false;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return false;}
         // Releases the resources of this method
         finally
         {
@@ -2027,7 +2041,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -2050,7 +2064,7 @@ public class DbComm_V1 implements IDbComm_model {
             return rs.next();
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return false;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return false;}
         // Releases the resources of this method
         finally
         {
@@ -2061,7 +2075,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -2079,7 +2093,7 @@ public class DbComm_V1 implements IDbComm_model {
             return (!rs.next());
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return false;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return false;}
         // Releases the resources of this method
         finally
         {
@@ -2090,7 +2104,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
@@ -2114,7 +2128,7 @@ public class DbComm_V1 implements IDbComm_model {
             return res;
         }
         // There was a fault with the connection to the server or with SQL
-        catch (SQLException e) {e.printStackTrace(); return null;}
+        catch (SQLException e) {logger.log(Level.WARNING, "Exception: ", e); return null;}
         // Releases the resources of this method
         finally
         {
@@ -2125,7 +2139,7 @@ public class DbComm_V1 implements IDbComm_model {
                 {
                     rs.close();
                 }
-                catch (Exception e) {e.printStackTrace();}
+                catch (Exception e) {logger.log(Level.WARNING, "Exception: ", e);}
             }
         }
     }
