@@ -29,7 +29,8 @@ public class MainTest {
         String event_id = "1125";
         testNaor9(cmidList,event_id);
 */
-        testNaor10("10042","1127");
+        //testNaor10("10042","1127");
+        testNaor11("10046","a1234","1198");
       //  DbComm_V1 db = new DbComm_V1();
       //  db.closeEvent(1003, "FINISHED");
 //      testNaor7("10017", "ff", "1077");
@@ -211,5 +212,21 @@ public class MainTest {
         commController.sendResponse();
 
 
+    }
+
+    //simulate undo assistant help
+    public static void testNaor11(String cmid,String password, String event_id) {
+
+        HashMap<String, String> fakeDetails = new HashMap<String, String>();
+        fakeDetails.put("community_member_id", cmid);
+        fakeDetails.put("password", password);
+        fakeDetails.put("event_id", event_id);
+        fakeDetails.put("RequestID", "cancelArrival");
+        fakeDetails.put("x", "31.523");
+        fakeDetails.put("y", "33.111");
+        fakeDetails.put("event_id", event_id);
+
+        IEmerController controller = new EmerController_V1();
+        controller.assistantCancelsArrival(fakeDetails);
     }
 }

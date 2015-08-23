@@ -246,7 +246,7 @@ public class EmerController_V1 implements IEmerController {
         notNeededHelpers.remove("event_id");
         //Update the DB of the cancelled assistants
         for(String helper : notNeededHelpers.keySet()) {
-            dbController.removeAssistantFromEvent(eventID, helper);//
+            dbController.removeAssistantFromEvent(eventID, helper,false);//
         }
 
         //reduce the list only to the unneeded assistants that are on the way
@@ -554,7 +554,7 @@ public class EmerController_V1 implements IEmerController {
         //remove every assistant from the database and inform. "1" to inform the assistants here.
         for(String patientID : toReject.keySet()){
             //Update the assistant's status on the DB
-            dbController.removeAssistantFromEvent(eventID, patientID);//
+            dbController.removeAssistantFromEvent(eventID, patientID,false);//
             //inform. "1" to inform helpers here.
             removeAssistant(patientID, eventID, 1, reason);
 
@@ -588,6 +588,9 @@ public class EmerController_V1 implements IEmerController {
             commController.setCommToUsers(request, sendTo, false);
             commController.sendResponse();
         }
+        ArrayList<String> cmidToStopFollow = new ArrayList<String>();
+        cmidToStopFollow.add(dbController.getCmidByPatientID(patientId));
+        stopFollow(eventId,cmidToStopFollow);
     }
 
     // Assistant arrival to the destination in emergency event
@@ -687,7 +690,7 @@ public class EmerController_V1 implements IEmerController {
         String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
         String eventID = data.get("event_id");
         //Update the assistant's status on the DB and inform. "0" to inform EMS here.
-        dbController.removeAssistantFromEvent(eventID, patientID);//
+        dbController.removeAssistantFromEvent(eventID, data.get("community_member_id"),true);//
         removeAssistant(patientID, eventID, 0, null);
     }
 
