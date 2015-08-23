@@ -457,6 +457,10 @@ public class EmerController_V1 implements IEmerController {
     // If they don't have that patient in
     //that event - it's an addition. If they do - it's an update.
     private void updateOrAddAssistantToEMS(String patientId, String eventId, String eta, String locationRemark, String x, String y) {
+        //prevent
+        if(!(dbController.getAssistDetails(dbController.getCmidByPatientID(patientId),eventId).get("response_type")).equals("1")){
+            return;
+        }
         //generate
         HashMap<String,String> updateOrAddToEms = new HashMap<String,String>();
         String patientCmid = dbController.getCmidByPatientID(patientId);
@@ -833,9 +837,6 @@ public class EmerController_V1 implements IEmerController {
         sendTo = assistantFuncs.addReceiver(where, sendTo);
         initiatedOneObjectRequest(request, sendTo);
     }
-
-
-
 
     private void initiatedOneObjectRequest(HashMap<String, String> request,ArrayList<String> URLs){
         HashMap<Integer,HashMap<String,String>> dataToSend = new HashMap<Integer,HashMap<String,String>>();
