@@ -16,7 +16,7 @@ public class ShmulikTest {
         DbComm_V1 c = new DbComm_V1();
        // HashMap<String, String> aa = c.getRejectCodes();
         //HashMap<String,String> data = new HashMap<String,String>();
-        HashMap<String,String> data1 = d.getUserByCmid(10018);
+        HashMap<String,String> data1 = d.getUserByCmid(1083);
         r.getUpdatesFields(data1);
 
     }
