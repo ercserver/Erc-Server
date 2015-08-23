@@ -684,10 +684,11 @@ public class EmerController_V1 implements IEmerController {
     public void assistantCancelsArrival(HashMap<String, String> data) {
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
-        String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
+        String cmid = data.get("community_member_id");
+        String patientID = dbController.getPatientIDByCmid(cmid);
         String eventID = data.get("event_id");
         //Update the assistant's status on the DB and inform. "0" to inform EMS here.
-        dbController.removeAssistantFromEvent(eventID, patientID);//
+        dbController.removeAssistantFromEvent(eventID, cmid);//
         removeAssistant(patientID, eventID, 0, null);
     }
 
