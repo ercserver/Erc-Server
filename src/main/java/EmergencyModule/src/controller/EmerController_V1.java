@@ -522,7 +522,7 @@ public class EmerController_V1 implements IEmerController {
     public void rejectAssistantsByEMS(HashMap<String, String> toReject) {
         // Verify parameters
         ParametersVerifier verifier = new ParametersVerifier(toReject);
-        if (!verifier.verify("password", "community_member_id", "RequestID", "event_id")){
+        if (!verifier.verify("password", "community_member_id", "RequestID", "event_id")){//
             return;
         }
         //Verify credentials
