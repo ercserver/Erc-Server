@@ -690,7 +690,7 @@ public class EmerController_V1 implements IEmerController {
         String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
         String eventID = data.get("event_id");
         //Update the assistant's status on the DB and inform. "0" to inform EMS here.
-        dbController.removeAssistantFromEvent(eventID, data.get("community_member_id"),true);//
+        dbController.removeAssistantFromEvent(eventID, data.get("community_member_id"),true);
         removeAssistant(patientID, eventID, 0, null);
     }
 
