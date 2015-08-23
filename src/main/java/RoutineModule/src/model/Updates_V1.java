@@ -43,7 +43,7 @@ public class Updates_V1 implements IUpdates_model {
             HashMap<String, String> field = fields.getValue();
             //field.containsKey()
             String name = field.get("field_name");
-            String value = data.get(name);
+            String value = userD.get(name);
             field.put("value",value);
         }
         return dataToSend;

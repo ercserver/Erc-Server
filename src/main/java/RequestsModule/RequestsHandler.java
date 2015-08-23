@@ -269,7 +269,7 @@ public class RequestsHandler {
                     rv = ruc.transferLocation(requestMap).toString();
                     break;
                 case UPDATE_REQ:
-                    rv = rc.getRegDetails(requestMap).toString();
+                    rv = ruc.getUpdatesFields(requestMap).toString();
                     break;
                 case UPDATE_DETAILS:
                     rv = ruc.updateMemberDetails(requestMap).toString();

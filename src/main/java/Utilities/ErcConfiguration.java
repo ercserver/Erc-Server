@@ -1,7 +1,7 @@
 package Utilities;
 
 /**
- * Created by ohad on 18/6/2015.
+ * Created by naor on 18/6/2015.
  */
 public class ErcConfiguration {
 

@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by ohad on 12/8/2015.
+ * Created by naor on 12/8/2015.
  */
 public class ParametersVerifier {
     private Set setToVerify = null;
