@@ -457,7 +457,7 @@ public class EmerController_V1 implements IEmerController {
     // If they don't have that patient in
     //that event - it's an addition. If they do - it's an update.
     private void updateOrAddAssistantToEMS(String patientId, String eventId, String eta, String locationRemark, String x, String y) {
-        //prevent
+        //prevent re-adding assistants that were reject
         if(!(dbController.getAssistDetails(dbController.getCmidByPatientID(patientId),eventId).get("response_type")).equals("1")){
             return;
         }
