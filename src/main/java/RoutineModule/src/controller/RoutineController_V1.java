@@ -188,7 +188,7 @@ public class RoutineController_V1 implements IRoutineController {
             //check if field need verification
             //For this we pull out details on the spesipic field
             HashMap<String, String> fieldDetails = dbController.getFieldDetails(key, type);
-            if (fieldDetails.get("needs_verification").equals("1"))
+            if (fieldDetails.get("needs_verification").equals("true"))
                 needVerify = true;
             else
             {

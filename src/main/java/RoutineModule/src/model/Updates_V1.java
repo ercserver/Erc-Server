@@ -129,7 +129,7 @@ public class Updates_V1 implements IUpdates_model {
         boolean needVer = false;
         String reg = data.get("redId");
         //TODO- how i get user type
-        String type = data.get("user_type");
+        int type = dbController.getUserType(String.valueOf(cmid));
 
         data.remove("user_type");// ?????
         data.remove("redId"); // ???
@@ -138,7 +138,8 @@ public class Updates_V1 implements IUpdates_model {
             //set  to urget to 0
             dbController.updateUrgentInRefreshDetailsTime
                     (cmid, data.get(fieldName), 0);
-            HashMap<String, String> filedData = dbController.getFieldDetails(fieldName,type );
+            HashMap<String, String> filedData = dbController.getFieldDetails(fieldName,
+                    String.valueOf(type) );
             if (filedData.get("needs_verification").equals("1")) {
                 needVer = true;
             } else {
