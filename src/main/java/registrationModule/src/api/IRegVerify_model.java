@@ -26,7 +26,7 @@ public interface IRegVerify_model {
     boolean checkCondForResendMail(HashMap<String, String> details, String email, int cmid);
 
     /***********for func responeDoctor********************/
-    HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid, String type,String password);
+    HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid, String password);
 
     /***********for func SignIn********************/
     HashMap<Integer,HashMap<String,String>>verifySignIn(HashMap<String,String> details);

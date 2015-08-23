@@ -157,11 +157,11 @@ public class RequestsHandler {
                     return rc.resendAuth(requestMap).toString();
 
                 case CONFIRM_PATIENT:
-                    rc.responseByDoctor(requestMap, true);
-                    break;
+                    return rc.responseByDoctor(requestMap, true).toString();
+
                 case REJECT_PATIENT:
-                    rc.responseByDoctor(requestMap, false);
-                    break;
+                    return rc.responseByDoctor(requestMap, false).toString();
+
 
                 default:
                     // Do nothing...

@@ -16,7 +16,7 @@ public class HashMapCreator {
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
     public  HashMap<String, String> jsonToMap(JSONObject jObject) throws JSONException {
-        logger.log(Level.INFO, "In jsonToMap");
+        //logger.log(Level.INFO, "In jsonToMap");
         HashMap<String, String> map = new HashMap<String, String>();
         Set<String> keys = jObject.keySet();
 
@@ -29,7 +29,7 @@ public class HashMapCreator {
             }
 
         }
-        logger.log(Level.INFO, "Exiting jsonToMap");
+        //logger.log(Level.INFO, "Exiting jsonToMap");
         return map;
     }
 

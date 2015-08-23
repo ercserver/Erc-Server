@@ -46,6 +46,10 @@ public class DbController_V1 implements IDbController {
         return DB_communicator.getFrequency(kindOfFrequency);
     }
 
+    public HashMap<Integer,HashMap<String,String>> getAllFrequencies(){
+        return DB_communicator.getAllFrequencies();
+    }
+
     public HashMap<Integer,HashMap<String,String>> getDefaultInEmergency(String state){
         return DB_communicator.getDefaultInEmergency(state);
     }

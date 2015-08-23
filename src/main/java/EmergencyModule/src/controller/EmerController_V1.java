@@ -787,8 +787,8 @@ public class EmerController_V1 implements IEmerController {
     private HashMap<String,String> turnIntListIntoHashMap(List<Integer> eventHelpers){
         HashMap<String,String> toReturn = new HashMap<String,String>();
 
-        for(Integer current : eventHelpers){
-            toReturn.put(current.toString(),null);
+        for(Integer cmid : eventHelpers){
+            toReturn.put(dbController.getPatientIDByCmid(cmid.toString()),null);
         }
         return toReturn;
     }

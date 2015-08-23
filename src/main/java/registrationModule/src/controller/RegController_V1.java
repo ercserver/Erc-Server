@@ -5,6 +5,8 @@ import DatabaseModule.src.api.IDbController;
 import Utilities.AssistantFunctions;
 import Utilities.ModelsFactory;
 import Utilities.PatientDetails;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import registrationModule.src.api.IRegController;
 import registrationModule.src.api.IRegRequest_model;
 import registrationModule.src.api.IRegVerify_model;
@@ -317,7 +319,7 @@ public class RegController_V1 implements IRegController {
             if (isConfirmation) {
                 dbController.updateStatus(cmidPatient, "verifying details", "active");
                 //we send regid != 0 to say that type is patient
-                response =  verification.proccesOfOkMember(new Integer(communityMemberId),regid,password);
+                response =  verification.proccesOfOkMember(new Integer(communityMemberId), password);
                 commController.setCommToUsers(response, target, false);
                 commController.sendResponse();
 
@@ -329,7 +331,7 @@ public class RegController_V1 implements IRegController {
                 commController.sendResponse();
             }
         }   //verification.responeDoctor(cmid, reason,regid);
-        return null;
+        return new JSONArray().put(new JSONObject().put("status", "ok"));
     }
 //--------------------------------------------------------------
     private boolean checkCmidAndPassword(String password, int cmid) {
@@ -351,7 +353,7 @@ public class RegController_V1 implements IRegController {
         if (isAccept) {
             dbController.updateStatus(new Integer(cmid), "verifying details", "active");
             //0 say that type is doctor
-            response =  verification.proccesOfOkMember(new Integer(cmid),"0",password);
+            response =  verification.proccesOfOkMember(new Integer(cmid),password);
             commController.setCommToUsers(response, sendTo, true);
         } else {
             response = buildRejectMessage(new Integer(cmid),"doctor Authorization reject you",

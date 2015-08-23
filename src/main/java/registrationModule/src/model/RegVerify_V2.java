@@ -2,6 +2,7 @@ package registrationModule.src.model;
 
 import DatabaseModule.src.api.IDbController;
 import Utilities.ErcConfiguration;
+import Utilities.HashMapBuilder;
 import Utilities.ModelsFactory;
 import Utilities.PatientDetails;
 import registrationModule.src.api.IRegVerify_model;
@@ -364,30 +365,19 @@ public class RegVerify_V2 implements IRegVerify_model {
     /***********for func responeDoctor********************/
 
     //ToDo need also to send cmid, password, and location frequency in emergency
-    public HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid,String type,String password)
+    public HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid/*,String type,*/, String password)
     {
         HashMap<Integer,HashMap<String,String>> responseToPatient =
                 new HashMap<Integer,HashMap<String,String>>();
 
-
-
         HashMap<String,String> response = new HashMap<String, String>();
         response.put("community_member_id",new Integer(cmid).toString());
         response.put("password", password);
-
-
         response.put("RequestID", "active");
 
-        responseToPatient.put(3,getFrequency("connect_server_frequency"));
-        responseToPatient.put(2,getFrequency("times_to_connect_to_server"));
-
         responseToPatient.put(1, response);
-        //if is a patient
-        if (!type.equals("0")) {
-            responseToPatient.put(4, getFrequency("location_frequency"));
+        responseToPatient.putAll(getAllFrequencies());
 
-            responseToPatient.put(5, getDefaultInEmergency(getState(cmid)));
-        }
         return responseToPatient;
     }
 
@@ -569,6 +559,7 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
+
     private HashMap<String,String> getFrequency(String code) {
         HashMap<String,String> response = new HashMap<String,String>();
 
@@ -586,6 +577,23 @@ public class RegVerify_V2 implements IRegVerify_model {
             return response;
         }
         return null;
+    }
+
+    private HashMap<Integer, HashMap<String,String>> getAllFrequencies() {
+        HashMap<Integer,HashMap<String,String>> freq
+                = dbController.getAllFrequencies();
+        if (freq == null)
+            return null;
+        HashMap<Integer, HashMap<String, String>> response = new HashMap<Integer, HashMap<String, String>>();
+        int i = 2;
+        for (Map.Entry<Integer,HashMap<String,String>> objs : freq.entrySet()){
+            HashMap<String,String> obj = objs.getValue();
+
+            response.put(i, new HashMapBuilder<String, String>().put("name", obj.get("name"))
+                    .put("frequency",obj.get("frequency")).build());
+            i++;
+        }
+        return response;
     }
 
     private boolean doesDoctorExist(HashMap<String,String> data) {

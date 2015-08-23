@@ -734,6 +734,11 @@ public class DbComm_V1 implements IDbComm_model {
         return (res.size() != 0);
     }
 
+    @Override
+    public HashMap<Integer, HashMap<String, String>> getAllFrequencies() {
+        return getRowsFromTable(null, "Frequencies");
+    }
+
 
     public int addNewCommunityMember(HashMap<String,String> details) {
         /* - I'm assuming the fields 'doc_license_num' (from p_doctors) will

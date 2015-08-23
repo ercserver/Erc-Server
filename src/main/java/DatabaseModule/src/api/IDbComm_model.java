@@ -142,4 +142,6 @@ public interface IDbComm_model {
     String getStatusByName(String statusName);
     HashMap<String, String> getMedicationNameAndDosage(String prescriptionNum);
     boolean isEmailMemberExists(String mail);
+
+    HashMap<Integer,HashMap<String,String>> getAllFrequencies();
 }
