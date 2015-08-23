@@ -236,7 +236,7 @@ public class DbController_V1 implements IDbController {
 
     public String getRegIDOfPatient(String patientId){return DB_communicator.getRegIDOfPatient(patientId);}
 
-    public void removeAssistantFromEvent(String eventId, String patient_id){DB_communicator.removeAssistantFromEvent(eventId, patient_id);}
+    public void removeAssistantFromEvent(String eventId, String patient_id,boolean assistantCancelled){DB_communicator.removeAssistantFromEvent(eventId, patient_id,assistantCancelled);}
 
     @Override
     public ArrayList<Integer> filterAvailableMembers(ArrayList<Integer> cmidList, String eventId) {
