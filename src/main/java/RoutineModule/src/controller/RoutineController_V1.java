@@ -74,7 +74,7 @@ public class RoutineController_V1 implements IRoutineController {
 
         int type = dbController.getUserType(data.get("community_member_id"));
 
-        if(type == 2 || type == 3 )
+        if(type == 1 || type == 3 )
         {
             commController.setCommToUsers(fields, null, false);
         }
