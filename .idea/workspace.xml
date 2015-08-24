@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java" line="21" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2528bf4-afdc-4339-83d1-823f1d97c247" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java" afterPath="$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="c2528bf4-afdc-4339-83d1-823f1d97c247" name="Default" comment="fixed: insert medication use" />
     <ignored path=".idea/dataSources.local.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,8 +15,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Erc-Server$MainTest.coverage" NAME="MainTest Coverage Results" MODIFIED="1440351193593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>emergency.ohad.*</FILTER>
+    </SUITE>
+  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
   </component>
   <component name="DatabaseView">
     <option name="FLATTEN" value="false" />
@@ -63,45 +71,47 @@
       <file leaf-file-name="EmerController_V1.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38055557">
-              <caret line="459" column="55" selection-start-line="459" selection-start-column="55" selection-end-line="459" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.33519554" vertical-offset="11304" max-vertical-offset="15895">
+              <caret line="686" column="41" selection-start-line="686" selection-start-column="41" selection-end-line="686" selection-end-column="41" />
               <folding>
-                <element signature="e#23354#23369#0" expanded="true" />
+                <element signature="e#30352#30360#0" expanded="true" />
+                <element signature="e#31229#31245#0" expanded="true" />
+                <element signature="e#31506#31538#0" expanded="true" />
+                <element signature="e#31625#31633#0" expanded="true" />
+                <element signature="e#32037#32052#0" expanded="true" />
+                <element signature="e#32303#32311#0" expanded="true" />
+                <element signature="e#32909#32925#0" expanded="true" />
+                <element signature="e#33902#33910#0" expanded="true" />
+                <element signature="e#34011#34045#0" expanded="true" />
+                <element signature="e#34966#34974#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IDbComm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbComm.java">
+      <file leaf-file-name="ShmulikTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding>
+                <marker date="1440351711589" expanded="true" signature="351:366" placeholder="&lt;~&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="socmedserver.dbo.P_CommunityMembers" pinned="false" current-in-tab="false">
+        <entry file="dbDummy://dbtable:/6d9b81c/0dea1675-760e-4885-a33a-65423bed7931/socmedserver.dbo.P_CommunityMembers">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GcmCommnication_V1.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/GcmCommnication_V1.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommController_V1.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/controller/CommController_V1.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -109,175 +119,72 @@
       <file leaf-file-name="DbController_V1.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/controller/DbController_V1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="218" column="0" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="6" max-vertical-offset="4471">
+              <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RequestsHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/RequestsModule/RequestsHandler.java">
+      <file leaf-file-name="IDbController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.137931">
-              <caret line="341" column="27" selection-start-line="341" selection-start-column="21" selection-end-line="341" selection-end-column="27" />
+            <state vertical-scroll-proportion="-31.655172" vertical-offset="0" max-vertical-offset="1462">
+              <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DbComm_V1.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java">
+      <file leaf-file-name="IDbComm.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbComm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.6551723">
-              <caret line="1748" column="21" selection-start-line="1748" selection-start-column="21" selection-end-line="1748" selection-end-column="21" />
+            <state vertical-scroll-proportion="-4.275862" vertical-offset="777" max-vertical-offset="1326">
+              <caret line="56" column="95" selection-start-line="56" selection-start-column="95" selection-end-line="56" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VerifyDetail.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/VerifyDetail.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1785">
+              <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ParametersVerifier.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/ParametersVerifier.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="510">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AssistantFunctions.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/AssistantFunctions.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="318" max-vertical-offset="1037">
+              <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
               <folding>
-                <marker date="1440362046159" expanded="true" signature="3387:3425" placeholder="SELECT * FRO..missingValue..." />
-                <marker date="1440362046159" expanded="true" signature="4446:4492" placeholder="DELETE FROM ..." />
-                <marker date="1440362046159" expanded="true" signature="4518:4599" placeholder="update dbo.P..." />
-                <marker date="1440362046159" expanded="true" signature="4625:4707" placeholder="update dbo.M..." />
-                <marker date="1440362046159" expanded="true" signature="10205:10416" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1440362046159" expanded="true" signature="11349:12811" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1440362046159" expanded="true" signature="13316:15120" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1440362046159" expanded="true" signature="15560:17000" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1440362046159" expanded="true" signature="18990:20150" placeholder="SELECT DISTI..P_CommunityMembers..." />
-                <marker date="1440362046159" expanded="true" signature="22400:22516" placeholder="SELECT DISTI..P_TypeLog..." />
-                <marker date="1440362046159" expanded="true" signature="24162:24260" placeholder="UPDATE P_Com..." />
-                <marker date="1440362046159" expanded="true" signature="26652:27350" placeholder="select dbo.P..P_Patients..." />
-                <marker date="1440362046159" expanded="true" signature="33283:33343" placeholder="UPDATE missi..." />
-                <marker date="1440362046159" expanded="true" signature="36146:36474" placeholder="insert into ..." />
-                <marker date="1440362046159" expanded="true" signature="38004:38122" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="38485:38565" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="38884:39020" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="39685:39752" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="40125:40180" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="40897:40992" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="41352:41488" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="42078:42205" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="42804:42939" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="43746:43847" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="44381:44521" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="44934:45091" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="45625:45726" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="46231:46371" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="51180:51322" placeholder="UPDATE P_Sta..." />
-                <marker date="1440362046159" expanded="true" signature="52094:52228" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="52816:52901" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="55109:55189" placeholder="DELETE FROM ..." />
-                <marker date="1440362046159" expanded="true" signature="55317:55466" placeholder="DELETE FROM ..." />
-                <marker date="1440362046159" expanded="true" signature="55852:55928" placeholder="DELETE FROM ..." />
-                <marker date="1440362046159" expanded="true" signature="56303:56390" placeholder="DELETE FROM ..." />
-                <marker date="1440362046159" expanded="true" signature="56516:56598" placeholder="DELETE FROM ..." />
-                <marker date="1440362046159" expanded="true" signature="60550:60719" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="62344:62418" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="62915:63081" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="63589:63731" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="64233:64363" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="64910:65062" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-                <marker date="1440362046159" expanded="true" signature="66615:66730" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="67488:67834" placeholder="SELECT P_Sta..P_StatusLog..." />
-                <marker date="1440362046159" expanded="true" signature="69663:69781" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-                <marker date="1440362046159" expanded="true" signature="70024:70162" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="70207:70348" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="71854:72058" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="74273:74461" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="79962:80046" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="81028:81232" placeholder="SELECT DISTI..P_Patients..." />
-                <marker date="1440362046159" expanded="true" signature="82515:82599" placeholder="UPDATE O_Eme..." />
-                <marker date="1440362046159" expanded="true" signature="83291:83495" placeholder="SELECT DISTI..P_Patients..." />
-                <marker date="1440362046159" expanded="true" signature="84635:84952" placeholder="SELECT DISTI..P_Patients..." />
-                <marker date="1440362046159" expanded="true" signature="86746:86894" placeholder="UPDATE dbo.O..." />
-                <marker date="1440362046159" expanded="true" signature="87525:87657" placeholder="UPDATE dbo.O..." />
-                <marker date="1440362046159" expanded="true" signature="89158:89280" placeholder="INSERT INTO ..." />
-                <marker date="1440362046159" expanded="true" signature="90304:90529" placeholder="SELECT DISTI..P_StatusLog..." />
-                <marker date="1440362046159" expanded="true" signature="91598:92192" placeholder="SELECT DISTI..P_Patients..." />
-                <marker date="1440362046159" expanded="true" signature="93139:93261" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-                <marker date="1440362046159" expanded="true" signature="94236:94453" placeholder="SELECT DISTI..P_Prescriptions..." />
+                <element signature="e#1115#1131#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DbInit_V1.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbInit_V1.java">
+      <file leaf-file-name="RoutineController_V1.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="703" column="27" selection-start-line="703" selection-start-column="27" selection-end-line="703" selection-end-column="27" />
+            <state vertical-scroll-proportion="-4.7586207" vertical-offset="2786" max-vertical-offset="6103">
+              <caret line="184" column="0" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
               <folding>
-                <marker date="1440356359869" expanded="true" signature="2543:2778" placeholder="CREATE TABLE..Enum..." />
-                <marker date="1440356359869" expanded="true" signature="2850:3038" placeholder="CREATE TABLE..M_MedicalConditions..." />
-                <marker date="1440356359869" expanded="true" signature="3110:3489" placeholder="CREATE TABLE..M_BrandNames..." />
-                <marker date="1440356359869" expanded="true" signature="3561:3895" placeholder="CREATE TABLE..M_Indications..." />
-                <marker date="1440356359869" expanded="true" signature="3967:4160" placeholder="CREATE TABLE..M_ActiveComponents..." />
-                <marker date="1440356359869" expanded="true" signature="4232:4667" placeholder="CREATE TABLE..M_Compositions..." />
-                <marker date="1440356359869" expanded="true" signature="4757:5180" placeholder="CREATE TABLE..M_Substitutives..." />
-                <marker date="1440356359869" expanded="true" signature="5278:6007" placeholder="CREATE TABLE..P_Devices..." />
-                <marker date="1440356359869" expanded="true" signature="6079:6238" placeholder="CREATE TABLE..P_Statuses..." />
-                <marker date="1440356359869" expanded="true" signature="6310:7303" placeholder="CREATE Table..P_CommunityMembers..." />
-                <marker date="1440356359869" expanded="true" signature="7375:7596" placeholder="CREATE Table..P_Patients..." />
-                <marker date="1440356359869" expanded="true" signature="7668:8112" placeholder="CREATE TABLE..P_StatusLog..." />
-                <marker date="1440356359869" expanded="true" signature="8184:8628" placeholder="CREATE TABLE..P_DeviceLog..." />
-                <marker date="1440356359869" expanded="true" signature="8700:9168" placeholder="CREATE TABLE..P_Buddies..." />
-                <marker date="1440356359869" expanded="true" signature="9324:9875" placeholder="CREATE TABLE..P_Relations..." />
-                <marker date="1440356359869" expanded="true" signature="9947:10159" placeholder="CREATE TABLE..P_EmergencyContact..." />
-                <marker date="1440356359869" expanded="true" signature="10231:10667" placeholder="CREATE TABLE..P_TypeLog..." />
-                <marker date="1440356359869" expanded="true" signature="10739:11126" placeholder="CREATE TABLE..P_Doctors..." />
-                <marker date="1440356359869" expanded="true" signature="11198:11464" placeholder="CREATE TABLE..MembersLoginDetails..." />
-                <marker date="1440356359869" expanded="true" signature="11536:11849" placeholder="CREATE TABLE..RefreshDetailsTime..." />
-                <marker date="1440356359869" expanded="true" signature="11921:12819" placeholder="CREATE TABLE..RegistrationFields..." />
-                <marker date="1440356359869" expanded="true" signature="12891:13042" placeholder="CREATE TABLE..ServerUserNames..." />
-                <marker date="1440356359869" expanded="true" signature="13114:13517" placeholder="CREATE TABLE..P_Supervision..." />
-                <marker date="1440356359869" expanded="true" signature="13589:13760" placeholder="CREATE TABLE..P_Medications..." />
-                <marker date="1440356359869" expanded="true" signature="13832:14391" placeholder="CREATE TABLE..P_Prescriptions..." />
-                <marker date="1440356359869" expanded="true" signature="14463:14987" placeholder="CREATE TABLE..P_Diagnosis..." />
-                <marker date="1440356359869" expanded="true" signature="15058:15201" placeholder="CREATE TABLE..RegIDs..." />
-                <marker date="1440356359869" expanded="true" signature="15238:15575" placeholder="CREATE TABLE..Availability..." />
-                <marker date="1440356359869" expanded="true" signature="15612:15761" placeholder="CREATE TABLE..HowManyToSendInEmerEvent..." />
-                <marker date="1440356359869" expanded="true" signature="17933:18470" placeholder="CREATE TABLE..P_Diagnosis..." />
-                <marker date="1440356359869" expanded="true" signature="19564:19761" placeholder="CREATE TABLE..MP_Specialization..." />
-                <marker date="1440356359869" expanded="true" signature="20793:21385" placeholder="CREATE TABLE..MP_Certification..." />
-                <marker date="1440356359869" expanded="true" signature="22422:22683" placeholder="CREATE TABLE..MP_MedicalPersonnel..." />
-                <marker date="1440356359869" expanded="true" signature="23710:24329" placeholder="CREATE TABLE..MP_Affiliation..." />
-                <marker date="1440356359869" expanded="true" signature="25352:25540" placeholder="CREATE TABLE..MP_Positions..." />
-                <marker date="1440356359869" expanded="true" signature="26571:27458" placeholder="CREATE TABLE..MP_Organizations..." />
-                <marker date="1440356359869" expanded="true" signature="28508:28916" placeholder="CREATE TABLE..B_DecisionGivenAmbulaneETA..." />
-                <marker date="1440356359869" expanded="true" signature="29965:30155" placeholder="CREATE TABLE..O_ActionTypes..." />
-                <marker date="1440356359869" expanded="true" signature="31199:32438" placeholder="CREATE TABLE..O_EmergencyEventResponse..." />
-                <marker date="1440356359869" expanded="true" signature="33461:33663" placeholder="CREATE TABLE..P_RelationTypes..." />
-                <marker date="1440356359869" expanded="true" signature="34703:34918" placeholder="CREATE TABLE..MP_OrganizationTypes..." />
-                <marker date="1440356359869" expanded="true" signature="35931:36112" placeholder="CREATE TABLE..O_EventStatuses..." />
-                <marker date="1440356359869" expanded="true" signature="37129:38490" placeholder="CREATE TABLE..O_EmergencyEvents..." />
-                <marker date="1440356359869" expanded="true" signature="39519:40024" placeholder="CREATE TABLE..O_EmergencyEventActions..." />
-                <marker date="1440356359869" expanded="true" signature="41055:42016" placeholder="CREATE TABLE..O_EmergencyMedicationUse..." />
-                <marker date="1440356359869" expanded="true" signature="43041:43308" placeholder="CREATE TABLE..O_AutomaticDispensers..." />
-                <marker date="1440356359869" expanded="true" signature="46376:46599" placeholder="CREATE TABLE..UpdatesDB..." />
-                <marker date="1440356359869" expanded="true" signature="47606:48032" placeholder="CREATE TABLE..Frequencies..." />
-                <marker date="1440356359869" expanded="true" signature="49039:49208" placeholder="CREATE TABLE..RejectCodes..." />
-                <marker date="1440356359869" expanded="true" signature="50232:50386" placeholder="CREATE TABLE..AuthenticationMethod..." />
-                <marker date="1440356359869" expanded="true" signature="51452:51619" placeholder="CREATE TABLE..DoctorAuthorizers..." />
-                <marker date="1440356359869" expanded="true" signature="52646:52813" placeholder="CREATE TABLE..DefaultCallerSettings..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MaorTests.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/registratinModule/MaorTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="65" column="42" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InitiatedHTTPCommunication_V1.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/InitiatedHTTPCommunication_V1.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
+                <element signature="e#2689#2697#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -287,12 +194,8 @@
   </component>
   <component name="Git.Settings">
     <option name="UPDATE_CHANGES_POLICY" value="SHELVE" />
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GradleLocalSettings">
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -300,11 +203,8 @@
         <option value="$PROJECT_DIR$/src/main/java/RoutineModule/src/api/IUpdates.java" />
         <option value="$PROJECT_DIR$/src/main/java/registrationModule/src/controller/RegController_V1.java" />
         <option value="$PROJECT_DIR$/src/main/java/RoutineModule/src/api/IUpdates_model.java" />
-        <option value="$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java" />
         <option value="$PROJECT_DIR$/src/main/java/Utilities/PatientDetails.java" />
         <option value="db-console:/6d9b81c/0dea1675-760e-4885-a33a-65423bed7931/" />
-        <option value="$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console_8.sql" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console_9.sql" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console_10.sql" />
@@ -318,14 +218,21 @@
         <option value="$PROJECT_DIR$/src/main/java/registrationModule/src/model/RegVerify_V2.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console.sql" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console_22.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java" />
         <option value="$PROJECT_DIR$/src/main/java/EmergencyModule/src/model/EmerFilter_V1.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console_23.sql" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console_24.sql" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console_25.sql" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0dea1675-760e-4885-a33a-65423bed7931/console_26.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java" />
+        <option value="$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java" />
         <option value="$PROJECT_DIR$/src/test/java/emergency/ohad/MainTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java" />
         <option value="$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseModule/src/controller/DbController_V1.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbComm.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Utilities/AssistantFunctions.java" />
       </list>
     </option>
   </component>
@@ -352,15 +259,12 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="NamedScopeManager">
-    <order />
-  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="2" />
-    <option name="y" value="1" />
-    <option name="width" value="1357" />
-    <option name="height" value="726" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -387,6 +291,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -426,6 +332,10 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rouyineModule" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -446,10 +356,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RequestsModule" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -541,7 +447,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="RequestsModule" />
+              <option name="myItemId" value="Utilities" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -627,7 +533,63 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Erc-Server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Erc-Server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Erc-Server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Erc-Server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -761,9 +723,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -789,7 +749,124 @@
     <property name="FullScreen" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
   </component>
-  <component name="RunManager" selected="Application.MaorTests">
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/InitiatedHTTPCommunication_V1.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbComm.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/test/java/emergency/naor/MainTest.java</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
+  </component>
+  <component name="RunManager" selected="Application.MainTest">
     <configuration default="false" name="ShmulikTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -836,6 +913,14 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="Erc-Server" />
       <envs />
+      <RunnerSettings RunnerId="Cover" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Cover" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
     <configuration default="false" name="MaorTests" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -856,18 +941,35 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="Erc-Server" />
       <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
       <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -890,6 +992,111 @@
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
+    <configuration default="true" type="TomeeConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment />
+      <server-settings />
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="JAR_PATH" value="$PROJECT_DIR$/src/main/java/sqljdbc4.jar" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -909,49 +1116,6 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="myFilePath" />
-      <option name="GLUE" />
-      <option name="myNameFilter" />
-      <option name="myGeneratedName" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
@@ -989,20 +1153,6 @@
       <option name="usbDebugPort" value="7936" />
       <method />
     </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
-      <option name="BCName" value="" />
-      <option name="launcherParameters">
-        <LauncherParameters>
-          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
-          <option name="launcherType" value="OSDefault" />
-          <option name="newPlayerInstance" value="false" />
-          <option name="playerPath" value="FlashPlayerDebugger.exe" />
-        </LauncherParameters>
-      </option>
-      <option name="moduleName" value="" />
-      <option name="trusted" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -1019,104 +1169,52 @@
       </ExternalSystemSettings>
       <method />
     </configuration>
-    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
-      <module name="" />
-      <setting name="vmparams" value="" />
-      <setting name="cmdLine" value="run-app" />
-      <setting name="depsClasspath" value="false" />
-      <setting name="passParentEnv" value="true" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <setting name="launchBrowser" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="JarApplication" factoryName="JAR Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="JAR_PATH" value="$PROJECT_DIR$/src/main/java/sqljdbc4.jar" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+    <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
       <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
+      <module name="" />
       <envs />
-      <properties />
-      <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="TomeeConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
-      <deployment />
-      <server-settings />
-      <predefined_log_file id="Tomcat" enabled="true" />
-      <predefined_log_file id="Tomcat Catalina" enabled="true" />
-      <predefined_log_file id="Tomcat Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <pass-parent-envs>true</pass-parent-envs>
-      <envs />
+    <configuration default="true" type="com.intellij.database.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="Unnamed" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 7.0.55" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
-      <option name="UPDATING_POLICY" value="restart-server" />
+      <option name="UPDATING_POLICY" value="hot-swap-classes" />
       <deployment>
         <artifact name="Erc-Server:war">
           <settings>
@@ -1200,13 +1298,18 @@
     </list>
     <recent_temporary>
       <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Application.MaorTests" />
-        <item index="1" class="java.lang.String" itemvalue="Application.MainTest" />
-        <item index="2" class="java.lang.String" itemvalue="Application.ShmulikTest" />
+        <item index="0" class="java.lang.String" itemvalue="Application.MainTest" />
+        <item index="1" class="java.lang.String" itemvalue="Application.ShmulikTest" />
+        <item index="2" class="java.lang.String" itemvalue="Application.MaorTests" />
       </list>
     </recent_temporary>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <recycled_changelist date="1440351708869">
+      <option name="PATH" value="C:\Users\User\IdeaProjects\m\Erc-Server\.idea\shelf\Uncommitted_changes_before_update_operation_at_23_08_2015_20_41_[Default].patch" />
+      <option name="DESCRIPTION" value="Uncommitted changes before update operation at 23/08/2015 20:41 [Default]" />
+    </recycled_changelist>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -1225,7 +1328,7 @@
       <workItem from="1439561199039" duration="1738000" />
       <workItem from="1439666743439" duration="10194000" />
       <workItem from="1439809637053" duration="8474000" />
-      <workItem from="1440360540462" duration="1580000" />
+      <workItem from="1440339362003" duration="8017000" />
     </task>
     <task id="LOCAL-00001" summary="maccbi">
       <created>1439296185635</created>
@@ -1258,16 +1361,70 @@
       <updated>1439811615481</updated>
     </task>
     <task id="LOCAL-00006" summary="fixed: insert medication use">
-      <created>1440362078390</created>
+      <created>1440339500921</created>
       <option name="number" value="00006" />
       <option name="project" value="LOCAL" />
-      <updated>1440362078390</updated>
+      <updated>1440339500921</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fixed: insert medication use">
+      <created>1440340046468</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1440340046468</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fixed: insert medication use">
+      <created>1440340254692</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1440340254692</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fixed: insert medication use">
+      <created>1440340341801</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1440340341801</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fixed: insert medication use">
+      <created>1440343920832</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1440343920832</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fixed: insert medication use">
+      <created>1440349185705</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1440349185705</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fixed: insert medication use">
+      <created>1440349406506</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1440349406506</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fixed: insert medication use">
+      <created>1440351650245</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1440351650245</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fixed: insert medication use">
+      <created>1440352008229</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1440352008229</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fixed: insert medication use">
+      <created>1440410350002</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1440410350002</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50318000" />
+    <option name="totallyTimeSpent" value="55217000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1279,40 +1436,41 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="1" width="1357" height="726" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.4969743" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3241491" sideWeight="0.49394855" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41574803" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3241491" sideWeight="0.51230425" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3273906" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20283371" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19180088" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1669107" sideWeight="0.49896908" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23742138" sideWeight="0.48173004" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.4969743" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32232705" sideWeight="0.48769575" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32704404" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32704404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1669107" sideWeight="0.5010309" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29575402" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41732284" sideWeight="0.49092284" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="GitLabIntegration" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3267974" sideWeight="0.49701938" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3241491" sideWeight="0.48769575" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1328,9 +1486,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
     <MESSAGE value="maccbi" />
     <MESSAGE value="fixed: insert medication use" />
     <option name="LAST_COMMIT_MESSAGE" value="fixed: insert medication use" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1341,14 +1503,8 @@
           <properties class="RoutineModule.src.model.Updates_V1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java</url>
-          <line>17</line>
-          <properties />
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java</url>
-          <line>187</line>
+          <line>188</line>
           <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
@@ -1360,7 +1516,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java</url>
-          <line>684</line>
+          <line>695</line>
           <properties />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
@@ -1384,7 +1540,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java</url>
-          <line>393</line>
+          <line>408</line>
           <properties />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
@@ -1396,7 +1552,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java</url>
-          <line>515</line>
+          <line>526</line>
           <properties />
           <option name="timeStamp" value="32" />
         </line-breakpoint>
@@ -1418,11 +1574,29 @@
           <properties />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java</url>
+          <line>17</line>
+          <properties />
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/emergency/ohad/MainTest.java</url>
+          <line>219</line>
+          <properties />
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/emergency/ohad/MainTest.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="40" />
+      <option name="time" value="46" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1431,444 +1605,208 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/InitiatedHTTPCommunication_V1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/ModelsFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/controller/DbController_V1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="224" column="0" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/registratinModule/ShmulikTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1676" column="0" selection-start-line="1676" selection-start-column="0" selection-end-line="1676" selection-end-column="0" />
-          <folding>
-            <marker date="1440362046159" expanded="true" signature="3387:3425" placeholder="SELECT * FRO..missingValue..." />
-            <marker date="1440362046159" expanded="true" signature="4446:4492" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="4518:4599" placeholder="update dbo.P..." />
-            <marker date="1440362046159" expanded="true" signature="4625:4707" placeholder="update dbo.M..." />
-            <marker date="1440362046159" expanded="true" signature="10205:10416" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="11349:12811" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="13316:15120" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="15560:17000" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="18990:20150" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="22400:22516" placeholder="SELECT DISTI..P_TypeLog..." />
-            <marker date="1440362046159" expanded="true" signature="24162:24260" placeholder="UPDATE P_Com..." />
-            <marker date="1440362046159" expanded="true" signature="26652:27350" placeholder="select dbo.P..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="33283:33343" placeholder="UPDATE missi..." />
-            <marker date="1440362046159" expanded="true" signature="36146:36474" placeholder="insert into ..." />
-            <marker date="1440362046159" expanded="true" signature="38004:38122" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="38485:38565" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="38884:39020" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="39685:39752" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="40125:40180" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="40897:40992" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="41352:41488" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="42078:42205" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="42804:42939" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="43746:43847" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="44381:44521" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="44934:45091" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="45625:45726" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="46231:46371" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="51180:51322" placeholder="UPDATE P_Sta..." />
-            <marker date="1440362046159" expanded="true" signature="52094:52228" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="52816:52901" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="55109:55189" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="55317:55466" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="55852:55928" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="56303:56390" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="56516:56598" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="60550:60719" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="62344:62418" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="62915:63081" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="63589:63731" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="64233:64363" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="64910:65062" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="66615:66730" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="67488:67834" placeholder="SELECT P_Sta..P_StatusLog..." />
-            <marker date="1440362046159" expanded="true" signature="69663:69781" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="70024:70162" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="70207:70348" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="71854:72058" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="74273:74461" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="79962:80046" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="81028:81232" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="82515:82599" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="83291:83495" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="84635:84952" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="86746:86894" placeholder="UPDATE dbo.O..." />
-            <marker date="1440362046159" expanded="true" signature="87525:87657" placeholder="UPDATE dbo.O..." />
-            <marker date="1440362046159" expanded="true" signature="89158:89280" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="90304:90529" placeholder="SELECT DISTI..P_StatusLog..." />
-            <marker date="1440362046159" expanded="true" signature="91598:92192" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="93139:93261" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="94236:94453" placeholder="SELECT DISTI..P_Prescriptions..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbInit_V1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="147" column="55" selection-start-line="147" selection-start-column="45" selection-end-line="147" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/registratinModule/MaorTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/registratinModule/ShmulikTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="23" column="40" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/RequestsModule/AppTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1440362046159" expanded="true" signature="3387:3425" placeholder="SELECT * FRO..missingValue..." />
-            <marker date="1440362046159" expanded="true" signature="4446:4492" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="4518:4599" placeholder="update dbo.P..." />
-            <marker date="1440362046159" expanded="true" signature="4625:4707" placeholder="update dbo.M..." />
-            <marker date="1440362046159" expanded="true" signature="10205:10416" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="11349:12811" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="13316:15120" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="15560:17000" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="18990:20150" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="22400:22516" placeholder="SELECT DISTI..P_TypeLog..." />
-            <marker date="1440362046159" expanded="true" signature="24162:24260" placeholder="UPDATE P_Com..." />
-            <marker date="1440362046159" expanded="true" signature="26652:27350" placeholder="select dbo.P..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="33283:33343" placeholder="UPDATE missi..." />
-            <marker date="1440362046159" expanded="true" signature="36146:36474" placeholder="insert into ..." />
-            <marker date="1440362046159" expanded="true" signature="38004:38122" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="38485:38565" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="38884:39020" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="39685:39752" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="40125:40180" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="40897:40992" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="41352:41488" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="42078:42205" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="42804:42939" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="43746:43847" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="44381:44521" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="44934:45091" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="45625:45726" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="46231:46371" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="51180:51322" placeholder="UPDATE P_Sta..." />
-            <marker date="1440362046159" expanded="true" signature="52094:52228" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="52816:52901" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="55109:55189" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="55317:55466" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="55852:55928" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="56303:56390" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="56516:56598" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="60550:60719" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="62344:62418" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="62915:63081" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="63589:63731" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="64233:64363" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="64910:65062" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="66615:66730" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="67488:67834" placeholder="SELECT P_Sta..P_StatusLog..." />
-            <marker date="1440362046159" expanded="true" signature="69663:69781" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="70024:70162" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="70207:70348" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="71854:72058" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="74273:74461" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="79962:80046" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="81028:81232" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="82515:82599" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="83291:83495" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="84635:84952" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="86746:86894" placeholder="UPDATE dbo.O..." />
-            <marker date="1440362046159" expanded="true" signature="87525:87657" placeholder="UPDATE dbo.O..." />
-            <marker date="1440362046159" expanded="true" signature="89158:89280" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="90304:90529" placeholder="SELECT DISTI..P_StatusLog..." />
-            <marker date="1440362046159" expanded="true" signature="91598:92192" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="93139:93261" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="94236:94453" placeholder="SELECT DISTI..P_Prescriptions..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/VerifyDetail.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/PatientDetails.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="97" column="12" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/controller/DbController_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/api/IRoutineController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/AssistantFunctions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/CommunicationParameters.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationModule/src/registrationModule.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/registrationModule/src/model/RegVerify_V2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.1034484">
-          <caret line="611" column="63" selection-start-line="611" selection-start-column="35" selection-end-line="611" selection-end-column="63" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/api/IUpdates.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="16" column="46" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/api/IUpdates_model.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Location_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/EmsRoutine_V1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationModule/src/model/RegRequest_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/ErcConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="32" column="68" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="68" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/SendAssistant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/VerifyDetail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/RequestsModule/AppTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/PatientDetails.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="97" column="12" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommOfficialFactory_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommOfficial_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommToMail_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="29" column="38" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="196" column="5" selection-start-line="196" selection-start-column="5" selection-end-line="196" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="5" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/registratinModule/ShmulikTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/ModelsFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/RequestsModule/RequestsHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="249" column="0" selection-start-line="249" selection-start-column="0" selection-end-line="249" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/registrationModule/src/controller/RegController_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="11" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="559" column="0" selection-start-line="559" selection-start-column="0" selection-end-line="559" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommToUsersFactory_V1.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/registrationModule/src/model/RegVerify_V2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="436" column="0" selection-start-line="436" selection-start-column="0" selection-end-line="436" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/InitiatedHTTPCommunication_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/EmergencyModule/src/model/EmerFilter_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/controller/CommController_V1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
@@ -1877,193 +1815,223 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/GcmCommnication_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/InitiatedHTTPCommunication_V1.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/EmergencyModule/src/model/EmerLogger_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/registratinModule/MaorTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="42" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="9" max-vertical-offset="2941">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbInit_V1.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/model/CommToUsers_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="703" column="27" selection-start-line="703" selection-start-column="27" selection-end-line="703" selection-end-column="27" />
-          <folding>
-            <marker date="1440356359869" expanded="true" signature="2543:2778" placeholder="CREATE TABLE..Enum..." />
-            <marker date="1440356359869" expanded="true" signature="2850:3038" placeholder="CREATE TABLE..M_MedicalConditions..." />
-            <marker date="1440356359869" expanded="true" signature="3110:3489" placeholder="CREATE TABLE..M_BrandNames..." />
-            <marker date="1440356359869" expanded="true" signature="3561:3895" placeholder="CREATE TABLE..M_Indications..." />
-            <marker date="1440356359869" expanded="true" signature="3967:4160" placeholder="CREATE TABLE..M_ActiveComponents..." />
-            <marker date="1440356359869" expanded="true" signature="4232:4667" placeholder="CREATE TABLE..M_Compositions..." />
-            <marker date="1440356359869" expanded="true" signature="4757:5180" placeholder="CREATE TABLE..M_Substitutives..." />
-            <marker date="1440356359869" expanded="true" signature="5278:6007" placeholder="CREATE TABLE..P_Devices..." />
-            <marker date="1440356359869" expanded="true" signature="6079:6238" placeholder="CREATE TABLE..P_Statuses..." />
-            <marker date="1440356359869" expanded="true" signature="6310:7303" placeholder="CREATE Table..P_CommunityMembers..." />
-            <marker date="1440356359869" expanded="true" signature="7375:7596" placeholder="CREATE Table..P_Patients..." />
-            <marker date="1440356359869" expanded="true" signature="7668:8112" placeholder="CREATE TABLE..P_StatusLog..." />
-            <marker date="1440356359869" expanded="true" signature="8184:8628" placeholder="CREATE TABLE..P_DeviceLog..." />
-            <marker date="1440356359869" expanded="true" signature="8700:9168" placeholder="CREATE TABLE..P_Buddies..." />
-            <marker date="1440356359869" expanded="true" signature="9324:9875" placeholder="CREATE TABLE..P_Relations..." />
-            <marker date="1440356359869" expanded="true" signature="9947:10159" placeholder="CREATE TABLE..P_EmergencyContact..." />
-            <marker date="1440356359869" expanded="true" signature="10231:10667" placeholder="CREATE TABLE..P_TypeLog..." />
-            <marker date="1440356359869" expanded="true" signature="10739:11126" placeholder="CREATE TABLE..P_Doctors..." />
-            <marker date="1440356359869" expanded="true" signature="11198:11464" placeholder="CREATE TABLE..MembersLoginDetails..." />
-            <marker date="1440356359869" expanded="true" signature="11536:11849" placeholder="CREATE TABLE..RefreshDetailsTime..." />
-            <marker date="1440356359869" expanded="true" signature="11921:12819" placeholder="CREATE TABLE..RegistrationFields..." />
-            <marker date="1440356359869" expanded="true" signature="12891:13042" placeholder="CREATE TABLE..ServerUserNames..." />
-            <marker date="1440356359869" expanded="true" signature="13114:13517" placeholder="CREATE TABLE..P_Supervision..." />
-            <marker date="1440356359869" expanded="true" signature="13589:13760" placeholder="CREATE TABLE..P_Medications..." />
-            <marker date="1440356359869" expanded="true" signature="13832:14391" placeholder="CREATE TABLE..P_Prescriptions..." />
-            <marker date="1440356359869" expanded="true" signature="14463:14987" placeholder="CREATE TABLE..P_Diagnosis..." />
-            <marker date="1440356359869" expanded="true" signature="15058:15201" placeholder="CREATE TABLE..RegIDs..." />
-            <marker date="1440356359869" expanded="true" signature="15238:15575" placeholder="CREATE TABLE..Availability..." />
-            <marker date="1440356359869" expanded="true" signature="15612:15761" placeholder="CREATE TABLE..HowManyToSendInEmerEvent..." />
-            <marker date="1440356359869" expanded="true" signature="17933:18470" placeholder="CREATE TABLE..P_Diagnosis..." />
-            <marker date="1440356359869" expanded="true" signature="19564:19761" placeholder="CREATE TABLE..MP_Specialization..." />
-            <marker date="1440356359869" expanded="true" signature="20793:21385" placeholder="CREATE TABLE..MP_Certification..." />
-            <marker date="1440356359869" expanded="true" signature="22422:22683" placeholder="CREATE TABLE..MP_MedicalPersonnel..." />
-            <marker date="1440356359869" expanded="true" signature="23710:24329" placeholder="CREATE TABLE..MP_Affiliation..." />
-            <marker date="1440356359869" expanded="true" signature="25352:25540" placeholder="CREATE TABLE..MP_Positions..." />
-            <marker date="1440356359869" expanded="true" signature="26571:27458" placeholder="CREATE TABLE..MP_Organizations..." />
-            <marker date="1440356359869" expanded="true" signature="28508:28916" placeholder="CREATE TABLE..B_DecisionGivenAmbulaneETA..." />
-            <marker date="1440356359869" expanded="true" signature="29965:30155" placeholder="CREATE TABLE..O_ActionTypes..." />
-            <marker date="1440356359869" expanded="true" signature="31199:32438" placeholder="CREATE TABLE..O_EmergencyEventResponse..." />
-            <marker date="1440356359869" expanded="true" signature="33461:33663" placeholder="CREATE TABLE..P_RelationTypes..." />
-            <marker date="1440356359869" expanded="true" signature="34703:34918" placeholder="CREATE TABLE..MP_OrganizationTypes..." />
-            <marker date="1440356359869" expanded="true" signature="35931:36112" placeholder="CREATE TABLE..O_EventStatuses..." />
-            <marker date="1440356359869" expanded="true" signature="37129:38490" placeholder="CREATE TABLE..O_EmergencyEvents..." />
-            <marker date="1440356359869" expanded="true" signature="39519:40024" placeholder="CREATE TABLE..O_EmergencyEventActions..." />
-            <marker date="1440356359869" expanded="true" signature="41055:42016" placeholder="CREATE TABLE..O_EmergencyMedicationUse..." />
-            <marker date="1440356359869" expanded="true" signature="43041:43308" placeholder="CREATE TABLE..O_AutomaticDispensers..." />
-            <marker date="1440356359869" expanded="true" signature="46376:46599" placeholder="CREATE TABLE..UpdatesDB..." />
-            <marker date="1440356359869" expanded="true" signature="47606:48032" placeholder="CREATE TABLE..Frequencies..." />
-            <marker date="1440356359869" expanded="true" signature="49039:49208" placeholder="CREATE TABLE..RejectCodes..." />
-            <marker date="1440356359869" expanded="true" signature="50232:50386" placeholder="CREATE TABLE..AuthenticationMethod..." />
-            <marker date="1440356359869" expanded="true" signature="51452:51619" placeholder="CREATE TABLE..DoctorAuthorizers..." />
-            <marker date="1440356359869" expanded="true" signature="52646:52813" placeholder="CREATE TABLE..DefaultCallerSettings..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RequestsModule/RequestsHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.137931">
-          <caret line="341" column="27" selection-start-line="341" selection-start-column="21" selection-end-line="341" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="9" max-vertical-offset="510">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/controller/DbController_V1.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/CommunicationModule/src/controller/CommController_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="218" column="0" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbComm.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/EmsRoutine_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="459">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/model/Updates_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5862069" vertical-offset="1785" max-vertical-offset="3740">
+          <caret line="113" column="13" selection-start-line="113" selection-start-column="13" selection-end-line="113" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbComm_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.6551723">
-          <caret line="1748" column="21" selection-start-line="1748" selection-start-column="21" selection-end-line="1748" selection-end-column="21" />
+        <state vertical-scroll-proportion="-8.068966" vertical-offset="7552" max-vertical-offset="36516">
+          <caret line="471" column="43" selection-start-line="471" selection-start-column="43" selection-end-line="471" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/model/DbInit_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2397" max-vertical-offset="21403">
+          <caret line="147" column="52" selection-start-line="147" selection-start-column="45" selection-end-line="147" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/registratinModule/MaorTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="2839">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/registratinModule/ShmulikTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="591" max-vertical-offset="1020">
+          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/6d9b81c/0dea1675-760e-4885-a33a-65423bed7931/socmedserver.dbo.MembersLoginDetails">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/6d9b81c/0dea1675-760e-4885-a33a-65423bed7931/socmedserver.dbo.P_Supervision">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/6d9b81c/0dea1675-760e-4885-a33a-65423bed7931/socmedserver.dbo.RegistrationFields">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/6d9b81c/0dea1675-760e-4885-a33a-65423bed7931/socmedserver.dbo.P_CommunityMembers">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/RoutineModule/src/controller/RoutineController_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.7586207" vertical-offset="2786" max-vertical-offset="6103">
+          <caret line="184" column="0" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
           <folding>
-            <marker date="1440362046159" expanded="true" signature="3387:3425" placeholder="SELECT * FRO..missingValue..." />
-            <marker date="1440362046159" expanded="true" signature="4446:4492" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="4518:4599" placeholder="update dbo.P..." />
-            <marker date="1440362046159" expanded="true" signature="4625:4707" placeholder="update dbo.M..." />
-            <marker date="1440362046159" expanded="true" signature="10205:10416" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="11349:12811" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="13316:15120" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="15560:17000" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="18990:20150" placeholder="SELECT DISTI..P_CommunityMembers..." />
-            <marker date="1440362046159" expanded="true" signature="22400:22516" placeholder="SELECT DISTI..P_TypeLog..." />
-            <marker date="1440362046159" expanded="true" signature="24162:24260" placeholder="UPDATE P_Com..." />
-            <marker date="1440362046159" expanded="true" signature="26652:27350" placeholder="select dbo.P..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="33283:33343" placeholder="UPDATE missi..." />
-            <marker date="1440362046159" expanded="true" signature="36146:36474" placeholder="insert into ..." />
-            <marker date="1440362046159" expanded="true" signature="38004:38122" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="38485:38565" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="38884:39020" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="39685:39752" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="40125:40180" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="40897:40992" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="41352:41488" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="42078:42205" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="42804:42939" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="43746:43847" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="44381:44521" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="44934:45091" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="45625:45726" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="46231:46371" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="51180:51322" placeholder="UPDATE P_Sta..." />
-            <marker date="1440362046159" expanded="true" signature="52094:52228" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="52816:52901" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="55109:55189" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="55317:55466" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="55852:55928" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="56303:56390" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="56516:56598" placeholder="DELETE FROM ..." />
-            <marker date="1440362046159" expanded="true" signature="60550:60719" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="62344:62418" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="62915:63081" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="63589:63731" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="64233:64363" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="64910:65062" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="66615:66730" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="67488:67834" placeholder="SELECT P_Sta..P_StatusLog..." />
-            <marker date="1440362046159" expanded="true" signature="69663:69781" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="70024:70162" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="70207:70348" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="71854:72058" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="74273:74461" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="79962:80046" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="81028:81232" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="82515:82599" placeholder="UPDATE O_Eme..." />
-            <marker date="1440362046159" expanded="true" signature="83291:83495" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="84635:84952" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="86746:86894" placeholder="UPDATE dbo.O..." />
-            <marker date="1440362046159" expanded="true" signature="87525:87657" placeholder="UPDATE dbo.O..." />
-            <marker date="1440362046159" expanded="true" signature="89158:89280" placeholder="INSERT INTO ..." />
-            <marker date="1440362046159" expanded="true" signature="90304:90529" placeholder="SELECT DISTI..P_StatusLog..." />
-            <marker date="1440362046159" expanded="true" signature="91598:92192" placeholder="SELECT DISTI..P_Patients..." />
-            <marker date="1440362046159" expanded="true" signature="93139:93261" placeholder="SELECT DISTI..O_EmergencyEvents..." />
-            <marker date="1440362046159" expanded="true" signature="94236:94453" placeholder="SELECT DISTI..P_Prescriptions..." />
+            <element signature="e#2689#2697#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/rouyineModule/ShmulikTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <marker date="1440351711589" expanded="true" signature="351:366" placeholder="&lt;~&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/controller/DbController_V1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6" max-vertical-offset="4471">
+          <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-31.655172" vertical-offset="0" max-vertical-offset="1462">
+          <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseModule/src/api/IDbComm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.275862" vertical-offset="777" max-vertical-offset="1326">
+          <caret line="56" column="95" selection-start-line="56" selection-start-column="95" selection-end-line="56" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/VerifyDetail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1785">
+          <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/ParametersVerifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="510">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Utilities/AssistantFunctions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="318" max-vertical-offset="1037">
+          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+          <folding>
+            <element signature="e#1115#1131#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/EmergencyModule/src/controller/EmerController_V1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38055557">
-          <caret line="459" column="55" selection-start-line="459" selection-start-column="55" selection-end-line="459" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.33519554" vertical-offset="11304" max-vertical-offset="15895">
+          <caret line="686" column="41" selection-start-line="686" selection-start-column="41" selection-end-line="686" selection-end-column="41" />
           <folding>
-            <element signature="e#23354#23369#0" expanded="true" />
+            <element signature="e#30352#30360#0" expanded="true" />
+            <element signature="e#31229#31245#0" expanded="true" />
+            <element signature="e#31506#31538#0" expanded="true" />
+            <element signature="e#31625#31633#0" expanded="true" />
+            <element signature="e#32037#32052#0" expanded="true" />
+            <element signature="e#32303#32311#0" expanded="true" />
+            <element signature="e#32909#32925#0" expanded="true" />
+            <element signature="e#33902#33910#0" expanded="true" />
+            <element signature="e#34011#34045#0" expanded="true" />
+            <element signature="e#34966#34974#0" expanded="true" />
           </folding>
         </state>
       </provider>
