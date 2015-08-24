@@ -440,6 +440,16 @@ public class EmerController_V1 implements IEmerController {
     public void receiveArrivalTime(HashMap<String,String> data)
     {
         logger.log(Level.INFO, "in receiveArrivalTime. data = " + data);
+        String eventId = data.get("event_id");
+        // Remove all assistants that has already cancelled their arrival
+        List<Integer> cancelledAssistants = dbController.getAllAssistantsByEventId(Integer.parseInt(data.get("event_id")), 2);
+        cancelledAssistants.addAll(dbController.getAllAssistantsByEventId(Integer.parseInt(eventId), 3));
+        ArrayList<String> caToString = new ArrayList<>();
+        for (int cmid : cancelledAssistants){
+            data.remove(Integer.toString(cmid));
+            caToString.add(Integer.toString(cmid));
+        }
+        stopFollow(eventId, caToString);
         emergencyLogger.handleReceivingUserArrivalTime(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base about the location and arrival times of an assistant
         dbController.updateAssistantArrivalTimesAndLocation(data);

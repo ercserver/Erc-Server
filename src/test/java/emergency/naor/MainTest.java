@@ -12,7 +12,9 @@ import org.json.JSONArray;
 import registrationModule.src.controller.RegController_V1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by naor on 20/6/2015.
@@ -26,8 +28,9 @@ public class MainTest {
         String event_id = "1125";
         testNaor9(cmidList,event_id);
 */
+
         //testNaor10("10042","1127");
-        testNaor11("10046","a1234","1198");
+        testNaor11("10046", "a1234", "1198");
       //  DbComm_V1 db = new DbComm_V1();
       //  db.closeEvent(1003, "FINISHED");
 //      testNaor7("10017", "ff", "1077");
