@@ -691,7 +691,8 @@ public class DbComm_V1 implements IDbComm_model {
         // Create the sql query
         String sql = "UPDATE " + tableName + " SET " + columnToUpdate + "=? WHERE " + whereString;
         //System.out.println(sql);
-        //logger.info("In updateTable. sql = " + sql);
+        logger.info("In updateTable. sql = " + sql);
+        logger.info("col = " + columnToUpdate + " value = " + newValue);
         try {
             if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();

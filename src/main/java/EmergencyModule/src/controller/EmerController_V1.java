@@ -446,16 +446,20 @@ public class EmerController_V1 implements IEmerController {
         List<Integer> cancelledAssistants = dbController.getAllAssistantsByEventId(Integer.parseInt(data.get("event_id")), 2);
         cancelledAssistants.addAll(dbController.getAllAssistantsByEventId(Integer.parseInt(eventId), 3));
         ArrayList<String> caToString = new ArrayList<>();
+        logger.log(Level.INFO, "in receiveArrivalTime.cancelledAssistants = " + cancelledAssistants);
         for (int cmid : cancelledAssistants){
             data.remove(Integer.toString(cmid));
             caToString.add(Integer.toString(cmid));
         }
         stopFollow(eventId, caToString);
+        logger.log(Level.INFO, "in receiveArrivalTime. data after stopFollow = " + data);
         emergencyLogger.handleReceivingUserArrivalTime(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base about the location and arrival times of an assistant
         dbController.updateAssistantArrivalTimesAndLocation(data);
         // Updates the EMS
-        HashMap<String,String> assistDetails = dbController.getAssistDetails(data.get("community_member_id"), data.get("event_id"));
+        HashMap<String,String> assistDetails = dbController.getAssistDetails(/*data.get("community_member_id")*/
+                dbController.getCmidByPatientID(data.get("patient_id")), data.get("event_id"));
+        logger.info("assistDetails = " + assistDetails);
         String eta = (assistDetails.get("transformation_mean").equals("0")) ?
                 data.get("eta_by_foot") : data.get("eta_by_car");
         updateOrAddAssistantToEMS(dbController.getPatientIDByCmid(data.get("community_member_id")),
@@ -487,9 +491,9 @@ public class EmerController_V1 implements IEmerController {
                 user.get("medication_num")).get(1).get("medication_name");
 
         updateOrAddToEms.put("medication_name",medName);
-        updateOrAddToEms.put("dosage",user.get("dosage"));
-        updateOrAddToEms.put("mobile_phone_number",user.get("mobile_phone_number"));
-        updateOrAddToEms.put("patient_id",patientId);
+        updateOrAddToEms.put("dosage", user.get("dosage"));
+        updateOrAddToEms.put("mobile_phone_number", user.get("mobile_phone_number"));
+        updateOrAddToEms.put("patient_id", patientId);
         updateOrAddToEms.put("event_id", eventId);
         updateOrAddToEms.put("eta", eta);
         updateOrAddToEms.put("location_remark", locationRemark);
@@ -549,10 +553,16 @@ public class EmerController_V1 implements IEmerController {
             String eventID = toReject.get("event_id");
             toReject.remove("event_id");
             //Reject the assistants
-            rejectAssistants(toReject, eventID,"EMS services decided help is no longer required");
+            rejectAssistants(new HashMapBuilder<String, String>()
+                    .put(toReject.get("patient_id"), null).build(),
+                    eventID,"EMS services decided help is no longer required");
             //stop following
-            ArrayList<String> cmidsToStopFollow = generateCmidListFromPatientsHashMap(toReject);
-            stopFollow(eventID,cmidsToStopFollow);
+            logger.info("before cmidsToStopFollow. toReject = " + toReject);
+            //ArrayList<String> cmidsToStopFollow = generateCmidListFromPatientsHashMap(toReject);
+            //logger.info("cmidsToStopFollow = " + cmidsToStopFollow);
+            ArrayList<String> stop = new ArrayList<>();
+            stop.add(toReject.get("patient_id"));
+            stopFollow(eventID, stop);
         }
     }
 
@@ -921,8 +931,9 @@ public class EmerController_V1 implements IEmerController {
         req.put("RequestID", "stopFollow");
         req.put("event_id", eventId);
         HashMap<Integer, HashMap<String, String>> response = new  HashMap<Integer, HashMap<String, String>>();
-        for(int i = 0; i < cmids.size(); i++)
+        for(int i = 0; i < cmids.size(); i++) {
             req.put(cmids.get(i), "null");
+        }
         response.put(1, req);
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("GIS",sendTo);
