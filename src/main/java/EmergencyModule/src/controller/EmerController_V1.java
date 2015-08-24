@@ -121,6 +121,7 @@ public class EmerController_V1 implements IEmerController {
         response.put("event_id", data.get("event_id"));
         response.put("x", data.get("x"));
         response.put("y", data.get("y"));
+        response.put("community_member_id", data.get("community_member_id"));
         //add the GIS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("GIS", sendTo);
