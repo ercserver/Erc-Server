@@ -121,6 +121,7 @@ public class EmerController_V1 implements IEmerController {
         response.put("event_id", data.get("event_id"));
         response.put("x", data.get("x"));
         response.put("y", data.get("y"));
+        response.put("community_member_id", data.get("community_member_id"));
         //add the GIS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("GIS", sendTo);
@@ -440,6 +441,16 @@ public class EmerController_V1 implements IEmerController {
     public void receiveArrivalTime(HashMap<String,String> data)
     {
         logger.log(Level.INFO, "in receiveArrivalTime. data = " + data);
+        String eventId = data.get("event_id");
+        // Remove all assistants that has already cancelled their arrival
+        List<Integer> cancelledAssistants = dbController.getAllAssistantsByEventId(Integer.parseInt(data.get("event_id")), 2);
+        cancelledAssistants.addAll(dbController.getAllAssistantsByEventId(Integer.parseInt(eventId), 3));
+        ArrayList<String> caToString = new ArrayList<>();
+        for (int cmid : cancelledAssistants){
+            data.remove(Integer.toString(cmid));
+            caToString.add(Integer.toString(cmid));
+        }
+        stopFollow(eventId, caToString);
         emergencyLogger.handleReceivingUserArrivalTime(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base about the location and arrival times of an assistant
         dbController.updateAssistantArrivalTimesAndLocation(data);
@@ -457,6 +468,10 @@ public class EmerController_V1 implements IEmerController {
     // If they don't have that patient in
     //that event - it's an addition. If they do - it's an update.
     private void updateOrAddAssistantToEMS(String patientId, String eventId, String eta, String locationRemark, String x, String y) {
+        //prevent re-adding assistants that were rejected
+        if(!(dbController.getAssistDetails(dbController.getCmidByPatientID(patientId),eventId).get("response_type")).equals("1")){
+            return;
+        }
         //generate
         HashMap<String,String> updateOrAddToEms = new HashMap<String,String>();
         String patientCmid = dbController.getCmidByPatientID(patientId);
@@ -522,7 +537,7 @@ public class EmerController_V1 implements IEmerController {
     public void rejectAssistantsByEMS(HashMap<String, String> toReject) {
         // Verify parameters
         ParametersVerifier verifier = new ParametersVerifier(toReject);
-        if (!verifier.verify("password", "community_member_id", "RequestID", "event_id")){
+        if (!verifier.verify("password", "community_member_id", "RequestID", "event_id")){//
             return;
         }
         //Verify credentials
@@ -690,7 +705,7 @@ public class EmerController_V1 implements IEmerController {
         String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
         String eventID = data.get("event_id");
         //Update the assistant's status on the DB and inform. "0" to inform EMS here.
-        dbController.removeAssistantFromEvent(eventID, data.get("community_member_id"),true);//
+        dbController.removeAssistantFromEvent(eventID, data.get("community_member_id"),true);
         removeAssistant(patientID, eventID, 0, null);
     }
 
@@ -833,9 +848,6 @@ public class EmerController_V1 implements IEmerController {
         sendTo = assistantFuncs.addReceiver(where, sendTo);
         initiatedOneObjectRequest(request, sendTo);
     }
-
-
-
 
     private void initiatedOneObjectRequest(HashMap<String, String> request,ArrayList<String> URLs){
         HashMap<Integer,HashMap<String,String>> dataToSend = new HashMap<Integer,HashMap<String,String>>();
