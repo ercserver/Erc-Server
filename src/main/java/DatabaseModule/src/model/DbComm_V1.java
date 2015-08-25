@@ -4,7 +4,6 @@ package DatabaseModule.src.model;
 import DatabaseModule.src.api.IDbComm_model;
 import Utilities.ErcConfiguration;
 import Utilities.HashMapBuilder;
-import net.sourceforge.jtds.jdbc.DateTime;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,8 +12,8 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 /*
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -1986,7 +1985,7 @@ public class DbComm_V1 implements IDbComm_model {
             }
 
 
-            if (num < -1){
+            if (num < 0){
                 // Insert new action type
                 PreparedStatement stmt = connection.prepareStatement("insert dbo.O_ActionTypes values (?)", Statement.RETURN_GENERATED_KEYS);
                 stmt.executeUpdate();

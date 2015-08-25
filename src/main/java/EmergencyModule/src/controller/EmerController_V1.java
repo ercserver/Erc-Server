@@ -13,8 +13,8 @@ import Utilities.ParametersVerifier;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 16/05/2015.
@@ -441,6 +441,11 @@ public class EmerController_V1 implements IEmerController {
     public void receiveArrivalTime(HashMap<String,String> data)
     {
         logger.log(Level.INFO, "in receiveArrivalTime. data = " + data);
+        if (!data.containsKey("patient_id")){
+            logger.info("No assistants");
+            return;
+        }
+
         String eventId = data.get("event_id");
         // Remove all assistants that has already cancelled their arrival
         List<Integer> cancelledAssistants = dbController.getAllAssistantsByEventId(Integer.parseInt(data.get("event_id")), 2);
