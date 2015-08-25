@@ -1968,7 +1968,7 @@ public class DbComm_V1 implements IDbComm_model {
 
     public void updateLogs(String eventId, String actionTypeName, String descr)
     {
-        //logger.log(Level.INFO, "In updateLogs");
+        logger.log(Level.INFO, String.format("In updateLogs. params = %s, %s, %s", eventId, actionTypeName, descr));
         HashMap<String, String> cond = new HashMap<String, String>();
         cond.put("action_type_name", actionTypeName);
 
@@ -1984,17 +1984,18 @@ public class DbComm_V1 implements IDbComm_model {
                 //pass
             }
 
-
+            logger.info("action num " + ((num < 0) ? "doesn't" : "" + "exists"));
             if (num < 0){
                 // Insert new action type
                 PreparedStatement stmt = connection.prepareStatement("insert dbo.O_ActionTypes values (?)", Statement.RETURN_GENERATED_KEYS);
+                stmt.setObject(1, actionTypeName);
                 stmt.executeUpdate();
 
                 ResultSet rs = stmt.getGeneratedKeys();
                 if (rs.next()){
                     num = rs.getInt(1);
                 }
-
+                logger.info("new action num : " + num);
             }
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO O_EmergencyEventActions  " +
                     "(event_id, action_type_num, more_description) VALUES (?,?,?)");
