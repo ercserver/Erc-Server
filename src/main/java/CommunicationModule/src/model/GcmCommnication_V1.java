@@ -7,8 +7,8 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by NAOR on 05/04/2015.
@@ -26,7 +26,7 @@ public class GcmCommnication_V1 extends CommToUsers_V1 {
     }
 
     public JSONArray sendResponse () {
-        logger.log(Level.INFO, "In gcm.sendResponse");
+        logger.log(Level.INFO, "In gcm.sendResponse. message = " + objToSend + " To: " + targets);
         Sender sender = new Sender(SENDER_ID);
         Message message = new Message.Builder()
 

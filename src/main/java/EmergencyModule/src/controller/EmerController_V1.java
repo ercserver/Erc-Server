@@ -132,7 +132,7 @@ public class EmerController_V1 implements IEmerController {
         //generate required data and approach the EMS
         HashMap<String,String> eventDetails = dbController.getEventDetails(data.get("event_id"));
         data.put("event_id", eventDetails.get("event_id"));
-        data.put("location_remark",eventDetails.get("location_remark"));
+        data.put("location_remark",data.get("location_remark"));
         data.put("x", eventDetails.get("x"));
         data.put("y", eventDetails.get("y"));
         String cmid = dbController.getCmidByPatientID(eventDetails.get("patient_id"));
@@ -767,25 +767,29 @@ public class EmerController_V1 implements IEmerController {
     @Override
     public void emsTakeover(HashMap<String, String> data) {
         // Check params
+        String eventId = data.get("event_id");
         if(null != data.get("status")){
-            cancelEvent(data.get("event_id"), "FINISHED");
+            cancelEvent(eventId, "FINISHED");
             //close the event within the GIS
-            cancelEventOnGISorEMS(data.get("event_id"), "GIS");
+            cancelEventOnGISorEMS(eventId, "GIS");
             // Close the event within the app of the patient
-            sendEventEndingToApp(data.get("event_id"));
+            sendEventEndingToApp(eventId);
             return;
         }
         //If the EMS wants to change the radius - ask for locations for GIS with the new radius
         //The Logic of the receiving of locations should handle the
         // addition/removal of users from the EMS and DB
         else if(null != data.get("radius")){
+           // HashMap<String, String> eventDetails = dbController.getEventDetails(eventId);
+
             //generate request
             HashMap<String,String>  request = new HashMap<String,String>();
             request.put("radius",data.get("radius"));
-            request.put("event_id",data.get("event_id"));
+            request.put("event_id", eventId);
             //Handle radius change logs
             emergencyLogger.changedRadius(request);
-            request.put("RequestID","AroundLocation");
+            request.put("RequestID", "AroundLocation");
+
 
             //send request to GIS
             ArrayList<String> sendTo = new ArrayList<String>();

@@ -9,7 +9,6 @@ import RequestsModule.utils.TestGCM;
 import RequestsModule.utils.TestNewDB;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -130,8 +129,8 @@ public class RequestsHandler {
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value = "/test-gcm")
-    public @ResponseBody String returnGCM() {
-        new TestGCM().gcmTest();
+    public @ResponseBody String returnGCM(@RequestParam int cmid) {
+        new TestGCM().gcmTest(cmid);
         return "gcm sent";
     }
 
