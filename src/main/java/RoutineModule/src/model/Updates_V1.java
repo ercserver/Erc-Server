@@ -14,11 +14,15 @@ import java.util.*;
  */
 public class Updates_V1 implements IUpdates_model {
 
+    //How to connect to database
     private IDbController dbController = null;
+
+    //this class Contain general functions for all processes
     private CommunicationParameters comParam = null;
     private PatientDetails memberDetail = null;
     private SendAssistant sendAssist = null;
 
+    //init all helper class
     public Updates_V1() {
         ModelsFactory models = new ModelsFactory();
         dbController = models.determineDbControllerVersion();
@@ -29,21 +33,21 @@ public class Updates_V1 implements IUpdates_model {
 
     public HashMap<Integer,HashMap<String,String>> getFieldsForUpdate(HashMap<String, String> data)
     {
-
-                //new HashMap<Integer,HashMap<String,String>>();
         int cmid = Integer.parseInt(data.get("community_member_id"));
-
+        //Get the fields for registration
         HashMap<Integer,HashMap<String,String>> dataToSend =
                 dbController.getRegistrationFields(dbController.getUserType(data.get("community_member_id")));
-
+        //Getting the data for the user
         HashMap<String,String> userD = memberDetail.getUserByCmid(cmid);
         dataToSend.get(1).put("RequestID", "updateDetails");
+
+        //Passes all fields for registration and for each one adds to the value that exists for that user
         for (Map.Entry<Integer,HashMap<String,String>> fields : dataToSend.entrySet())
         {
             HashMap<String, String> field = fields.getValue();
-            //field.containsKey()
             String name = field.get("field_name");
             String value = userD.get(name);
+            //add value to return
             field.put("value",value);
         }
         return dataToSend;
@@ -51,12 +55,8 @@ public class Updates_V1 implements IUpdates_model {
 
     @Override
     public HashMap<String, String> getCommunicationParameters(int cmid,String type) {
-       // HashMap<Integer,HashMap<String, String>> ret =
-       //         new HashMap<Integer,HashMap<String, String>>();
-
         HashMap<String, String> ret = new HashMap<String, String>();
-
-
+        //According resulting code returns the callback parameter
         if (type.equals("setConnectServerFrequency"))
         {
             ret.putAll(comParam.getFrequency("'connect_server_frequency'"));
@@ -67,6 +67,8 @@ public class Updates_V1 implements IUpdates_model {
         }
 
         String reg = memberDetail.getRegId(cmid);
+
+        //If a user is kind of sick adding more parameters to send
         if (memberDetail.ifTypeISPatientOrGuardian(reg)) {
             if (type.equals("setLocationFrequency")) {
                 ret.putAll(comParam.getFrequency("'location_frequency'"));
@@ -84,7 +86,7 @@ public class Updates_V1 implements IUpdates_model {
         return sendAssist.buildBasicRespone(message,code);
     }
 
-
+    //Updating data in a given case does not need authentication
     public void updateUserDetails(int cmid,String col,String value) {
             HashMap<String, String> member = new HashMap<String, String>();
             member.put(col, "'" + value + "'");
@@ -92,7 +94,8 @@ public class Updates_V1 implements IUpdates_model {
             dbController.updateUserDetails(member);
     }
 
-
+    //On comparing dates and returns
+    //true if the first one larger than the other plus refreseFreq and the other false
     private boolean compareDate(Date d1,Date d2,int refreseFreq )
     {
         long diff = d1.getTime() - d2.getTime();
@@ -101,18 +104,24 @@ public class Updates_V1 implements IUpdates_model {
     }
 
     @Override
+    //Checks should refresh the field
     public boolean FieldneedRefresh(Map.Entry<Integer, HashMap<String, String>> objs) {
         HashMap<String, String> obj = objs.getValue();
         Calendar timeRef = Calendar.getInstance();
+        //d1 is a current time
         Date d1 = new Date(String.valueOf(timeRef.getTime()));
         String lastUpdate = obj.get("last_update_time");
+        //d2 is  last_update_time of field
         Date d2 = new Date(lastUpdate);
+        //How often should update
         int timeToRefresh = Integer.parseInt(obj.get("refresh_time"));
         return compareDate(d1,d2,timeToRefresh);
     }
 
     @Override
+
     public boolean checkIfWeFinishWithOnePatient(int i, int cmid, int tempCmid,Map.Entry<Integer, HashMap<String, String>> objs) {
+        //if is a first time init cmid
         if (i == 1) {
             cmid = objs.getKey();
             tempCmid = cmid;
@@ -121,6 +130,7 @@ public class Updates_V1 implements IUpdates_model {
         {
             tempCmid = objs.getKey();
         }
+        //check if old cmid equal to current cmid
         return tempCmid == cmid;
     }
 
@@ -128,18 +138,21 @@ public class Updates_V1 implements IUpdates_model {
     public HashMap<String, String> CheckIfNeedVerifyAndUpdateOrSendToVer(int cmid,HashMap<String, String> data) {
         boolean needVer = false;
         String reg = data.get("redId");
-        //TODO- how i get user type
+        // get user type from db
         int type = dbController.getUserType(String.valueOf(cmid));
 
-        data.remove("user_type");// ?????
-        data.remove("redId"); // ???
+        data.remove("user_type");
+        data.remove("redId");
+
         Set<String> keys = data.keySet();
+        // pass all over field
         for (String fieldName : keys) {
             //set  to urget to 0
             dbController.updateUrgentInRefreshDetailsTime
                     (cmid, data.get(fieldName), 0);
             HashMap<String, String> filedData = dbController.getFieldDetails(fieldName,
                     String.valueOf(type) );
+            //Checking the settings of the field should he Verification
             if (filedData.get("needs_verification").equals("1")) {
                 needVer = true;
             } else {
@@ -159,7 +172,9 @@ public class Updates_V1 implements IUpdates_model {
         Set<String> keys = data.keySet();
         keys.remove("community_member_id");
         keys.remove("password");
+        // pass all over field
         for (String fieldName : keys) {
+            //set  to urget to 1
             dbController.updateUrgentInRefreshDetailsTime
                     (cmid, fieldName, 1);
         }
@@ -174,6 +189,7 @@ public class Updates_V1 implements IUpdates_model {
 
     @Override
     public HashMap<String,String> forgotPassword(String email, HashMap<String, String> userD,int authMethod) {
+        //create data to send for   forgot password
         String first = userD.get("first_name");
         String last =  userD.get("last_name");
         HashMap<String,String> data = new HashMap<String,String>();
@@ -187,6 +203,7 @@ public class Updates_V1 implements IUpdates_model {
     }
 
     private String generateMessgeForForgotPass(HashMap<String, String> userD) {
+        //create messge for forgot password
         String first = userD.get("first_name");
         String last =  userD.get("last_name");
         return "Hi " + first + " " + last + "\n" + "Your password in Socmed App is: " + userD.get("password") +
@@ -197,6 +214,8 @@ public class Updates_V1 implements IUpdates_model {
 
     private String generateMessgeForVerfictionDoctor(HashMap<String, String> memberDetails)
     {
+
+        //create messge for verfiction doctor
         String firstName = memberDetails.get("first_name");
         String lastName = memberDetails.get("last_name");
         String licenseNumber = memberDetails.get("doc_license_number");
