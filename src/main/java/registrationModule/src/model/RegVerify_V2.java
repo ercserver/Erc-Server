@@ -10,8 +10,8 @@ import registrationModule.src.api.IRegVerify_model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by User on 29/04/2015.
@@ -59,7 +59,6 @@ public class RegVerify_V2 implements IRegVerify_model {
         if (ifTypeISDoctor(code)) {
             //return doctorsAuthorizer details
             return dbController.getEmailOfDoctorsAuthorizer(data.get("state"));
-            //return generateMailForVerificationDoctor(data, doctorsAuthorizer);
         }
         return null;
     }
@@ -88,52 +87,6 @@ public class RegVerify_V2 implements IRegVerify_model {
                 "Socmed administration team.";
     }
 
-/*
-    private ArrayList<String> generateMailForVerificationDoctor(HashMap<String, String> memberDetails,
-                                                                HashMap<String, String> doctorsAuthorizer){
-
-*/
-
-        /*if (key.equals("specialization_description") || key.equals("org_house")
-                || key.equals("organization_description") || key.equals("doc_license_number")
-                || key.equals("web_site") || key.equals("org_city") ||
-                key.equals("org_street") ||  key.equals("org_state") ||
-                key.equals("remarks") || key.equals("organization_type_description") ||
-                key.equals("position_description") || key.equals("org_phone_number") ||
-                key.equals("org_city") || key.equals("email_address_of_organization")
-                || key.equals("fax_number")
-                )*/
-
-
-
-/*
-        String emailAddress = doctorsAuthorizer.get("email_address");
-        String emailMessage  = "Dear authorizer,\n" +
-                "Please confirm/reject the following doctor be a valid doctor:\n" +
-                "First Name: " + firstName + ".\n" +
-                "Last Name: " + lastName + ".\n" +
-                "Licence Number: " + licenseNumber + ".\n\n" +
-                "Workplace details: " + "\n" +
-                "   organization description: " +
-                    memberDetails.equals("organization_description") + ".\n" +
-                "   organization type description" +
-                    memberDetails.equals("organization_type_description") + ".\n" +
-                "   position_description: " + memberDetails.equals("position_description") + "\n" +
-                "   email address of organization: "  +
-                    memberDetails.equals("email_address_of_organization") +  ".\n" +
-                "   org phone number: " + memberDetails.equals("org_phone_number") +  ".\n" +
-                "Thank you,\n" +
-                "Socmed administration team.";
-        String subject = "Doctor Authorization for Socmed App";
-
-        ArrayList<String> emailDetails = new ArrayList<String>();
-        emailDetails.add(emailAddress);
-        emailDetails.add(emailMessage);
-        emailDetails.add(subject);
-
-        return emailDetails;
-    }
-*/
     private boolean ifTypeISDoctor(String regid) {
         return regid.equals("0");
     }
@@ -192,12 +145,6 @@ public class RegVerify_V2 implements IRegVerify_model {
         return null;
     }
 
-    /*
-    public boolean statusIsEqualTo(String s,HashMap <String,String> details) {
-
-        return details.get("status_num").equals(s);
-    }*/
-
     /***********for func resendMail*********************/
     public String getRegId(int cmid)
     {
@@ -205,8 +152,10 @@ public class RegVerify_V2 implements IRegVerify_model {
         String reg = "0";
         for (Map.Entry<Integer,HashMap<String,String>> objs : reg_id.entrySet()){
             HashMap<String,String> obj = objs.getValue();
+            //return reg id from data
             reg = obj.get("reg_id");
         }
+        //send "0"
         return reg;
     }
 
@@ -217,10 +166,12 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     @Override
+
     public String initState(String state) {
 
         if (null == state)
         {
+            //init difult state to israel
             state = "israel";
         }
         return state;
@@ -244,6 +195,7 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     public HashMap<String, String> getUserByMail(String mail) {
 
+        //Prepares the data to use the function getUserByParameter
         HashMap<String, String> member = new HashMap<String, String>();
         member.put("P_CommunityMembers.email_address",  mail );
         HashMap<String, String> details = dbController.getUserByParameter(member);
@@ -298,12 +250,17 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     @Override
     public HashMap<String, String> getSupervision(String docLicence) {
+
+        // Prepares the data to use the function getDoctor
         HashMap<String,String> whereConditions = new HashMap<String, String>();
         whereConditions.put("doc_license_number", docLicence);
         HashMap<Integer, HashMap<String, String>> data = dbController.getDoctor(whereConditions);
+
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> obj = objs.getValue();
+            // get cmid of Supervision
             int cmid =  new Integer(obj.get("community_member_id"));
+            //Get all the data on it and return
             HashMap<String,String> doctor = getUserByCmid(cmid);
             return doctor;
         }
@@ -341,30 +298,8 @@ public class RegVerify_V2 implements IRegVerify_model {
 
     }
 
-
-/*
-    public boolean checkCondForResendMail(HashMap<String, String> details, String email, int cmid) {
-        String status = getStatus(details);
-        String currentEmail = details.get("email_address");
-
-        //if we  resend mail to hos current mail
-        //we need to check that this mail dont approval
-        if (currentEmail.equals(email)) {
-            return status.equals("verifying email");
-        }
-        //if member change his mail we need to check that
-        //is mail not exist in another user
-        else {
-            return getUserByMail(email) == null;
-        }
-
-
-
-    }
-*/
     /***********for func responeDoctor********************/
 
-    //ToDo need also to send cmid, password, and location frequency in emergency
     public HashMap<Integer,HashMap<String,String>> proccesOfOkMember(int cmid/*,String type,*/, String password)
     {
         HashMap<Integer,HashMap<String,String>> responseToPatient =
@@ -506,17 +441,23 @@ public class RegVerify_V2 implements IRegVerify_model {
     private String getState(int cmid) {
         HashMap<String,String> member = new HashMap<String,String>();
         member.put("P_CommunityMembers.community_member_id",new Integer(cmid).toString());
+        //Receiving data on the user
         HashMap<String,String> details = dbController.getUserByParameter(member);
+        //Pull the country from all data
         return details.get("state");
     }
 
     private HashMap<String, String> getDefaultInEmergency(String state) {
+
+        //get code of DefaultInEmergency
         HashMap<Integer,HashMap<String,String>> defult
                 = dbController.getDefaultInEmergency(state);
+
         for (Map.Entry<Integer,HashMap<String,String>> objs : defult.entrySet()){
             HashMap<String,String> obj = objs.getValue();
             String code = obj.get("default_caller");
             HashMap<String,String> response = convertCodeToDefaultCallerSettings(code);
+            //return value of who default in emergency
             return response;
 
         }
@@ -524,47 +465,53 @@ public class RegVerify_V2 implements IRegVerify_model {
     }
 
     public String convertCodeToGender(String code) {
+        //Prepares the data to use the function convertCodeToGender
         HashMap<String,String> defalut = new HashMap<String,String>();
         defalut.put("column_name","gender");
         defalut.put("enum_code", code );
         defalut.put("table_name","P_CommunityMembers");
+        //get gender
         HashMap<Integer, HashMap<String, String>> data =
                 dbController.getFromEnum(defalut);
 
-        //System.out.println(response);
+        //teturn gender type as a string
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
            HashMap<String,String> obj = objs.getValue();
            return obj.get("enum_value");
         }
-
         return null;
     }
 
     public HashMap<String, String> convertCodeToDefaultCallerSettings(String code) {
+        //Prepares the data to use the function getFromEnum
         HashMap<String,String> defalut = new HashMap<String,String>();
         defalut.put("column_name","default_caller");
         defalut.put("enum_code", code );
         defalut.put("table_name","DefaultCallerSettings");
+
+        //get DefaultCallerSettings value
         HashMap<Integer, HashMap<String, String>> data =
                 dbController.getFromEnum(defalut);
 
-        //System.out.println(response);
+
         for (Map.Entry<Integer,HashMap<String,String>> objs : data.entrySet()){
             HashMap<String,String> response = new HashMap<String,String>();
             HashMap<String,String> obj = objs.getValue();
             response.put("name","default_caller");
             response.put("frequency",obj.get("enum_value")); // ???
+            //Returns a map containing the name default caller and its value
             return response;
         }
         return null;
     }
 
-
+    //Get the value of the frequency according to its name
     private HashMap<String,String> getFrequency(String code) {
         HashMap<String,String> response = new HashMap<String,String>();
 
         HashMap<String,String> kindOfFrequency = new HashMap<String,String>();
         kindOfFrequency.put("name",code);
+        //Get the value of the frequency according to its name
         HashMap<Integer,HashMap<String,String>> freq
                 = dbController.getFrequency(kindOfFrequency);
         if (freq == null)
@@ -574,18 +521,21 @@ public class RegVerify_V2 implements IRegVerify_model {
 
             response.put("name",obj.get("name"));
             response.put("frequency",obj.get("frequency"));
+            //Returns a map containing the name frequency and its value
             return response;
         }
         return null;
     }
 
     private HashMap<Integer, HashMap<String,String>> getAllFrequencies() {
+        //Get all the frequency needed to send in the registration process
         HashMap<Integer,HashMap<String,String>> freq
                 = dbController.getAllFrequencies();
         if (freq == null)
             return null;
         HashMap<Integer, HashMap<String, String>> response = new HashMap<Integer, HashMap<String, String>>();
         int i = 2;
+        //Passing on any frequency and creates a message to send
         for (Map.Entry<Integer,HashMap<String,String>> objs : freq.entrySet()){
             HashMap<String,String> obj = objs.getValue();
 
