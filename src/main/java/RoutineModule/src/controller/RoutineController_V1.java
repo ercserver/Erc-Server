@@ -105,7 +105,7 @@ public class RoutineController_V1 implements IRoutineController {
 
     //to update communication Parameters
     //Receives a code that these parameters need updating
-    public Object updateCommunicationParameters(String code)
+    public Object updateCommunicationParameters(String code, String newVal)
     {
 
         HashMap<Integer, HashMap<String, String>> ret =
@@ -122,7 +122,7 @@ public class RoutineController_V1 implements IRoutineController {
 
         //add messge to send
         String messge = "please update your communication parameters";
-        HashMap<String, String> basic = updates.buildBasicResponse(messge, code);
+        HashMap<String, String> basic = updates.buildBasicResponse(messge, code, newVal);
 
         //pass all over cmid in db
         for (Map.Entry<Integer,HashMap<String,String>> objs : allCmid.entrySet()){
@@ -258,7 +258,7 @@ public class RoutineController_V1 implements IRoutineController {
                 //send
                 String reg = memberDetail.getRegId(cmid);
                 ArrayList<String> target = new ArrayList<String>();
-                sendAssist.buildBasicRespone("need refresh parameter", "refresh");
+                sendAssist.buildBasicRespone("need refresh parameter", "refresh", null);
                 ret.put(cmid, obj);
                 if (memberDetail.ifTypeISPatientOrGuardian(reg)) {
                     target.add(reg);

@@ -8,13 +8,13 @@ import java.util.HashMap;
 public class SendAssistant {
 
     //basic respone include only message and Request ID
-   public HashMap<String,String> buildBasicRespone(String message,
-                                                                        String code)
+   public HashMap<String,String> buildBasicRespone(String message, String code, String newVal)
     {
 
         HashMap<String,String> dataToSend = new HashMap<String, String>();
         dataToSend.put("RequestID", code);
         dataToSend.put("message", message);
+        dataToSend.put("newVal", newVal);
         return dataToSend;
     }
 }

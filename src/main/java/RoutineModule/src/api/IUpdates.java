@@ -12,7 +12,7 @@ public interface IUpdates {
     //code meen witch parmeter to update
     //in prototye code say send all parameter
     // Send to all users the most recent comm. params.
-    public Object updateCommunicationParameters(String code);
+    public Object updateCommunicationParameters(String code, String newVal);
 
     //get email and send his password to email
     public Object forgotPassword(HashMap<String, String> data);

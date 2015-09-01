@@ -82,8 +82,8 @@ public class Updates_V1 implements IUpdates_model {
 
     @Override
     public HashMap<String, String> buildBasicResponse(String message,
-                                                      String code) {
-        return sendAssist.buildBasicRespone(message,code);
+                                                      String code, String newVal) {
+        return sendAssist.buildBasicRespone(message,code, newVal);
     }
 
     //Updating data in a given case does not need authentication
