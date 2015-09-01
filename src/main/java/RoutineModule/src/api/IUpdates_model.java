@@ -10,7 +10,7 @@ public interface IUpdates_model {
     HashMap<Integer,HashMap<String,String>> getFieldsForUpdate(HashMap<String, String> data);
     HashMap<String, String>  getCommunicationParameters(int cmid,String type);
 
-    HashMap<String,String> buildBasicResponse(String message,String code);
+    HashMap<String,String> buildBasicResponse(String message,String code, String newVal);
     void updateUserDetails(int cmid,String col,String value);
 
     boolean FieldneedRefresh(Map.Entry<Integer, HashMap<String, String>> objs);
