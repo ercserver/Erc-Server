@@ -56,7 +56,7 @@ public class RequestsHandler {
     private final String FOLLOW_USER = "followUser";
     private final String UPDATE_REQ = "updateReq";
     private final String UPDATE_DETAILS = "updateDetails";
-    private final String EMS_EVENT = "EMSEvent";
+    private final String EMS_EVENT = "EMSEvents";
 
     /*** Emergency Requests Codes ***/
     private final String HELP = "help";
