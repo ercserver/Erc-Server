@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2528bf4-afdc-4339-83d1-823f1d97c247" name="Default" comment="fixed: insert medication use">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/registrationModule/src/controller/RegController_V1.java" afterPath="$PROJECT_DIR$/src/main/java/registrationModule/src/controller/RegController_V1.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/RequestsModule/RequestsHandler.java" afterPath="$PROJECT_DIR$/src/main/java/RequestsModule/RequestsHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -105,8 +104,8 @@
       <file leaf-file-name="RequestsHandler.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/RequestsModule/RequestsHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6818182" vertical-offset="4148" max-vertical-offset="6307">
-              <caret line="282" column="65" selection-start-line="282" selection-start-column="65" selection-end-line="282" selection-end-column="65" />
+            <state vertical-scroll-proportion="0.72727275" vertical-offset="4148" max-vertical-offset="6324">
+              <caret line="283" column="17" selection-start-line="283" selection-start-column="17" selection-end-line="283" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -1234,7 +1233,7 @@
       <workItem from="1439809637053" duration="8474000" />
       <workItem from="1440339362003" duration="8657000" />
       <workItem from="1440950473306" duration="7840000" />
-      <workItem from="1441044726178" duration="13744000" />
+      <workItem from="1441044726178" duration="13897000" />
     </task>
     <task id="LOCAL-00001" summary="maccbi">
       <created>1439296185635</created>
@@ -1374,11 +1373,17 @@
       <option name="project" value="LOCAL" />
       <updated>1441200287606</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fixed: insert medication use">
+      <created>1441207316879</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1441207316879</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77441000" />
+    <option name="totallyTimeSpent" value="77594000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1407,7 +1412,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23742138" sideWeight="0.48173004" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.4969743" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32232705" sideWeight="0.48769575" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32232705" sideWeight="0.48769575" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32704404" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
@@ -1966,8 +1971,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RequestsModule/RequestsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6818182" vertical-offset="4148" max-vertical-offset="6307">
-          <caret line="282" column="65" selection-start-line="282" selection-start-column="65" selection-end-line="282" selection-end-column="65" />
+        <state vertical-scroll-proportion="0.72727275" vertical-offset="4148" max-vertical-offset="6324">
+          <caret line="283" column="17" selection-start-line="283" selection-start-column="17" selection-end-line="283" selection-end-column="17" />
           <folding />
         </state>
       </provider>
