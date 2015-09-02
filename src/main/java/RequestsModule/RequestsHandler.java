@@ -56,7 +56,7 @@ public class RequestsHandler {
     private final String FOLLOW_USER = "followUser";
     private final String UPDATE_REQ = "updateReq";
     private final String UPDATE_DETAILS = "updateDetails";
-
+    private final String EMS_EVENT = "EMSEvent";
 
     /*** Emergency Requests Codes ***/
     private final String HELP = "help";
@@ -276,8 +276,8 @@ public class RequestsHandler {
                 case FORGOT_PASSWORD:
                     rv = ruc.forgotPassword(requestMap).toString();
                     break;
-
-
+                case EMS_EVENT:
+                    rv = ruc.getEmsEventsByDispatcherCmid(requestMap).toString();
                 default:
                     // Do nothing...
                     rv = "Wrong JSONFile id";
