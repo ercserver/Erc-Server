@@ -279,9 +279,10 @@ public class RequestsHandler {
                     break;
                 case EMS_EVENT:
                     rv = ruc.getEmsEventsByDispatcherCmid(requestMap).toString();
+                    break;
                 case UPDATE_STATUS:
                     rv = ruc.updateStatus(requestMap).toString();
-
+                    break;
                 default:
                     // Do nothing...
                     rv = "Wrong JSONFile id";
