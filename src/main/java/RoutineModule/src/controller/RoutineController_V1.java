@@ -266,7 +266,7 @@ public class RoutineController_V1 implements IRoutineController {
                 }
                 // is a doctor
                 else {
-                    target.add("url...");//*
+                    target = assistent.addReceiver("EMS",target);
                     commController.setCommToUsers(ret, null, false);
                 }
                 commController.sendResponse();
@@ -369,7 +369,7 @@ public class RoutineController_V1 implements IRoutineController {
         String password = data.get("password");
         if(assistent.checkCmidAndPassword(password,cmid))
         {
-               return ems.getEmsEventsByDispatcherCmid(cmid);
+            return ems.getEmsEventsByDispatcherCmid(cmid);
         }
         return null;
     }
