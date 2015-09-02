@@ -306,7 +306,6 @@ public class RegController_V1 implements IRegController {
                 response =  verification.proccesOfOkMember(new Integer(communityMemberId), password);
                 commController.setCommToUsers(response, target, false);
                 commController.sendResponse();
-
             }
             else
             {
