@@ -559,7 +559,7 @@ public class EmerController_V1 implements IEmerController {
             toReject.remove("event_id");
             //Reject the assistants
             rejectAssistants(new HashMapBuilder<String, String>()
-                    .put(dbController.getCmidByPatientID(toReject.get("patient_id")), null).build(),
+                    .put(toReject.get("patient_id"), null).build(),
                     eventID,"EMS services decided help is no longer required");
             //stop following
             logger.info("before cmidsToStopFollow. toReject = " + toReject);
@@ -582,19 +582,19 @@ public class EmerController_V1 implements IEmerController {
 
     private void rejectAssistants(HashMap<String, String> toReject,String eventID,String reason){
         //remove every assistant from the database and inform. "1" to inform the assistants here.
-        for(String CMID : toReject.keySet()){
+        for(String patientID : toReject.keySet()){
             //Update the assistant's status on the DB
-            dbController.removeAssistantFromEvent(eventID, CMID,false);//
+            dbController.removeAssistantFromEvent(eventID, patientID,false);//
             //inform. "1" to inform helpers here.
-            removeAssistant(CMID, eventID, 1, reason);
+            removeAssistant(patientID, eventID, 1, reason);
 
         }
     }
 
     //we call this function from "rejectAssistantsByEMS", "cancelEvent" and receiveArrivalTimes
-    private void removeAssistant(String cmid, String eventId, int inform,String reason) {
+    private void removeAssistant(String patientId, String eventId, int inform,String reason) {
         //Handling rejection logs
-        emergencyLogger.updateAssistantRemovalFromEvent(cmid, eventId, inform);
+        emergencyLogger.updateAssistantRemovalFromEvent(patientId, eventId, inform);
 
         HashMap<String,String> data = new HashMap<String,String>();
         data.put("RequestID", "cancelAssist");
@@ -602,7 +602,7 @@ public class EmerController_V1 implements IEmerController {
         data.put("reason",reason);
         //Notify the EMS of the removal
         if(0 == inform){
-            data.put("patient_id", dbController.getPatientIDByCmid(cmid));
+            data.put("patient_id", patientId);
             ArrayList<String> sendTo = new ArrayList<String>();
             sendTo = assistantFuncs.addReceiver("EMS", sendTo);
             initiatedOneObjectRequest(data, sendTo);
@@ -610,7 +610,7 @@ public class EmerController_V1 implements IEmerController {
         //Notify the assistant of the removal - GCM
         else{
             //Get the regID of the user to be aborted
-            String regId = dbController.getRegIDsOfUser(Integer.parseInt(cmid)).get(1).get("reg_id");
+            String regId = dbController.getRegIDOfPatient(patientId);
             HashMap<Integer,HashMap<String,String>> request = new HashMap<>();
             request.put(1, data);
             ArrayList<String> sendTo = new ArrayList<String>();
@@ -619,7 +619,7 @@ public class EmerController_V1 implements IEmerController {
             commController.sendResponse();
         }
         ArrayList<String> cmidToStopFollow = new ArrayList<String>();
-        cmidToStopFollow.add(cmid);
+        cmidToStopFollow.add(dbController.getCmidByPatientID(patientId));
         stopFollow(eventId,cmidToStopFollow);
     }
 
@@ -717,11 +717,11 @@ public class EmerController_V1 implements IEmerController {
     public void assistantCancelsArrival(HashMap<String, String> data) {
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
-        //String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
+        String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
         String eventID = data.get("event_id");
         //Update the assistant's status on the DB and inform. "0" to inform EMS here.
         dbController.removeAssistantFromEvent(eventID, data.get("community_member_id"),true);
-        removeAssistant(data.get("community_member_id"), eventID, 0, null);
+        removeAssistant(patientID, eventID, 0, null);
     }
 
     @Override

@@ -1,10 +1,8 @@
 package registratinModule;
 
-import DatabaseModule.src.model.DbComm_V1;
 import EmergencyModule.src.api.IEmerController;
 import EmergencyModule.src.controller.EmerController_V1;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,6 +16,9 @@ public class MaorTests {
         //cmids.add("10010");
         //controller.stopFollow("1053", cmids);
         HashMap<String, String>h = new HashMap<String,String>();
+        h.put("event_id", "1321");
+        h.put("status", "FINISH");
+        controller.emsTakeover(h);
         /*h.put("event_id", "1027");
         h.put("RequestID", "UsersArrivalTimes");
         h.put("radius", "5");
