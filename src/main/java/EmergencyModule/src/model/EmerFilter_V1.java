@@ -3,11 +3,12 @@ package EmergencyModule.src.model;
 import DatabaseModule.src.api.IDbController;
 import EmergencyModule.src.api.IEmerFilter_model;
 import Utilities.ModelsFactory;
-//import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
+//import org.apache.log4j.Logger;
 
 
 // Created by NAOR on 16/05/2015.
@@ -33,7 +34,10 @@ public class EmerFilter_V1 implements IEmerFilter_model {
         ArrayList<Integer> intedList = new ArrayList<Integer>();
         Iterator<String> iter = listToFilter.keySet().iterator();
         while(iter.hasNext()) {
-            intedList.add(Integer.parseInt(iter.next()));
+            int cur = Integer.parseInt(iter.next());
+            if (!dbController.getRegIDsOfUser(cur).isEmpty()) {
+                intedList.add(cur);
+            }
         }
      //   logger.info("intedList = " + intedList);
         // Gets filter by the data base
