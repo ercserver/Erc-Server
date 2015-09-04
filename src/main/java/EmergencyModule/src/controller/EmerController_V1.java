@@ -151,6 +151,7 @@ public class EmerController_V1 implements IEmerController {
         data.put("dosage",medicationDetails.get("dosage"));
         //add the required command to the request
         data.put("RequestID", "start");
+        dbController.updateEMSOfEvent(data.get("ems_id"), data.get("event_id"));
         //add the EMS URL to the receivers
         ArrayList<String> sendTo = new ArrayList<String>();
         sendTo = assistantFuncs.addReceiver("EMS", sendTo);
