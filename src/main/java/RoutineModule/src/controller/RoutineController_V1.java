@@ -369,6 +369,7 @@ public class RoutineController_V1 implements IRoutineController {
         String password = data.get("password");
         if(assistent.checkCmidAndPassword(password,cmid))
         {
+
             return ems.getEmsEventsByDispatcherCmid(cmid);
         }
         return null;

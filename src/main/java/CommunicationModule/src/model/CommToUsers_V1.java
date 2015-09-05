@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 /**
  * Created by NAOR on 06/04/2015.
@@ -25,7 +24,7 @@ public class CommToUsers_V1 implements ICommToUsers_model {
     }
 
     public JSONArray sendResponse () {
-        logger.log(Level.INFO, "In CommToUsers_V1.sendResponse");
+        //logger.log(Level.INFO, "In CommToUsers_V1.sendResponse");
         return objToSend;
     }
 }

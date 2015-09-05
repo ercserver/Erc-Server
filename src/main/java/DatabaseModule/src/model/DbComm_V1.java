@@ -1703,9 +1703,11 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
     public HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid){
+        logger.info("enetering");
         HashMapBuilder<String, String> hma = new HashMapBuilder<String, String>();
         return selectFromTable("O_EmergencyEvents", null /*all*/,
                 hma.put("ems_member_id", Integer.toString(cmid)).build());
+
     }
 
     @Override
@@ -1984,7 +1986,7 @@ public class DbComm_V1 implements IDbComm_model {
                 //pass
             }
 
-            logger.info("action num " + ((num < 0) ? "doesn't" : "" + "exists"));
+            //logger.info("action num " + ((num < 0) ? "doesn't" : "" + "exists"));
             if (num < 0){
                 // Insert new action type
                 PreparedStatement stmt = connection.prepareStatement("insert dbo.O_ActionTypes values (?)", Statement.RETURN_GENERATED_KEYS);

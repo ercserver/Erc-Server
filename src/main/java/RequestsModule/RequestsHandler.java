@@ -9,6 +9,7 @@ import RequestsModule.utils.TestGCM;
 import RequestsModule.utils.TestNewDB;
 import RoutineModule.src.api.IRoutineController;
 import RoutineModule.src.controller.RoutineController_V1;
+import Utilities.ThreadDumper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -85,6 +86,7 @@ public class RequestsHandler {
     // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
     public RequestsHandler(){
         logger.log(Level.INFO, "Controller Ctor");
+        ThreadDumper.getInstance().start();
 
     }
 
@@ -142,7 +144,7 @@ public class RequestsHandler {
         JSONObject json = jv.createJSON(data);
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
         String reqId = "";
-        logger.log(Level.INFO, "After parsing JSONFile");
+        //logger.log(Level.INFO, "After parsing JSONFile");
         try {
 
             reqId = requestMap.get(REQ_ID);
@@ -179,14 +181,14 @@ public class RequestsHandler {
     public @ResponseBody String handleEmergencyRequests(@RequestBody String data) {
         logger.log(Level.INFO, "In Emergency. params = " + data);
         JSONObject json = jv.createJSON(data);
-        logger.log(Level.INFO, "After json object");
+        //logger.log(Level.INFO, "After json object");
         HashMap<String, String> requestMap = hmc.jsonToMap(json);
-        logger.log(Level.INFO, "requestMap = " + requestMap);
+        //logger.log(Level.INFO, "requestMap = " + requestMap);
         String reqId = "";
-        logger.log(Level.INFO, "After parsing JSONFile");
+        //logger.log(Level.INFO, "After parsing JSONFile");
         try {
             reqId = requestMap.get(REQ_ID);
-            logger.log(Level.INFO, "Before switch. reqID = " + reqId);
+            //logger.log(Level.INFO, "Before switch. reqID = " + reqId);
             switch (reqId) {
                 case HELP:
                     ec.emergencyCall(requestMap);
@@ -299,7 +301,7 @@ public class RequestsHandler {
         logger.info("in handleMembersArrivalTimes. json = " + JSONFile);
         JSONArray data = new JSONArray(JSONFile);
         HashMap<Integer, HashMap<String, String>> requestMap = hmc.jsonArrayToMap(data);
-        logger.info("in map = " + requestMap);
+        //logger.info("in map = " + requestMap);
         String rv = "Received Request id : ";
         // Get JSONFile id
         try{
@@ -309,7 +311,7 @@ public class RequestsHandler {
                 reqId = details.get(REQ_ID);
                 switch (reqId){
                     case USERS_ARRIVAL_TIMES:
-                        logger.info("in  USERS_ARRIVAL_TIMES");
+                        //logger.info("in  USERS_ARRIVAL_TIMES");
                         ec.receiveUsersArrivalTimesAndApproach(requestMap);
                         rv += reqId;
                         break;
@@ -330,12 +332,12 @@ public class RequestsHandler {
         logger.log(Level.INFO, "JSONFile = " + JSONFile);
          JSONObject data = jv.createJSON(JSONFile);
         HashMap<String, String> requestMap = hmc.jsonToMap(data);
-         logger.log(Level.INFO, "requestMap = " + requestMap);
+         //logger.log(Level.INFO, "requestMap = " + requestMap);
         String reqId = "";
         String rv = "";
         try {
             reqId = requestMap.get(REQ_ID);
-            logger.log(Level.INFO, "reqId = " + reqId);
+            //logger.log(Level.INFO, "reqId = " + reqId);
             switch (reqId) {
                 case AROUND_LOCATION:
                     ec.receiveUsersAroundLocation(requestMap);

@@ -35,7 +35,8 @@ public class EmerFilter_V1 implements IEmerFilter_model {
         Iterator<String> iter = listToFilter.keySet().iterator();
         while(iter.hasNext()) {
             int cur = Integer.parseInt(iter.next());
-            if (!dbController.getRegIDsOfUser(cur).isEmpty()) {
+            // Check if user has regid
+            if (!dbController.getRegIDsOfUser(cur).isEmpty() && !intedList.contains(cur)) {
                 intedList.add(cur);
             }
         }

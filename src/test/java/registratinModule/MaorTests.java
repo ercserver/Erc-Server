@@ -1,8 +1,7 @@
 package registratinModule;
 
-import EmergencyModule.src.api.IEmerController;
-import EmergencyModule.src.controller.EmerController_V1;
 import RoutineModule.src.controller.RoutineController_V1;
+import RoutineModule.src.model.EmsRoutine_V1;
 
 import java.util.HashMap;
 
@@ -11,7 +10,7 @@ import java.util.HashMap;
  */
 public class MaorTests {
     public static void main(String[] args) {
-        IEmerController controller = new EmerController_V1();
+        System.out.println(new EmsRoutine_V1().getEmsEventsByDispatcherCmid(10010));
         RoutineController_V1 cont = new RoutineController_V1();
         //controller.askGisToFollow("1053", "10010");
        // ArrayList<String> cmids = new ArrayList<String>();
