@@ -303,7 +303,7 @@ public class RegController_V1 implements IRegController {
             if (isConfirmation) {
                 dbController.updateStatus(cmidPatient, "verifying details", "active");
                 //we send regid != 0 to say that type is patient
-                response =  verification.proccesOfOkMember(new Integer(communityMemberId), password);
+                response =  verification.proccesOfOkMember(new Integer(communityMemberId), patientDet.get("password"));
                 commController.setCommToUsers(response, target, false);
                 commController.sendResponse();
             }
