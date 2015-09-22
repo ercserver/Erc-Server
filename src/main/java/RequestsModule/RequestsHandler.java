@@ -283,7 +283,7 @@ public class RequestsHandler {
                     rv = ruc.getEmsEventsByDispatcherCmid(requestMap).toString();
                     break;
                 case UPDATE_STATUS:
-                    rv = ruc.updateStatus(requestMap).toString();
+                    rv = ruc.updateUserStatus(requestMap).toString();
                     break;
                 default:
                     // Do nothing...

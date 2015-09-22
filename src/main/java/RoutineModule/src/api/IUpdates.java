@@ -32,9 +32,9 @@ public interface IUpdates {
 
     public Object updateStatus(HashMap<String, String> data);
 
-    // TODO: Ohad
+    public Object updateUserStatus(HashMap<String, String> data);
+
     public Object logoff(HashMap<String, String> data);
 
-    // TODO: Shmulik
     public Object deleteMember(HashMap<String, String> data);
 }

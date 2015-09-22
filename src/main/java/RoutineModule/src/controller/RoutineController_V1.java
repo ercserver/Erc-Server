@@ -331,6 +331,33 @@ public class RoutineController_V1 implements IRoutineController {
         return null;
     }
 
+    // Update's user's status
+    public Object updateUserStatus(HashMap<String, String> data)
+    {
+        String status = data.get("status");
+        // user log-off
+        if(status.equals("onHold"))
+            return logoff(data);
+        // user want to delete account
+        else if(status.equals("deleteAccount"))
+            return deleteMember(data);
+        // user changed to another status
+        else
+        {
+            //Checks whether the password is correct
+            int cmid = Integer.parseInt(data.get("community_member_id"));
+            String password = data.get("password");
+            if (assistent.checkCmidAndPassword(password,cmid))
+            {
+                //Get the current status of the user
+                String oldStatus = updates.getCurrentStatusOfPatient(cmid);
+                //change status in db
+                dbController.updateStatus(cmid, oldStatus, status);
+            }
+            return null;
+        }
+    }
+
     @Override
 
     public Object logoff(HashMap<String, String> data) {
