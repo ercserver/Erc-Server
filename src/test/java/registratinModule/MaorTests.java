@@ -2,6 +2,7 @@ package registratinModule;
 
 import RoutineModule.src.controller.RoutineController_V1;
 import RoutineModule.src.model.EmsRoutine_V1;
+import registrationModule.src.controller.RegController_V1;
 
 import java.util.HashMap;
 
@@ -17,6 +18,12 @@ public class MaorTests {
         //cmids.add("10010");
         //controller.stopFollow("1053", cmids);
         HashMap<String, String>h = new HashMap<String,String>();
+        h.put("state", "Israel");
+        h.put("RequestID", "resendAuth");
+        h.put("email_address", "shirap64@gmail.com");
+        RegController_V1 c = new RegController_V1();
+        c.resendAuth(h);
+
         /*h.put("event_id", "1321");
         h.put("status", "FINISH");
         controller.emsTakeover(h);*/
@@ -62,10 +69,10 @@ public class MaorTests {
         h.put("RequestID", "EMSId");
         controller.getCmidOfEms(h);*/
 
-        h.put("community_member_id", "10010");
+       /* h.put("community_member_id", "10010");
         h.put("password", "a123");
         Object obj = cont.getEmsEventsByDispatcherCmid(h);
-        System.out.print(obj);
+        System.out.print(obj);*/
 
         /*h.put("password", "a1234");
         h.put("community_member_id", "10042");
