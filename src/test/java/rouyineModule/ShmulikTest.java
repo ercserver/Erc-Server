@@ -20,6 +20,6 @@ public class ShmulikTest {
        //r.getEmsEventsByDispatcherCmid(data1);
        r.deleteMember(data1);
        // r.getUpdatesFields(data1);
-
+////maccbi
     }
 }
