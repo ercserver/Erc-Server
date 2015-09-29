@@ -1930,22 +1930,20 @@ public class DbComm_V1 implements IDbComm_model {
 
     @Override
     public void updateMedicineGiven(int cmid, int eventID) {
-        HashMapBuilder<String, String> hmb = new HashMapBuilder<String, String>();
-        try {
-            if (connection == null || connection.isClosed()){
+        updateResult(Integer.toString(cmid), Integer.toString(eventID), "'gave medication'");
+        try
+        {
+            if (!(connection != null && !connection.isClosed() /*&& connection.isValid*/))
                 connect();
-            }
-            String sql = "UPDATE dbo.O_EmergencyMedicationUse SET providing_member_id=?, " +
-                    "medication_provision_date=CURRENT_TIMESTAMP WHERE event_id=?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setObject(1, cmid); // providing_member_id
-            stmt.setObject(2, eventID);
-
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            logger.log(Level.WARNING, "Exception: ", e);
+            statement = connection.createStatement();
+            statement.execute("UPDATE O_EmergencyMedicationUse SET medication_provision_date=current_timestamp WHERE providing_member_id="
+                    + Integer.toString(cmid) + " AND event_id=" + Integer.toString(eventID));
         }
-
+        catch (SQLException e) {e.printStackTrace();}
+        finally
+        {
+            releaseResources(statement, connection);
+        }
     }
 
     @Override
