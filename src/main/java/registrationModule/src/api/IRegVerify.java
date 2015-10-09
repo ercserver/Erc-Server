@@ -18,7 +18,6 @@ public interface IRegVerify {
     Object responseByDoctor(HashMap<String, String> data, boolean isConfirmation);
 
 
-    //TODO
     Object responeToDoctorAturization(String cmid,boolean isAccept);
 
     Object signIn(HashMap<String,String> details);

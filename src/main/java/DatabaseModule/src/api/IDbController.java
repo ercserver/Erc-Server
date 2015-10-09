@@ -79,4 +79,5 @@ public interface IDbController  extends IDbInit, IDbComm {
     HashMap<String, String> getMedicationNameAndDosage(String prescriptionNum);
     boolean isEmailMemberExists(String mail);
     HashMap<Integer,HashMap<String,String>> getAllFrequencies();
+    public int getEventIDByCmidResponse(String cmid);
 }

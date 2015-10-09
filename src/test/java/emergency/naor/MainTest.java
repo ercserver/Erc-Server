@@ -12,9 +12,7 @@ import org.json.JSONArray;
 import registrationModule.src.controller.RegController_V1;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by naor on 20/6/2015.
@@ -198,8 +196,6 @@ public class MainTest {
         fakeDetails.put("subRequest", "cmid");
         fakeDetails.put("x", "31.879038");
         fakeDetails.put("y", "34.72952");
-        //TODO - if she really keeps insisting, just give it to her... =\
-        //fakeDetails.put("community_member_id", cmid);
 
 
         //add reg_id of the relevant cmid to the list to send and execute sending

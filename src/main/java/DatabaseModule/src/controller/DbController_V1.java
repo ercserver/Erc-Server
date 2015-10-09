@@ -99,7 +99,7 @@ public class DbController_V1 implements IDbController {
     }
 
     public void updateStatus(int cmid, String oldStatus, String newStatus) {
-        DB_communicator.updateStatus(cmid,oldStatus,newStatus);
+        DB_communicator.updateStatus(cmid, oldStatus, newStatus);
     }
 
     public HashMap<Integer,HashMap<String,String>> getRegIDsOfUser(int cmid)
@@ -204,6 +204,7 @@ public class DbController_V1 implements IDbController {
         }
         return list;
     }
+    public int getEventIDByCmidResponse(String cmid){ return DB_communicator.getEventIDByCmidResponse(cmid);}
 
     @Override
     public void closeEvent(int eventId, String newStatus) {

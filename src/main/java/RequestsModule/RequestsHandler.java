@@ -83,7 +83,7 @@ public class RequestsHandler {
     EmerController_V1 ec = new EmerController_V1();
 
 
-    // TODO - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
+    // TODO - Future design - Create a constructor that starts the scheduler ( a singleton - Schdeuler)
     public RequestsHandler(){
         logger.log(Level.INFO, "Controller Ctor");
         ThreadDumper.getInstance().start();
@@ -280,7 +280,8 @@ public class RequestsHandler {
                     rv = ruc.forgotPassword(requestMap).toString();
                     break;
                 case EMS_EVENT:
-                    rv = ruc.getEmsEventsByDispatcherCmid(requestMap).toString();
+                    rv = hmc.hashMapToJsonArray((HashMap<Integer, HashMap<String, String>>)
+                            ruc.getEmsEventsByDispatcherCmid(requestMap)).toString();
                     break;
                 case UPDATE_STATUS:
                     rv = ruc.updateUserStatus(requestMap).toString();
@@ -293,6 +294,7 @@ public class RequestsHandler {
         }catch (Exception ex){
             logger.log(Level.WARNING, "Exception: ", ex);
         }
+        logger.info("return value = " + rv);
         return rv;
     }
 
@@ -389,5 +391,4 @@ public class RequestsHandler {
     }
 
 
-    //ToDo:need links for confirmation and rejection of doctor
 }

@@ -12,7 +12,6 @@ import java.util.HashMap;
 public class CommToUsersFactory_V1 implements ICommToUsersFactory {
     public CommToUsers_V1 createComm(HashMap<Integer,HashMap<String,String>> data,ArrayList<String> target,boolean initiatedComm) {
 
-        //TODO - PROBLEM! EMS OR DOCTOR? also - DO WE PASS UN/PW HERE?? LETS TALK ABOUT THIS.
         //If we respond to a website (EMS or Doctor website)
         if (null == target || target.get(0).equals("0"))
         {

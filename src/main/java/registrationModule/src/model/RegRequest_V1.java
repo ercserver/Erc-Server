@@ -7,7 +7,6 @@ import registrationModule.src.api.IRegRequest_model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 /**
  * Created by NAOR on 06/04/2015.
@@ -58,8 +57,6 @@ public class RegRequest_V1 implements IRegRequest_model {
         decision.add("community_member_id");
         decision.add("patient_id");
         decision.add("external_id");
-        //TODO - More fields?
-        //decision.add("medical_condition");
         //...
         //...
         return decision;

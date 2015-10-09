@@ -9,7 +9,6 @@ import java.util.List;
  * Created by NAOR on 06/04/2015.
  */
 public interface IDbComm {
-    //TODO - lots of methods to query the DB
     HashMap<Integer,HashMap<String,String>> getRegistrationFields(int userType);
     HashMap<String,String> getUserByParameter(HashMap<String,String> whereConditions);
     void updateUserDetails(HashMap<String,String> updates);

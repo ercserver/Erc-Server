@@ -1,6 +1,5 @@
 package EmergencyModule.src.api;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -39,7 +38,6 @@ public interface IEmer {
     //From app
     void patientCancelledEvent(HashMap<String,String> data);
 
-    //TODO - Ohad - add this to the controller. the requestID is "AssistantDetails"
     //From EMS
     void requestAssistantDetails(HashMap<String, String> data);
 }

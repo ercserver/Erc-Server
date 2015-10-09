@@ -5,9 +5,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 /**
  * Created by naor on 5/5/2015.
@@ -41,6 +41,18 @@ public class HashMapCreator {
         }
 
         return map;
+    }
+
+    public JSONArray hashMapToJsonArray(HashMap<Integer, HashMap<String, String>> map){
+        JSONArray rv = new JSONArray();
+        try{
+            for (Map.Entry<Integer, HashMap<String, String>> entry : map.entrySet()){
+                rv.put(new JSONObject(entry.getValue()));
+            }
+        }catch (JSONException ex){
+           // logger.info(ex..);
+        }
+        return rv;
     }
 
 

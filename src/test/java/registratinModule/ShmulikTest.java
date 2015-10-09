@@ -1,16 +1,9 @@
 package registratinModule;
 
-import EmergencyModule.src.api.IEmerController;
-import EmergencyModule.src.controller.EmerController_V1;
-import RoutineModule.src.api.IRoutineController;
-import RoutineModule.src.controller.RoutineController_V1;
-import org.json.JSONArray;
-import registrationModule.src.controller.RegController_V1;
+import org.json.JSONObject;
 import registrationModule.src.model.RegVerify_V2;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
 
 /**
  * Created by User on 06/05/2015.
@@ -18,6 +11,11 @@ import java.util.logging.Level;
 
 public class ShmulikTest {
     public static void main(String[] args) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("message", "hello world!");
+        JSONObject json = new JSONObject(map);
+        System.out.println(json);
+
         //testNaor6("10042");
         //testNaor4("10005");
        //testNaor5();

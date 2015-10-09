@@ -383,7 +383,6 @@ public class RegController_V1 implements IRegController {
                 break;
             }
             case 1: {
-                //TODO - To be implemented in later versions
                 //String phone = data.get("phone_number");
                 break;
             }

@@ -16,6 +16,5 @@ public class CommToSMS_V1 extends CommOfficial_V1 {
     }
 
     public void sendMessage() {
-        //TODO - Implement SMS messaging at some point (not for the prototype)
     }
 }

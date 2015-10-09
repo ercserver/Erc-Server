@@ -66,7 +66,6 @@ public interface IDbComm_model {
     HashMap<Integer, HashMap<String, String>> getEventsByEmsCmid(int cmid);
 
 
-    // TODO: Ohad
     HashMap<Integer, HashMap<String, String>> getRegistrationFieldsWithRefreshTime();
 
     HashMap<Integer, HashMap<String, String>> getUnfinishedEvents();
@@ -144,4 +143,6 @@ public interface IDbComm_model {
     boolean isEmailMemberExists(String mail);
 
     HashMap<Integer,HashMap<String,String>> getAllFrequencies();
+
+    int getEventIDByCmidResponse(String cmid);
 }

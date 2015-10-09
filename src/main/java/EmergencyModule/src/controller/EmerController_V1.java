@@ -234,7 +234,7 @@ public class EmerController_V1 implements IEmerController {
                 notNeededHelpers.remove(helper);
             }
         }
-        //Isolate the list of undeeded assistants to assistants that were previously
+        //Isolate the list of unneeded assistants to assistants that were previously
         //requested to help but are no longer needed
         for(String helper : notNeededHelpers.keySet()){
             //only keep helpers that are not needed
@@ -242,8 +242,16 @@ public class EmerController_V1 implements IEmerController {
                 notNeededHelpers.remove(helper);
             }
         }
+/*********/
+        for(String helper : notNeededHelpers.keySet()){
+            //only keep helpers that are not needed
+            if(approvedArrivalAssistants.containsKey(helper)){
+                notNeededHelpers.remove(helper);
+            }
+        }
+/*********/
         //inform these no longer needed assistants of the cancellation
-        rejectAssistants(notNeededHelpers,eventID,"Assistance is no longer required.");
+        rejectAssistants(notNeededHelpers, eventID, "Assistance is no longer required.");
         notNeededHelpers.remove("event_id");
         //Update the DB of the cancelled assistants
         for(String helper : notNeededHelpers.keySet()) {
@@ -332,7 +340,10 @@ public class EmerController_V1 implements IEmerController {
     public void assistantRespondsToApproach(HashMap<String, String> response) {
         if (!assistantFuncs.checkCmidAndPassword(response.get("password"), Integer.parseInt(response.get("community_member_id"))))
             return;
-        emergencyLogger.handleAssistantRespondsToApproach(response.get("event_id"), response.get("community_member_id"));
+        response.put("event_id" ,Integer.toString(dbController.getEventIDByCmidResponse(response.get("community_member_id"))) );
+        emergencyLogger.handleAssistantRespondsToApproach(
+                response.get("event_id")
+                , response.get("community_member_id"));
         //Not in prototype
         String EMSArrivalTime = null;
         // How much time will take this assistant
@@ -631,6 +642,7 @@ public class EmerController_V1 implements IEmerController {
         {
             return;
         }
+        data.put("event_id", Integer.toString(dbController.getEventIDByCmidResponse(data.get("community_member_id"))));
         emergencyLogger.handleArrivalToDest(data.get("event_id"), data.get("community_member_id"));
         // Updates the data base
         dbController.updateArrivalDate(data);
@@ -699,6 +711,8 @@ public class EmerController_V1 implements IEmerController {
         String cmid = data.get("community_member_id");
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(cmid)))
             return;
+
+        data.put("event_id" ,Integer.toString(dbController.getEventIDByCmidResponse(data.get("community_member_id"))) );
         String eventID = data.get("event_id");
         dbController.updateMedicineGiven(Integer.parseInt(cmid), Integer.parseInt(eventID));
         data.put("patient_id", dbController.getPatientIDByCmid(cmid));
@@ -717,6 +731,7 @@ public class EmerController_V1 implements IEmerController {
     public void assistantCancelsArrival(HashMap<String, String> data) {
         if (!assistantFuncs.checkCmidAndPassword(data.get("password"), Integer.parseInt(data.get("community_member_id"))))
             return;
+        data.put("event_id" ,Integer.toString(dbController.getEventIDByCmidResponse(data.get("community_member_id"))) );
         String patientID = dbController.getPatientIDByCmid(data.get("community_member_id"));
         String eventID = data.get("event_id");
         //Update the assistant's status on the DB and inform. "0" to inform EMS here.

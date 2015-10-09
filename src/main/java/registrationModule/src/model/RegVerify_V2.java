@@ -47,7 +47,6 @@ public class RegVerify_V2 implements IRegVerify_model {
             HashMap<String, String> member = new HashMap<String, String>();
             member.put("P_CommunityMembers.community_member_id", new Integer(cmid).toString());
             HashMap<String, String> responseToDoctor = dbController.getUserByParameter(member);
-            //ToDo:why do we need that?
             responseToDoctor.put("RequestID", "verifyPatient");
             return filterDataForVerification(responseToDoctor);
         }
@@ -569,7 +568,6 @@ public class RegVerify_V2 implements IRegVerify_model {
         return fields;
     }
 
-    //TODO- Not for prototype for future releases
     private HashMap<String, String>  generateVerificationForSMSD(String access, String message, String subject) {
         return null;
     }

@@ -740,6 +740,8 @@ public class DbComm_V1 implements IDbComm_model {
     }
 
 
+
+
     public int addNewCommunityMember(HashMap<String,String> details) {
         /* - I'm assuming the fields 'doc_license_num' (from p_doctors) will
              be in the form 'TABLENAME.doc_license_num' to prevent ambiguity.
@@ -1262,7 +1264,28 @@ public class DbComm_V1 implements IDbComm_model {
 
 
 
-    // TODO: get fields with values (intersection of registration fields and community_member)
+    public int getEventIDByCmidResponse(String cmid){
+        ResultSet rs = null;
+        int eventID = -1;
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT event_id from " +
+                    "O_EmergencyEventResponse where community_member_id=? and result is null ORDER BY event_id desc");
+            stmt.setInt(1, Integer.parseInt(cmid));
+
+            rs = stmt.executeQuery();
+            if (rs.next()){
+                eventID = rs.getInt("event_id");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        catch (NullPointerException ex){
+            //pass
+        }
+        return eventID;
+    }
 
     public HashMap<String, String> getEventDetails(String eventId)
     {

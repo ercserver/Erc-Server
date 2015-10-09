@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class CommOfficialFactory_V1 implements ICommOfficialFactory {
 
-    //TODO - we should probably turn "type" into enum at some point...
+
     public ICommOfficial_model createComm(HashMap<String, String> data, int type) {
         switch(type){
             case 0:{

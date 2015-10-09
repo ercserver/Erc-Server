@@ -6,11 +6,13 @@ import java.lang.management.ThreadMXBean;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 /**
  * Created by ohad on 5/9/2015.
  */
 public class ThreadDumper {
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     private static class InstanceHolder {
         private static final ThreadDumper instance = new ThreadDumper();
@@ -35,7 +37,7 @@ public class ThreadDumper {
             executor.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    generateThreadDump();
+                    System.out.println(generateThreadDump());
                 }
             }, 0, 60, TimeUnit.SECONDS);
             InstanceHolder.running = true;
